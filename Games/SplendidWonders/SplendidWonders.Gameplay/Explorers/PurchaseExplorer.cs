@@ -1,0 +1,62 @@
+﻿using SplendidWonders.Common.Model;
+using SplendidWonders.Common.Setup;
+using SplendidWonders.Gameplay.Actions;
+using System.Collections.Immutable;
+
+namespace SplendidWonders.Gameplay.Explorers
+{
+    public class PurchaseExplorer : IActionExplorer<PurchaseAction>
+    {
+        public IEnumerable<PurchaseAction> Explore(GameState gameState)
+        {
+            List<PurchaseAction> purchaseActions = new List<PurchaseAction>();
+
+            for (int i = 1; i < 4; i++)
+            {
+                for (int j = 1; j < 5; j++)
+                {
+                    var card = gameState[i][j];
+
+                    if (card == null || card == Cards.Empty)
+                        continue;
+
+                    if (CalculatePurchasability(card.Cost, gameState.ActivePlayer.Store, gameState.ActivePlayer.Tableau))
+                    {
+                        purchaseActions.Add(new PurchaseFromBoardAction() { Card = card });
+                    }
+                }
+            }
+
+            foreach (var card in gameState.ActivePlayer.ReservedCards)
+            {
+                if (CalculatePurchasability(card.Cost, gameState.ActivePlayer.Store, gameState.ActivePlayer.Tableau))
+                {
+                    purchaseActions.Add(new PurchaseFromReservedAction() { Card = card });
+                }
+            }
+
+            return purchaseActions;
+        }
+
+        private static bool CalculatePurchasability(TokenGroup cardCosts, TokenGroup playerStore, ImmutableList<DevelopmentCard> playerTableau)
+        {
+            int playerYellowBonuses = playerTableau.Count(c => c.Bonus == DevelopmentBonus.Yellow);
+            int playerBlueBonuses = playerTableau.Count(c => c.Bonus == DevelopmentBonus.Blue);
+            int playerGreenBonuses = playerTableau.Count(c => c.Bonus == DevelopmentBonus.Green);
+            int playerBrownBonuses = playerTableau.Count(c => c.Bonus == DevelopmentBonus.Brown);
+            int playerRedBonuses = playerTableau.Count(c => c.Bonus == DevelopmentBonus.Red);
+
+
+            int deficit =
+                Math.Min(0, playerYellowBonuses + playerStore.Yellow - cardCosts.Yellow) +
+                Math.Min(0, playerBlueBonuses + playerStore.Blue - cardCosts.Blue) +
+                Math.Min(0, playerGreenBonuses + playerStore.Green - cardCosts.Green) +
+                Math.Min(0, playerBrownBonuses + playerStore.Brown - cardCosts.Brown) +
+                Math.Min(0, playerRedBonuses + playerStore.Red - cardCosts.Red);
+
+            int availablePolymaths = playerStore.Polymath - cardCosts.Polymath;
+
+            return availablePolymaths >= 0 && deficit + availablePolymaths >= 0;
+        }
+    }
+}

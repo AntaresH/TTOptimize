@@ -1,0 +1,25 @@
+﻿using SplendidWonders.CLI.Input;
+using SplendidWonders.Gameplay.Actions;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using TTOptimize.Core;
+
+namespace SplendidWonders.CLI
+{
+    internal class GenericUtils
+    {
+        public static Dictionary<string, string> CommandShortHandMap = new Dictionary<string, string>
+        {
+            { nameof(DrawThreeTokensAction), "H3" },
+            { nameof(DrawDoubleTokensAction), "H2" },
+            { nameof(ReserveFromBoardAction), "FJ" },
+            { nameof(ReserveFromDeckAction), "FP" },
+            { nameof(PurchaseFromBoardAction), "KJ" },
+            { nameof(PurchaseFromReservedAction), "KK" },
+            { nameof(ReturnTokensAction), "LV" },
+            { nameof(SelectLeaderAction), "VV" },
+            { nameof(DisplayReservedCardsCommand), "FL" }
+        };
+    }
+}

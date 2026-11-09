@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/Games/">
+    <Project Path="Games/SplendidWonders/SplendidWonders.CLI/SplendidWonders.CLI.csproj" Id="e20a1522-8869-48df-9a8e-3c97524c2eb5" />
+    <Project Path="Games/SplendidWonders/SplendidWonders.Common/SplendidWonders.Common.csproj" Id="e09405bb-4e0c-4988-8b49-c76034c05bf7" />
+    <Project Path="Games/SplendidWonders/SplendidWonders.Gameplay/SplendidWonders.Gameplay.csproj" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="Games/SplendidWonders/SplendidWonders.Gameplay.Tests/SplendidWonders.Gameplay.Tests.csproj" />
+  </Folder>
+  <Project Path="TTOptimize.ConsoleHost/TTOptimize.ConsoleHost.csproj" />
+  <Project Path="TTOptimize.Core/TTOptimize.Core.csproj" />
+  <Project Path="TTOptimize.Platform/TTOptimize.Platform.csproj" />
+</Solution>
