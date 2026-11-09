@@ -7,11 +7,14 @@ namespace TTOptimize.Platform
 {
     public class HumanAgent : IPlayerAgent
     {
+        public string Name { get; }
         private IGameInput _input;
 
-        public HumanAgent(IGameInput input)
+        public HumanAgent(IGameInput input, string name)
         {
             _input = input;
+
+            Name = name;
         }
 
         public ApplicationCommand DecideCommand(IGameState gameState, IEnumerable<GameAction> validActions)

@@ -23,16 +23,6 @@ namespace SplendidWonders.Gameplay
             _stateReducer = stateReducer;
         }
 
-        public List<Player> GetFinalStandings(IGameState gameState)
-        {
-            var swGameState = (GameState)gameState;
-
-            return swGameState.Players
-                .OrderByDescending(p => p.Tableau.Sum(c => c.VictoryPoints) + p.AcquiredLeaders.Count * 3)
-                .ThenBy(p => p.Tableau.Count)
-                .ToList();
-        }
-
         public bool Validate(GameAction command)
         {
             return _validActions.Any(action => action.Equals(command));
@@ -52,6 +42,16 @@ namespace SplendidWonders.Gameplay
         {
             _validActions.Clear();
             return _stateReducer.Reduce(baseState, actionToApply);
+        }
+
+        object IGameRules.GetFinalStandings(IGameState gameState)
+        {
+            var swGameState = (GameState)gameState;
+
+            return swGameState.Players
+                .OrderByDescending(p => p.Tableau.Sum(c => c.VictoryPoints) + p.AcquiredLeaders.Count * 3)
+                .ThenBy(p => p.Tableau.Count)
+                .ToList();
         }
     }
 }

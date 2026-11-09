@@ -4,7 +4,7 @@
     {
         void Render(IGameState gameState, IEnumerable<GameAction> legalActions, string customMessage);
         void Render(IGameState gameState, IEnumerable<GameAction> legalActions);
-        void RenderFinalState(IGameState gameState);
+        void RenderFinalState(IGameState gameState, object finalStandingsData);
         void DisplayPresentationCommand(IGameState gameState, PresentationCommand presentationCommand);
     }
 }

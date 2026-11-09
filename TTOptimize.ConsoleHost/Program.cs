@@ -42,7 +42,6 @@ public class Program
 
         var gameConfiguration = new GameConfiguration()
         {
-            PlayerNames = new List<string>() { "Ambrus", "Brünhilda" },
             UseExtendedLeaders = true,
             UseRandomSeed = true
         };

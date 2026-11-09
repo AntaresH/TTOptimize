@@ -9,19 +9,16 @@ public class GameOrchestrator
 
     private readonly IGameConfiguration _gameConfiguration;
     private readonly IGameStateFactory _factory;
-    private readonly IList<IPlayerAgent> _agents;
     private readonly IGameRules _rules;
     private readonly IGameView _view;
 
     public GameOrchestrator(
         IGameConfiguration gameConfiguration,
-        IList<IPlayerAgent> agents,
         IGameStateFactory factory,
         IGameRules rules,
         IGameView view)
     {
         _gameConfiguration = gameConfiguration;
-        _agents = agents;
         _factory = factory;
         _rules = rules;
         _view = view;
@@ -31,16 +28,16 @@ public class GameOrchestrator
     {
         IGameState currentState = _factory.Create(_gameConfiguration);
 
-        string commandMessage = string.Empty;
+        string validationFailureMessage = string.Empty;
 
         while (currentState.GameProgression != GameProgression.GameOver)
         {
             var legalActions = _rules.Explore(currentState);
 
-            _view.Render(currentState, legalActions, commandMessage);
-            commandMessage = null;
+            _view.Render(currentState, legalActions, validationFailureMessage);
+            validationFailureMessage = string.Empty;
 
-            IPlayerAgent activeAgent = _agents[currentState.ActivePlayerId - 1];
+            IPlayerAgent activeAgent = _gameConfiguration.PlayerAgents[currentState.ActivePlayerId - 1];
 
             var command = activeAgent.DecideCommand(currentState, legalActions);
 
@@ -57,11 +54,12 @@ public class GameOrchestrator
                 }
                 else
                 {
-                    commandMessage = string.Format(_invalidCommandType, command.CommandText);
+                    validationFailureMessage = string.Format(_invalidCommandType, command.CommandText);
                 }
             }
         }
 
-        _view.RenderFinalState(currentState);
+        var finalStandings = _rules.GetFinalStandings(currentState);
+        _view.RenderFinalState(currentState, finalStandings);
     }
 }

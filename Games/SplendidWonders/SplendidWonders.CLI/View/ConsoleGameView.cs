@@ -21,9 +21,10 @@ namespace SplendidWonders.CLI.View
             Render(gameState, validActions, string.Empty);
         }
 
-        public void RenderFinalState(IGameState gameState)
+        public void RenderFinalState(IGameState gameState, object finalStandingsData)
         {
             DisplayBoard((GameState)gameState);
+            DisplayGameOver((List<Player>) finalStandingsData);
         }
 
         public void DisplayPresentationCommand(IGameState gameState, PresentationCommand presentationCommand)

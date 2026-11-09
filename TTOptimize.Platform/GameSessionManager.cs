@@ -25,13 +25,17 @@ public class GameSessionManager
 
             var agents = new List<IPlayerAgent>()
             {
-                new HumanAgent(input),
-                new HumanAgent(input)
+                new HumanAgent(input, "Atanáziusz"),
+                new HumanAgent(input, "Brünhilda")
             };
 
-            var orchestrator = new GameOrchestrator(configuration, agents, stateFactory, rules, view);
+            configuration.PlayerAgents = agents;
+
+            var orchestrator = new GameOrchestrator(configuration, stateFactory, rules, view);
 
             orchestrator.Run();
+
+            Console.ReadLine();
         }
     }
 }
