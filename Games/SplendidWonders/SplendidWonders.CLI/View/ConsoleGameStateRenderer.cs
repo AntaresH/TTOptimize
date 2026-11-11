@@ -1,5 +1,6 @@
 using System.Text;
 using SplendidWonders.Common.Model;
+using SplendidWonders.Gameplay.Actions;
 using TTOptimize.Core;
 using TTOptimize.Core.GameAbstractions;
 
@@ -22,9 +23,12 @@ namespace SplendidWonders.CLI.View
         private const int PlayerPanelContentWidth = PlayerPanelWidth - 4;
         private const int PlayerPanelSideWidth = 2;
 
-        public void Render(GameState gameState, IEnumerable<DevelopmentCard>? purchasableCards)
+        public void Render(GameState gameState, IEnumerable<PurchaseAction>? purchaseActions)
         {
-            var purchasableCardIds = purchasableCards?.Select(card => card.Id).ToHashSet() ?? new HashSet<int>();
+            var purchaseCardRequirements = purchaseActions?
+                .GroupBy(action => action.Card.Id)
+                .ToDictionary(group => group.Key, group => group.Any(action => action.RequiredPolymathsCount > 0))
+                ?? new Dictionary<int, bool>();
             var playerPanels = BuildPlayerPanels(gameState);
             var leaderBlocks = new List<RenderedBlock>();
             foreach (var leader in gameState.Leaders)
@@ -108,7 +112,8 @@ namespace SplendidWonders.CLI.View
                 {
                     int startRow = (DeckLevelCount - level) * DeckBlockHeight;
                     var card = gameState[level][column];
-                    var block = FormatCard(card, MarketColumnWidth, purchasableCardIds.Contains(card.Id));
+                    bool isPurchasable = purchaseCardRequirements.TryGetValue(card.Id, out bool requiresPolymaths);
+                    var block = FormatCard(card, MarketColumnWidth, isPurchasable, requiresPolymaths);
                     for (int row = 0; row < DeckBlockHeight; row++)
                         AppendCanvas(canvas, colorRanges, startRow + row, block.Lines[row], relativeRanges: block.ColorRanges[row]);
                 }
@@ -738,13 +743,13 @@ namespace SplendidWonders.CLI.View
             return colorRanges;
         }
 
-        private static RenderedBlock FormatCard(DevelopmentCard card, int width, bool isPurchasable)
+        private static RenderedBlock FormatCard(DevelopmentCard card, int width, bool isPurchasable, bool requiresPolymaths)
         {
             var lines = new string[DeckBlockHeight];
             var colorRanges = CreateColorRanges(DeckBlockHeight);
 
-            const char sideBorder = '|';
-            string top = "+" + new string('-', width - 2) + "+";
+            char sideBorder = isPurchasable ? '║' : '|';
+            string top = "+" + new string(isPurchasable ? '=' : '-', width - 2) + "+";
             string side = sideBorder + new string(' ', width - 2) + sideBorder;
             int contentWidth = Math.Max(8, width - 4);
 
@@ -756,7 +761,11 @@ namespace SplendidWonders.CLI.View
 
             RgbColor cardBackground = GetTableauCountBackgroundColor(card.Bonus);
             RgbColor bonusColor = cardBackground;
-            RgbColor borderColor = isPurchasable ? new RgbColor(255, 255, 125) : bonusColor;
+            RgbColor borderColor = !isPurchasable
+                ? bonusColor
+                : requiresPolymaths
+                    ? new RgbColor(255, 255, 255)
+                    : new RgbColor(255, 255, 125);
             string victoryPoints = card.VictoryPoints > 0 ? "{" + card.VictoryPoints + "}" : string.Empty;
             var cost = card.Cost;
             var costText = new StringBuilder();

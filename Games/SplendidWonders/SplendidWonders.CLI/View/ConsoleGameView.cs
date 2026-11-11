@@ -27,11 +27,6 @@ namespace SplendidWonders.CLI.View
             DisplayGameOver((List<Player>) finalStandingsData);
         }
 
-        public void DisplayPresentationCommand(IGameState gameState, PresentationCommand presentationCommand)
-        {
-            DisplayPresentationCommand((GameState)gameState, presentationCommand);
-        }
-
         public void DisplayGameOver(List<Player> players)
         {
             Console.WriteLine(Strings.GameOverTitle);
@@ -71,7 +66,7 @@ namespace SplendidWonders.CLI.View
         {
             Console.Clear();
             DisplayGameTitle();
-            _gameStateRenderer.Render(gameState, validActions.OfType<PurchaseAction>().Select(pa => pa.Card));
+            _gameStateRenderer.Render(gameState, validActions.OfType<PurchaseAction>());
         }
 
         public void DisplayValidActions(IEnumerable<GameAction> validActions)
@@ -83,11 +78,6 @@ namespace SplendidWonders.CLI.View
                 string shorthand = GenericUtils.CommandShortHandMap.ContainsKey(command.GetType().Name) ? GenericUtils.CommandShortHandMap[command.GetType().Name] : string.Empty;
                 Console.WriteLine($"{command.GetType().Name} ({shorthand})");
             }
-        }
-
-        public void DisplayTurnStart(Player player)
-        {
-            Console.WriteLine(string.Format(Strings.PlayerTurnFormat, player.Name));
         }
 
         public void DisplayInvalidCommandMessage()
@@ -111,125 +101,6 @@ namespace SplendidWonders.CLI.View
             Console.WriteLine("        | |                                                                           ");
             Console.WriteLine("        |_|                                                                           ");
             Console.WriteLine("");
-        }
-
-        public static string GetRgbColoredConsoleForeground(string text, DevelopmentBonus trueColorRgbFormat)
-        {
-            return $"\u001b[38;2;{ConvertRgbColorIntoText(trueColorRgbFormat)}m{text}\u001b[0m";
-        }
-
-        public static string GetRgbColoredConsoleBackground(string text, DevelopmentBonus trueColorRgbFormat)
-        {
-            return $"\u001b[48;2;{ConvertRgbColorIntoText(trueColorRgbFormat)}m{text}\u001b[0m";
-        }
-
-        public static string ConvertRgbColorIntoText(DevelopmentBonus bonus)
-        {
-            return bonus switch
-            {
-                DevelopmentBonus.Yellow => "208;208;0",
-                DevelopmentBonus.Blue => "80;145;255",
-                DevelopmentBonus.Green => "0;220;50",
-                DevelopmentBonus.Brown => "145;92;42",
-                DevelopmentBonus.Red => "255;80;80",
-                _ => "192;192;192"
-            };
-        }
-
-        public void DisplayPresentationCommand(GameState gameState, PresentationCommand command)
-        {
-            if (command is DisplayReservedCardsCommand)
-            {
-                DisplayCards(gameState.ActivePlayer.ReservedCards);
-                Console.ReadLine();
-            }
-        }
-
-        public void DisplaySelectLeaderArgumentRequest(IEnumerable<Leader> eligibleLeaders)
-        {
-            foreach (var leader in eligibleLeaders)
-            {
-                PrintLeader(leader);
-            }
-        }
-
-        private void DisplayCards(IEnumerable<DevelopmentCard> cards)
-        {
-            foreach (var card in cards)
-            {
-                PrintCard(card);
-            }
-        }
-
-        public static void PrintCard(DevelopmentCard card)
-        {
-            List<string> colorCostTexts = new List<string>();
-
-            if (card.Cost.Yellow > 0)
-            {
-                colorCostTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Yellow.ToString(), DevelopmentBonus.Yellow));
-            }
-
-            if (card.Cost.Blue > 0)
-            {
-                colorCostTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Blue.ToString(), DevelopmentBonus.Blue));
-            }
-
-            if (card.Cost.Green > 0)
-            {
-                colorCostTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Green.ToString(), DevelopmentBonus.Green));
-            }
-
-            if (card.Cost.Brown > 0)
-            {
-                colorCostTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Brown.ToString(), DevelopmentBonus.Brown));
-            }
-
-            if (card.Cost.Red > 0)
-            {
-                colorCostTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Red.ToString(), DevelopmentBonus.Red));
-            }
-
-            string vpDisplay = card.VictoryPoints > 0 ? $"{{{card.VictoryPoints}}}" : "   ";
-
-            string namePadding = new string(' ', Math.Max(0, 20 - card.Name.Length));
-            string coloredName = GetRgbColoredConsoleForeground(card.Name, card.Bonus);
-
-            Console.WriteLine($"{card.Id,-5} {coloredName}{namePadding} {vpDisplay} Költségek: {string.Join(" ", colorCostTexts)}");
-        }
-
-        public static void PrintLeader(Leader leader)
-        {
-            List<string> colorCostTexts = new List<string>();
-
-            if (leader.Requirements.Yellow > 0)
-            {
-                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {leader.Requirements.Yellow.ToString()} ", DevelopmentBonus.Yellow));
-            }
-
-            if (leader.Requirements.Blue > 0)
-            {
-                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {leader.Requirements.Blue.ToString()} ", DevelopmentBonus.Blue));
-            }
-
-            if (leader.Requirements.Green > 0)
-            {
-                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {leader.Requirements.Green.ToString()} ", DevelopmentBonus.Green));
-            }
-
-            if (leader.Requirements.Brown > 0)
-            {
-                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {leader.Requirements.Brown.ToString()} ", DevelopmentBonus.Brown));
-            }
-
-            if (leader.Requirements.Red > 0)
-            {
-                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {leader.Requirements.Red.ToString()} ", DevelopmentBonus.Red));
-            }
-
-            string vpDisplay = leader.VictoryPoints > 0 ? $"{{{leader.VictoryPoints}}}" : string.Empty;
-
-            Console.WriteLine($"{leader.Id} {leader.Name.PadRight(15)} {vpDisplay} Feltételek: {string.Join(" ", colorCostTexts)}");
         }
 
         public static void PrintColoredLine(string text, ConsoleColor color)

@@ -124,12 +124,38 @@ namespace SplendidWonders.CLI.Input
 
         private static string GetRgbColoredConsoleForeground(string text, DevelopmentBonus trueColorRgbFormat)
         {
-            return $"\u001b[38;2;{ConvertRgbColorIntoText(trueColorRgbFormat)}m{text}\u001b[0m";
+            return $"\u001b[38;2;{ConvertBonusToLightColorSet(trueColorRgbFormat)}m{text}\u001b[0m";
         }
 
         private static string GetRgbColoredConsoleBackground(string text, DevelopmentBonus trueColorRgbFormat)
         {
-            return $"\u001b[48;2;{ConvertRgbColorIntoText(trueColorRgbFormat)}m{text}\u001b[0m";
+            return $"\u001b[48;2;{ConvertBonusToDarkColorSet(trueColorRgbFormat)}m{text}\u001b[0m";
+        }
+
+        public static string ConvertBonusToLightColorSet(DevelopmentBonus bonus)
+        {
+            return bonus switch
+            {
+                DevelopmentBonus.Yellow => "208;208;0",
+                DevelopmentBonus.Blue => "80;145;255",
+                DevelopmentBonus.Green => "0;220;50",
+                DevelopmentBonus.Brown => "145;92;42",
+                DevelopmentBonus.Red => "255;80;80",
+                _ => "192;192;192"
+            };
+        }
+
+        private static string ConvertBonusToDarkColorSet(DevelopmentBonus bonus)
+        {
+            return bonus switch
+            {
+                DevelopmentBonus.Yellow => "138;116;0",
+                DevelopmentBonus.Blue => "30;60;165",
+                DevelopmentBonus.Green => "0;125;30",
+                DevelopmentBonus.Brown => "100;45;0",
+                DevelopmentBonus.Red => "180;10;20",
+                _ => "96;96;96"
+            };
         }
 
         private static string ConvertRgbColorIntoText(DevelopmentBonus bonus)

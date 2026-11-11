@@ -8,6 +8,5 @@ namespace TTOptimize.Core
         void Render(IGameState gameState, IEnumerable<GameAction> validActions, string customMessage);
         void Render(IGameState gameState, IEnumerable<GameAction> validActions);
         void RenderFinalState(IGameState gameState, object finalStandingsData);
-        void DisplayPresentationCommand(IGameState gameState, PresentationCommand presentationCommand);
     }
 }
