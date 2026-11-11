@@ -1,7 +1,7 @@
 ﻿using SplendidWonders.Common.Model;
 using SplendidWonders.Common.Setup;
 using SplendidWonders.Gameplay.Actions;
-using TTOptimize.Core;
+using TTOptimize.Core.GameAbstractions;
 
 namespace SplendidWonders.Gameplay.Reducers
 {

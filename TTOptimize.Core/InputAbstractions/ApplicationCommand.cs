@@ -1,4 +1,6 @@
-﻿namespace TTOptimize.Core
+﻿using TTOptimize.Core.GameAbstractions;
+
+namespace TTOptimize.Core.InputAbstractions
 {
     public abstract class ApplicationCommand
     {

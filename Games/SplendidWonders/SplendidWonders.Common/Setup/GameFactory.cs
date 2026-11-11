@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Net.Security;
 using System.Text;
-using TTOptimize.Core;
+using TTOptimize.Core.GameAbstractions;
 
 namespace SplendidWonders.Common.Setup
 {

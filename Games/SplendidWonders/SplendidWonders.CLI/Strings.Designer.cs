@@ -63,18 +63,36 @@ namespace SplendidWonders.CLI {
         /// <summary>
         ///   Looks up a localized string similar to Húzz 2 azonos kategóriájú fejlődéslapkát!.
         /// </summary>
-        internal static string DrawDoubleTokensActionDescription {
+        internal static string DrawDoubleTokensCommandDescription {
             get {
-                return ResourceManager.GetString("DrawDoubleTokensActionDescription", resourceCulture);
+                return ResourceManager.GetString("DrawDoubleTokensCommandDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to H2.
+        /// </summary>
+        internal static string DrawDoubleTokensCommandKey {
+            get {
+                return ResourceManager.GetString("DrawDoubleTokensCommandKey", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Húzz 1-1 fejlődéslapkát három különböző kategóriákból!.
         /// </summary>
-        internal static string DrawThreeTokensActionDescription {
+        internal static string DrawThreeTokensCommandDescription {
             get {
-                return ResourceManager.GetString("DrawThreeTokensActionDescription", resourceCulture);
+                return ResourceManager.GetString("DrawThreeTokensCommandDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to H3.
+        /// </summary>
+        internal static string DrawThreeTokensCommandKey {
+            get {
+                return ResourceManager.GetString("DrawThreeTokensCommandKey", resourceCulture);
             }
         }
         
@@ -180,9 +198,18 @@ namespace SplendidWonders.CLI {
         /// <summary>
         ///   Looks up a localized string similar to Foglalt kártyák listázása.
         /// </summary>
-        internal static string ListReservedCardsPresentationCommandDescription {
+        internal static string ListReservedCardsCommandDescription {
             get {
-                return ResourceManager.GetString("ListReservedCardsPresentationCommandDescription", resourceCulture);
+                return ResourceManager.GetString("ListReservedCardsCommandDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FL.
+        /// </summary>
+        internal static string ListReservedCardsCommandKey {
+            get {
+                return ResourceManager.GetString("ListReservedCardsCommandKey", resourceCulture);
             }
         }
         
@@ -201,15 +228,6 @@ namespace SplendidWonders.CLI {
         internal static string ParameterCount {
             get {
                 return ResourceManager.GetString("ParameterCount", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Szeretnél újra játszani? (i/n):.
-        /// </summary>
-        internal static string PlayAgain {
-            get {
-                return ResourceManager.GetString("PlayAgain", resourceCulture);
             }
         }
         
@@ -250,20 +268,47 @@ namespace SplendidWonders.CLI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kérlek add meg, hogy milyen színű lapkákat szeretnél húzni (S - sárga, K - kék, Z - zöld, B - barna, P - piros). Például, &quot;S B P&quot;. Háromnál kevesebb színt is megadhatsz, ha nem tudnál úgysem a játéktérről eleget felhúzni:.
+        ///   Looks up a localized string similar to Kérlek add meg, hogy milyen színű lapkából szeretnél kettőt húzni (S - sárga, K - kék, Z - zöld, B - barna, P - piros). Például, &quot;K&quot;..
         /// </summary>
-        internal static string PromptChooseColors {
+        internal static string PromptDoubleTokens {
             get {
-                return ResourceManager.GetString("PromptChooseColors", resourceCulture);
+                return ResourceManager.GetString("PromptDoubleTokens", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kérlek add meg, hogy milyen színű lapkából szeretnél kettőt húzni (S - sárga, K - kék, Z - zöld, B - barna, P - piros). Például, &quot;K&quot;..
+        ///   Looks up a localized string similar to Kérlek válaszd ki a kártyát, amit meg szeretnél vásárolni! Add meg a kártya számát a jelen pillanatban megvásárolható kártyák listájából:.
         /// </summary>
-        internal static string PromptChooseDoubleColor {
+        internal static string PromptPurchaseFromBoard {
             get {
-                return ResourceManager.GetString("PromptChooseDoubleColor", resourceCulture);
+                return ResourceManager.GetString("PromptPurchaseFromBoard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kérlek válaszd ki a kártyát, amit meg szeretnél vásárolni. Add meg a kártya számát az alábbi listából:.
+        /// </summary>
+        internal static string PromptPurchaseFromReserved {
+            get {
+                return ResourceManager.GetString("PromptPurchaseFromReserved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kérlek válaszd ki a kártyát, amit le szeretnél foglalni. Add meg a kártya szintjét (1-3) és az oszlopszámot (1-4). Például: &quot;1,2&quot; vagy &quot;3,3&quot;:.
+        /// </summary>
+        internal static string PromptReserveFromBoard {
+            get {
+                return ResourceManager.GetString("PromptReserveFromBoard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kérlek válaszd ki a paklit (1-3), aminek legfelső lapját le szeretnéd foglalni. Például: &quot;1&quot;.
+        /// </summary>
+        internal static string PromptReserveFromDeck {
+            get {
+                return ResourceManager.GetString("PromptReserveFromDeck", resourceCulture);
             }
         }
         
@@ -277,20 +322,56 @@ namespace SplendidWonders.CLI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kérlek Válaszd ki a vezért, aki csatlakozzon a birodalmadhoz. Add meg a vezér számát az alábbi listából:.
+        /// </summary>
+        internal static string PromptSelectLeader {
+            get {
+                return ResourceManager.GetString("PromptSelectLeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kérlek add meg, hogy milyen színű lapkákat szeretnél húzni (S - sárga, K - kék, Z - zöld, B - barna, P - piros). Például, &quot;S B P&quot;. Háromnál kevesebb színt is megadhatsz, ha nem tudnál úgysem a játéktérről eleget felhúzni:.
+        /// </summary>
+        internal static string PromptThreeTokens {
+            get {
+                return ResourceManager.GetString("PromptThreeTokens", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vásárolj meg egy kártyát a játéktérről!.
         /// </summary>
-        internal static string PurchaseFromBoardActionDescription {
+        internal static string PurchaseFromBoardCommandDescription {
             get {
-                return ResourceManager.GetString("PurchaseFromBoardActionDescription", resourceCulture);
+                return ResourceManager.GetString("PurchaseFromBoardCommandDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KJ.
+        /// </summary>
+        internal static string PurchaseFromBoardCommandKey {
+            get {
+                return ResourceManager.GetString("PurchaseFromBoardCommandKey", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Vásárolj meg egy kártyát a korábban általad foglaltak közül!.
         /// </summary>
-        internal static string PurchaseFromReservedActionDescription {
+        internal static string PurchaseFromReservedCommandDescription {
             get {
-                return ResourceManager.GetString("PurchaseFromReservedActionDescription", resourceCulture);
+                return ResourceManager.GetString("PurchaseFromReservedCommandDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KK.
+        /// </summary>
+        internal static string PurchaseFromReservedCommandKey {
+            get {
+                return ResourceManager.GetString("PurchaseFromReservedCommandKey", resourceCulture);
             }
         }
         
@@ -306,72 +387,72 @@ namespace SplendidWonders.CLI {
         /// <summary>
         ///   Looks up a localized string similar to Fogljalj le 1 kártyát a játéktérről!.
         /// </summary>
-        internal static string ReserveFromBoardActionDescription {
+        internal static string ReserveFromBoardCommandDescription {
             get {
-                return ResourceManager.GetString("ReserveFromBoardActionDescription", resourceCulture);
+                return ResourceManager.GetString("ReserveFromBoardCommandDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FJ.
+        /// </summary>
+        internal static string ReserveFromBoardCommandKey {
+            get {
+                return ResourceManager.GetString("ReserveFromBoardCommandKey", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Foglald le egy általad kiválasztott pakli legfelső kártyáját!.
         /// </summary>
-        internal static string ReserveFromDeckActionDescription {
+        internal static string ReserveFromDeckCommandDescription {
             get {
-                return ResourceManager.GetString("ReserveFromDeckActionDescription", resourceCulture);
+                return ResourceManager.GetString("ReserveFromDeckCommandDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FP.
+        /// </summary>
+        internal static string ReserveFromDeckCommandKey {
+            get {
+                return ResourceManager.GetString("ReserveFromDeckCommandKey", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Tegyél vissza fejlődéslapkákat a játéktérre!.
         /// </summary>
-        internal static string ReturnTokensActionDescription {
+        internal static string ReturnTokensCommandDescription {
             get {
-                return ResourceManager.GetString("ReturnTokensActionDescription", resourceCulture);
+                return ResourceManager.GetString("ReturnTokensCommandDescription", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kérlek válaszd ki a kártyát, amit meg szeretnél vásárolni. Add meg a kártya szintjét (1-3) és az oszlopszámot (1-4). Például: &quot;1,2&quot; vagy &quot;3,3&quot;:.
+        ///   Looks up a localized string similar to LV.
         /// </summary>
-        internal static string SelectCardToBuy {
+        internal static string ReturnTokensCommandKey {
             get {
-                return ResourceManager.GetString("SelectCardToBuy", resourceCulture);
+                return ResourceManager.GetString("ReturnTokensCommandKey", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kérlek válaszd ki a kártyát, amit meg szeretnél vásárolni. Add meg a kártya számát az alábbi listából:.
+        ///   Looks up a localized string similar to Csatlakozó vezér kiválasztása.
         /// </summary>
-        internal static string SelectCardToBuyFromReserved {
+        internal static string SelectLeaderCommandDescriptionFormat {
             get {
-                return ResourceManager.GetString("SelectCardToBuyFromReserved", resourceCulture);
+                return ResourceManager.GetString("SelectLeaderCommandDescriptionFormat", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kérlek válaszd ki a kártyát, amit le szeretnél foglalni. Add meg a kártya szintjét (1-3) és az oszlopszámot (1-4). Például: &quot;1,2&quot; vagy &quot;3,3&quot;:.
+        ///   Looks up a localized string similar to VV.
         /// </summary>
-        internal static string SelectCardToReserve {
+        internal static string SelectLeaderCommandKey {
             get {
-                return ResourceManager.GetString("SelectCardToReserve", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Kérlek válaszd ki a paklit (1-3), aminek legfelső lapját le szeretnéd foglalni. Például: &quot;1&quot;.
-        /// </summary>
-        internal static string SelectDeckToReserve {
-            get {
-                return ResourceManager.GetString("SelectDeckToReserve", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Válaszd ki a vezért, aki csatlakozzon a birodalmadhoz:.
-        /// </summary>
-        internal static string SelectLeaderActionDescriptionFormat {
-            get {
-                return ResourceManager.GetString("SelectLeaderActionDescriptionFormat", resourceCulture);
+                return ResourceManager.GetString("SelectLeaderCommandKey", resourceCulture);
             }
         }
         

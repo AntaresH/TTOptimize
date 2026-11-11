@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualBasic;
 using SplendidWonders.CLI;
 using SplendidWonders.Common.Setup;
 using System.Runtime.InteropServices;
@@ -38,14 +39,40 @@ public class Program
 
         var rootServiceProvider = services.BuildServiceProvider();
 
-        var sessionManager = rootServiceProvider.GetRequiredService<GameSessionManager>();
+        bool stayInApp = true;
 
-        var gameConfiguration = new GameConfiguration()
+        while (stayInApp)
         {
-            UseExtendedLeaders = true,
-            UseRandomSeed = true
-        };
+            var sessionManager = rootServiceProvider.GetRequiredService<GameSessionManager>();
 
-        sessionManager.StartNewMatch(Games.SPLENDID_WONDERS, gameConfiguration);
+            var gameConfiguration = new GameConfiguration()
+            {
+                UseExtendedLeaders = true,
+                UseRandomSeed = true
+            };
+
+            sessionManager.StartNewMatch(Games.SPLENDID_WONDERS, gameConfiguration);
+
+            StayPrompter();
+        }
+    }
+
+    private static bool StayPrompter()
+    {
+        while (true)
+        {
+            Console.WriteLine(Strings.PlayAgain);
+
+            var userInput = Console.ReadLine().Trim();
+
+            if (userInput == Strings.YesShort || userInput == Strings.Yes)
+            {
+                return true;
+            }
+            else if (userInput == Strings.NoShort || userInput == Strings.No)
+            {
+                return false;
+            }
+        }
     }
 }

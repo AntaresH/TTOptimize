@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using TTOptimize.Core;
+using TTOptimize.Core.GameAbstractions;
+using TTOptimize.Core.InputAbstractions;
 
 namespace TTOptimize.Platform
 {
@@ -17,7 +19,7 @@ namespace TTOptimize.Platform
             Name = name;
         }
 
-        public ApplicationCommand DecideCommand(IGameState gameState, IEnumerable<GameAction> validActions)
+        public GameCommand DecideCommand(IGameState gameState, IEnumerable<GameAction> validActions)
         {
             return _input.ReadCommand(gameState, validActions);
         }

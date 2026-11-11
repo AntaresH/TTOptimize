@@ -3,6 +3,7 @@ using SplendidWonders.Common.Model;
 using SplendidWonders.Gameplay.Actions;
 using SplendidWonders.Gameplay.Explorers;
 using TTOptimize.Core;
+using TTOptimize.Core.GameAbstractions;
 
 namespace SplendidWonders.Gameplay
 {

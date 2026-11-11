@@ -2,14 +2,14 @@
 using SplendidWonders.Common.Model;
 using SplendidWonders.Gameplay.Actions;
 using System.Collections.Immutable;
-using TTOptimize.Core;
+using TTOptimize.Core.GameAbstractions;
+using TTOptimize.Core.InputAbstractions;
 
 namespace SplendidWonders.CLI.View
 {
     public class ConsoleGameView : ISplendidWondersView
     {
         private readonly ConsoleGameStateRenderer _gameStateRenderer = new();
-        private readonly ConsoleGameActionsRenderer _gameActionsRenderer = new();
 
         public void Render(IGameState gameState, IEnumerable<GameAction> validActions, string customMessage)
         {
@@ -58,7 +58,6 @@ namespace SplendidWonders.CLI.View
                 Console.WriteLine();
                 Console.WriteLine();
             }
-            _gameActionsRenderer.Render(gameState, validActions);
         }
 
         public void DisplayBoard(GameState gameState)
@@ -89,33 +88,6 @@ namespace SplendidWonders.CLI.View
             Console.WriteLine(Strings.InvalidCommandState);
         }
 
-        public void DisplayThreeTokensArgumentRequest()
-        {
-            Console.WriteLine(Strings.PromptChooseColors);
-        }
-
-        public void DisplayDoubleTokensArgumentRequest()
-        {
-            Console.WriteLine(Strings.PromptChooseDoubleColor);
-        }
-
-        public void DisplayPurchaseFromBoardArgumentRequest(IEnumerable<DevelopmentCard> purchasableCards)
-        {
-            Console.WriteLine(Strings.SelectCardToBuy);
-
-            DisplayCards(purchasableCards);
-        }
-
-        public void DisplayReserveFromDeckArgumentRequest()
-        {
-            Console.WriteLine(Strings.SelectDeckToReserve);
-        }
-
-        public void DisplayReserveFromBoardArgumentRequest()
-        {
-            Console.WriteLine(Strings.SelectCardToReserve);
-        }
-
         public void DisplayInvalidCommand(GameAction command)
         {
             Console.WriteLine(string.Format(Strings.InvalidCommandTypeStateFormat, command.GetType().Name));
@@ -132,18 +104,6 @@ namespace SplendidWonders.CLI.View
             Console.WriteLine("        | |                                                                           ");
             Console.WriteLine("        |_|                                                                           ");
             Console.WriteLine("");
-        }
-
-        public void DisplayReturnTokensArgumentRequest()
-        {
-            Console.WriteLine(Strings.PromptReturnTokens);
-        }
-
-        public void DisplayPurchaseFromReservedArgumentRequest(ImmutableList<DevelopmentCard> reservedCards)
-        {
-            Console.WriteLine(Strings.SelectCardToBuyFromReserved);
-
-            DisplayCards(reservedCards);
         }
 
         public static string GetRgbColoredConsoleForeground(string text, DevelopmentBonus trueColorRgbFormat)

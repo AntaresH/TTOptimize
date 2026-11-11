@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TTOptimize.Core
+namespace TTOptimize.Core.GameAbstractions
 {
     public abstract class GameAction
     {

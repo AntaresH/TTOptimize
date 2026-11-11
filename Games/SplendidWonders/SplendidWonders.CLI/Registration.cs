@@ -1,11 +1,14 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SplendidWonders.CLI.Input;
+using SplendidWonders.CLI.Input.Wizards;
 using SplendidWonders.CLI.View;
 using SplendidWonders.Gameplay;
 using SplendidWonders.Gameplay.Actions;
 using SplendidWonders.Gameplay.Explorers;
 using SplendidWonders.Gameplay.Reducers;
 using TTOptimize.Core;
+using TTOptimize.Core.GameAbstractions;
+using TTOptimize.Core.InputAbstractions;
 
 namespace SplendidWonders.CLI
 {
@@ -40,6 +43,16 @@ namespace SplendidWonders.CLI
             services.AddKeyedSingleton<ConsoleGameView>(Games.SPLENDID_WONDERS);
             services.AddKeyedSingleton<IGameView>(Games.SPLENDID_WONDERS, (sp, key) => sp.GetRequiredKeyedService<ConsoleGameView>(key));
             services.AddKeyedSingleton<ISplendidWondersView>(Games.SPLENDID_WONDERS, (sp, key) => sp.GetRequiredKeyedService<ConsoleGameView>(key));
+
+            services.AddKeyedSingleton<IConsoleCommandWizard, DrawDoubleTokensCommandWizard>(Games.SPLENDID_WONDERS);
+            services.AddKeyedSingleton<IConsoleCommandWizard, DrawThreeTokensCommandWizard>(Games.SPLENDID_WONDERS);
+            services.AddKeyedSingleton<IConsoleCommandWizard, PurchaseFromBoardCommandWizard>(Games.SPLENDID_WONDERS);
+            services.AddKeyedSingleton<IConsoleCommandWizard, PurchaseFromReservedCommandWizard>(Games.SPLENDID_WONDERS);
+            services.AddKeyedSingleton<IConsoleCommandWizard, ReserveFromBoardCommandWizard>(Games.SPLENDID_WONDERS);
+            services.AddKeyedSingleton<IConsoleCommandWizard, ReserveFromDeckCommandWizard>(Games.SPLENDID_WONDERS);
+            services.AddKeyedSingleton<IConsoleCommandWizard, ReturnTokensCommandWizard>(Games.SPLENDID_WONDERS);
+            services.AddKeyedSingleton<IConsoleCommandWizard, SelectLeaderCommandWizard>(Games.SPLENDID_WONDERS);
+            services.AddKeyedSingleton<IConsoleCommandWizard, ShowReservedCardsCommandWizard>(Games.SPLENDID_WONDERS);
             services.AddKeyedSingleton<IGameInput, ConsoleGameInput>(Games.SPLENDID_WONDERS);
 
             services.AddKeyedSingleton<IGameStateFactory, StateFactory>(Games.SPLENDID_WONDERS);

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
 using TTOptimize.Core;
+using TTOptimize.Core.GameAbstractions;
+using TTOptimize.Core.InputAbstractions;
 
 namespace SplendidWonders.CLI.View
 {
@@ -14,17 +16,9 @@ namespace SplendidWonders.CLI.View
         void DisplayValidActions(IEnumerable<GameAction> validActions);
         void DisplayTurnStart(Player currentPlayer);
         void DisplayInvalidCommandMessage();
-        void DisplayThreeTokensArgumentRequest();
-        void DisplayDoubleTokensArgumentRequest();
-        void DisplayPurchaseFromBoardArgumentRequest(IEnumerable<DevelopmentCard> purchasableCards);
-        void DisplayPurchaseFromReservedArgumentRequest(ImmutableList<DevelopmentCard> reservedCards);
-        void DisplayReserveFromBoardArgumentRequest();
-        void DisplayReserveFromDeckArgumentRequest();
         void DisplayInvalidCommand(GameAction command);
         void DisplayGameTitle();
-        void DisplayReturnTokensArgumentRequest();
         void DisplayPresentationCommand(GameState gameState, PresentationCommand command);
-        void DisplaySelectLeaderArgumentRequest(IEnumerable<Leader> eligibleLeaders);
         void DisplayBoard(GameState gameState);
     }
 }

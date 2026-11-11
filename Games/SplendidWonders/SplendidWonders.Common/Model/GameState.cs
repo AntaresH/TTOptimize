@@ -1,5 +1,5 @@
 ﻿using System.Collections.Immutable;
-using TTOptimize.Core;
+using TTOptimize.Core.GameAbstractions;
 
 namespace SplendidWonders.Common.Model
 {

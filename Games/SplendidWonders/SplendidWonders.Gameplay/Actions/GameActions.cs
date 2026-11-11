@@ -1,6 +1,6 @@
 ﻿
 using SplendidWonders.Common.Model;
-using TTOptimize.Core;
+using TTOptimize.Core.GameAbstractions;
 
 namespace SplendidWonders.Gameplay.Actions
 {

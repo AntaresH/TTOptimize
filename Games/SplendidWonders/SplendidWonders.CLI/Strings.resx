@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DrawDoubleTokensActionDescription" xml:space="preserve">
+  <data name="DrawDoubleTokensCommandDescription" xml:space="preserve">
     <value>Húzz 2 azonos kategóriájú fejlődéslapkát!</value>
   </data>
-  <data name="DrawThreeTokensActionDescription" xml:space="preserve">
+  <data name="DrawDoubleTokensCommandKey" xml:space="preserve">
+    <value>H2</value>
+  </data>
+  <data name="DrawThreeTokensCommandDescription" xml:space="preserve">
     <value>Húzz 1-1 fejlődéslapkát három különböző kategóriákból!</value>
+  </data>
+  <data name="DrawThreeTokensCommandKey" xml:space="preserve">
+    <value>H3</value>
   </data>
   <data name="EmptyTableau" xml:space="preserve">
     <value>(üres)</value>
@@ -156,17 +162,14 @@
   <data name="Level3Title" xml:space="preserve">
     <value>Csodák</value>
   </data>
-  <data name="ListReservedCardsPresentationCommandDescription" xml:space="preserve">
-    <value>Foglalt kártyák listázása</value>
+  <data name="ListReservedCardsCommandKey" xml:space="preserve">
+    <value>FL</value>
   </data>
   <data name="NameCannotBeEmpty" xml:space="preserve">
     <value>A név nem lehet üres. Kérlek add meg újra a játékos nevét:</value>
   </data>
   <data name="ParameterCount" xml:space="preserve">
     <value>Paraméterek száma:</value>
-  </data>
-  <data name="PlayAgain" xml:space="preserve">
-    <value>Szeretnél újra játszani? (i/n):</value>
   </data>
   <data name="PlayerStorageTitle" xml:space="preserve">
     <value>Saját készlet</value>
@@ -180,47 +183,56 @@
   <data name="PlayerTurnFormat" xml:space="preserve">
     <value>{0} köre.</value>
   </data>
-  <data name="PromptChooseColors" xml:space="preserve">
+  <data name="PromptThreeTokens" xml:space="preserve">
     <value>Kérlek add meg, hogy milyen színű lapkákat szeretnél húzni (S - sárga, K - kék, Z - zöld, B - barna, P - piros). Például, "S B P". Háromnál kevesebb színt is megadhatsz, ha nem tudnál úgysem a játéktérről eleget felhúzni:</value>
   </data>
-  <data name="PromptChooseDoubleColor" xml:space="preserve">
+  <data name="PromptDoubleTokens" xml:space="preserve">
     <value>Kérlek add meg, hogy milyen színű lapkából szeretnél kettőt húzni (S - sárga, K - kék, Z - zöld, B - barna, P - piros). Például, "K".</value>
   </data>
   <data name="PromptReturnTokens" xml:space="preserve">
     <value>Kérlek add meg, hogy milyen színű lapkákat szeretnél visszarakni a játéktérre!(S - sárga, K - kék, Z - zöld, B - barna, P - piros). Például, "S B P" vagy " K K"</value>
   </data>
-  <data name="PurchaseFromBoardActionDescription" xml:space="preserve">
+  <data name="PurchaseFromBoardCommandKey" xml:space="preserve">
+    <value>KJ</value>
+  </data>
+  <data name="PurchaseFromBoardCommandDescription" xml:space="preserve">
     <value>Vásárolj meg egy kártyát a játéktérről!</value>
   </data>
-  <data name="PurchaseFromReservedActionDescription" xml:space="preserve">
+  <data name="PurchaseFromReservedCommandDescription" xml:space="preserve">
     <value>Vásárolj meg egy kártyát a korábban általad foglaltak közül!</value>
   </data>
   <data name="ReservedCardsCountFormat" xml:space="preserve">
     <value>🂠 : {0}</value>
   </data>
-  <data name="ReserveFromBoardActionDescription" xml:space="preserve">
+  <data name="ReserveFromBoardCommandDescription" xml:space="preserve">
     <value>Fogljalj le 1 kártyát a játéktérről!</value>
   </data>
-  <data name="ReserveFromDeckActionDescription" xml:space="preserve">
+  <data name="ReserveFromBoardCommandKey" xml:space="preserve">
+    <value>FJ</value>
+  </data>
+  <data name="ReserveFromDeckCommandDescription" xml:space="preserve">
     <value>Foglald le egy általad kiválasztott pakli legfelső kártyáját!</value>
   </data>
-  <data name="ReturnTokensActionDescription" xml:space="preserve">
+  <data name="ReserveFromDeckCommandKey" xml:space="preserve">
+    <value>FP</value>
+  </data>
+  <data name="ReturnTokensCommandDescription" xml:space="preserve">
     <value>Tegyél vissza fejlődéslapkákat a játéktérre!</value>
   </data>
-  <data name="SelectCardToBuy" xml:space="preserve">
-    <value>Kérlek válaszd ki a kártyát, amit meg szeretnél vásárolni. Add meg a kártya szintjét (1-3) és az oszlopszámot (1-4). Például: "1,2" vagy "3,3":</value>
+  <data name="PromptPurchaseFromBoard" xml:space="preserve">
+    <value>Kérlek válaszd ki a kártyát, amit meg szeretnél vásárolni! Add meg a kártya számát a jelen pillanatban megvásárolható kártyák listájából:</value>
   </data>
-  <data name="SelectCardToBuyFromReserved" xml:space="preserve">
+  <data name="PromptPurchaseFromReserved" xml:space="preserve">
     <value>Kérlek válaszd ki a kártyát, amit meg szeretnél vásárolni. Add meg a kártya számát az alábbi listából:</value>
   </data>
-  <data name="SelectCardToReserve" xml:space="preserve">
+  <data name="PromptReserveFromBoard" xml:space="preserve">
     <value>Kérlek válaszd ki a kártyát, amit le szeretnél foglalni. Add meg a kártya szintjét (1-3) és az oszlopszámot (1-4). Például: "1,2" vagy "3,3":</value>
   </data>
-  <data name="SelectDeckToReserve" xml:space="preserve">
+  <data name="PromptReserveFromDeck" xml:space="preserve">
     <value>Kérlek válaszd ki a paklit (1-3), aminek legfelső lapját le szeretnéd foglalni. Például: "1"</value>
   </data>
-  <data name="SelectLeaderActionDescriptionFormat" xml:space="preserve">
-    <value>Válaszd ki a vezért, aki csatlakozzon a birodalmadhoz:</value>
+  <data name="SelectLeaderCommandDescriptionFormat" xml:space="preserve">
+    <value>Csatlakozó vezér kiválasztása</value>
   </data>
   <data name="UseExtendedLeaders" xml:space="preserve">
     <value>Akarod használni az extra vezetőket? (i/n):</value>
@@ -236,5 +248,20 @@
   </data>
   <data name="Winner" xml:space="preserve">
     <value>Győztes</value>
+  </data>
+  <data name="PurchaseFromReservedCommandKey" xml:space="preserve">
+    <value>KK</value>
+  </data>
+  <data name="ReturnTokensCommandKey" xml:space="preserve">
+    <value>LV</value>
+  </data>
+  <data name="SelectLeaderCommandKey" xml:space="preserve">
+    <value>VV</value>
+  </data>
+  <data name="PromptSelectLeader" xml:space="preserve">
+    <value>Kérlek Válaszd ki a vezért, aki csatlakozzon a birodalmadhoz. Add meg a vezér számát az alábbi listából:</value>
+  </data>
+  <data name="ListReservedCardsCommandDescription" xml:space="preserve">
+    <value>Foglalt kártyák listázása</value>
   </data>
 </root>

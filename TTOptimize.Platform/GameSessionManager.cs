@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TTOptimize.Core;
+using TTOptimize.Core.GameAbstractions;
+using TTOptimize.Core.InputAbstractions;
 
 namespace TTOptimize.Platform;
 
@@ -34,8 +36,6 @@ public class GameSessionManager
             var orchestrator = new GameOrchestrator(configuration, stateFactory, rules, view);
 
             orchestrator.Run();
-
-            Console.ReadLine();
         }
     }
 }

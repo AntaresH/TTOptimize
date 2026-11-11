@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TTOptimize.Core.GameAbstractions;
+using TTOptimize.Core.InputAbstractions;
 
 namespace TTOptimize.Core
 {
     public interface IPlayerAgent
     {
         string Name { get; }
-        ApplicationCommand DecideCommand(IGameState gameState, IEnumerable<GameAction> legalActions);
+        GameCommand DecideCommand(IGameState gameState, IEnumerable<GameAction> validActions);
     }
 
     public interface IPlayerResult

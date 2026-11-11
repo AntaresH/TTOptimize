@@ -3,7 +3,7 @@ using SplendidWonders.Common.Setup;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TTOptimize.Core;
+using TTOptimize.Core.GameAbstractions;
 
 namespace SplendidWonders.Gameplay
 {

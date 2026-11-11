@@ -1,4 +1,4 @@
-﻿namespace TTOptimize.Core
+﻿namespace TTOptimize.Core.GameAbstractions
 {
     public enum GameProgression
     {

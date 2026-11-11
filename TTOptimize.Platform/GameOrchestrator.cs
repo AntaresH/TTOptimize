@@ -1,5 +1,7 @@
 ﻿using Microsoft.VisualBasic;
 using TTOptimize.Core;
+using TTOptimize.Core.GameAbstractions;
+using TTOptimize.Core.InputAbstractions;
 
 namespace TTOptimize.Platform;
 
@@ -32,30 +34,22 @@ public class GameOrchestrator
 
         while (currentState.GameProgression != GameProgression.GameOver)
         {
-            var legalActions = _rules.Explore(currentState);
+            var validActions = _rules.Explore(currentState);
 
-            _view.Render(currentState, legalActions, validationFailureMessage);
+            _view.Render(currentState, validActions, validationFailureMessage);
             validationFailureMessage = string.Empty;
 
             IPlayerAgent activeAgent = _gameConfiguration.PlayerAgents[currentState.ActivePlayerId - 1];
 
-            var command = activeAgent.DecideCommand(currentState, legalActions);
+            var command = activeAgent.DecideCommand(currentState, validActions);
 
-            if (command is PresentationCommand presentationCommand)
+            if (_rules.Validate(command.Action))
             {
-                _view.DisplayPresentationCommand(currentState, presentationCommand);
-                continue;
+                currentState = _rules.Reduce(currentState, command.Action);
             }
-            else if (command is GameCommand gameCommand)
+            else
             {
-                if (_rules.Validate(gameCommand.Action))
-                {
-                    currentState = _rules.Reduce(currentState, gameCommand.Action);
-                }
-                else
-                {
-                    validationFailureMessage = string.Format(_invalidCommandType, command.CommandText);
-                }
+                validationFailureMessage = string.Format(_invalidCommandType, command.CommandText);
             }
         }
 
