@@ -2,6 +2,7 @@
 {
     public abstract class PurchaseAction : CardAction
     {
+        public int RequiredPolymathsCount { get; set; }
     }
 
     public class PurchaseFromBoardAction : PurchaseAction
@@ -10,12 +11,11 @@
         {
             if (obj is PurchaseAction other)
             {
-                return Card.Equals(other.Card);
+                return Card.Equals(other.Card) && RequiredPolymathsCount == other.RequiredPolymathsCount;
             }
 
             return base.Equals(obj);
         }
-
     }
 
     public class PurchaseFromReservedAction : PurchaseAction
@@ -24,7 +24,7 @@
         {
             if (obj is PurchaseAction other)
             {
-                return Card.Equals(other.Card);
+                return Card.Equals(other.Card) && RequiredPolymathsCount == other.RequiredPolymathsCount;
             }
             return base.Equals(obj);
         }

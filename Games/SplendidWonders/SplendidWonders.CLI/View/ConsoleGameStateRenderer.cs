@@ -756,7 +756,7 @@ namespace SplendidWonders.CLI.View
 
             RgbColor cardBackground = GetTableauCountBackgroundColor(card.Bonus);
             RgbColor bonusColor = cardBackground;
-            RgbColor borderColor = isPurchasable ? new RgbColor(255, 255, 0) : bonusColor;
+            RgbColor borderColor = isPurchasable ? new RgbColor(255, 255, 125) : bonusColor;
             string victoryPoints = card.VictoryPoints > 0 ? "{" + card.VictoryPoints + "}" : string.Empty;
             var cost = card.Cost;
             var costText = new StringBuilder();

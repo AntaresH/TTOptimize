@@ -20,25 +20,31 @@ namespace SplendidWonders.Gameplay.Explorers
                     if (card == null || card == Cards.Empty)
                         continue;
 
-                    if (CalculatePurchasability(card.Cost, gameState.ActivePlayer.Store, gameState.ActivePlayer.Tableau))
+                    int deficit = CalculateDeficit(card.Cost, gameState.ActivePlayer.Store, gameState.ActivePlayer.Tableau);
+                    int availablePolymaths = gameState.ActivePlayer.Store.Polymath - card.Cost.Polymath;
+
+                    if (deficit == 0 || availablePolymaths + deficit >= 0)
                     {
-                        purchaseActions.Add(new PurchaseFromBoardAction() { Card = card });
+                        purchaseActions.Add(new PurchaseFromBoardAction() { Card = card, RequiredPolymathsCount = -deficit });
                     }
                 }
             }
 
             foreach (var card in gameState.ActivePlayer.ReservedCards)
             {
-                if (CalculatePurchasability(card.Cost, gameState.ActivePlayer.Store, gameState.ActivePlayer.Tableau))
+                int deficit = CalculateDeficit(card.Cost, gameState.ActivePlayer.Store, gameState.ActivePlayer.Tableau);
+                int availablePolymaths = gameState.ActivePlayer.Store.Polymath - card.Cost.Polymath;
+
+                if (deficit == 0 || availablePolymaths + deficit >= 0)
                 {
-                    purchaseActions.Add(new PurchaseFromReservedAction() { Card = card });
+                    purchaseActions.Add(new PurchaseFromBoardAction() { Card = card, RequiredPolymathsCount = -deficit });
                 }
             }
 
             return purchaseActions;
         }
 
-        private static bool CalculatePurchasability(TokenGroup cardCosts, TokenGroup playerStore, ImmutableList<DevelopmentCard> playerTableau)
+        private int CalculateDeficit(TokenGroup cardCosts, TokenGroup playerStore, ImmutableList<DevelopmentCard> playerTableau)
         {
             int playerYellowBonuses = playerTableau.Count(c => c.Bonus == DevelopmentBonus.Yellow);
             int playerBlueBonuses = playerTableau.Count(c => c.Bonus == DevelopmentBonus.Blue);
@@ -46,17 +52,12 @@ namespace SplendidWonders.Gameplay.Explorers
             int playerBrownBonuses = playerTableau.Count(c => c.Bonus == DevelopmentBonus.Brown);
             int playerRedBonuses = playerTableau.Count(c => c.Bonus == DevelopmentBonus.Red);
 
-
-            int deficit =
+            return 
                 Math.Min(0, playerYellowBonuses + playerStore.Yellow - cardCosts.Yellow) +
                 Math.Min(0, playerBlueBonuses + playerStore.Blue - cardCosts.Blue) +
                 Math.Min(0, playerGreenBonuses + playerStore.Green - cardCosts.Green) +
                 Math.Min(0, playerBrownBonuses + playerStore.Brown - cardCosts.Brown) +
                 Math.Min(0, playerRedBonuses + playerStore.Red - cardCosts.Red);
-
-            int availablePolymaths = playerStore.Polymath - cardCosts.Polymath;
-
-            return availablePolymaths >= 0 && deficit + availablePolymaths >= 0;
         }
     }
 }

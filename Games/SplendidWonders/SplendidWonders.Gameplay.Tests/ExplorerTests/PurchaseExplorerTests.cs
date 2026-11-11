@@ -169,7 +169,7 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([0, 2, 2, 0, 1, 0]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 1) }
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 1), RequiredPolymathsCount = 0 }
                 })
                 .SetName("Purchase - Empty Tableau - 2 blue, 2 green, 1 red");
 
@@ -177,7 +177,7 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([0, 0, 0, 2, 1, 0]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4) }
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4), RequiredPolymathsCount = 0 }
                 })
                 .SetName("Purchase - Empty Tableau - 2 brown, 1 red");
 
@@ -185,7 +185,7 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([0, 0, 0, 2, 0, 1]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4) }
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4), RequiredPolymathsCount = 1 }
                 })
                 .SetName("Purchase - Empty Tableau -  2 brown, 1 polymath");
 
@@ -198,8 +198,8 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([0, 0, 0, 0, 0, 3]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4) }
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2), RequiredPolymathsCount = 3 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4), RequiredPolymathsCount = 3 }
                 })
                 .SetName("Purchase - Empty Tableau - 3 polymath");
 
@@ -207,9 +207,9 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([3, 4, 1, 0, 1, 1]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 1) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) }
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 1), RequiredPolymathsCount = 1 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 0 }
                 })
                 .SetName("Purchase - Empty Tableau - lots of tokens #1");
 
@@ -217,9 +217,9 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([0, 0, 1, 5, 2, 0]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 43) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 44) }
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 43), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 44), RequiredPolymathsCount = 0 }
                 })
                 .SetName("Purchase - Empty Tableau - lots of tokens #2");
         }
@@ -230,7 +230,7 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([0, 0, 0, 0, 0, 0]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 0 },
 
                 })
                 .SetName("Purchase - Tableau 42011 - Card Setup #0 - empty store");
@@ -239,8 +239,8 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([0, 1, 1, 0, 1, 0]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 0 },
 
                 })
                 .SetName("Purchase - Tableau 42011 - Card Setup #0 + 3-long store balanced");
@@ -249,8 +249,8 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([3, 0, 0, 0, 0, 0]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 42) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 42), RequiredPolymathsCount = 0 },
                 })
                 .SetName("Purchase - Tableau 42011 - Card Setup #0 + 3-long store yellow-heavy");
 
@@ -258,11 +258,11 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([1, 0, 1, 0, 0, 1]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 1) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 42) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 1), RequiredPolymathsCount = 1 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2), RequiredPolymathsCount = 1 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4), RequiredPolymathsCount = 1 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 42), RequiredPolymathsCount = 1 },
 
                 })
                 .SetName("Purchase - Tableau 42011 - Card Setup #0 - 3-long store with polymath");
@@ -271,9 +271,9 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([1, 1, 1, 1, 1, 0]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4), RequiredPolymathsCount = 0 },
 
                 })
                 .SetName("Purchase - Tableau 42011 - Card Setup #0 - 5-long store balanced");
@@ -282,9 +282,9 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([0, 0, 0, 5, 0, 0]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 44) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 44), RequiredPolymathsCount = 0 },
 
                 })
                 .SetName("Purchase - Tableau 42011 - Card Setup #0 - 5-long store brown-heavy");
@@ -293,11 +293,11 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([2, 0, 0, 0, 1, 2]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 1) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 42) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 1), RequiredPolymathsCount = 2 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2), RequiredPolymathsCount = 1 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4), RequiredPolymathsCount = 1 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 42), RequiredPolymathsCount = 0 },
                 })
                 .SetName("Purchase - Tableau 42011 - Card Setup #0 - 5-long store with polymath");
 
@@ -305,13 +305,13 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([0, 0, 0, 0, 0, 5]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 1) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 42) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 43) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 44) }
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 1), RequiredPolymathsCount = 2 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2), RequiredPolymathsCount = 1 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4), RequiredPolymathsCount = 1 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 42), RequiredPolymathsCount = 2 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 43), RequiredPolymathsCount = 5 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 44), RequiredPolymathsCount = 4 }
                 })
                 .SetName("Purchase - Tableau 42011 - Card Setup #0 - 5-long store only polymath");
 
@@ -319,11 +319,11 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([2, 1, 2, 1, 2, 0]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 1) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 42) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 1), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 42), RequiredPolymathsCount = 0 },
                 })
                 .SetName("Purchase - Tableau 42011 - Card Setup #0 - 8-long store balanced");
 
@@ -331,11 +331,11 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([0, 1, 0, 5, 2, 0]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 41) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 44) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 41), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 44), RequiredPolymathsCount = 0 },
                 })
                 .SetName("Purchase - Tableau 42011 - Card Setup #0 - 8-long store brown-heavy");
 
@@ -343,13 +343,13 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([3, 0, 0, 2, 1, 2]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 1) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 42) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 43) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 44) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 1), RequiredPolymathsCount = 2 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2), RequiredPolymathsCount = 1 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 42), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 43), RequiredPolymathsCount = 2 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 44), RequiredPolymathsCount = 2 },
                 })
                 .SetName("Purchase - Tableau 42011 - Card Setup #0 - 8-long store with polymath");
 
@@ -357,12 +357,12 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([2, 1, 2, 3, 2, 0]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 1) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 42) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 43) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 1), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 42), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 43), RequiredPolymathsCount = 0 },
                 })
                 .SetName("Purchase - Tableau 42011 - Card Setup #0 - 10-long store balanced");
 
@@ -370,12 +370,12 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([1, 1, 0, 2, 6, 0]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level3.First(c => c.Id == 71) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level3.First(c => c.Id == 72) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level3.First(c => c.Id == 74) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level3.First(c => c.Id == 71), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level3.First(c => c.Id == 72), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level3.First(c => c.Id == 74), RequiredPolymathsCount = 0 },
                 })
                 .SetName("Purchase - Tableau 42011 - Card Setup #0 - 10-long store red-heavy");
 
@@ -383,14 +383,14 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([1, 1, 2, 2, 2, 2]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 1) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 41) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 42) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 43) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 44) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 1), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 41), RequiredPolymathsCount = 2 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 42), RequiredPolymathsCount = 1 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 43), RequiredPolymathsCount = 1 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 44), RequiredPolymathsCount = 2 },
                 })
                 .SetName("Purchase - Tableau 42011 - Card Setup #0 - 10-long store with polymath");
         }
@@ -406,9 +406,9 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 }.ToImmutableList(),
                 new PurchaseAction[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
-                    new PurchaseFromReservedAction() { Card = Cards.Level3.First(c => c.Id == 81) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 0 },
+                    new PurchaseFromReservedAction() { Card = Cards.Level3.First(c => c.Id == 81), RequiredPolymathsCount = 0 },
                 })
                 .SetName("Purchase - Tableau 42011 - Card Setup #0 - one reserved card + 5-long store");
 
@@ -422,16 +422,16 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 }.ToImmutableList(),
                 new PurchaseAction[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 1) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 41) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 42) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 43) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 44) },
-                    new PurchaseFromReservedAction() { Card = Cards.Level1.First(c => c.Id == 32) },
-                    new PurchaseFromReservedAction() { Card = Cards.Level3.First(c => c.Id == 82) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 1), RequiredPolymathsCount = 2 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 4), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 41), RequiredPolymathsCount = 2 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 42), RequiredPolymathsCount = 1 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 43), RequiredPolymathsCount = 2 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 44), RequiredPolymathsCount = 2 },
+                    new PurchaseFromReservedAction() { Card = Cards.Level1.First(c => c.Id == 32), RequiredPolymathsCount = 0 },
+                    new PurchaseFromReservedAction() { Card = Cards.Level3.First(c => c.Id == 82), RequiredPolymathsCount = 0 },
                 })
                 .SetName("Purchase - Tableau 42011 - Card Setup #0 - multiple reserved cards + 8-long store with polymath");
         }
@@ -465,9 +465,9 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([1, 1, 0, 0, 1, 0]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 18) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 18), RequiredPolymathsCount = 0 },
 
                 })
                 .SetName("Purchase - Tableau 20233 - Card Setup #12345 + 3-long store balanced");
@@ -476,8 +476,8 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([0, 3, 0, 0, 0, 0]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6), RequiredPolymathsCount = 0 },
                 })
                 .SetName("Purchase - Tableau 20233 - Card Setup #12345 + 3-long store blue-heavy");
 
@@ -485,9 +485,9 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([0, 1, 1, 0, 0, 1]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 18) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 1 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 18), RequiredPolymathsCount = 1 },
 
                 })
                 .SetName("Purchase - Tableau 20233 - Card Setup #12345 + 3-long store with polymath");
@@ -496,9 +496,9 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([1, 1, 1, 1, 1, 0]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 18) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 18), RequiredPolymathsCount = 0 },
 
                 })
                 .SetName("Purchase - Tableau 20233 - Card Setup #12345 + 5-long store balanced");
@@ -507,8 +507,8 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([0, 1, 0, 4, 0, 0]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 62) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 62), RequiredPolymathsCount = 0 },
 
                 })
                 .SetName("Purchase - Tableau 20233 - Card Setup #12345 + 5-long store brown-heavy");
@@ -517,10 +517,10 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([2, 0, 0, 0, 1, 2]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 18) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level3.First(c => c.Id == 71) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 1 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6), RequiredPolymathsCount = 1 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 18), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level3.First(c => c.Id == 71), RequiredPolymathsCount = 2 },
                 })
                 .SetName("Purchase - Tableau 20233 - Card Setup #12345 + 5-long store with polymath");
 
@@ -528,13 +528,13 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([0, 0, 0, 0, 0, 5]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 18) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 56) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 62) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level3.First(c => c.Id == 71) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2), RequiredPolymathsCount = 3 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 2 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6), RequiredPolymathsCount = 1 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 18), RequiredPolymathsCount = 1 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 56), RequiredPolymathsCount = 4 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 62), RequiredPolymathsCount = 3 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level3.First(c => c.Id == 71), RequiredPolymathsCount = 4 },
                 })
                 .SetName("Purchase - Tableau 20233 - Card Setup #12345 + 5-long store only polymath");
 
@@ -542,9 +542,9 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([2, 1, 2, 1, 2, 0]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 18) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 18), RequiredPolymathsCount = 0 },
                 })
                 .SetName("Purchase - Tableau 20233 - Card Setup #12345 + 8-long store balanced");
 
@@ -552,10 +552,10 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([0, 6, 0, 0, 1, 0]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 18) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 47) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 18), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 47), RequiredPolymathsCount = 0 },
                 })
                 .SetName("Purchase - Tableau 20233 - Card Setup #12345 + 8-long store blue-heavy");
 
@@ -563,11 +563,11 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([3, 0, 0, 2, 1, 2]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 18) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 62) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level3.First(c => c.Id == 71) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 1 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6), RequiredPolymathsCount = 1 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 18), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 62), RequiredPolymathsCount = 1 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level3.First(c => c.Id == 71), RequiredPolymathsCount = 2 },
                 })
                 .SetName("Purchase - Tableau 20233 - Card Setup #12345 + 8-long store with polymath");
 
@@ -575,12 +575,12 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([3, 3, 2, 1, 1, 0]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 18) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 50) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level3.First(c => c.Id == 82) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 18), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 50), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level3.First(c => c.Id == 82), RequiredPolymathsCount = 0 },
                 })
                 .SetName("Purchase - Tableau 20233 - Card Setup #12345 + 10-long store balanced");
 
@@ -588,13 +588,13 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([5, 3, 1, 0, 1, 0]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 18) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 50) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level3.First(c => c.Id == 76) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level3.First(c => c.Id == 82) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 18), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 50), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level3.First(c => c.Id == 76), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level3.First(c => c.Id == 82), RequiredPolymathsCount = 0 },
                 })
                 .SetName("Purchase - Tableau 20233 - Card Setup #12345 + 10-long store yellow-heavy");
 
@@ -602,12 +602,12 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 TokenGroup.FromArray([1, 0, 3, 2, 2, 2]),
                 new[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 18) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 56) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 62) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level3.First(c => c.Id == 71) }
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 1 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6), RequiredPolymathsCount = 1 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 18), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 56), RequiredPolymathsCount = 1 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 62), RequiredPolymathsCount = 1 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level3.First(c => c.Id == 71), RequiredPolymathsCount = 1 }
                 })
                 .SetName("Purchase - Tableau 20233 - Card Setup #12345 + 10-long store with polymath");
         }
@@ -623,9 +623,9 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 }.ToImmutableList(),
                 new PurchaseAction[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6) },
-                    new PurchaseFromReservedAction() { Card = Cards.Level2.First(c => c.Id == 49) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6), RequiredPolymathsCount = 0 },
+                    new PurchaseFromReservedAction() { Card = Cards.Level2.First(c => c.Id == 49), RequiredPolymathsCount = 0 },
                 })
                 .SetName("Purchase - Tableau 20233 - Card Setup #12345 + one reserved card + 5-long store");
 
@@ -639,15 +639,15 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
                 }.ToImmutableList(),
                 new PurchaseAction[]
                 {
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 18) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 62) },
-                    new PurchaseFromBoardAction() { Card = Cards.Level3.First(c => c.Id == 71) },
-                    new PurchaseFromReservedAction() { Card = Cards.Level1.First(c => c.Id == 36) },
-                    new PurchaseFromReservedAction() { Card = Cards.Level2.First(c => c.Id == 51) },
-                    new PurchaseFromReservedAction() { Card = Cards.Level3.First(c => c.Id == 88) },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 2), RequiredPolymathsCount = 2 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 3), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 6), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level1.First(c => c.Id == 18), RequiredPolymathsCount = 0 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level2.First(c => c.Id == 62), RequiredPolymathsCount = 1 },
+                    new PurchaseFromBoardAction() { Card = Cards.Level3.First(c => c.Id == 71), RequiredPolymathsCount = 1 },
+                    new PurchaseFromReservedAction() { Card = Cards.Level1.First(c => c.Id == 36), RequiredPolymathsCount = 0 },
+                    new PurchaseFromReservedAction() { Card = Cards.Level2.First(c => c.Id == 51), RequiredPolymathsCount = 2 },
+                    new PurchaseFromReservedAction() { Card = Cards.Level3.First(c => c.Id == 88), RequiredPolymathsCount = 2 },
                 })
                 .SetName("Purchase - Tableau 20233 - Card Setup #12345 + multiple reserved cards + 8-long store with polymath");
         }
