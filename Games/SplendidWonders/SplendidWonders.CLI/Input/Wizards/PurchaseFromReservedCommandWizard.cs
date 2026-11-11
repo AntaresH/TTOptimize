@@ -17,7 +17,7 @@ namespace SplendidWonders.CLI.Input.Wizards
 
         public override string Description => Strings.PurchaseFromReservedCommandDescription;
 
-        public IEnumerable<DevelopmentCard> _purchasableReservedCards;
+        public IEnumerable<PurchaseAction> _purchaseFromReservedActions;
 
         public override bool CanExecute(IGameState state, IEnumerable<GameAction> validActions)
             => validActions.OfType<PurchaseFromReservedAction>().Any();
@@ -28,10 +28,12 @@ namespace SplendidWonders.CLI.Input.Wizards
 
             var allReservedCards = swGameState.ActivePlayer.ReservedCards;
 
-            _purchasableReservedCards = validActions.OfType<PurchaseAction>().Select(pa => pa.Card).Intersect(allReservedCards);
+            _purchaseFromReservedActions = validActions
+                .OfType<PurchaseAction>()
+                .Where(pa => allReservedCards.Contains(pa.Card));
 
-            Console.WriteLine(Strings.PromptReserveFromBoard);
-            ConsoleInputDisplayHelper.DisplayCards(_purchasableReservedCards);
+            Console.WriteLine(Strings.PromptPurchaseFromBoard);
+            ConsoleInputDisplayHelper.DisplayCards(_purchaseFromReservedActions);
 
             return PromptForParameter();
         }
@@ -44,11 +46,11 @@ namespace SplendidWonders.CLI.Input.Wizards
             {
                 int cardId = int.Parse(match.Groups[0].Value);
 
-                if (_purchasableReservedCards.Any(c => c.Id == cardId))
+                if (_purchaseFromReservedActions.Any(pa => pa.Card.Id == cardId))
                 {
                     return new PurchaseFromBoardAction()
                     {
-                        Card = _purchasableReservedCards.First(c => c.Id == cardId)
+                        Card = _purchaseFromReservedActions.First(pa => pa.Card.Id == cardId).Card
                     };
                 }
             }

@@ -35,6 +35,14 @@ namespace SplendidWonders.CLI.Input
             }
         }
 
+        public static void DisplayCards(IEnumerable<PurchaseAction> purchaseActions)
+        {
+            foreach (var purchase in purchaseActions)
+            {
+                PrintCard(purchase.Card, purchase.RequiredPolymathsCount);
+            }
+        }
+
         public static void DisplayLeaders(IEnumerable<Leader> leaders)
         {
             foreach (var leader in leaders)
@@ -85,41 +93,45 @@ namespace SplendidWonders.CLI.Input
             Console.WriteLine($"{leader.Id} {leader.Name.PadRight(15)} {vpDisplay} Feltételek: {string.Join(" ", colorCostTexts)}");
         }
 
-        private static void PrintCard(DevelopmentCard card)
+        private static void PrintCard(DevelopmentCard card, int requiredPolymathsCount = 0)
         {
-            List<string> colorCostTexts = new List<string>();
+            List<string> colorCostSubTexts = new List<string>();
 
             if (card.Cost.Yellow > 0)
             {
-                colorCostTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Yellow.ToString(), DevelopmentBonus.Yellow));
+                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Yellow.ToString(), DevelopmentBonus.Yellow));
             }
 
             if (card.Cost.Blue > 0)
             {
-                colorCostTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Blue.ToString(), DevelopmentBonus.Blue));
+                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Blue.ToString(), DevelopmentBonus.Blue));
             }
 
             if (card.Cost.Green > 0)
             {
-                colorCostTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Green.ToString(), DevelopmentBonus.Green));
+                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Green.ToString(), DevelopmentBonus.Green));
             }
 
             if (card.Cost.Brown > 0)
             {
-                colorCostTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Brown.ToString(), DevelopmentBonus.Brown));
+                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Brown.ToString(), DevelopmentBonus.Brown));
             }
 
             if (card.Cost.Red > 0)
             {
-                colorCostTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Red.ToString(), DevelopmentBonus.Red));
+                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Red.ToString(), DevelopmentBonus.Red));
             }
 
             string vpDisplay = card.VictoryPoints > 0 ? $"{{{card.VictoryPoints}}}" : "   ";
 
-            string namePadding = new string(' ', Math.Max(0, 20 - card.Name.Length));
+            string namePadding = new string(' ', Math.Max(0, 26 - card.Name.Length));
             string coloredName = GetRgbColoredConsoleForeground(card.Name, card.Bonus);
 
-            Console.WriteLine($"{card.Id,-5} {coloredName}{namePadding} {vpDisplay} Költségek: {string.Join(" ", colorCostTexts)}");
+            string colorCost = string.Join(" ", colorCostSubTexts);
+            string costPadding = new string(' ', Math.Max(0, 12 - colorCostSubTexts.Count * 2 -1));
+            string polymathsDisplay = requiredPolymathsCount > 0 ? $"Polihisztor: {requiredPolymathsCount}" : string.Empty;
+
+            Console.WriteLine($"{card.Id,-5} {coloredName}{namePadding}   {vpDisplay}   Költségek: {colorCost}{costPadding} {polymathsDisplay}");
         }
 
         private static string GetRgbColoredConsoleForeground(string text, DevelopmentBonus trueColorRgbFormat)

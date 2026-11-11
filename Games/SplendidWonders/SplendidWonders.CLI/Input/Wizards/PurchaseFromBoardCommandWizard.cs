@@ -16,14 +16,14 @@ namespace SplendidWonders.CLI.Input.Wizards
 
         public override string Description => Strings.PurchaseFromBoardCommandDescription;
 
-        private IEnumerable<DevelopmentCard> _availablePurchases;
+        private IEnumerable<PurchaseAction> _availablePurchases;
 
         public override bool CanExecute(IGameState state, IEnumerable<GameAction> validActions)
             => validActions.OfType<PurchaseFromBoardAction>().Any();
 
         public override GameCommand? RunConsoleDialog(IGameState state, IEnumerable<GameAction> validActions)
         {
-            _availablePurchases = validActions.OfType<PurchaseAction>().Select(pa => pa.Card);
+            _availablePurchases = validActions.OfType<PurchaseAction>();
 
             Console.WriteLine(Strings.PromptPurchaseFromBoard);
             ConsoleInputDisplayHelper.DisplayCards(_availablePurchases);
@@ -39,11 +39,11 @@ namespace SplendidWonders.CLI.Input.Wizards
             {
                 int cardId = int.Parse(match.Groups[0].Value);
 
-                if (_availablePurchases.Any(c => c.Id == cardId))
+                if (_availablePurchases.Any(pa => pa.Card.Id == cardId))
                 {
                     return new PurchaseFromBoardAction()
                     {
-                        Card = _availablePurchases.First(c => c.Id == cardId)
+                        Card = _availablePurchases.First(c => c.Card.Id == cardId).Card
                     };
                 }
             }

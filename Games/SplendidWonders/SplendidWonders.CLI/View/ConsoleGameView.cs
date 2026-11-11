@@ -69,27 +69,6 @@ namespace SplendidWonders.CLI.View
             _gameStateRenderer.Render(gameState, validActions.OfType<PurchaseAction>());
         }
 
-        public void DisplayValidActions(IEnumerable<GameAction> validActions)
-        {
-            Console.WriteLine(Strings.ValidCommands);
-
-            foreach (var command in validActions)
-            {
-                string shorthand = GenericUtils.CommandShortHandMap.ContainsKey(command.GetType().Name) ? GenericUtils.CommandShortHandMap[command.GetType().Name] : string.Empty;
-                Console.WriteLine($"{command.GetType().Name} ({shorthand})");
-            }
-        }
-
-        public void DisplayInvalidCommandMessage()
-        {
-            Console.WriteLine(Strings.InvalidCommandState);
-        }
-
-        public void DisplayInvalidCommand(GameAction command)
-        {
-            Console.WriteLine(string.Format(Strings.InvalidCommandTypeStateFormat, command.GetType().Name));
-        }
-
         public void DisplayGameTitle()
         {
             Console.WriteLine("   _____       _                _ _     _  __          __             _               ");
