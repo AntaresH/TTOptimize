@@ -136,12 +136,12 @@ namespace SplendidWonders.CLI.Input
         {
             return bonus switch
             {
-                DevelopmentBonus.Yellow => "208;208;0",
-                DevelopmentBonus.Blue => "80;145;255",
-                DevelopmentBonus.Green => "0;220;50",
-                DevelopmentBonus.Brown => "145;92;42",
-                DevelopmentBonus.Red => "255;80;80",
-                _ => "192;192;192"
+                DevelopmentBonus.Yellow => "138;116;0",
+                DevelopmentBonus.Blue => "30;60;165",
+                DevelopmentBonus.Green => "0;125;30",
+                DevelopmentBonus.Brown => "100;45;0",
+                DevelopmentBonus.Red => "180;10;20",
+                _ => "96;96;96"
             };
         }
 

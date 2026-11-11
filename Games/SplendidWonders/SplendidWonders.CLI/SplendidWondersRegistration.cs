@@ -12,7 +12,7 @@ using TTOptimize.Core.InputAbstractions;
 
 namespace SplendidWonders.CLI
 {
-    public static class Registration
+    public static class SplendidWondersRegistration
     {
         public static IServiceCollection AddSplendidWonders(this IServiceCollection services)
         {

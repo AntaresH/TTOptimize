@@ -49,7 +49,7 @@ namespace SplendidWonders.CLI.View
 
         public void DisplayGame(GameState gameState, IEnumerable<GameAction> validActions, string previousInvalidCommand)
         {
-            DisplayBoard(gameState);
+            DisplayBoard(gameState, validActions);
 
             if (!string.IsNullOrEmpty(previousInvalidCommand))
             {
@@ -64,7 +64,14 @@ namespace SplendidWonders.CLI.View
         {
             Console.Clear();
             DisplayGameTitle();
-            _gameStateRenderer.Render(gameState);
+            _gameStateRenderer.Render(gameState, null);
+        }
+
+        public void DisplayBoard(GameState gameState, IEnumerable<GameAction> validActions)
+        {
+            Console.Clear();
+            DisplayGameTitle();
+            _gameStateRenderer.Render(gameState, validActions.OfType<PurchaseAction>().Select(pa => pa.Card));
         }
 
         public void DisplayValidActions(IEnumerable<GameAction> validActions)

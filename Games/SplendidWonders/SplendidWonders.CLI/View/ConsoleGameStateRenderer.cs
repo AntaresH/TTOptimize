@@ -1,6 +1,7 @@
 using System.Text;
 using SplendidWonders.Common.Model;
 using TTOptimize.Core;
+using TTOptimize.Core.GameAbstractions;
 
 namespace SplendidWonders.CLI.View
 {
@@ -21,8 +22,9 @@ namespace SplendidWonders.CLI.View
         private const int PlayerPanelContentWidth = PlayerPanelWidth - 4;
         private const int PlayerPanelSideWidth = 2;
 
-        public void Render(GameState gameState)
+        public void Render(GameState gameState, IEnumerable<DevelopmentCard>? purchasableCards)
         {
+            var purchasableCardIds = purchasableCards?.Select(card => card.Id).ToHashSet() ?? new HashSet<int>();
             var playerPanels = BuildPlayerPanels(gameState);
             var leaderBlocks = new List<RenderedBlock>();
             foreach (var leader in gameState.Leaders)
@@ -105,7 +107,8 @@ namespace SplendidWonders.CLI.View
                 for (int level = DeckLevelCount; level >= 1; level--)
                 {
                     int startRow = (DeckLevelCount - level) * DeckBlockHeight;
-                    var block = FormatCard(gameState[level][column], MarketColumnWidth);
+                    var card = gameState[level][column];
+                    var block = FormatCard(card, MarketColumnWidth, purchasableCardIds.Contains(card.Id));
                     for (int row = 0; row < DeckBlockHeight; row++)
                         AppendCanvas(canvas, colorRanges, startRow + row, block.Lines[row], relativeRanges: block.ColorRanges[row]);
                 }
@@ -735,12 +738,14 @@ namespace SplendidWonders.CLI.View
             return colorRanges;
         }
 
-        private static RenderedBlock FormatCard(DevelopmentCard card, int width)
+        private static RenderedBlock FormatCard(DevelopmentCard card, int width, bool isPurchasable)
         {
             var lines = new string[DeckBlockHeight];
             var colorRanges = CreateColorRanges(DeckBlockHeight);
 
+            const char sideBorder = '|';
             string top = "+" + new string('-', width - 2) + "+";
+            string side = sideBorder + new string(' ', width - 2) + sideBorder;
             int contentWidth = Math.Max(8, width - 4);
 
             var nameLines = WrapText(card.Name ?? string.Empty, contentWidth, 3);
@@ -751,6 +756,7 @@ namespace SplendidWonders.CLI.View
 
             RgbColor cardBackground = GetTableauCountBackgroundColor(card.Bonus);
             RgbColor bonusColor = cardBackground;
+            RgbColor borderColor = isPurchasable ? new RgbColor(255, 255, 0) : bonusColor;
             string victoryPoints = card.VictoryPoints > 0 ? "{" + card.VictoryPoints + "}" : string.Empty;
             var cost = card.Cost;
             var costText = new StringBuilder();
@@ -771,19 +777,19 @@ namespace SplendidWonders.CLI.View
             string requirementsContent = costSummary.PadRight(requirementsWidth) + victoryPoints;
 
             lines[0] = top;
-            lines[1] = "|" + new string(' ', width - 2) + "|";
-            lines[2] = CenterCardLine(nameLines[0], contentWidth);
-            lines[3] = CenterCardLine(nameLines[1], contentWidth);
-            lines[4] = CenterCardLine(nameLines[2], contentWidth);
-            lines[5] = "|" + new string(' ', width - 2) + "|";
-            lines[6] = "| " + requirementsContent.PadRight(contentWidth) + " |";
+            lines[1] = side;
+            lines[2] = CenterCardLine(nameLines[0], contentWidth, sideBorder);
+            lines[3] = CenterCardLine(nameLines[1], contentWidth, sideBorder);
+            lines[4] = CenterCardLine(nameLines[2], contentWidth, sideBorder);
+            lines[5] = side;
+            lines[6] = sideBorder + " " + requirementsContent.PadRight(contentWidth) + " " + sideBorder;
             lines[7] = top;
 
-            colorRanges[0].Add(new ColorRange(0, width, bonusColor));
-            AddCardSideBorderRanges(colorRanges, 1, width, bonusColor);
+            colorRanges[0].Add(new ColorRange(0, width, borderColor));
+            AddCardSideBorderRanges(colorRanges, 1, width, borderColor);
             AddCardInteriorBackground(colorRanges[1], width, cardBackground);
             for (int row = 2; row <= 5; row++)
-                AddCardSideBorderRanges(colorRanges, row, width, bonusColor);
+                AddCardSideBorderRanges(colorRanges, row, width, borderColor);
             for (int row = 0; row < nameLines.Count; row++)
             {
                 int titleStart = 2 + (contentWidth - nameLines[row].Length) / 2;
@@ -791,10 +797,10 @@ namespace SplendidWonders.CLI.View
                 AddCardInteriorBackground(colorRanges[row + 2], width, titleBackground, titleStart, nameLines[row].Length, new RgbColor(255, 255, 255));
             }
             AddCardInteriorBackground(colorRanges[5], width, new RgbColor(0, 0, 0));
-            AddCardSideBorderRanges(colorRanges, 6, width, bonusColor);
+            AddCardSideBorderRanges(colorRanges, 6, width, borderColor);
             int victoryPointsStart = 2 + requirementsWidth;
             AddCardCostRanges(colorRanges[6], width, visibleCostRanges, victoryPointsStart, victoryPoints);
-            colorRanges[7].Add(new ColorRange(0, width, bonusColor));
+            colorRanges[7].Add(new ColorRange(0, width, borderColor));
             foreach (var ranges in colorRanges)
                 ranges.Sort((left, right) => left.Start.CompareTo(right.Start));
 
@@ -865,9 +871,9 @@ namespace SplendidWonders.CLI.View
             return (char)0x2551 + " " + new string(' ', leftPadding) + value + new string(' ', rightPadding) + " " + (char)0x2551;
         }
 
-        private static string CenterCardLine(string content, int width)
+        private static string CenterCardLine(string content, int width, char sideBorder)
         {
-            return "| " + CenterText(content, width) + " |";
+            return sideBorder + " " + CenterText(content, width) + " " + sideBorder;
         }
 
         private static string CenterText(string content, int width)
