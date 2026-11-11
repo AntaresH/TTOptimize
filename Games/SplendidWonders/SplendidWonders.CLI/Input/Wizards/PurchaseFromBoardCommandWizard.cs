@@ -23,7 +23,7 @@ namespace SplendidWonders.CLI.Input.Wizards
 
         public override GameCommand? RunConsoleDialog(IGameState state, IEnumerable<GameAction> validActions)
         {
-            _availablePurchases = validActions.OfType<PurchaseAction>();
+            _availablePurchases = validActions.OfType<PurchaseFromBoardAction>();
 
             Console.WriteLine(Strings.PromptPurchaseFromBoard);
             ConsoleInputDisplayHelper.DisplayCards(_availablePurchases);
@@ -39,12 +39,11 @@ namespace SplendidWonders.CLI.Input.Wizards
             {
                 int cardId = int.Parse(match.Groups[0].Value);
 
-                if (_availablePurchases.Any(pa => pa.Card.Id == cardId))
+                var selectedPurchase = _availablePurchases.First(pa => pa.Card.Id == cardId);
+
+                if (selectedPurchase != null)
                 {
-                    return new PurchaseFromBoardAction()
-                    {
-                        Card = _availablePurchases.First(c => c.Card.Id == cardId).Card
-                    };
+                    return selectedPurchase;
                 }
             }
 

@@ -37,7 +37,7 @@ namespace SplendidWonders.Gameplay.Explorers
 
                 if (deficit == 0 || availablePolymaths + deficit >= 0)
                 {
-                    purchaseActions.Add(new PurchaseFromBoardAction() { Card = card, RequiredPolymathsCount = -deficit });
+                    purchaseActions.Add(new PurchaseFromReservedAction() { Card = card, RequiredPolymathsCount = -deficit });
                 }
             }
 

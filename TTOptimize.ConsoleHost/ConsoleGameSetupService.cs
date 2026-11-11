@@ -33,7 +33,16 @@ public class ConsoleGameSetupService
             var attribute = property.GetCustomAttribute<GameConfigParamAttribute>();
             if (attribute == null) continue;
 
-            // Jelenleg int és bool típusokra készítjük fel
+            var dependsOn = property.GetCustomAttribute<DependsOnAttribute>();
+            if (dependsOn != null)
+            {
+                var targetProp = configurationType.GetProperty(dependsOn.PropertyName);
+                var actualValue = targetProp?.GetValue(configInstance);
+
+                if (!Equals(actualValue, dependsOn.ExpectedValue)) 
+                    continue;
+            }
+
             if (property.PropertyType == typeof(int))
             {
                 int defaultValue = (int)(property.GetValue(configInstance) ?? attribute.Min);
