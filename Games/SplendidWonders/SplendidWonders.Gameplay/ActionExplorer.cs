@@ -50,7 +50,7 @@ namespace SplendidWonders.Gameplay
                 validActions.AddRange(returnTokensActions);
                 return validActions;
             }
-            else if (selectLeaderActions.Any())
+            else if (selectLeaderActions.Count > 1)
             {
                 validActions.AddRange(selectLeaderActions);
                 return validActions;
