@@ -22,6 +22,7 @@ namespace SplendidWonders.CLI.View
         private const int PlayerPanelWidth = 36;
         private const int PlayerPanelContentWidth = PlayerPanelWidth - 4;
         private const int PlayerPanelSideWidth = 2;
+        private const int PlayerPanelHorizontalOffset = 2;
 
         public void Render(GameState gameState, IEnumerable<PurchaseAction>? purchaseActions)
         {
@@ -30,6 +31,7 @@ namespace SplendidWonders.CLI.View
                 .ToDictionary(group => group.Key, group => group.Any(action => action.RequiredPolymathsCount > 0))
                 ?? new Dictionary<int, bool>();
             var playerPanels = BuildPlayerPanels(gameState);
+            var playerPanelLines = BuildPlayerPanelLines(playerPanels);
             var leaderBlocks = new List<RenderedBlock>();
             foreach (var leader in gameState.Leaders)
                 leaderBlocks.Add(FormatLeader(leader));
@@ -45,9 +47,9 @@ namespace SplendidWonders.CLI.View
                 (Lines: BuildTokenBlock(gameState.TokenSupply.Polymath, isPolymath: true), BorderColor: new RgbColor(255, 255, 255), BackgroundColor: new RgbColor(255, 255, 255), NumberColor: new RgbColor(96, 96, 96))
             };
             int tokenTotalHeight = tokenBlocks.Length * TokenBlockHeight;
-            int playerPanelsHeight = 0;
-            foreach (var playerPanel in playerPanels)
-                playerPanelsHeight = Math.Max(playerPanelsHeight, playerPanel.Lines.Count);
+            int playerPanelColumnCount = Math.Min(2, playerPanels.Count);
+            int playerPanelCanvasStartIndex = leaderBlocks.Count > 0 ? 5 : playerPanelLines.Count > 0 ? 1 : 0;
+            int playerPanelsHeight = Math.Max(0, playerPanelLines.Count - playerPanelCanvasStartIndex);
 
             int totalHeight = Math.Max(Math.Max(deckTotalHeight, tokenTotalHeight), playerPanelsHeight);
 
@@ -122,29 +124,25 @@ namespace SplendidWonders.CLI.View
                     AppendCanvas(canvas, colorRanges, row, " ");
             }
 
-            foreach (var playerPanel in playerPanels)
+            for (int panelLineIndex = playerPanelCanvasStartIndex; panelLineIndex < playerPanelLines.Count; panelLineIndex++)
             {
-                for (int row = 0; row < totalHeight; row++)
-                {
-                    string panelLine = row < playerPanel.Lines.Count
-                        ? playerPanel.Lines[row]
-                        : new string(' ', PlayerPanelWidth);
-                    var panelColorRanges = new List<ColorRange>();
-                    if (row == playerPanel.StorageLine)
-                        panelColorRanges.AddRange(playerPanel.StorageColorRanges);
-                    if (playerPanel.TableauColorRanges.TryGetValue(row, out var additionalRanges))
-                        panelColorRanges.AddRange(additionalRanges);
-                    var canvasColorRanges = new List<ColorRange>(panelColorRanges.Count);
-                    foreach (var range in panelColorRanges)
-                        canvasColorRanges.Add(range with { Start = range.Start + 3 });
-                    AppendCanvas(canvas, colorRanges, row, "   " + panelLine, relativeRanges: canvasColorRanges);
-                }
+                var panelLine = playerPanelLines[panelLineIndex];
+                AppendCanvas(canvas, colorRanges, panelLineIndex - playerPanelCanvasStartIndex, panelLine.Text, relativeRanges: panelLine.ColorRanges);
             }
 
             Console.WriteLine();
             if (leaderBlocks.Count > 0)
             {
-                WriteLeaderRow(leaderBlocks, canvas, playerPanels.Count);
+                WriteLeaderRow(leaderBlocks, canvas, playerPanelLines, playerPanelColumnCount);
+                if (playerPanelLines.Count <= 4)
+                    Console.WriteLine();
+            }
+            else if (playerPanelLines.Count > 0)
+            {
+                WritePlayerPanelLine(canvas, playerPanelLines[0], playerPanelColumnCount);
+            }
+            else
+            {
                 Console.WriteLine();
             }
 
@@ -256,13 +254,86 @@ namespace SplendidWonders.CLI.View
             Console.WriteLine(line[position..]);
         }
 
-        private static void WriteLeaderRow(List<RenderedBlock> leaders, string[] board, int playerPanelCount)
+        private static void AddPlayerPanelColorRanges(List<ColorRange> colorRanges, PlayerPanel panel, int row, int start)
+        {
+            if (row == panel.StorageLine)
+            {
+                foreach (var range in panel.StorageColorRanges)
+                    colorRanges.Add(range with { Start = range.Start + start });
+            }
+
+            if (panel.TableauColorRanges.TryGetValue(row, out var additionalRanges))
+            {
+                foreach (var range in additionalRanges)
+                    colorRanges.Add(range with { Start = range.Start + start });
+            }
+        }
+
+        private static void WritePlayerPanelLine(string[] board, ColoredLine panelLine, int playerPanelColumnCount, int leftOffset = 0)
+        {
+            int boardWidth = board.Max(line => line.Length);
+            int panelStart = Math.Max(0, boardWidth - GetPlayerPanelRegionWidth(playerPanelColumnCount) - leftOffset);
+            var colorRanges = panelLine.ColorRanges
+                .Select(range => range with { Start = range.Start + panelStart })
+                .ToList();
+            WriteCanvasLine(new string(' ', panelStart) + panelLine.Text, colorRanges);
+        }
+
+        private static List<ColoredLine> BuildPlayerPanelLines(List<PlayerPanel> playerPanels)
+        {
+            int columnCount = Math.Min(2, playerPanels.Count);
+            var lines = new List<ColoredLine>();
+
+            for (int firstPanelIndex = 0; firstPanelIndex < playerPanels.Count; firstPanelIndex += 2)
+            {
+                PlayerPanel leftPanel = playerPanels[firstPanelIndex];
+                PlayerPanel? rightPanel = firstPanelIndex + 1 < playerPanels.Count
+                    ? playerPanels[firstPanelIndex + 1]
+                    : null;
+                int rowHeight = Math.Max(leftPanel.Lines.Count, rightPanel?.Lines.Count ?? 0);
+
+                for (int row = 0; row < rowHeight; row++)
+                {
+                    var panelLine = new StringBuilder();
+                    var colorRanges = new List<ColorRange>();
+
+                    for (int column = 0; column < columnCount; column++)
+                    {
+                        panelLine.Append("   ");
+                        int panelStart = panelLine.Length;
+
+                        PlayerPanel? panel = column == 0 ? leftPanel : rightPanel;
+                        if (panel is null)
+                        {
+                            panelLine.Append(' ', PlayerPanelWidth);
+                            continue;
+                        }
+
+                        string panelText = row < panel.Lines.Count
+                            ? panel.Lines[row]
+                            : new string(' ', PlayerPanelWidth);
+                        panelLine.Append(panelText);
+                        AddPlayerPanelColorRanges(colorRanges, panel, row, panelStart);
+                    }
+
+                    panelLine.Append(' ', PlayerPanelHorizontalOffset);
+                    lines.Add(new ColoredLine(panelLine.ToString(), colorRanges));
+                }
+
+                if (firstPanelIndex + 2 < playerPanels.Count)
+                    lines.Add(new ColoredLine(new string(' ', GetPlayerPanelRegionWidth(columnCount)), new List<ColorRange>()));
+            }
+
+            return lines;
+        }
+
+        private static void WriteLeaderRow(List<RenderedBlock> leaders, string[] board, IReadOnlyList<ColoredLine> playerPanelLines, int playerPanelColumnCount)
         {
             int boardWidth = 0;
             foreach (string line in board)
                 boardWidth = Math.Max(boardWidth, line.Length);
 
-            int widthBeforePlayerPanels = boardWidth - playerPanelCount * (PlayerPanelWidth + 3);
+            int widthBeforePlayerPanels = boardWidth - GetPlayerPanelRegionWidth(playerPanelColumnCount);
             int rowWidth = Math.Max(widthBeforePlayerPanels, leaders.Count * LeaderBlockWidth);
             int availableSpacing = rowWidth - leaders.Count * LeaderBlockWidth;
             for (int row = 0; row < LeaderBlockHeight; row++)
@@ -280,8 +351,28 @@ namespace SplendidWonders.CLI.View
                 }
 
                 line.Append(' ', rowWidth - line.Length);
+                int playerLineIndex = row - (LeaderBlockHeight - 5);
+                if (playerLineIndex >= 0 && playerLineIndex < playerPanelLines.Count)
+                {
+                    var playerLine = playerPanelLines[playerLineIndex];
+                    int playerLineOffset = PlayerPanelHorizontalOffset;
+                    foreach (var range in playerLine.ColorRanges)
+                        colorRanges.Add(range with { Start = range.Start + line.Length - playerLineOffset });
+                    line.Append(playerLine.Text[playerLineOffset..]);
+                }
+                else
+                {
+                    line.Append(' ', GetPlayerPanelRegionWidth(playerPanelColumnCount));
+                }
                 WriteCanvasLine(line.ToString(), colorRanges);
             }
+        }
+
+        private static int GetPlayerPanelRegionWidth(int columnCount)
+        {
+            return columnCount == 0
+                ? 0
+                : columnCount * (PlayerPanelWidth + 3) + PlayerPanelHorizontalOffset;
         }
 
         private readonly record struct RgbColor(byte Red, byte Green, byte Blue);
