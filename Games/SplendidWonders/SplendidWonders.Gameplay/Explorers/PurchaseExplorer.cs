@@ -7,7 +7,7 @@ namespace SplendidWonders.Gameplay.Explorers
 {
     public class PurchaseExplorer : IActionExplorer<PurchaseAction>
     {
-        public IEnumerable<PurchaseAction> Explore(GameState gameState)
+        public IReadOnlyList<PurchaseAction> Explore(GameState gameState)
         {
             List<PurchaseAction> purchaseActions = new List<PurchaseAction>();
 

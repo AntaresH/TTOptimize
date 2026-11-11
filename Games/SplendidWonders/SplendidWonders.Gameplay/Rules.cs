@@ -29,14 +29,14 @@ namespace SplendidWonders.Gameplay
             return _validActions.Any(action => action.Equals(command));
         }
 
-        public IEnumerable<GameAction> Explore(IGameState currentState)
+        public IReadOnlyList<GameAction> Explore(IGameState currentState)
         {
             if (_validActions == null || !_validActions.Any())
             {
                 _validActions = _actionExplorer.Explore(currentState);
             }
 
-            return _validActions;
+            return _validActions.ToArray();
         }
 
         public IGameState Reduce(IGameState baseState, GameAction actionToApply)

@@ -1,25 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TTOptimize.Core;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
 
-namespace TTOptimize.Engine
+namespace TTOptimize.Core.Agents
 {
     public class HumanAgent : IPlayerAgent
     {
         public string Name { get; }
         private IGameInput _input;
 
-        public HumanAgent(IGameInput input, string name)
+        public HumanAgent(string name)
         {
-            _input = input;
-
             Name = name;
         }
 
-        public GameCommand DecideCommand(IGameState gameState, IEnumerable<GameAction> validActions)
+        public void SetInputMethod(IGameInput input)
+        {
+            _input = input;
+        }
+
+        public GameCommand DecideCommand(IGameState gameState, IReadOnlyList<GameAction> validActions)
         {
             return _input.ReadCommand(gameState, validActions);
         }

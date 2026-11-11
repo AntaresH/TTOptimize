@@ -3,7 +3,8 @@ using Microsoft.VisualBasic;
 using SplendidWonders.CLI;
 using SplendidWonders.Common.Setup;
 using System.Runtime.InteropServices;
-using TTOptimize.Core;
+using TTOptimize.Core.Agents;
+using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Engine;
 
 namespace TTOptimize.ConsoleHost;
@@ -33,25 +34,27 @@ public class Program
         var services = new ServiceCollection();
 
         services.AddTTOptimizeEngine();
-
         services.AddSplendidWonders();
-        // services.AddForestShuffle();
 
-        var rootServiceProvider = services.BuildServiceProvider();
+        services.AddSingleton<ConsoleGameSetupService>();
+
+        var rootProvider = services.BuildServiceProvider();
+
+        // 1. Lekérjük az elérhető játékokat és a segédosztályokat
+        var manifests = rootProvider.GetServices<IGameManifest>().ToList();
+        var setupService = rootProvider.GetRequiredService<ConsoleGameSetupService>();
+        var sessionManager = rootProvider.GetRequiredService<GameSessionManager>();
 
         bool stayInApp = true;
 
         while (stayInApp)
         {
-            var sessionManager = rootServiceProvider.GetRequiredService<GameSessionManager>();
+            var selectedManifest = manifests.First();
 
-            var gameConfiguration = new SplendidWondersConfiguration()
-            {
-                UseExtendedLeaders = true,
-                UseRandomSeed = true
-            };
+            IGameConfiguration config = setupService.ReadConfiguration(selectedManifest.ConfigurationType);
+            IReadOnlyList<IPlayerAgent> agents = setupService.CreateAgents(selectedManifest.GameId, config.PlayerCount);
 
-            sessionManager.StartNewMatch(Games.SPLENDID_WONDERS, gameConfiguration);
+            sessionManager.StartNewMatch(selectedManifest.GameId, config, agents);
 
             StayPrompter();
         }

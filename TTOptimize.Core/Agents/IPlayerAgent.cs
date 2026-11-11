@@ -4,12 +4,12 @@ using System.Text;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
 
-namespace TTOptimize.Core
+namespace TTOptimize.Core.Agents
 {
     public interface IPlayerAgent
     {
         string Name { get; }
-        GameCommand DecideCommand(IGameState gameState, IEnumerable<GameAction> validActions);
+        GameCommand DecideCommand(IGameState gameState, IReadOnlyList<GameAction> validActions);
     }
 
     public interface IPlayerResult

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TTOptimize.Core;
+using TTOptimize.Core.Agents;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
 
@@ -14,7 +15,7 @@ public class GameSessionManager
         _rootServiceProvider = rootServiceProvider;
     }
 
-    public void StartNewMatch(string gameId, IGameConfiguration configuration)
+    public void StartNewMatch(string gameId, IGameConfiguration configuration, IReadOnlyList<IPlayerAgent> agents)
     {
         using (IServiceScope scope = _rootServiceProvider.CreateScope())
         {
@@ -25,15 +26,17 @@ public class GameSessionManager
             var view = scopeProvider.GetRequiredKeyedService<IGameView>(gameId);
             var input = scopeProvider.GetRequiredKeyedService<IGameInput>(gameId);
 
-            var agents = new List<IPlayerAgent>()
+            foreach(var agent in agents)
             {
-                new HumanAgent(input, "Atanáziusz"),
-                new HumanAgent(input, "Brünhilda")
-            };
+                if (agent is HumanAgent hAgent)
+                {
+                    hAgent.SetInputMethod(input);
+                }
+            }
 
-            configuration.PlayerCount = agents.Count;
+            var initialState = stateFactory.Create(configuration);
 
-            var orchestrator = new GameOrchestrator(configuration, agents, stateFactory, rules, view);
+            var orchestrator = new GameOrchestrator(initialState, agents, rules, view);
 
             orchestrator.Run();
         }

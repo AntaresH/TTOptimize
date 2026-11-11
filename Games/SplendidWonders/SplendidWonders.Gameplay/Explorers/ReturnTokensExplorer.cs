@@ -5,7 +5,7 @@ namespace SplendidWonders.Gameplay.Explorers
 {
     public class ReturnTokensExplorer : IActionExplorer<ReturnTokensAction>
     {
-        public IEnumerable<ReturnTokensAction> Explore(GameState gameState)
+        public IReadOnlyList<ReturnTokensAction> Explore(GameState gameState)
         {
             List<ReturnTokensAction> validReturnTokensActions = new List<ReturnTokensAction>();
 

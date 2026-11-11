@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualBasic;
 using TTOptimize.Core;
+using TTOptimize.Core.Agents;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
 
@@ -9,29 +10,26 @@ public class GameOrchestrator
 {
     private const string _invalidCommandType = "A megadott parancs ({0}) ezekkel a paraméterekkel nem végrehajtható a játék jelenlegi állapotában!";
 
-    private readonly IGameConfiguration _gameConfiguration;
+    private readonly IGameState _initialState;
     private readonly IReadOnlyList<IPlayerAgent> _playerAgents;
-    private readonly IGameStateFactory _factory;
     private readonly IGameRules _rules;
     private readonly IGameView _view;
 
     public GameOrchestrator(
-        IGameConfiguration gameConfiguration,
+        IGameState initialState,
         IReadOnlyList<IPlayerAgent> playerAgents,
-        IGameStateFactory factory,
         IGameRules rules,
         IGameView view)
     {
-        _gameConfiguration = gameConfiguration;
+        _initialState = initialState;
         _playerAgents = playerAgents;
-        _factory = factory;
         _rules = rules;
         _view = view;
     }
 
     public void Run()
     {
-        IGameState currentState = _factory.Create(_gameConfiguration);
+        IGameState currentState = _initialState;
 
         string validationFailureMessage = string.Empty;
 

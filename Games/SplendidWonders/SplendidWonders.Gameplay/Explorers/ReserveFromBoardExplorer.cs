@@ -6,7 +6,7 @@ namespace SplendidWonders.Gameplay.Explorers
 {
     public class ReserveFromBoardExplorer : IActionExplorer<ReserveFromBoardAction>
     {
-        public IEnumerable<ReserveFromBoardAction> Explore(GameState gameState)
+        public IReadOnlyList<ReserveFromBoardAction> Explore(GameState gameState)
         {
             List<ReserveFromBoardAction> reserveFromBoardActions = new List<ReserveFromBoardAction>();
 

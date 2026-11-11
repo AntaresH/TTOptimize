@@ -5,7 +5,7 @@ namespace SplendidWonders.Gameplay.Explorers
 {
     public class SelectLeaderExplorer : IActionExplorer<SelectLeaderAction>
     {
-        public IEnumerable<SelectLeaderAction> Explore(GameState gameState)
+        public IReadOnlyList<SelectLeaderAction> Explore(GameState gameState)
         {
             List<SelectLeaderAction> selectLeaderActions = new List<SelectLeaderAction>();
 

@@ -5,7 +5,7 @@ namespace SplendidWonders.Gameplay.Explorers
 {
     public class DrawDoubleTokensExplorer : IActionExplorer<DrawDoubleTokensAction>
     {
-        public IEnumerable<DrawDoubleTokensAction> Explore(GameState gameState)
+        public IReadOnlyList<DrawDoubleTokensAction> Explore(GameState gameState)
         {
             List<DrawDoubleTokensAction> gameActions = new List<DrawDoubleTokensAction>();
 
