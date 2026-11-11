@@ -10,16 +10,16 @@ namespace SplendidWonders.Common.Setup
 {
     public class GameFactory : IGameStateFactory
     {
-        public static GameState GetNewGameState(GameConfiguration configuration)
+        public static GameState GetNewGameState(SplendidWondersConfiguration configuration)
         {
             var players = new List<Player>();
 
-            for (int i = 0; i < configuration.PlayerAgents.Count; i++)
+            for (int i = 0; i < configuration.PlayerCount; i++)
             {
-                players.Add(new Player() { Id = i + 1, Name = configuration.PlayerAgents[i].Name });
+                players.Add(new Player() { Id = i + 1, Name = configuration.PlayerNames[i] });
             }
 
-            var tokenSupply = configuration.PlayerAgents.Count switch
+            var tokenSupply = configuration.PlayerCount switch
             {
                 2 => new TokenGroup() { Yellow = 4, Blue = 4, Green = 4, Brown = 4, Red = 4, Polymath = 5 },
                 3 => new TokenGroup() { Yellow = 5, Blue = 5, Green = 5, Brown = 5, Red = 5, Polymath = 5 },
@@ -30,7 +30,7 @@ namespace SplendidWonders.Common.Setup
             int seed = configuration.UseRandomSeed ? new Random().Next(1,1000000) : configuration.Seed;
 
             var randomizedDecks = GetRandomizedCardSetup(seed);
-            var randomizedLeaders = GetRandomizedLeaders(configuration.UseExtendedLeaders, configuration.PlayerAgents.Count, seed);
+            var randomizedLeaders = GetRandomizedLeaders(configuration.UseExtendedLeaders, configuration.PlayerCount, seed);
 
             return new GameState
             {
@@ -99,7 +99,7 @@ namespace SplendidWonders.Common.Setup
 
         public IGameState Create(IGameConfiguration gameConfiguration)
         {
-            var swGameConfiguration = (GameConfiguration) gameConfiguration;
+            var swGameConfiguration = (SplendidWondersConfiguration) gameConfiguration;
             return GetNewGameState(swGameConfiguration);
         }
     }

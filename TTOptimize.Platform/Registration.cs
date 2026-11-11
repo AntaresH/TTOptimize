@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace TTOptimize.Platform;
+namespace TTOptimize.Engine;
 
 public static class PlatformEngineRegistration
 {

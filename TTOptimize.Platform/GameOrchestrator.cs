@@ -3,24 +3,27 @@ using TTOptimize.Core;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
 
-namespace TTOptimize.Platform;
+namespace TTOptimize.Engine;
 
 public class GameOrchestrator
 {
     private const string _invalidCommandType = "A megadott parancs ({0}) ezekkel a paraméterekkel nem végrehajtható a játék jelenlegi állapotában!";
 
     private readonly IGameConfiguration _gameConfiguration;
+    private readonly IReadOnlyList<IPlayerAgent> _playerAgents;
     private readonly IGameStateFactory _factory;
     private readonly IGameRules _rules;
     private readonly IGameView _view;
 
     public GameOrchestrator(
         IGameConfiguration gameConfiguration,
+        IReadOnlyList<IPlayerAgent> playerAgents,
         IGameStateFactory factory,
         IGameRules rules,
         IGameView view)
     {
         _gameConfiguration = gameConfiguration;
+        _playerAgents = playerAgents;
         _factory = factory;
         _rules = rules;
         _view = view;
@@ -36,10 +39,13 @@ public class GameOrchestrator
         {
             var validActions = _rules.Explore(currentState);
 
-            _view.Render(currentState, validActions, validationFailureMessage);
-            validationFailureMessage = string.Empty;
+            IPlayerAgent activeAgent = _playerAgents[currentState.ActivePlayerId - 1];
 
-            IPlayerAgent activeAgent = _gameConfiguration.PlayerAgents[currentState.ActivePlayerId - 1];
+            if (activeAgent is HumanAgent)
+            {
+                _view.Render(currentState, validActions, validationFailureMessage);
+                validationFailureMessage = string.Empty;
+            }
 
             var command = activeAgent.DecideCommand(currentState, validActions);
 

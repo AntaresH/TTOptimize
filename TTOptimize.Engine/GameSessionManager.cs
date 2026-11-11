@@ -1,0 +1,41 @@
+﻿using Microsoft.Extensions.DependencyInjection;
+using TTOptimize.Core;
+using TTOptimize.Core.GameAbstractions;
+using TTOptimize.Core.InputAbstractions;
+
+namespace TTOptimize.Engine;
+
+public class GameSessionManager
+{
+    private readonly IServiceProvider _rootServiceProvider;
+
+    public GameSessionManager(IServiceProvider rootServiceProvider)
+    {
+        _rootServiceProvider = rootServiceProvider;
+    }
+
+    public void StartNewMatch(string gameId, IGameConfiguration configuration)
+    {
+        using (IServiceScope scope = _rootServiceProvider.CreateScope())
+        {
+            IServiceProvider scopeProvider = scope.ServiceProvider;
+
+            var stateFactory = scopeProvider.GetRequiredKeyedService<IGameStateFactory>(gameId);
+            var rules = scopeProvider.GetRequiredKeyedService<IGameRules>(gameId);
+            var view = scopeProvider.GetRequiredKeyedService<IGameView>(gameId);
+            var input = scopeProvider.GetRequiredKeyedService<IGameInput>(gameId);
+
+            var agents = new List<IPlayerAgent>()
+            {
+                new HumanAgent(input, "Atanáziusz"),
+                new HumanAgent(input, "Brünhilda")
+            };
+
+            configuration.PlayerCount = agents.Count;
+
+            var orchestrator = new GameOrchestrator(configuration, agents, stateFactory, rules, view);
+
+            orchestrator.Run();
+        }
+    }
+}

@@ -4,7 +4,7 @@ using SplendidWonders.CLI;
 using SplendidWonders.Common.Setup;
 using System.Runtime.InteropServices;
 using TTOptimize.Core;
-using TTOptimize.Platform;
+using TTOptimize.Engine;
 
 namespace TTOptimize.ConsoleHost;
 
@@ -45,7 +45,7 @@ public class Program
         {
             var sessionManager = rootServiceProvider.GetRequiredService<GameSessionManager>();
 
-            var gameConfiguration = new GameConfiguration()
+            var gameConfiguration = new SplendidWondersConfiguration()
             {
                 UseExtendedLeaders = true,
                 UseRandomSeed = true

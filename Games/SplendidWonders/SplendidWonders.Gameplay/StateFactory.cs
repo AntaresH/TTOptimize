@@ -11,7 +11,7 @@ namespace SplendidWonders.Gameplay
     {
         public IGameState Create(IGameConfiguration gameConfiguration)
         {
-            var swGameConfiguration = (GameConfiguration) gameConfiguration;
+            var swGameConfiguration = (SplendidWondersConfiguration) gameConfiguration;
 
             return GameFactory.GetNewGameState(swGameConfiguration);
         }

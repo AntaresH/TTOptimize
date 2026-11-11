@@ -52,10 +52,7 @@ namespace SplendidWonders.CLI.Input
         }
         public static void ClearFromLine(int startLine)
         {
-            // 1. Visszaállítjuk a kurzort a mentett sor elejére
             Console.SetCursorPosition(0, startLine);
-
-            // 2. ANSI Escape kód (\x1b[J): Töröl mindent a kurzortól a képernyő aljáig!
             Console.Write("\x1b[J");
         }
 

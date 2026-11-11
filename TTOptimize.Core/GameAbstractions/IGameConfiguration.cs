@@ -2,6 +2,6 @@
 {
     public interface IGameConfiguration
     {
-        IList<IPlayerAgent> PlayerAgents { get; set; }
+        int PlayerCount { get; set; }
     }
 }

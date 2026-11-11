@@ -9,5 +9,5 @@
   </Folder>
   <Project Path="TTOptimize.ConsoleHost/TTOptimize.ConsoleHost.csproj" />
   <Project Path="TTOptimize.Core/TTOptimize.Core.csproj" />
-  <Project Path="TTOptimize.Platform/TTOptimize.Platform.csproj" />
+  <Project Path="TTOptimize.Engine/TTOptimize.Engine.csproj" Id="f6e6af29-9052-4d81-9592-8f7460d8ac3b" />
 </Solution>

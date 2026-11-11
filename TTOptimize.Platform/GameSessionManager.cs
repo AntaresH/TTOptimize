@@ -3,7 +3,7 @@ using TTOptimize.Core;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
 
-namespace TTOptimize.Platform;
+namespace TTOptimize.Engine;
 
 public class GameSessionManager
 {
@@ -14,7 +14,7 @@ public class GameSessionManager
         _rootServiceProvider = rootServiceProvider;
     }
 
-    public void StartNewMatch(string gameId, IGameConfiguration configuration)
+    public void StartNewMatch(string gameId, IGameConfiguration configuration, IEnumerable<IPlayerAgent> players)
     {
         using (IServiceScope scope = _rootServiceProvider.CreateScope())
         {
@@ -31,9 +31,9 @@ public class GameSessionManager
                 new HumanAgent(input, "Brünhilda")
             };
 
-            configuration.PlayerAgents = agents;
+            configuration.PlayerCount = agents.Count;
 
-            var orchestrator = new GameOrchestrator(configuration, stateFactory, rules, view);
+            var orchestrator = new GameOrchestrator(configuration, agents, stateFactory, rules, view);
 
             orchestrator.Run();
         }

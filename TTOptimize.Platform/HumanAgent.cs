@@ -5,7 +5,7 @@ using TTOptimize.Core;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
 
-namespace TTOptimize.Platform
+namespace TTOptimize.Engine
 {
     public class HumanAgent : IPlayerAgent
     {
