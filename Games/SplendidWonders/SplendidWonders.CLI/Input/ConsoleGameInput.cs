@@ -15,7 +15,7 @@ namespace SplendidWonders.CLI.Input
         private readonly IEnumerable<IConsoleCommandWizard> _wizards;
 
         public ConsoleGameInput(
-            [FromKeyedServices(Games.SPLENDID_WONDERS)] IEnumerable<IConsoleCommandWizard> wizards)
+            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IEnumerable<IConsoleCommandWizard> wizards)
         {
             _wizards = wizards;
         }

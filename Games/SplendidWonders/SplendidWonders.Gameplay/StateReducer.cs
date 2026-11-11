@@ -18,13 +18,13 @@ namespace SplendidWonders.Gameplay
         private readonly IStateReducer<ReturnTokensAction> _returnTokensReducer;
 
         public StateReducer(
-            [FromKeyedServices(Games.SPLENDID_WONDERS)] IStateReducer<DrawThreeTokensAction> drawThreeTokensReducer,
-            [FromKeyedServices(Games.SPLENDID_WONDERS)] IStateReducer<DrawDoubleTokensAction> drawDoubleTokensReducer,
-            [FromKeyedServices(Games.SPLENDID_WONDERS)] IStateReducer<ReturnTokensAction> returnTokensReducer,
-            [FromKeyedServices(Games.SPLENDID_WONDERS)] IStateReducer<ReserveFromBoardAction> reserveFromBoardReducer,
-            [FromKeyedServices(Games.SPLENDID_WONDERS)] IStateReducer<ReserveFromDeckAction> reserveFromDeckReducer,
-            [FromKeyedServices(Games.SPLENDID_WONDERS)] IStateReducer<PurchaseAction> purchaseReducer,
-            [FromKeyedServices(Games.SPLENDID_WONDERS)] IStateReducer<SelectLeaderAction> selectLeaderReducer
+            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IStateReducer<DrawThreeTokensAction> drawThreeTokensReducer,
+            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IStateReducer<DrawDoubleTokensAction> drawDoubleTokensReducer,
+            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IStateReducer<ReturnTokensAction> returnTokensReducer,
+            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IStateReducer<ReserveFromBoardAction> reserveFromBoardReducer,
+            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IStateReducer<ReserveFromDeckAction> reserveFromDeckReducer,
+            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IStateReducer<PurchaseAction> purchaseReducer,
+            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IStateReducer<SelectLeaderAction> selectLeaderReducer
             )
         {
             _drawThreeTokensReducer = drawThreeTokensReducer;

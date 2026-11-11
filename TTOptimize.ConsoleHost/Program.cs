@@ -3,6 +3,7 @@ using Microsoft.VisualBasic;
 using SplendidWonders.CLI;
 using SplendidWonders.Common.Setup;
 using System.Runtime.InteropServices;
+using TTOptimize.Core;
 using TTOptimize.Core.Agents;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Engine;
@@ -40,7 +41,6 @@ public class Program
 
         var rootProvider = services.BuildServiceProvider();
 
-        // 1. Lekérjük az elérhető játékokat és a segédosztályokat
         var manifests = rootProvider.GetServices<IGameManifest>().ToList();
         var setupService = rootProvider.GetRequiredService<ConsoleGameSetupService>();
         var sessionManager = rootProvider.GetRequiredService<GameSessionManager>();
@@ -49,22 +49,51 @@ public class Program
 
         while (stayInApp)
         {
-            var selectedManifest = manifests.First();
+            Console.WriteLine(  " _______  _______  _______  ______  _______  __   __   __  __   ______  _______ \r\n" +
+                                "|__   __||__   __||   _   ||   _  ||__  __| |  | |  |_|  ||  | |____  ||    ___|\r\n" +
+                                "   | |      | |   |  | |  ||  |_| |   | |   |  | |       ||  |  ____| ||   |___ \r\n" +
+                                "   | |      | |   |  | |  ||   ___|   | |   |  | | || || ||  | | _____||    ___|\r\n" +
+                                "   | |      | |   |  |_|  ||  |       | |   |  | | ||_|| ||  | | |____ |   |___ \r\n" +
+                                "   |_|      |_|   |_______||__|       |_|   |__| |_|   |_||__| |______||_______|");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Melyik játékkal szeretnél játszani?");
+            
+            for (int i = 0; i < manifests.Count; i++)
+            {
+                Console.WriteLine($"({i + 1}) - {manifests[i].DisplayName} - {manifests[i].Description}");
+            }
 
-            IGameConfiguration config = setupService.ReadConfiguration(selectedManifest.ConfigurationType);
-            IReadOnlyList<IPlayerAgent> agents = setupService.CreateAgents(selectedManifest.GameId, config.PlayerCount);
+            bool stayInGame = true;
 
-            sessionManager.StartNewMatch(selectedManifest.GameId, config, agents);
+            while (stayInGame)
+            {
+                var input = Console.ReadLine().Trim();
 
-            StayPrompter();
+                if (int.TryParse(input, out int parsedNum) && parsedNum > 0 && parsedNum <= manifests.Count)
+                {
+                    var selectedManifest = manifests[parsedNum - 1];
+
+                    IGameConfiguration config = setupService.ReadConfiguration(selectedManifest.ConfigurationType);
+                    IReadOnlyList<IPlayerAgent> agents = setupService.CreateAgents(selectedManifest.GameId, config.PlayerCount);
+
+                    config.PlayerNames = agents.Select(ag => ag.Name).ToList();
+
+                    sessionManager.StartNewMatch(selectedManifest.GameId, config, agents);
+
+                    stayInGame = StayPrompter(Strings.PlayAgainWithTheseSettings);
+                }
+            }
+
+            stayInGame = StayPrompter(Strings.PlayAgain);
         }
     }
 
-    private static bool StayPrompter()
+    private static bool StayPrompter(string message)
     {
         while (true)
         {
-            Console.WriteLine(Strings.PlayAgain);
+            Console.WriteLine(message);
 
             var userInput = Console.ReadLine().Trim();
 

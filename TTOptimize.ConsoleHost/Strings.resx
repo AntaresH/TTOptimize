@@ -123,8 +123,11 @@
   <data name="NoShort" xml:space="preserve">
     <value>n</value>
   </data>
+  <data name="PlayAgainWithSettings" xml:space="preserve">
+    <value>Szeretnél újra játszani ezekkel a beállításokkal? (igen/nem)</value>
+  </data>
   <data name="PlayAgain" xml:space="preserve">
-    <value>Szeretnél újra játszani? (igen/nem)</value>
+    <value>Szeretnél újra játszni? (igen/nem)</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>igen</value>

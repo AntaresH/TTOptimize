@@ -133,6 +133,15 @@ namespace SplendidWonders.CLI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Erőforrás-menedzsment és tablóépítő kártyajáték..
+        /// </summary>
+        internal static string GameDescription {
+            get {
+                return ResourceManager.GetString("GameDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vége a játéknak!.
         /// </summary>
         internal static string GameOverTitle {

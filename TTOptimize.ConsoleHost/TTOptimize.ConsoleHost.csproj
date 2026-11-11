@@ -14,7 +14,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Games\SplendidWonders\SplendidWonders.CLI\SplendidWonders.CLI.csproj" />
     <ProjectReference Include="..\TTOptimize.Engine\TTOptimize.Engine.csproj" />
-    <ProjectReference Include="..\TTOptimize.Platform\TTOptimize.Engine.csproj" />
   </ItemGroup>
 
   <ItemGroup>

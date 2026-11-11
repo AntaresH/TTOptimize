@@ -264,4 +264,7 @@
   <data name="ListReservedCardsCommandDescription" xml:space="preserve">
     <value>Foglalt kártyák listázása</value>
   </data>
+  <data name="GameDescription" xml:space="preserve">
+    <value>Erőforrás-menedzsment és tablóépítő kártyajáték.</value>
+  </data>
 </root>

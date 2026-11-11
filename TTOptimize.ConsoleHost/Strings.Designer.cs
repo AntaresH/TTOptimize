@@ -79,11 +79,20 @@ namespace TTOptimize.ConsoleHost {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Szeretnél újra játszani? (igen/nem).
+        ///   Looks up a localized string similar to Szeretnél újra játszni? (igen/nem).
         /// </summary>
         internal static string PlayAgain {
             get {
                 return ResourceManager.GetString("PlayAgain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Szeretnél újra játszani ezekkel a beállításokkal? (igen/nem).
+        /// </summary>
+        internal static string PlayAgainWithTheseSettings {
+            get {
+                return ResourceManager.GetString("PlayAgainWithSettings", resourceCulture);
             }
         }
         

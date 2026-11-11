@@ -3,5 +3,6 @@
     public interface IGameConfiguration
     {
         int PlayerCount { get; set; }
+        List<string> PlayerNames { get; set; }
     }
 }

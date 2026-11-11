@@ -17,8 +17,8 @@ namespace SplendidWonders.Gameplay
         private readonly IStateReducer _stateReducer;
 
         public Rules(
-            [FromKeyedServices(Games.SPLENDID_WONDERS)] IActionExplorer actionExplorer,
-            [FromKeyedServices(Games.SPLENDID_WONDERS)] IStateReducer stateReducer)
+            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IActionExplorer actionExplorer,
+            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IStateReducer stateReducer)
         {
             _actionExplorer = actionExplorer;
             _stateReducer = stateReducer;
