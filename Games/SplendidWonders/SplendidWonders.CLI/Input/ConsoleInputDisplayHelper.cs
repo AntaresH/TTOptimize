@@ -1,5 +1,6 @@
 ﻿using SplendidWonders.CLI.View;
 using SplendidWonders.Common.Model;
+using SplendidWonders.Common.Setup;
 using SplendidWonders.Gameplay.Actions;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
@@ -62,32 +63,39 @@ namespace SplendidWonders.CLI.Input
 
             if (leader.Requirements.Yellow > 0)
             {
-                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {leader.Requirements.Yellow.ToString()} ", DevelopmentBonus.Yellow));
+                string whiteText = GetWhiteConsoleForegroundText(leader.Requirements.Yellow.ToString());
+                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {whiteText} ", DevelopmentBonus.Yellow));
             }
 
             if (leader.Requirements.Blue > 0)
             {
-                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {leader.Requirements.Blue.ToString()} ", DevelopmentBonus.Blue));
+                string whiteText = GetWhiteConsoleForegroundText(leader.Requirements.Blue.ToString());
+                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {whiteText} ", DevelopmentBonus.Blue));
             }
 
             if (leader.Requirements.Green > 0)
             {
-                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {leader.Requirements.Green.ToString()} ", DevelopmentBonus.Green));
+                string whiteText = GetWhiteConsoleForegroundText(leader.Requirements.Green.ToString());
+                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {whiteText} ", DevelopmentBonus.Green));
             }
 
             if (leader.Requirements.Brown > 0)
             {
-                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {leader.Requirements.Brown.ToString()} ", DevelopmentBonus.Brown));
+                string whiteText = GetWhiteConsoleForegroundText(leader.Requirements.Brown.ToString());
+                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {whiteText} ", DevelopmentBonus.Brown));
             }
 
             if (leader.Requirements.Red > 0)
             {
-                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {leader.Requirements.Red.ToString()} ", DevelopmentBonus.Red));
+                string whiteText = GetWhiteConsoleForegroundText(leader.Requirements.Red.ToString());
+                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {whiteText} ", DevelopmentBonus.Red));
             }
 
             string vpDisplay = leader.VictoryPoints > 0 ? $"{{{leader.VictoryPoints}}}" : string.Empty;
+            string namePadding = new string(' ', Math.Max(0, 18 - leader.Name.Length));
+            string colorCost = string.Join(" ", colorCostTexts);
 
-            Console.WriteLine($"{leader.Id} {leader.Name.PadRight(15)} {vpDisplay} Feltételek: {string.Join(" ", colorCostTexts)}");
+            Console.WriteLine($"{leader.Id,-5} {leader.Name}{namePadding} {leader.VictoryPoints} Feltételek: {colorCost}");
         }
 
         private static void PrintCard(DevelopmentCard card, int requiredPolymathsCount = 0)
@@ -131,14 +139,19 @@ namespace SplendidWonders.CLI.Input
             Console.WriteLine($"{card.Id,-5} {coloredName}{namePadding}   {vpDisplay}   Költségek: {colorCost}{costPadding} {polymathsDisplay}");
         }
 
+        private static string GetWhiteConsoleForegroundText(string text)
+        {
+            return $"\u001b[38;2;255;255;255m{text}\u001b[39m";
+        }
+
         private static string GetRgbColoredConsoleForeground(string text, DevelopmentBonus trueColorRgbFormat)
         {
-            return $"\u001b[38;2;{ConvertBonusToLightColorSet(trueColorRgbFormat)}m{text}\u001b[0m";
+            return $"\u001b[38;2;{ConvertBonusToLightColorSet(trueColorRgbFormat)}m{text}\u001b[39m";
         }
 
         private static string GetRgbColoredConsoleBackground(string text, DevelopmentBonus trueColorRgbFormat)
         {
-            return $"\u001b[48;2;{ConvertBonusToDarkColorSet(trueColorRgbFormat)}m{text}\u001b[0m";
+            return $"\u001b[48;2;{ConvertBonusToDarkColorSet(trueColorRgbFormat)}m{text}\u001b[49m";
         }
 
         public static string ConvertBonusToLightColorSet(DevelopmentBonus bonus)
@@ -155,19 +168,6 @@ namespace SplendidWonders.CLI.Input
         }
 
         private static string ConvertBonusToDarkColorSet(DevelopmentBonus bonus)
-        {
-            return bonus switch
-            {
-                DevelopmentBonus.Yellow => "138;116;0",
-                DevelopmentBonus.Blue => "30;60;165",
-                DevelopmentBonus.Green => "0;125;30",
-                DevelopmentBonus.Brown => "100;45;0",
-                DevelopmentBonus.Red => "180;10;20",
-                _ => "96;96;96"
-            };
-        }
-
-        private static string ConvertRgbColorIntoText(DevelopmentBonus bonus)
         {
             return bonus switch
             {

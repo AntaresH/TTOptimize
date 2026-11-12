@@ -123,16 +123,37 @@
   <data name="NoShort" xml:space="preserve">
     <value>n</value>
   </data>
-  <data name="PlayAgainWithSettings" xml:space="preserve">
-    <value>Szeretnél újra játszani ezekkel a beállításokkal? (igen/nem)</value>
+  <data name="PromptStayInGame" xml:space="preserve">
+    <value>Szeretnél újra játszani ezzel a játékkal? (igen/nem)</value>
   </data>
-  <data name="PlayAgain" xml:space="preserve">
-    <value>Szeretnél újra játszni? (igen/nem)</value>
+  <data name="PromptStayInApp" xml:space="preserve">
+    <value>Szeretnél másik játékkal játszani? (igen/nem)</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>igen</value>
   </data>
   <data name="YesShort" xml:space="preserve">
     <value>i</value>
+  </data>
+  <data name="PromptGameChooser" xml:space="preserve">
+    <value>Melyik játékkal szeretnél játszani?</value>
+  </data>
+  <data name="GameSettings" xml:space="preserve">
+    <value>JÁTÉK BEÁLLÍTÁSOK</value>
+  </data>
+  <data name="PlayerSettings" xml:space="preserve">
+    <value>JÁTÉKOSOK BEÁLLÍTÁSA</value>
+  </data>
+  <data name="Player" xml:space="preserve">
+    <value>Játékos</value>
+  </data>
+  <data name="Human" xml:space="preserve">
+    <value>Ember</value>
+  </data>
+  <data name="NameToEnter" xml:space="preserve">
+    <value>neve</value>
+  </data>
+  <data name="AgentType" xml:space="preserve">
+    <value>Típus</value>
   </data>
 </root>

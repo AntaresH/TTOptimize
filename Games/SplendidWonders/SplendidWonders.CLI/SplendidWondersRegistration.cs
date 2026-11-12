@@ -18,46 +18,46 @@ namespace SplendidWonders.CLI
         {
             services.AddSingleton<IGameManifest, SplendidWondersManifest>();
 
-            services.AddKeyedSingleton<IActionExplorer<DrawThreeTokensAction>, DrawThreeTokensExplorer>(Games.SPLENDID_WONDERS_KEY);
-            services.AddKeyedSingleton<IActionExplorer<DrawDoubleTokensAction>, DrawDoubleTokensExplorer>(Games.SPLENDID_WONDERS_KEY);
-            services.AddKeyedSingleton<IActionExplorer<ReturnTokensAction>, ReturnTokensExplorer>(Games.SPLENDID_WONDERS_KEY);
-            services.AddKeyedSingleton<IActionExplorer<ReserveFromBoardAction>, ReserveFromBoardExplorer>(Games.SPLENDID_WONDERS_KEY);
-            services.AddKeyedSingleton<IActionExplorer<ReserveFromDeckAction>, ReserveFromDeckExplorer>(Games.SPLENDID_WONDERS_KEY);
-            services.AddKeyedSingleton<IActionExplorer<PurchaseAction>, PurchaseExplorer>(Games.SPLENDID_WONDERS_KEY);
-            services.AddKeyedSingleton<IActionExplorer<SelectLeaderAction>, SelectLeaderExplorer>(Games.SPLENDID_WONDERS_KEY);
-            services.AddKeyedSingleton<IActionExplorer, ActionExplorer>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IActionExplorer<DrawThreeTokensAction>, DrawThreeTokensExplorer>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IActionExplorer<DrawDoubleTokensAction>, DrawDoubleTokensExplorer>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IActionExplorer<ReturnTokensAction>, ReturnTokensExplorer>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IActionExplorer<ReserveFromBoardAction>, ReserveFromBoardExplorer>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IActionExplorer<ReserveFromDeckAction>, ReserveFromDeckExplorer>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IActionExplorer<PurchaseAction>, PurchaseExplorer>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IActionExplorer<SelectLeaderAction>, SelectLeaderExplorer>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IActionExplorer, ActionExplorer>(Games.SPLENDID_WONDERS_KEY);
 
-            services.AddKeyedSingleton<TokenActionReducer>(Games.SPLENDID_WONDERS_KEY);
-            services.AddKeyedSingleton<IStateReducer<DrawThreeTokensAction>>(Games.SPLENDID_WONDERS_KEY, (sp, key) => sp.GetRequiredKeyedService<TokenActionReducer>(key));
-            services.AddKeyedSingleton<IStateReducer<DrawDoubleTokensAction>>(Games.SPLENDID_WONDERS_KEY, (sp, key) => sp.GetRequiredKeyedService<TokenActionReducer>(key));
-            services.AddKeyedSingleton<IStateReducer<ReturnTokensAction>>(Games.SPLENDID_WONDERS_KEY, (sp, key) => sp.GetRequiredKeyedService<TokenActionReducer>(key));
+            services.AddKeyedScoped<TokenActionReducer>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IStateReducer<DrawThreeTokensAction>>(Games.SPLENDID_WONDERS_KEY, (sp, key) => sp.GetRequiredKeyedService<TokenActionReducer>(key));
+            services.AddKeyedScoped<IStateReducer<DrawDoubleTokensAction>>(Games.SPLENDID_WONDERS_KEY, (sp, key) => sp.GetRequiredKeyedService<TokenActionReducer>(key));
+            services.AddKeyedScoped<IStateReducer<ReturnTokensAction>>(Games.SPLENDID_WONDERS_KEY, (sp, key) => sp.GetRequiredKeyedService<TokenActionReducer>(key));
 
-            services.AddKeyedSingleton<ReserveActionReducer>(Games.SPLENDID_WONDERS_KEY);
-            services.AddKeyedSingleton<IStateReducer<ReserveFromBoardAction>>(Games.SPLENDID_WONDERS_KEY, (sp, key) => sp.GetRequiredKeyedService<ReserveActionReducer>(key));
-            services.AddKeyedSingleton<IStateReducer<ReserveFromDeckAction>>(Games.SPLENDID_WONDERS_KEY, (sp, key) => sp.GetRequiredKeyedService<ReserveActionReducer>(key));
+            services.AddKeyedScoped<ReserveActionReducer>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IStateReducer<ReserveFromBoardAction>>(Games.SPLENDID_WONDERS_KEY, (sp, key) => sp.GetRequiredKeyedService<ReserveActionReducer>(key));
+            services.AddKeyedScoped<IStateReducer<ReserveFromDeckAction>>(Games.SPLENDID_WONDERS_KEY, (sp, key) => sp.GetRequiredKeyedService<ReserveActionReducer>(key));
 
-            services.AddKeyedSingleton<IStateReducer<PurchaseAction>, PurchaseReducer>(Games.SPLENDID_WONDERS_KEY);
-            services.AddKeyedSingleton<IStateReducer<SelectLeaderAction>, SelectLeaderReducer>(Games.SPLENDID_WONDERS_KEY);
-            services.AddKeyedSingleton<IStateReducer, StateReducer>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IStateReducer<PurchaseAction>, PurchaseReducer>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IStateReducer<SelectLeaderAction>, SelectLeaderReducer>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IStateReducer, StateReducer>(Games.SPLENDID_WONDERS_KEY);
 
-            services.AddKeyedSingleton<IGameRules, Rules>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IGameRules, Rules>(Games.SPLENDID_WONDERS_KEY);
 
-            services.AddKeyedSingleton<ConsoleGameView>(Games.SPLENDID_WONDERS_KEY);
-            services.AddKeyedSingleton<IGameView>(Games.SPLENDID_WONDERS_KEY, (sp, key) => sp.GetRequiredKeyedService<ConsoleGameView>(key));
-            services.AddKeyedSingleton<ISplendidWondersView>(Games.SPLENDID_WONDERS_KEY, (sp, key) => sp.GetRequiredKeyedService<ConsoleGameView>(key));
+            services.AddKeyedScoped<ConsoleGameView>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IGameView>(Games.SPLENDID_WONDERS_KEY, (sp, key) => sp.GetRequiredKeyedService<ConsoleGameView>(key));
+            services.AddKeyedScoped<ISplendidWondersView>(Games.SPLENDID_WONDERS_KEY, (sp, key) => sp.GetRequiredKeyedService<ConsoleGameView>(key));
 
-            services.AddKeyedSingleton<IConsoleCommandWizard, DrawDoubleTokensCommandWizard>(Games.SPLENDID_WONDERS_KEY);
-            services.AddKeyedSingleton<IConsoleCommandWizard, DrawThreeTokensCommandWizard>(Games.SPLENDID_WONDERS_KEY);
-            services.AddKeyedSingleton<IConsoleCommandWizard, PurchaseFromBoardCommandWizard>(Games.SPLENDID_WONDERS_KEY);
-            services.AddKeyedSingleton<IConsoleCommandWizard, PurchaseFromReservedCommandWizard>(Games.SPLENDID_WONDERS_KEY);
-            services.AddKeyedSingleton<IConsoleCommandWizard, ReserveFromBoardCommandWizard>(Games.SPLENDID_WONDERS_KEY);
-            services.AddKeyedSingleton<IConsoleCommandWizard, ReserveFromDeckCommandWizard>(Games.SPLENDID_WONDERS_KEY);
-            services.AddKeyedSingleton<IConsoleCommandWizard, ReturnTokensCommandWizard>(Games.SPLENDID_WONDERS_KEY);
-            services.AddKeyedSingleton<IConsoleCommandWizard, SelectLeaderCommandWizard>(Games.SPLENDID_WONDERS_KEY);
-            services.AddKeyedSingleton<IConsoleCommandWizard, ShowReservedCardsCommandWizard>(Games.SPLENDID_WONDERS_KEY);
-            services.AddKeyedSingleton<IGameInput, ConsoleGameInput>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IConsoleCommandWizard, DrawDoubleTokensCommandWizard>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IConsoleCommandWizard, DrawThreeTokensCommandWizard>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IConsoleCommandWizard, PurchaseFromBoardCommandWizard>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IConsoleCommandWizard, PurchaseFromReservedCommandWizard>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IConsoleCommandWizard, ReserveFromBoardCommandWizard>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IConsoleCommandWizard, ReserveFromDeckCommandWizard>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IConsoleCommandWizard, ReturnTokensCommandWizard>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IConsoleCommandWizard, SelectLeaderCommandWizard>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IConsoleCommandWizard, ShowReservedCardsCommandWizard>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IGameInput, ConsoleGameInput>(Games.SPLENDID_WONDERS_KEY);
 
-            services.AddKeyedSingleton<IGameStateFactory, StateFactory>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IGameStateFactory, StateFactory>(Games.SPLENDID_WONDERS_KEY);
 
             return services;
         }

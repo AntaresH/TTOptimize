@@ -61,6 +61,42 @@ namespace TTOptimize.ConsoleHost {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Típus.
+        /// </summary>
+        internal static string AgentType {
+            get {
+                return ResourceManager.GetString("AgentType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to JÁTÉK BEÁLLÍTÁSOK.
+        /// </summary>
+        internal static string GameSettings {
+            get {
+                return ResourceManager.GetString("GameSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ember.
+        /// </summary>
+        internal static string Human {
+            get {
+                return ResourceManager.GetString("Human", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to neve.
+        /// </summary>
+        internal static string NameToEnter {
+            get {
+                return ResourceManager.GetString("NameToEnter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to nem.
         /// </summary>
         internal static string No {
@@ -79,20 +115,47 @@ namespace TTOptimize.ConsoleHost {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Szeretnél újra játszni? (igen/nem).
+        ///   Looks up a localized string similar to Játékos.
         /// </summary>
-        internal static string PlayAgain {
+        internal static string Player {
             get {
-                return ResourceManager.GetString("PlayAgain", resourceCulture);
+                return ResourceManager.GetString("Player", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Szeretnél újra játszani ezekkel a beállításokkal? (igen/nem).
+        ///   Looks up a localized string similar to JÁTÉKOSOK BEÁLLÍTÁSA.
         /// </summary>
-        internal static string PlayAgainWithTheseSettings {
+        internal static string PlayerSettings {
             get {
-                return ResourceManager.GetString("PlayAgainWithSettings", resourceCulture);
+                return ResourceManager.GetString("PlayerSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Melyik játékkal szeretnél játszani?.
+        /// </summary>
+        internal static string PromptGameChooser {
+            get {
+                return ResourceManager.GetString("PromptGameChooser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Szeretnél másik játékkal játszani? (igen/nem).
+        /// </summary>
+        internal static string PromptStayInApp {
+            get {
+                return ResourceManager.GetString("PromptStayInApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Szeretnél újra játszani ezzel a játékkal? (igen/nem).
+        /// </summary>
+        internal static string PromptStayInGame {
+            get {
+                return ResourceManager.GetString("PromptStayInGame", resourceCulture);
             }
         }
         

@@ -13,7 +13,6 @@ namespace SplendidWonders.CLI.View
     {
         void DisplayGameOver(List<Player> players);
         void DisplayGame(GameState gameState, IEnumerable<GameAction> validActions, string previousInvalidCommand);
-        void DisplayGameTitle();
         void DisplayBoard(GameState gameState);
     }
 }

@@ -37,7 +37,7 @@ namespace SplendidWonders.CLI.Input
 
                     if (commandInput == "X")
                     {
-                        throw new UserAbortException();
+                        throw new ConsoleUserAbortException();
                     }
 
                     var wizard = activeWizards.FirstOrDefault(wiz => wiz.CommandKey == commandInput);

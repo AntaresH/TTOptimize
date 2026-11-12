@@ -26,7 +26,7 @@ public class ConsoleGameSetupService
 
         var configInstance = (IGameConfiguration)Activator.CreateInstance(configurationType)!;
 
-        Console.WriteLine("\n=== JÁTÉK BEÁLLÍTÁSOK ===");
+        Console.WriteLine($"\n=== {Strings.GameSettings} ===");
 
         foreach (var property in configurationType.GetProperties(BindingFlags.Public | BindingFlags.Instance))
         {
@@ -66,19 +66,19 @@ public class ConsoleGameSetupService
 
         var gameInput = _serviceProvider.GetRequiredKeyedService<IGameInput>(gameId);
 
-        Console.WriteLine("\n=== JÁTÉKOSOK BEÁLLÍTÁSA ===");
+        Console.WriteLine($"\n=== {Strings.PlayerSettings} ===");
 
         for (int i = 0; i < playerCount; i++)
         {
-            Console.WriteLine($"\n--- {i + 1}. Játékos ---");
-            string name = PromptString($"Játékos neve (Enter = Játékos {i + 1}): ", $"Játékos {i + 1}");
-            int agentType = PromptInt("Típus [1 = Ember, 2 = Random Bot]: ", 1, 2, 1);
+            Console.WriteLine($"\n--- {i + 1}. {Strings.Player} ---");
+            string name = PromptString($"{Strings.Player} {Strings.NameToEnter} (Enter = {Strings.Player} {i + 1}): ", $"{Strings.Player} {i + 1}");
+            int agentType = PromptInt($"{Strings.AgentType} [1 = {Strings.Human}, 2 = Random Bot]: ", 1, 2, 1);
 
             IPlayerAgent agent = agentType switch
             {
                 1 => new HumanAgent(name),
                 2 => new RandomAgent(name),
-                _ => throw new InvalidOperationException("Ismeretlen ágens típus.")
+                _ => throw new InvalidOperationException("Unknown agent type.")
             };
 
             agents.Add(agent);

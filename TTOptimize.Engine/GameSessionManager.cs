@@ -26,7 +26,7 @@ public class GameSessionManager
             var view = scopeProvider.GetRequiredKeyedService<IGameView>(gameId);
             var input = scopeProvider.GetRequiredKeyedService<IGameInput>(gameId);
 
-            foreach(var agent in agents)
+            foreach (var agent in agents)
             {
                 if (agent is HumanAgent hAgent)
                 {

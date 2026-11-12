@@ -10,7 +10,7 @@ namespace SplendidWonders.Common.Setup
         public int PlayerCount { get; set; } = 2;
 
         [GameConfigParam("Véletlenszerű keverés (Seed) használata")]
-        public bool UseRandomSeed { get; set; }
+        public bool UseRandomSeed { get; set; } = true;
 
         [GameConfigParam("Egyedi Seed szám", min: 0, max: 100000)]
         [DependsOn(nameof(UseRandomSeed), false)]
