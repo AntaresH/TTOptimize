@@ -70,23 +70,13 @@ public class SetupService
 
             if (property.PropertyType == typeof(int))
             {
-                SetPropertyValue<int>(
-                    property,
-                    configInstance,
-                    attribute.Min,
-                    int.TryParse,
-                    def => PromptInt(attribute.DisplayName, attribute.Min, attribute.Max, def)
-                );
+                SetPropertyFromArgumentOrPrompt(property, configInstance, attribute.Min,
+                    def => PromptInt(attribute.DisplayName, attribute.Min, attribute.Max, def));
             }
             else if (property.PropertyType == typeof(bool))
             {
-                SetPropertyValue<bool>(
-                    property,
-                    configInstance,
-                    false,
-                    bool.TryParse,
-                    def => PromptBool(attribute.DisplayName, def)
-                );
+                SetPropertyFromArgumentOrPrompt(property, configInstance, false,
+                    def => PromptBool(attribute.DisplayName, def));
             }
         }
 
@@ -106,27 +96,8 @@ public class SetupService
         {
             Console.WriteLine($"\n--- {i + 1}. {Strings.Player} ---");
 
-            string name = string.Empty;
-            string nameArg = argumentService.GetArgument($"PLAYER{i+1}NAME");
-            if (!string.IsNullOrEmpty(nameArg))
-            {
-                name = nameArg;
-            }
-            else
-            {
-                name = PromptString($"{Strings.Player} {Strings.NameToEnter} (Enter = {Strings.Player} {i + 1}): ", $"{Strings.Player} {i + 1}");
-            }
-
-            int agentType = 0;
-            string agentTypeArgString = argumentService.GetArgument($"PLAYER{i+1}TYPE");
-            if (int.TryParse(agentTypeArgString, out int agentTypeArgInt))
-            { 
-                agentType = agentTypeArgInt;
-            }
-            else 
-            {
-                agentType = PromptInt($"{Strings.AgentType} [1 = {Strings.Human}, 2 = Random Bot]: ", 1, 2, 1);
-            }
+            string name = FromArgumentOrPrompt(string.Format(Strings.PlayerNameArgumentKeyFormat, i + 1), () => PromptString(Strings.PlayerNamePrompt, $"{Strings.Player} {i + 1}"));
+            int agentType = FromArgumentOrPrompt(string.Format(Strings.AgentTypeArgumentKeyFormat, i + 1), () => PromptInt(Strings.AgentTypePrompt, 1, 2, 1));
 
             IPlayerAgent agent = agentType switch
             {
@@ -139,6 +110,42 @@ public class SetupService
         }
 
         return agents;
+    }
+
+    private void SetPropertyFromArgumentOrPrompt<T>(PropertyInfo property, object configInstance, 
+        T fallbackDefault, Func<T, T> promptUser) where T : IParsable<T>
+    {
+        var argumentService = _serviceProvider.GetRequiredService<ArgumentService>();
+
+        T defaultValue = (T)(property.GetValue(configInstance) ?? fallbackDefault!);
+
+        string? propArg = argumentService.GetArgument(property.Name);
+
+        if (T.TryParse(propArg, null, out T parsedValue))
+        {
+            property.SetValue(configInstance, parsedValue);
+        }
+        else
+        {
+            T value = promptUser(defaultValue);
+            property.SetValue(configInstance, value);
+        }
+    }
+
+    private T FromArgumentOrPrompt<T>(string formattedArgumentKey, Func<T> promptUser) where T : IParsable<T>
+    {
+        var argumentService = _serviceProvider.GetRequiredService<ArgumentService>();
+
+        string propertyArg = argumentService.GetArgument(formattedArgumentKey);
+
+        if (T.TryParse(propertyArg, null, out T parsedArg))
+        {
+            return parsedArg;
+        }
+        else
+        {
+            return promptUser();
+        }
     }
 
     private int PromptInt(string label, int min, int max, int defaultValue)
@@ -182,29 +189,4 @@ public class SetupService
         return string.IsNullOrEmpty(input) ? defaultValue : input;
     }
 
-    private delegate bool TryParseHandler<T>(string? value, out T result);
-
-    private void SetPropertyValue<T>(
-    PropertyInfo property,
-    object configInstance,
-    T fallbackDefault,
-    TryParseHandler<T> tryParse,
-    Func<T, T> promptUser)
-    {
-        var argumentService = _serviceProvider.GetRequiredService<ArgumentService>();
-
-        T defaultValue = (T)(property.GetValue(configInstance) ?? fallbackDefault!);
-
-        string? propArg = argumentService.GetArgument(property.Name);
-
-        if (tryParse(propArg, out T parsedValue))
-        {
-            property.SetValue(configInstance, parsedValue);
-        }
-        else
-        {
-            T value = promptUser(defaultValue);
-            property.SetValue(configInstance, value);
-        }
-    }
 }

@@ -70,6 +70,24 @@ namespace TTOptimize.ConsoleHost {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PLAYER{0}TYPE.
+        /// </summary>
+        internal static string AgentTypeArgumentKeyFormat {
+            get {
+                return ResourceManager.GetString("AgentTypeArgumentKeyFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Típus [1 = Ember, 2 = Random Bot]: .
+        /// </summary>
+        internal static string AgentTypePrompt {
+            get {
+                return ResourceManager.GetString("AgentTypePrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to JÁTÉK BEÁLLÍTÁSOK.
         /// </summary>
         internal static string GameSettings {
@@ -120,6 +138,24 @@ namespace TTOptimize.ConsoleHost {
         internal static string Player {
             get {
                 return ResourceManager.GetString("Player", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PLAYER{0}NAME.
+        /// </summary>
+        internal static string PlayerNameArgumentKeyFormat {
+            get {
+                return ResourceManager.GetString("PlayerNameArgumentKeyFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Játékos neve (Enter = Játékos {0}): .
+        /// </summary>
+        internal static string PlayerNamePrompt {
+            get {
+                return ResourceManager.GetString("PlayerNamePrompt", resourceCulture);
             }
         }
         
