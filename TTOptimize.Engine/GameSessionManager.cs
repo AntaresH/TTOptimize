@@ -83,8 +83,8 @@ public class GameSessionManager
         }
     }
 
-    private void Orchestrator_ValidationFailed(string validationFailureMessage, IPlayerAgent activeAgent)
+    private void Orchestrator_ValidationFailed(string invalidCommandText, IPlayerAgent activeAgent)
     {
-        _lastValidationFailure = validationFailureMessage;
+        _lastValidationFailure = string.Format(Strings.InvalidCommandType, invalidCommandText);
     }
 }

@@ -8,7 +8,6 @@ namespace TTOptimize.Engine;
 
 public class GameOrchestrator
 {
-    private const string _invalidCommandType = "A megadott parancs ({0}) ezekkel a paraméterekkel nem végrehajtható a játék jelenlegi állapotában!";
     private readonly IGameState _initialState;
     private readonly IReadOnlyList<IPlayerAgent> _playerAgents;
     private readonly IGameRules _rules;
@@ -44,8 +43,7 @@ public class GameOrchestrator
             }
             else
             {
-                string validationFailureMessage = string.Format(_invalidCommandType, command.CommandText);
-                ValidationFailed?.Invoke(validationFailureMessage, activeAgent);
+                ValidationFailed?.Invoke(command.CommandText, activeAgent);
             }
         }
 

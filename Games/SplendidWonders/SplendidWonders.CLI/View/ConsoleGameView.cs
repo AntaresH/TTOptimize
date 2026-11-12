@@ -46,9 +46,7 @@ namespace SplendidWonders.CLI.View
 
             if (!string.IsNullOrEmpty(previousInvalidCommand))
             {
-                Console.WriteLine();
                 PrintColoredLine(previousInvalidCommand, ConsoleColor.Red);
-                Console.WriteLine();
                 Console.WriteLine();
             }
         }

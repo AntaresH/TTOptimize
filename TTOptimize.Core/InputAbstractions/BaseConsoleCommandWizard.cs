@@ -35,7 +35,7 @@ public abstract class BaseConsoleCommandWizard : IConsoleCommandWizard
                 return new GameCommand()
                 {
                     Action = generatedAction,
-                    CommandText = $"({CommandKey} {input}"
+                    CommandText = $"{CommandKey} {input}"
                 };
             }
         }

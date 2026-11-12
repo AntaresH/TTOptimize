@@ -1,3 +1,4 @@
 **/bin/
 **/.vs/
 **/obj/
+/TTOptimize.ConsoleHost/TTOptimize.ConsoleHost.csproj.user
