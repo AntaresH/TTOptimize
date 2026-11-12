@@ -91,11 +91,10 @@ namespace SplendidWonders.CLI.Input
                 colorCostTexts.Add(GetRgbColoredConsoleBackground($" {whiteText} ", DevelopmentBonus.Red));
             }
 
-            string vpDisplay = leader.VictoryPoints > 0 ? $"{{{leader.VictoryPoints}}}" : string.Empty;
             string namePadding = new string(' ', Math.Max(0, 18 - leader.Name.Length));
             string colorCost = string.Join(" ", colorCostTexts);
 
-            Console.WriteLine($"{leader.Id,-5} {leader.Name}{namePadding} {leader.VictoryPoints} Feltételek: {colorCost}");
+            Console.WriteLine($"{leader.Id,-5} {leader.Name}{namePadding} Feltételek: {colorCost}");
         }
 
         private static void PrintCard(DevelopmentCard card, int requiredPolymathsCount = 0)
