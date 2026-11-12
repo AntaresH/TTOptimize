@@ -142,7 +142,7 @@ namespace SplendidWonders.CLI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vége a játéknak!.
+        ///   Looks up a localized string similar to Vége a játéknak.
         /// </summary>
         internal static string GameOverTitle {
             get {

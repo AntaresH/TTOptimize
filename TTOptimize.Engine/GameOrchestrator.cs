@@ -9,41 +9,32 @@ namespace TTOptimize.Engine;
 public class GameOrchestrator
 {
     private const string _invalidCommandType = "A megadott parancs ({0}) ezekkel a paraméterekkel nem végrehajtható a játék jelenlegi állapotában!";
-
     private readonly IGameState _initialState;
     private readonly IReadOnlyList<IPlayerAgent> _playerAgents;
     private readonly IGameRules _rules;
-    private readonly IGameView _view;
+    public event Action<IGameState, IReadOnlyList<GameAction>, IPlayerAgent>? TurnStarted;
+    public event Action<string, IPlayerAgent>? ValidationFailed;
 
     public GameOrchestrator(
         IGameState initialState,
         IReadOnlyList<IPlayerAgent> playerAgents,
-        IGameRules rules,
-        IGameView view)
+        IGameRules rules)
     {
         _initialState = initialState;
         _playerAgents = playerAgents;
         _rules = rules;
-        _view = view;
     }
 
-    public void Run()
+    public IGameState Run()
     {
         IGameState currentState = _initialState;
-
-        string validationFailureMessage = string.Empty;
 
         while (currentState.GameProgression != GameProgression.GameOver)
         {
             var validActions = _rules.Explore(currentState);
+            var activeAgent = _playerAgents[currentState.ActivePlayerId - 1];
 
-            IPlayerAgent activeAgent = _playerAgents[currentState.ActivePlayerId - 1];
-
-            if (activeAgent is HumanAgent)
-            {
-                _view.Render(currentState, validActions, validationFailureMessage);
-                validationFailureMessage = string.Empty;
-            }
+            TurnStarted?.Invoke(currentState, validActions, activeAgent);
 
             var command = activeAgent.DecideCommand(currentState, validActions);
 
@@ -53,11 +44,11 @@ public class GameOrchestrator
             }
             else
             {
-                validationFailureMessage = string.Format(_invalidCommandType, command.CommandText);
+                string validationFailureMessage = string.Format(_invalidCommandType, command.CommandText);
+                ValidationFailed?.Invoke(validationFailureMessage, activeAgent);
             }
         }
 
-        var finalStandings = _rules.GetFinalStandings(currentState);
-        _view.RenderFinalState(currentState, finalStandings);
+        return currentState;
     }
 }

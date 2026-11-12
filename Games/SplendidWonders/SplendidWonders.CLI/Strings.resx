@@ -142,7 +142,7 @@
     <value>Végső pontszámok:</value>
   </data>
   <data name="GameOverTitle" xml:space="preserve">
-    <value>Vége a játéknak!</value>
+    <value>Vége a játéknak</value>
   </data>
   <data name="InvalidCommandState" xml:space="preserve">
     <value>A megadott parancs nem érvényes a jelenlegi játékállapotban!</value>

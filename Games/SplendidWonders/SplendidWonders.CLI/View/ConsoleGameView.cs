@@ -29,17 +29,15 @@ namespace SplendidWonders.CLI.View
 
         public void DisplayGameOver(List<Player> players)
         {
-            Console.WriteLine(Strings.GameOverTitle);
-            Console.WriteLine();
-            Console.WriteLine($"{Strings.Winner}: {players.First().Name}");
+            Console.WriteLine($"{Strings.GameOverTitle} - {Strings.Winner}: {players.First().Name}");
             Console.WriteLine();
             Console.WriteLine(Strings.FinalScores);
-            Console.WriteLine();
 
             for (int i = 0; i < players.Count; i++)
             {
                 Console.WriteLine($"#{i+1}: {players[i].Name} - {players[i].Tableau.Sum(c => c.VictoryPoints) + players[i].AcquiredLeaders.Count * 3} {Strings.VP}");
             }
+            Console.WriteLine();
         }
 
         public void DisplayGame(GameState gameState, IEnumerable<GameAction> validActions, string previousInvalidCommand)

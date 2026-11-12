@@ -25,7 +25,7 @@ public class SetupService
         _isInterActive = bool.TryParse(interActiveModeArg, out bool parsed) ? parsed : true;
     }
 
-    public GameSessionData SetupGame(IGameManifest selectedManifest)
+    public GameSessionConfiguration SetupGame(IGameManifest selectedManifest)
     {   
         if (_isInterActive)
         {
@@ -40,7 +40,7 @@ public class SetupService
 
         config.PlayerNames = agents.Select(ag => ag.Name).ToList();
 
-        return new GameSessionData()
+        return new GameSessionConfiguration()
         {
             GameConfiguration = config,
             Agents = agents
