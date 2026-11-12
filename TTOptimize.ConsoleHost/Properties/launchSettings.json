@@ -1,12 +1,19 @@
 {
   "profiles": {
+    "FullInteractive": {
+      "commandName": "Project"
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    },
     "SplendidWonders HvH": {
       "commandName": "Project",
-      "commandLineArgs": "gameid=splendidWonders playercount=2 userandomseed=true player1name=Ambrus player2name=Brünhilda player1type=1 player2type=1"
+      "commandLineArgs": "interactive=false gameid=splendidWonders playercount=2 userandomseed=true player1name=Ambrus player2name=Brünhilda player1type=1 player2type=1"
     },
     "SplendidWonders GVG": {
       "commandName": "Project",
-      "commandLineArgs": "gameid=splendidWonders playercount=2 userandomseed=true player1name=Metalhead player2name=Ironboss player1type=2 player2type=2"
+      "commandLineArgs": "interactive=false gameid=splendidWonders playercount=2 userandomseed=true player1name=Metalhead player2name=Ironboss player1type=2 player2type=2"
     }
   }
 }

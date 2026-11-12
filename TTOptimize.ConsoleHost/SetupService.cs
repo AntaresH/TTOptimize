@@ -13,20 +13,27 @@ namespace TTOptimize.ConsoleHost;
 public class SetupService
 {
     private readonly IServiceProvider _serviceProvider;
+    private readonly ArgumentService _argumentService;
+    private readonly bool _isInterActive;
 
     public SetupService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
+        _argumentService = serviceProvider.GetRequiredService<ArgumentService>();
+
+        var interActiveModeArg = _argumentService.GetArgument(TTOptArguments.INTERACTIVE_MODE);
+        _isInterActive = bool.TryParse(interActiveModeArg, out bool parsed) ? parsed : true;
     }
 
     public GameSessionData SetupGame(IGameManifest selectedManifest)
-    {
-        var sessionManager = _serviceProvider.GetRequiredService<GameSessionManager>();
-        
-        var gameView = _serviceProvider.GetRequiredKeyedService<ISplendidWondersView>(selectedManifest.GameId);
+    {   
+        if (_isInterActive)
+        {
+            var gameView = _serviceProvider.GetRequiredKeyedService<ISplendidWondersView>(selectedManifest.GameId);
 
-        Console.Clear();
-        gameView.DisplayGameTitle();
+            Console.Clear();
+            gameView.DisplayGameTitle();
+        }
 
         IGameConfiguration config = ReadConfiguration(selectedManifest.ConfigurationType);
         IReadOnlyList<IPlayerAgent> agents = CreateAgents(selectedManifest.GameId, config.PlayerCount);
@@ -42,8 +49,6 @@ public class SetupService
 
     public IGameConfiguration ReadConfiguration(Type configurationType)
     {
-        var argumentService = _serviceProvider.GetRequiredService<ArgumentService>();
-
         if (!typeof(IGameConfiguration).IsAssignableFrom(configurationType))
         {
             throw new ArgumentException($"A megadott típus nem implementálja az IGameConfiguration interfészt: {configurationType.Name}");
@@ -51,7 +56,8 @@ public class SetupService
 
         var configInstance = (IGameConfiguration)Activator.CreateInstance(configurationType)!;
 
-        Console.WriteLine($"\n=== {Strings.GameSettings} ===");
+        if (_isInterActive)
+            Console.WriteLine($"\n=== {Strings.GameSettings} ===");
 
         foreach (var property in configurationType.GetProperties(BindingFlags.Public | BindingFlags.Instance))
         {
@@ -87,14 +93,13 @@ public class SetupService
     {
         var agents = new List<IPlayerAgent>(playerCount);
 
-        var gameInput = _serviceProvider.GetRequiredKeyedService<IGameInput>(gameId);
-        var argumentService = _serviceProvider.GetRequiredService<ArgumentService>();
-
-        Console.WriteLine($"\n=== {Strings.PlayerSettings} ===");
+        if (_isInterActive)
+            Console.WriteLine($"\n=== {Strings.PlayerSettings} ===");
 
         for (int i = 0; i < playerCount; i++)
         {
-            Console.WriteLine($"\n--- {i + 1}. {Strings.Player} ---");
+            if (_isInterActive)
+                Console.WriteLine($"\n--- {i + 1}. {Strings.Player} ---");
 
             string name = FromArgumentOrPrompt(string.Format(Strings.PlayerNameArgumentKeyFormat, i + 1), () => PromptString(Strings.PlayerNamePrompt, $"{Strings.Player} {i + 1}"));
             int agentType = FromArgumentOrPrompt(string.Format(Strings.AgentTypeArgumentKeyFormat, i + 1), () => PromptInt(Strings.AgentTypePrompt, 1, 2, 1));
@@ -115,11 +120,9 @@ public class SetupService
     private void SetPropertyFromArgumentOrPrompt<T>(PropertyInfo property, object configInstance, 
         T fallbackDefault, Func<T, T> promptUser) where T : IParsable<T>
     {
-        var argumentService = _serviceProvider.GetRequiredService<ArgumentService>();
-
         T defaultValue = (T)(property.GetValue(configInstance) ?? fallbackDefault!);
 
-        string? propArg = argumentService.GetArgument(property.Name);
+        string? propArg = _argumentService.GetArgument(property.Name);
 
         if (T.TryParse(propArg, null, out T parsedValue))
         {
@@ -134,9 +137,7 @@ public class SetupService
 
     private T FromArgumentOrPrompt<T>(string formattedArgumentKey, Func<T> promptUser) where T : IParsable<T>
     {
-        var argumentService = _serviceProvider.GetRequiredService<ArgumentService>();
-
-        string propertyArg = argumentService.GetArgument(formattedArgumentKey);
+        string propertyArg = _argumentService.GetArgument(formattedArgumentKey);
 
         if (T.TryParse(propertyArg, null, out T parsedArg))
         {

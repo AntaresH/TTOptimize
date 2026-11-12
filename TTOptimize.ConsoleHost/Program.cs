@@ -48,6 +48,7 @@ public class Program
 
         var gameSelectionService = rootProvider.GetRequiredService<GameSelectionService>();
         var setupService = rootProvider.GetRequiredService<SetupService>();
+        var argumentService = rootProvider.GetRequiredService<ArgumentService>();
 
         bool stayInApp = true;
 
@@ -55,9 +56,15 @@ public class Program
         {
             bool stayInGame = true;
 
-            Console.Clear();
-            DisplayTTOptimizeTitle();
-            Console.WriteLine(Strings.PromptGameChooser);
+            string interactiveModeArg = argumentService.GetArgument(TTOptArguments.INTERACTIVE_MODE);
+            bool interActiveMode = bool.TryParse(interactiveModeArg, out bool parsed) ? parsed : true;
+
+            if (interActiveMode)
+            {
+                Console.Clear();
+                DisplayTTOptimizeTitle();
+                Console.WriteLine(Strings.PromptGameChooser);
+            }
 
             var selectedGame = gameSelectionService.SelectGame();
             var sessionData = setupService.SetupGame(selectedGame);
@@ -73,10 +80,10 @@ public class Program
                 {
                 }
 
-                stayInGame = StayPrompter(Strings.PromptStayInGame);
+                stayInGame = interActiveMode ? StayPrompter(Strings.PromptStayInGame) : false;
             }
 
-            stayInApp = StayPrompter(Strings.PromptStayInApp);
+            stayInApp = interActiveMode ? StayPrompter(Strings.PromptStayInApp) : false;
         }
     }
 

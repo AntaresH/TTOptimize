@@ -4,6 +4,6 @@
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup>
-    <ActiveDebugProfile>SplendidWonders GVG</ActiveDebugProfile>
+    <ActiveDebugProfile>FullInteractive</ActiveDebugProfile>
   </PropertyGroup>
 </Project>

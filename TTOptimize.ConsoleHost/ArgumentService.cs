@@ -4,6 +4,7 @@ namespace TTOptimize.ConsoleHost
 {
     public static class TTOptArguments
     {
+        public const string INTERACTIVE_MODE = "interactive";
         public const string GAMEID = "gameid";
         public const string PLAYERCOUNT = "playercount";
         public const string PLAYER1NAME = "player1name";
@@ -45,6 +46,7 @@ namespace TTOptimize.ConsoleHost
                                 _commandArguments.Add(argumentType, parsedNum);
                             }
                             break;
+                        case TTOptArguments.INTERACTIVE_MODE:
                         case TTOptArguments.USERANDOMSEED:
                             if (bool.TryParse(argumentValue, out bool parsedBool))
                             {
