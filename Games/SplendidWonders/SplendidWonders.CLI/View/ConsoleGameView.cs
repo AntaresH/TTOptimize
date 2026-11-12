@@ -79,7 +79,6 @@ namespace SplendidWonders.CLI.View
             Console.WriteLine(" |_____/| .__/|_|\\___|_| |_|\\__,_|_|\\__,_|     \\/  \\/ \\___/|_| |_|\\__,_|\\___|_|  |___/");
             Console.WriteLine("        | |                                                                           ");
             Console.WriteLine("        |_|                                                                           ");
-            Console.WriteLine("");
         }
 
         public static void PrintColoredLine(string text, ConsoleColor color)

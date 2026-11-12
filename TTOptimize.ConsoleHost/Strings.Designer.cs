@@ -99,9 +99,9 @@ namespace TTOptimize.ConsoleHost {
         /// <summary>
         ///   Looks up a localized string similar to nem.
         /// </summary>
-        internal static string No {
+        internal static string NoLong {
             get {
-                return ResourceManager.GetString("No", resourceCulture);
+                return ResourceManager.GetString("NoLong", resourceCulture);
             }
         }
         
@@ -162,9 +162,9 @@ namespace TTOptimize.ConsoleHost {
         /// <summary>
         ///   Looks up a localized string similar to igen.
         /// </summary>
-        internal static string Yes {
+        internal static string YesLong {
             get {
-                return ResourceManager.GetString("Yes", resourceCulture);
+                return ResourceManager.GetString("YesLong", resourceCulture);
             }
         }
         

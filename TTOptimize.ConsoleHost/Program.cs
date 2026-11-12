@@ -3,6 +3,7 @@ using Microsoft.VisualBasic;
 using SplendidWonders.CLI;
 using SplendidWonders.CLI.View;
 using SplendidWonders.Common.Setup;
+using System.Net.Http.Headers;
 using System.Runtime.InteropServices;
 using TTOptimize.Core;
 using TTOptimize.Core.Agents;
@@ -39,13 +40,14 @@ public class Program
         services.AddTTOptimizeEngine();
         services.AddSplendidWonders();
 
-        services.AddSingleton<ConsoleGameSetupService>();
+        services.AddSingleton<SetupService>();
+        services.AddSingleton<GameSelectionService>();
+        services.AddSingleton((isp) => new ArgumentService(args));
 
         var rootProvider = services.BuildServiceProvider();
 
-        var manifests = rootProvider.GetServices<IGameManifest>().ToList();
-        var setupService = rootProvider.GetRequiredService<ConsoleGameSetupService>();
-        var sessionManager = rootProvider.GetRequiredService<GameSessionManager>();
+        var gameSelectionService = rootProvider.GetRequiredService<GameSelectionService>();
+        var setupService = rootProvider.GetRequiredService<SetupService>();
 
         bool stayInApp = true;
 
@@ -53,46 +55,28 @@ public class Program
         {
             bool stayInGame = true;
 
+            Console.Clear();
+            DisplayTTOptimizeTitle();
+            Console.WriteLine(Strings.PromptGameChooser);
+
+            var selectedGame = gameSelectionService.SelectGame();
+            var sessionData = setupService.SetupGame(selectedGame);
+
             while (stayInGame)
             {
-                Console.Clear();
-                DisplayTTOptimizeTitle();
-                Console.WriteLine(Strings.PromptGameChooser);
-
-                for (int i = 0; i < manifests.Count; i++)
+                try
                 {
-                    Console.WriteLine($"({i + 1}) - {manifests[i].DisplayName} - {manifests[i].Description}");
+                    var sessionManager = rootProvider.GetRequiredService<GameSessionManager>();
+                    sessionManager.StartNewMatch(selectedGame.GameId, sessionData.GameConfiguration, sessionData.Agents);
+                }
+                catch (ConsoleUserAbortException)
+                {
                 }
 
-                var input = Console.ReadLine().Trim();
-
-                if (int.TryParse(input, out int parsedNum) && parsedNum > 0 && parsedNum <= manifests.Count)
-                {
-                    var gameView = rootProvider.GetRequiredKeyedService<ISplendidWondersView>(manifests[parsedNum-1].GameId);
-
-                    Console.Clear();
-                    gameView.DisplayGameTitle();
-
-                    try
-                    {
-                        var selectedManifest = manifests[parsedNum - 1];
-
-                        IGameConfiguration config = setupService.ReadConfiguration(selectedManifest.ConfigurationType);
-                        IReadOnlyList<IPlayerAgent> agents = setupService.CreateAgents(selectedManifest.GameId, config.PlayerCount);
-
-                        config.PlayerNames = agents.Select(ag => ag.Name).ToList();
-
-                        sessionManager.StartNewMatch(selectedManifest.GameId, config, agents);
-                    }
-                    catch (ConsoleUserAbortException)
-                    {
-                    }
-
-                    stayInGame = StayPrompter(Strings.PromptStayInGame);
-                }
+                stayInGame = StayPrompter(Strings.PromptStayInGame);
             }
 
-           stayInApp = StayPrompter(Strings.PromptStayInApp);
+            stayInApp = StayPrompter(Strings.PromptStayInApp);
         }
     }
 
@@ -116,11 +100,11 @@ public class Program
 
             var userInput = Console.ReadLine().Trim();
 
-            if (userInput == Strings.YesShort || userInput == Strings.Yes)
+            if (userInput == Strings.YesShort || userInput == Strings.YesLong)
             {
                 return true;
             }
-            else if (userInput == Strings.NoShort || userInput == Strings.No)
+            else if (userInput == Strings.NoShort || userInput == Strings.NoLong)
             {
                 return false;
             }

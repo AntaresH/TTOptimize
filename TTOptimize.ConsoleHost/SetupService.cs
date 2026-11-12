@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SplendidWonders.CLI.View;
+using System.ComponentModel.Design;
 using System.Reflection;
 using TTOptimize.Core;
 using TTOptimize.Core.Agents;
@@ -8,17 +10,40 @@ using TTOptimize.Engine;
 
 namespace TTOptimize.ConsoleHost;
 
-public class ConsoleGameSetupService
+public class SetupService
 {
     private readonly IServiceProvider _serviceProvider;
 
-    public ConsoleGameSetupService(IServiceProvider serviceProvider)
+    public SetupService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
     }
 
+    public GameSessionData SetupGame(IGameManifest selectedManifest)
+    {
+        var sessionManager = _serviceProvider.GetRequiredService<GameSessionManager>();
+        
+        var gameView = _serviceProvider.GetRequiredKeyedService<ISplendidWondersView>(selectedManifest.GameId);
+
+        Console.Clear();
+        gameView.DisplayGameTitle();
+
+        IGameConfiguration config = ReadConfiguration(selectedManifest.ConfigurationType);
+        IReadOnlyList<IPlayerAgent> agents = CreateAgents(selectedManifest.GameId, config.PlayerCount);
+
+        config.PlayerNames = agents.Select(ag => ag.Name).ToList();
+
+        return new GameSessionData()
+        {
+            GameConfiguration = config,
+            Agents = agents
+        };
+    }
+
     public IGameConfiguration ReadConfiguration(Type configurationType)
     {
+        var argumentService = _serviceProvider.GetRequiredService<ArgumentService>();
+
         if (!typeof(IGameConfiguration).IsAssignableFrom(configurationType))
         {
             throw new ArgumentException($"A megadott típus nem implementálja az IGameConfiguration interfészt: {configurationType.Name}");
@@ -45,15 +70,23 @@ public class ConsoleGameSetupService
 
             if (property.PropertyType == typeof(int))
             {
-                int defaultValue = (int)(property.GetValue(configInstance) ?? attribute.Min);
-                int value = PromptInt(attribute.DisplayName, attribute.Min, attribute.Max, defaultValue);
-                property.SetValue(configInstance, value);
+                SetPropertyValue<int>(
+                    property,
+                    configInstance,
+                    attribute.Min,
+                    int.TryParse,
+                    def => PromptInt(attribute.DisplayName, attribute.Min, attribute.Max, def)
+                );
             }
             else if (property.PropertyType == typeof(bool))
             {
-                bool defaultValue = (bool)(property.GetValue(configInstance) ?? false);
-                bool value = PromptBool(attribute.DisplayName, defaultValue);
-                property.SetValue(configInstance, value);
+                SetPropertyValue<bool>(
+                    property,
+                    configInstance,
+                    false,
+                    bool.TryParse,
+                    def => PromptBool(attribute.DisplayName, def)
+                );
             }
         }
 
@@ -65,14 +98,35 @@ public class ConsoleGameSetupService
         var agents = new List<IPlayerAgent>(playerCount);
 
         var gameInput = _serviceProvider.GetRequiredKeyedService<IGameInput>(gameId);
+        var argumentService = _serviceProvider.GetRequiredService<ArgumentService>();
 
         Console.WriteLine($"\n=== {Strings.PlayerSettings} ===");
 
         for (int i = 0; i < playerCount; i++)
         {
             Console.WriteLine($"\n--- {i + 1}. {Strings.Player} ---");
-            string name = PromptString($"{Strings.Player} {Strings.NameToEnter} (Enter = {Strings.Player} {i + 1}): ", $"{Strings.Player} {i + 1}");
-            int agentType = PromptInt($"{Strings.AgentType} [1 = {Strings.Human}, 2 = Random Bot]: ", 1, 2, 1);
+
+            string name = string.Empty;
+            string nameArg = argumentService.GetArgument($"PLAYER{i+1}NAME");
+            if (!string.IsNullOrEmpty(nameArg))
+            {
+                name = nameArg;
+            }
+            else
+            {
+                name = PromptString($"{Strings.Player} {Strings.NameToEnter} (Enter = {Strings.Player} {i + 1}): ", $"{Strings.Player} {i + 1}");
+            }
+
+            int agentType = 0;
+            string agentTypeArgString = argumentService.GetArgument($"PLAYER{i+1}TYPE");
+            if (int.TryParse(agentTypeArgString, out int agentTypeArgInt))
+            { 
+                agentType = agentTypeArgInt;
+            }
+            else 
+            {
+                agentType = PromptInt($"{Strings.AgentType} [1 = {Strings.Human}, 2 = Random Bot]: ", 1, 2, 1);
+            }
 
             IPlayerAgent agent = agentType switch
             {
@@ -126,5 +180,31 @@ public class ConsoleGameSetupService
         Console.Write(label);
         string? input = Console.ReadLine()?.Trim();
         return string.IsNullOrEmpty(input) ? defaultValue : input;
+    }
+
+    private delegate bool TryParseHandler<T>(string? value, out T result);
+
+    private void SetPropertyValue<T>(
+    PropertyInfo property,
+    object configInstance,
+    T fallbackDefault,
+    TryParseHandler<T> tryParse,
+    Func<T, T> promptUser)
+    {
+        var argumentService = _serviceProvider.GetRequiredService<ArgumentService>();
+
+        T defaultValue = (T)(property.GetValue(configInstance) ?? fallbackDefault!);
+
+        string? propArg = argumentService.GetArgument(property.Name);
+
+        if (tryParse(propArg, out T parsedValue))
+        {
+            property.SetValue(configInstance, parsedValue);
+        }
+        else
+        {
+            T value = promptUser(defaultValue);
+            property.SetValue(configInstance, value);
+        }
     }
 }
