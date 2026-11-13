@@ -1,11 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SplendidWonders.CLI.View;
+using SplendidWonders.CLI.View.Legacy;
 using System.ComponentModel.Design;
 using System.Reflection;
 using TTOptimize.Core;
 using TTOptimize.Core.Agents;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
+using TTOptimize.Core.ViewAbstractions;
 using TTOptimize.Engine;
 
 namespace TTOptimize.ConsoleHost;
@@ -29,10 +30,10 @@ public class SetupService
     {   
         if (_isInterActive)
         {
-            var gameView = _serviceProvider.GetRequiredKeyedService<ISplendidWondersView>(selectedManifest.GameId);
+            var titleView = _serviceProvider.GetRequiredKeyedService<ITitleView>(selectedManifest.GameId);
 
             Console.Clear();
-            gameView.DisplayGameTitle();
+            titleView.DisplayGameTitle();
         }
 
         IGameConfiguration config = ReadConfiguration(selectedManifest.ConfigurationType);
@@ -101,7 +102,7 @@ public class SetupService
             if (_isInterActive)
                 Console.WriteLine($"\n--- {i + 1}. {Strings.Player} ---");
 
-            string name = FromArgumentOrPrompt(string.Format(Strings.PlayerNameArgumentKeyFormat, i + 1), () => PromptString(Strings.PlayerNamePrompt, $"{Strings.Player} {i + 1}"));
+            string name = FromArgumentOrPrompt(string.Format(Strings.PlayerNameArgumentKeyFormat, i + 1), () => PromptString(string.Format(Strings.PlayerNamePrompt, i + 1), $"{Strings.Player} {i + 1}"));
             int agentType = FromArgumentOrPrompt(string.Format(Strings.AgentTypeArgumentKeyFormat, i + 1), () => PromptInt(Strings.AgentTypePrompt, 1, 2, 1));
 
             IPlayerAgent agent = agentType switch

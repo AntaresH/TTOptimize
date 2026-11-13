@@ -4,7 +4,7 @@ using SplendidWonders.Gameplay.Actions;
 using TTOptimize.Core;
 using TTOptimize.Core.GameAbstractions;
 
-namespace SplendidWonders.CLI.View
+namespace SplendidWonders.CLI.View.Legacy
 {
     internal sealed class ConsoleGameStateRenderer
     {

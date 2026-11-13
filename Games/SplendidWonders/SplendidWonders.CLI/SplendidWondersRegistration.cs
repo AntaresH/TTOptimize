@@ -2,6 +2,7 @@
 using SplendidWonders.CLI.Input;
 using SplendidWonders.CLI.Input.Wizards;
 using SplendidWonders.CLI.View;
+using SplendidWonders.CLI.View.Legacy;
 using SplendidWonders.Gameplay;
 using SplendidWonders.Gameplay.Actions;
 using SplendidWonders.Gameplay.Explorers;
@@ -9,6 +10,7 @@ using SplendidWonders.Gameplay.Reducers;
 using TTOptimize.Core;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
+using TTOptimize.Core.ViewAbstractions;
 
 namespace SplendidWonders.CLI
 {
@@ -42,9 +44,17 @@ namespace SplendidWonders.CLI
 
             services.AddKeyedScoped<IGameRules, Rules>(Games.SPLENDID_WONDERS_KEY);
 
-            services.AddKeyedScoped<ConsoleGameView>(Games.SPLENDID_WONDERS_KEY);
-            services.AddKeyedScoped<IGameView>(Games.SPLENDID_WONDERS_KEY, (sp, key) => sp.GetRequiredKeyedService<ConsoleGameView>(key));
-            services.AddKeyedScoped<ISplendidWondersView>(Games.SPLENDID_WONDERS_KEY, (sp, key) => sp.GetRequiredKeyedService<ConsoleGameView>(key));
+            //services.AddKeyedScoped<ConsoleGameView>(Games.SPLENDID_WONDERS_KEY);
+            //services.AddKeyedScoped<IGameView>(Games.SPLENDID_WONDERS_KEY, (sp, key) => sp.GetRequiredKeyedService<ConsoleGameView>(key));
+            //services.AddKeyedScoped<ISplendidWondersView>(Games.SPLENDID_WONDERS_KEY, (sp, key) => sp.GetRequiredKeyedService<ConsoleGameView>(key));
+
+            services.AddKeyedScoped<LeaderAreaWidget>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<TokenSupplyWidget>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<DecksWidget>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<MarketWidget>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<PlayerAreaWidget>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<ILayoutManager, SplendidWondersLayoutManager>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedSingleton<ITitleView, SplendidWondersTitleView>(Games.SPLENDID_WONDERS_KEY);
 
             services.AddKeyedScoped<IConsoleCommandWizard, DrawDoubleTokensCommandWizard>(Games.SPLENDID_WONDERS_KEY);
             services.AddKeyedScoped<IConsoleCommandWizard, DrawThreeTokensCommandWizard>(Games.SPLENDID_WONDERS_KEY);

@@ -5,10 +5,12 @@ using SplendidWonders.CLI.View;
 using SplendidWonders.Common.Setup;
 using System.Net.Http.Headers;
 using System.Runtime.InteropServices;
+using TTOptimize.ConsoleHost.ConsoleView;
 using TTOptimize.Core;
 using TTOptimize.Core.Agents;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
+using TTOptimize.Core.ViewAbstractions;
 using TTOptimize.Engine;
 
 namespace TTOptimize.ConsoleHost;
@@ -43,6 +45,14 @@ public class Program
         services.AddSingleton<SetupService>();
         services.AddSingleton<GameSelectionService>();
         services.AddSingleton((isp) => new ArgumentService(args));
+        services.AddSingleton<ConxelAnsiCompiler>();
+        
+        services.AddKeyedScoped<IGameView>(Games.SPLENDID_WONDERS_KEY, (sp, key) =>
+        {
+            var layoutManager = sp.GetRequiredKeyedService<ILayoutManager>(key);
+            var compiler = sp.GetRequiredService<ConxelAnsiCompiler>();
+            return new ConxelGameView(layoutManager, compiler);
+        });
 
         var rootProvider = services.BuildServiceProvider();
 

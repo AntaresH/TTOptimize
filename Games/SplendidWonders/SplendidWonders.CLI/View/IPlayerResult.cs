@@ -1,3 +1,0 @@
-﻿namespace SplendidWonders.CLI.View
-{
-}
