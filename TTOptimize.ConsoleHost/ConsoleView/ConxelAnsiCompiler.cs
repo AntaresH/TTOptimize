@@ -9,16 +9,16 @@ public class ConxelAnsiCompiler
 {
     public string Compile(ConxelCanvas canvas)
     {
-        var sb = new StringBuilder(canvas.Width * canvas.Height * 2);
+        var sb = new StringBuilder(canvas.Columns * canvas.Rows * 2);
 
-        for (int y = 0; y < canvas.Height; y++)
+        for (int row = 0; row < canvas.Rows; row++)
         {
             RgbColor? currentFg = null;
             RgbColor? currentBg = null;
 
-            for (int x = 0; x < canvas.Width; x++)
+            for (int column = 0; column < canvas.Columns; column++)
             {
-                Conxel cell = canvas.GetAt(x, y);
+                Conxel cell = canvas.GetAt(row, column);
 
                 if (cell.Foreground != currentFg)
                 {
@@ -40,7 +40,7 @@ public class ConxelAnsiCompiler
                     currentBg = cell.Background;
                 }
 
-                sb.Append(cell.Symbol);
+                sb.Append(cell.Glyph);
             }
 
             if (currentFg != null || currentBg != null)

@@ -1,47 +1,83 @@
-﻿namespace TTOptimize.Core.ViewAbstractions;
+﻿using System.Globalization;
+
+namespace TTOptimize.Core.ViewAbstractions;
 
 public class ConxelCanvas
 {
     private readonly Conxel[,] _buffer;
-    public int Width { get; }
-    public int Height { get; }
+    public int Columns { get; }
+    public int Rows { get; }
 
-    public ConxelCanvas(int width, int height)
+    public ConxelCanvas(int rows, int columns)
     {
-        Width = width;
-        Height = height;
-        _buffer = new Conxel[height, width];
+        Columns = columns;
+        Rows = rows;
+        _buffer = new Conxel[rows, columns];
         Clear();
     }
 
     public void Clear()
     {
-        for (int y = 0; y < Height; y++)
-            for (int x = 0; x < Width; x++)
-                _buffer[y, x] = new Conxel(' ');
+        for (int row = 0; row < Rows; row++)
+            for (int column = 0; column < Columns; column++)
+                _buffer[row, column] = new Conxel(" ");
     }
 
-    public void Blit(ConxelCanvas source, int startX, int startY)
+    public void Blit(Conxel[,] source, int startRow, int startColumns)
     {
-        for (int y = 0; y < source.Height; y++)
+        int srcRows = source.GetLength(0);
+        int srcColumns = source.GetLength(1);
+
+        for (int row = 0; row < srcRows; row++)
         {
-            int targetY = startY + y;
-            if (targetY < 0 || targetY >= Height) continue;
+            int targetRow = startRow + row;
+            if (targetRow < 0 || targetRow >= Rows) continue;
 
-            for (int x = 0; x < source.Width; x++)
+            for (int column = 0; column < srcColumns; column++)
             {
-                int targetX = startX + x;
-                if (targetX < 0 || targetX >= Width) continue;
+                int targetColumns = startColumns + column;
+                if (targetColumns < 0 || targetColumns >= Columns) continue;
 
-                _buffer[targetY, targetX] = source[y, x];
+                _buffer[targetRow, targetColumns] = source[row, column];
             }
         }
     }
-    public Conxel this[int y, int x]
+    public void Blit(ConxelCanvas source, int startRow, int startColumn)
     {
-        get => _buffer[y, x];
-        set => _buffer[y, x] = value;
+        Blit(source._buffer, startRow, startColumn);
     }
 
-    public Conxel GetAt(int x, int y) => _buffer[y, x];
+    public void WriteText(int startRow, int startColumn, string text, RgbColor? foreground = null, RgbColor? background = null)
+    {
+        if (startRow < 0 || startRow >= Rows || string.IsNullOrEmpty(text))
+        {
+            return;
+        }
+
+        var enumerator = StringInfo.GetTextElementEnumerator(text);
+        int offset = 0;
+
+        while (enumerator.MoveNext())
+        {
+            int targetColumn = startColumn + offset;
+            if (targetColumn >= Columns) break;
+
+            if (targetColumn >= 0)
+            {
+                string element = enumerator.GetTextElement();
+                RgbColor? effectiveBg = background ?? _buffer[startRow, targetColumn].Background;
+                _buffer[startRow, targetColumn] = new Conxel(element, foreground, effectiveBg);
+            }
+
+            offset++;
+        }
+    }
+
+    public Conxel this[int row, int column]
+    {
+        get => _buffer[row, column];
+        set => _buffer[row, column] = value;
+    }
+
+    public Conxel GetAt(int row, int column) => _buffer[row, column];
 }

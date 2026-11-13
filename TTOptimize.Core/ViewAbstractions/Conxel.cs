@@ -20,10 +20,14 @@ public readonly record struct RgbColor(byte R, byte G, byte B)
     public static readonly RgbColor DarkSetBrown = new RgbColor(100, 45, 0);
     public static readonly RgbColor DarkSetRed = new RgbColor(180, 10, 20);
     public static readonly RgbColor DarkSetDefault = new RgbColor(96, 96, 96);
+
+    public static readonly RgbColor Orange = new RgbColor(204, 85, 0);
+    public static readonly RgbColor Turqoise = new RgbColor(0, 128, 128);
+    public static readonly RgbColor DarkMagenta = new RgbColor(160, 0, 80);
 }
 
 public readonly record struct Conxel(
-    char Symbol = ' ',
+    string Glyph = " ",
     RgbColor? Foreground = null, // null = terminal default color
     RgbColor? Background = null
 );

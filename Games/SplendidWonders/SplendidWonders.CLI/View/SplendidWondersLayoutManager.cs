@@ -18,24 +18,25 @@ public class SplendidWondersLayoutManager : ILayoutManager
     private readonly PlayerAreaWidget _playerAreaWidget;
 
     public SplendidWondersLayoutManager(
-        [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] LeaderAreaWidget leaderAreaWidget,
         [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] TokenSupplyWidget tokenSupplyWidget,
         [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] DecksWidget decksWidget,
+        [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] LeaderAreaWidget leaderAreaWidget,
         [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] MarketWidget marketWidget,
         [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] PlayerAreaWidget playerAreaWidget)
     {
-        _marketWidget = marketWidget;
         _tokenSupplyWidget = tokenSupplyWidget;
+        _decksWidget = decksWidget;
+        _marketWidget = marketWidget;
         _leaderAreaWidget = leaderAreaWidget;
         _playerAreaWidget = playerAreaWidget;
     }
 
     public ConxelCanvas BuildCanvas(IGameState state, IReadOnlyList<GameAction>? legalActions, string? errorMessage)
     {
-        var canvas = new ConxelCanvas(CanvasWidth, CanvasHeight);
+        var canvas = new ConxelCanvas(CanvasHeight, CanvasWidth);
 
-        canvas.Blit(_tokenSupplyWidget.RenderToBuffer(state, legalActions), startX: 0, startY: 0);
-        //canvas.Blit(_marketWidget.RenderToBuffer(state, legalActions), startX: 0, startY: 6);
+        canvas.Blit(_tokenSupplyWidget.RenderToBuffer(state, legalActions), startColumn: 0, startRow: 2);
+        canvas.Blit(_decksWidget.RenderToBuffer(state, legalActions), startColumn: 7, startRow: 0);
 
         //canvas.Blit(_leaderAreaWidget.RenderToBuffer(state, legalActions), startX: 85, startY: 0);
 
