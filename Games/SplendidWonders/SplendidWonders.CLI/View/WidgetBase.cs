@@ -54,7 +54,7 @@ namespace SplendidWonders.CLI.View
 
             borderedCanvas.WriteText(0, 1, string.Concat(Enumerable.Repeat(horizBorder, innerCanvas.Columns)), borderColor);
 
-            for (int i = 0; i < borderedCanvas.Rows; i++)
+            for (int i = 1; i < borderedCanvas.Rows - 1; i++)
             {
                 borderedCanvas[i, 0] = new Conxel(vertBorder, borderColor);
                 borderedCanvas[i, borderedCanvas.Columns - 1] = new Conxel(vertBorder, borderColor);

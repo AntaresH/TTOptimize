@@ -7,7 +7,7 @@ using TTOptimize.Core.ViewAbstractions;
 
 namespace SplendidWonders.CLI.View
 {
-    public class PlayerAreaWidget : IConxelWidget
+    public class PlayerAreaWidget : WidgetBase, IConxelWidget
     {
         private string _horizBorderChar = "-";
         private string _vertBorderChar = "|";
@@ -38,7 +38,6 @@ namespace SplendidWonders.CLI.View
         {
             var playerBlockCanvas = new ConxelCanvas(_playerBlockHeight, _playerBlockWidth);
 
-            //WidgetRenderingHelper.AddSingleBorderToCanvas(playerBlockCanvas, blockColor);
 
             //playerBlockCanvas.WriteText(1, 1, player.Name, blockColor);
             //playerBlockCanvas.Blit(StoreLine(player.Store, player.ReservedCards), 2, 1);
