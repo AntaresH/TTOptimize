@@ -102,30 +102,5 @@ namespace SplendidWonders.CLI.View
 
             return reqLine;
         }
-
-        public IEnumerable<KeyValuePair<RgbColor, int>> GetRequirementsEnumerable(TokenGroup cost)
-        {
-            var costs = new Dictionary<RgbColor, int>();
-
-            if (cost.Yellow > 0)
-                yield return new KeyValuePair<RgbColor, int>(RgbColor.LightSetYellow, cost.Yellow);
-
-            if (cost.Blue > 0)
-                yield return new KeyValuePair<RgbColor, int>(RgbColor.LightSetBlue, cost.Blue);
-
-            if (cost.Green > 0)
-                yield return new KeyValuePair<RgbColor, int>(RgbColor.LightSetGreen, cost.Green);
-
-            if (cost.Brown > 0)
-                yield return new KeyValuePair<RgbColor, int>(RgbColor.LightSetBrown, cost.Brown);
-
-            if (cost.Red > 0)
-                yield return new KeyValuePair<RgbColor, int>(RgbColor.LightSetRed, cost.Red);
-
-            if (cost.Polymath > 0)
-                yield return new KeyValuePair<RgbColor, int>(RgbColor.FullWhite, cost.Polymath);
-
-            yield break;
-        }
     }
 }
