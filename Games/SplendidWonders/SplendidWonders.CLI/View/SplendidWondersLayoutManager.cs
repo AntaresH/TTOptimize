@@ -35,8 +35,9 @@ public class SplendidWondersLayoutManager : ILayoutManager
     {
         var canvas = new ConxelCanvas(CanvasHeight, CanvasWidth);
 
-        canvas.Blit(_tokenSupplyWidget.RenderToBuffer(state, legalActions), startColumn: 0, startRow: 2);
-        canvas.Blit(_decksWidget.RenderToBuffer(state, legalActions), startColumn: 7, startRow: 0);
+        canvas.Blit(_tokenSupplyWidget.RenderToBuffer(state, legalActions), startRow: 2, startColumn: 0);
+        canvas.Blit(_decksWidget.RenderToBuffer(state, legalActions), startRow: 0, startColumn: 7);
+        canvas.Blit(_marketWidget.RenderToBuffer(state, legalActions), startRow: 0, startColumn: 26);
 
         //canvas.Blit(_leaderAreaWidget.RenderToBuffer(state, legalActions), startX: 85, startY: 0);
 
