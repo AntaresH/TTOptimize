@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Globalization;
 using System.Text;
+using TTOptimize.Core.ViewAbstractions;
 
 namespace SplendidWonders.CLI.View
 {
@@ -79,7 +81,7 @@ namespace SplendidWonders.CLI.View
 
             return (CenterText(rawLine1, maxWidth), CenterText(rawLine2, maxWidth));
         }
-
+        
         private static string TruncateIfNeeded(string text, int maxWidth)
         {
             if (text.Length <= maxWidth) return text;

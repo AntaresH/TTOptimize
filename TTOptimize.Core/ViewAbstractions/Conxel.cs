@@ -6,6 +6,7 @@ namespace TTOptimize.Core.ViewAbstractions;
 
 public readonly record struct RgbColor(byte R, byte G, byte B)
 {
+    public static readonly RgbColor WarmWhite = new RgbColor(255, 250, 220);
     public static readonly RgbColor FullWhite = new RgbColor(255, 255, 255);
     public static readonly RgbColor LightSetYellow = new RgbColor(208, 208, 0);
     public static readonly RgbColor LightSetBlue = new RgbColor(80, 145, 255);
