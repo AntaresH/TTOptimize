@@ -15,7 +15,7 @@ namespace SplendidWonders.CLI.View
         private string _vertBorderChar = "|";
         private string _cornerChar = "+";
         private int _cardHeight = 8;
-        private int _cardWidth = 19;
+        private int _cardWidth = 24;
 
         public ConxelCanvas RenderToBuffer(IGameState state, IReadOnlyList<GameAction> legalActions)
         {
@@ -23,11 +23,11 @@ namespace SplendidWonders.CLI.View
 
             var marketCanvas = new ConxelCanvas(3 * _cardHeight + 2, 4 * _cardWidth + 3);
 
-            for (int i = 2; i >= 0; i--)
+            for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    var developmentCard = swState[i + 1][j + 1];
+                    var developmentCard = swState[3 - i][j + 1];
                     var respectivePurchaseAction = legalActions.OfType<PurchaseAction>().FirstOrDefault(pa => pa.Card == developmentCard);
 
                     marketCanvas.Blit(RenderCard(developmentCard, respectivePurchaseAction), i * _cardHeight + i, j * _cardWidth + j);
@@ -115,9 +115,9 @@ namespace SplendidWonders.CLI.View
                 i += 2;
             }
 
-            reqLine[0, _cardWidth - 4] = new Conxel("{", RgbColor.FullWhite);
-            reqLine[0, _cardWidth - 3] = new Conxel(victoryPoints.ToString(), RgbColor.FullWhite);
-            reqLine[0, _cardWidth - 2] = new Conxel("}", RgbColor.FullWhite);
+            reqLine[0, _cardWidth - 5] = new Conxel("{", RgbColor.FullWhite);
+            reqLine[0, _cardWidth - 4] = new Conxel(victoryPoints.ToString(), RgbColor.FullWhite);
+            reqLine[0, _cardWidth - 3] = new Conxel("}", RgbColor.FullWhite);
             
             reqLine[0, _cardWidth - 1] = new Conxel(_vertBorderChar, borderColor);
 

@@ -14,7 +14,7 @@ namespace SplendidWonders.CLI.View
         private string _vertBorderChar = "\u2551";
         private string _cornerChar = "+";
         private int _deckHeight = 8;
-        private int _deckWidth = 18;
+        private int _deckWidth = 20;
         private string _level3Icon = "\uD83C\uDFDB "; // the extra space is VERY necessary as the 🏛 is a UTF16 surrogate-pair which is condensed into one column
         private string _level2Icon = "⛯";
         private string _level1Icon = "▓"; // try the double-length 🧱 (the counter problem of the level 3 icon)
