@@ -26,14 +26,14 @@ namespace SplendidWonders.CLI.View
 
             var decksCanvas = new ConxelCanvas(3 * borderedDeckHeight + 2, borderedDeckWidth);
 
-            decksCanvas.Blit(RenderDeck($"{_level3Icon} {Strings.Level3Title}", swState.Level3.Deck.Count, RgbColor.DarkMagenta), 0, 0);
-            decksCanvas.Blit(RenderDeck($"{_level2Icon} {Strings.Level2Title}", swState.Level2.Deck.Count, RgbColor.Turqoise), borderedDeckHeight + 1, 0);
-            decksCanvas.Blit(RenderDeck($"{_level1Icon} {Strings.Level1Title}", swState.Level1.Deck.Count, RgbColor.Orange), 2 * borderedDeckHeight + 2, 0);
+            decksCanvas.Blit(Deck($"{_level3Icon} {Strings.Level3Title}", swState.Level3.Deck.Count, RgbColor.DarkMagenta), 0, 0);
+            decksCanvas.Blit(Deck($"{_level2Icon} {Strings.Level2Title}", swState.Level2.Deck.Count, RgbColor.Turqoise), borderedDeckHeight + 1, 0);
+            decksCanvas.Blit(Deck($"{_level1Icon} {Strings.Level1Title}", swState.Level1.Deck.Count, RgbColor.Orange), 2 * borderedDeckHeight + 2, 0);
 
             return decksCanvas;
         }
 
-        private ConxelCanvas RenderDeck(string deckTitle, int remaining, RgbColor deckColor)
+        private ConxelCanvas Deck(string deckTitle, int remaining, RgbColor deckColor)
         {
             var deckCanvas = new ConxelCanvas(_innerHeight, _innerWidth);
                         

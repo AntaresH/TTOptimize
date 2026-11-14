@@ -27,15 +27,15 @@ namespace SplendidWonders.CLI.View
 
         private ConxelCanvas NormalPile(int tokens, RgbColor color)
         {
-            return RenderPile(tokens, color).WithSingleBorder(color);
+            return Pile(tokens, color).WithSingleBorder(color);
         }
 
         private ConxelCanvas PolymathPile(int tokens)
         {
-            return RenderPile(tokens, RgbColor.FullWhite).WithDoubleBorder(RgbColor.FullWhite);
+            return Pile(tokens, RgbColor.FullWhite).WithDoubleBorder(RgbColor.FullWhite);
         }
 
-        private ConxelCanvas RenderPile(int tokens, RgbColor foreGroundColor)
+        private ConxelCanvas Pile(int tokens, RgbColor foreGroundColor)
         {
             var pileBuffer = new ConxelCanvas(1, 3);
 

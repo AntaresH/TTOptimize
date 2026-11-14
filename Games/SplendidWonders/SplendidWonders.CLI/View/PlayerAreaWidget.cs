@@ -39,25 +39,25 @@ namespace SplendidWonders.CLI.View
         {
             var playerBlockCanvas = new ConxelCanvas(_playerBlockHeight, _playerBlockWidth);
 
-            playerBlockCanvas.Blit(NameLine(player.Name, player.Tableau, blockColor), 0, 0);
+            int victoryPoints = player.Tableau.Sum(dc => dc.VictoryPoints) + player.AcquiredLeaders.Count * 3;
+
+            playerBlockCanvas.Blit(NameLine(player.Name, player.Tableau, victoryPoints, blockColor), 0, 0);
             playerBlockCanvas.Blit(StoreLine(player.Store, player.ReservedCards, blockColor), 2, 0);
             playerBlockCanvas.Blit(TableauLine(player.Tableau), 4, 0);
 
             return playerBlockCanvas.WithSingleBorder(blockColor).WithCorners(blockColor);
         }
 
-        private ConxelCanvas NameLine(string name, ImmutableList<DevelopmentCard> tableau, RgbColor blockColor)
+        private ConxelCanvas NameLine(string name, ImmutableList<DevelopmentCard> tableau, int victoryPoints, RgbColor blockColor)
         {
             var nameLine = new ConxelCanvas(1, _playerBlockWidth);
 
             nameLine.WriteText(0, 1, name, blockColor);
 
-            int totalVP = tableau.Sum(dc => dc.VictoryPoints);
-
-            if (totalVP > 0)
+            if (victoryPoints > 0)
             {
                 nameLine[0, 17] = new Conxel("{", blockColor);
-                nameLine[0, 18] = new Conxel(totalVP.ToString(), blockColor);
+                nameLine[0, 18] = new Conxel(victoryPoints.ToString(), blockColor);
                 nameLine[0, 19] = new Conxel("}", blockColor);
             }
 

@@ -30,14 +30,25 @@ namespace SplendidWonders.CLI.View
                     var developmentCard = swState[3 - i][j + 1];
                     var purchaseAction = legalActions.OfType<PurchaseAction>().FirstOrDefault(pa => pa.Card == developmentCard);
 
-                    marketCanvas.Blit(RenderCard(developmentCard, purchaseAction), i * borderedCardHeight + i, j * borderedCardWidth + j);
+                    var cardCanvas = developmentCard == Cards.Empty
+                                        ? EmptyCard(WidgetHelper.DarkSetDefault)
+                                        : Card(developmentCard, purchaseAction);
+
+                    marketCanvas.Blit(cardCanvas, i * borderedCardHeight +i, j * borderedCardWidth + j);
                 }
             }
 
             return marketCanvas;
         }
 
-        private ConxelCanvas RenderCard(DevelopmentCard developmentCard, PurchaseAction respectivePurchaseAction)
+        private ConxelCanvas EmptyCard(RgbColor cardColor)
+        {
+            var cardCanvas = new ConxelCanvas(_cardInnerHeight, _cardInnerWidth);
+
+            return new ConxelCanvas(_cardInnerHeight, _cardInnerWidth).WithSingleBorder(cardColor).WithCorners(cardColor);
+        }
+
+        private ConxelCanvas Card(DevelopmentCard developmentCard, PurchaseAction respectivePurchaseAction)
         {
             var cardColor = GetDarkDevelopmentColor(developmentCard.Bonus);
             var borderColor = respectivePurchaseAction == null
@@ -54,7 +65,7 @@ namespace SplendidWonders.CLI.View
             cardCanvas.Blit(EmptyBlock(_cardInnerWidth), 4, 0);
             cardCanvas.Blit(RequirementsLine(borderColor, developmentCard.Cost, developmentCard.VictoryPoints), 5, 0);
 
-            return needsDoubleBorder 
+            return needsDoubleBorder
                         ? cardCanvas.WithDoubleBorder(borderColor).WithCorners(borderColor)
                         : cardCanvas.WithSingleBorder(borderColor).WithCorners(borderColor);
         }

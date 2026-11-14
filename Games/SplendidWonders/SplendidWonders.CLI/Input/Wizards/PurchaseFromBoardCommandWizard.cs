@@ -39,7 +39,7 @@ namespace SplendidWonders.CLI.Input.Wizards
             {
                 int cardId = int.Parse(match.Groups[0].Value);
 
-                var selectedPurchase = _availablePurchases.First(pa => pa.Card.Id == cardId);
+                var selectedPurchase = _availablePurchases.FirstOrDefault(pa => pa.Card.Id == cardId);
 
                 if (selectedPurchase != null)
                 {
