@@ -15,11 +15,11 @@ namespace SplendidWonders.CLI.View
 
             var tokenSupplyCanvas = new ConxelCanvas(23, 5);
 
-            tokenSupplyCanvas.Blit(NormalPile(swState.TokenSupply.Yellow, RgbColor.LightSetYellow), 0, 0);
-            tokenSupplyCanvas.Blit(NormalPile(swState.TokenSupply.Blue, RgbColor.LightSetBlue), 4, 0);
-            tokenSupplyCanvas.Blit(NormalPile(swState.TokenSupply.Green, RgbColor.LightSetGreen), 8, 0);
-            tokenSupplyCanvas.Blit(NormalPile(swState.TokenSupply.Brown, RgbColor.LightSetBrown), 12, 0);
-            tokenSupplyCanvas.Blit(NormalPile(swState.TokenSupply.Red, RgbColor.LightSetRed), 16, 0);
+            tokenSupplyCanvas.Blit(NormalPile(swState.TokenSupply.Yellow, WidgetHelper.LightSetYellow), 0, 0);
+            tokenSupplyCanvas.Blit(NormalPile(swState.TokenSupply.Blue, WidgetHelper.LightSetBlue), 4, 0);
+            tokenSupplyCanvas.Blit(NormalPile(swState.TokenSupply.Green, WidgetHelper.LightSetGreen), 8, 0);
+            tokenSupplyCanvas.Blit(NormalPile(swState.TokenSupply.Brown, WidgetHelper.LightSetBrown), 12, 0);
+            tokenSupplyCanvas.Blit(NormalPile(swState.TokenSupply.Red, WidgetHelper.LightSetRed), 16, 0);
             tokenSupplyCanvas.Blit(PolymathPile(swState.TokenSupply.Polymath), 20, 0);
 
             return tokenSupplyCanvas;
@@ -27,12 +27,12 @@ namespace SplendidWonders.CLI.View
 
         private ConxelCanvas NormalPile(int tokens, RgbColor color)
         {
-            return SingleBorder(RenderPile(tokens, color), color);
+            return RenderPile(tokens, color).WithSingleBorder(color);
         }
 
         private ConxelCanvas PolymathPile(int tokens)
         {
-            return DoubleBorder(RenderPile(tokens, RgbColor.FullWhite), RgbColor.FullWhite);
+            return RenderPile(tokens, RgbColor.FullWhite).WithDoubleBorder(RgbColor.FullWhite);
         }
 
         private ConxelCanvas RenderPile(int tokens, RgbColor foreGroundColor)

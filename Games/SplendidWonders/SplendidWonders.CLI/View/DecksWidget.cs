@@ -44,7 +44,7 @@ namespace SplendidWonders.CLI.View
             deckCanvas.Blit(CenteredTextLine(deckColor, remaining.ToString()), 4, 0);
             deckCanvas.Blit(ColoredBlock(deckColor, _innerWidth), 5, 0);
 
-            return Cornered(DoubleBorder(deckCanvas, deckColor), deckColor);
+            return deckCanvas.WithDoubleBorder(deckColor).WithCorners(deckColor);
         }
 
         private ConxelCanvas CenteredTextLine(RgbColor deckColor, string deckTitle)

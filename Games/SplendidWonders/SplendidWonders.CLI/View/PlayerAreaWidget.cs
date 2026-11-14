@@ -27,7 +27,7 @@ namespace SplendidWonders.CLI.View
             {
                 var player = swState.Players[i];
                 var isActive = swState.ActivePlayerId == player.Id;
-                var blockColor = isActive ? RgbColor.LightSetDefault : RgbColor.DarkSetDefault;
+                var blockColor = isActive ? WidgetHelper.LightSetDefault : WidgetHelper.DarkSetDefault;
 
                 playerAreaCanvas.Blit(RenderPlayerBlock(player, blockColor), 0, i * borderedPlayerBlockWidth + i);
             }
@@ -43,7 +43,7 @@ namespace SplendidWonders.CLI.View
             playerBlockCanvas.Blit(StoreLine(player.Store, player.ReservedCards, blockColor), 2, 0);
             playerBlockCanvas.Blit(TableauLine(player.Tableau), 4, 0);
 
-            return Cornered(SingleBorder(playerBlockCanvas, blockColor), blockColor);
+            return playerBlockCanvas.WithSingleBorder(blockColor).WithCorners(blockColor);
         }
 
         private ConxelCanvas NameLine(string name, ImmutableList<DevelopmentCard> tableau, RgbColor blockColor)

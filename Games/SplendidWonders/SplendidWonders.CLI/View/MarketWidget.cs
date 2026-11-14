@@ -43,10 +43,10 @@ namespace SplendidWonders.CLI.View
             var borderColor = respectivePurchaseAction == null
                                 ? cardColor
                                 : respectivePurchaseAction.RequiredPolymathsCount == 0
-                                    ? RgbColor.LightSetYellow
+                                    ? WidgetHelper.LightSetYellow
                                     : RgbColor.WarmWhite;
 
-            var doubleBorder = respectivePurchaseAction != null;
+            var needsDoubleBorder = respectivePurchaseAction != null;
 
             var cardCanvas = new ConxelCanvas(_cardInnerHeight, _cardInnerWidth);
 
@@ -54,9 +54,9 @@ namespace SplendidWonders.CLI.View
             cardCanvas.Blit(EmptyBlock(_cardInnerWidth), 4, 0);
             cardCanvas.Blit(RequirementsLine(borderColor, developmentCard.Cost, developmentCard.VictoryPoints), 5, 0);
 
-            return doubleBorder 
-                        ? Cornered(DoubleBorder(cardCanvas, borderColor), borderColor)
-                        : Cornered(SingleBorder(cardCanvas, borderColor), borderColor);
+            return needsDoubleBorder 
+                        ? cardCanvas.WithDoubleBorder(borderColor).WithCorners(borderColor)
+                        : cardCanvas.WithSingleBorder(borderColor).WithCorners(borderColor);
         }
 
         private ConxelCanvas CardHeaderLines(RgbColor borderColor, RgbColor cardColor, string title)

@@ -7,6 +7,11 @@ public class ConxelCanvas
     private readonly Conxel[,] _buffer;
     public int Columns { get; }
     public int Rows { get; }
+    private static string _defaultHorizSingleBorderSymbol = "-";
+    private static string _defaultVertSingleBorderSymbol = "|";
+    private static string _defaultHorizDoubleBorderSymbol = "=";
+    private static string _defaultVertDoubleBorderSymbol = "\u2551";
+    private static string _defaultCornerSymbol = "+";
 
     public ConxelCanvas(int rows, int columns)
     {
@@ -71,6 +76,44 @@ public class ConxelCanvas
 
             offset++;
         }
+    }
+
+    public ConxelCanvas WithCorners(RgbColor borderColor)
+    {
+        _buffer[0, 0] = new Conxel(_defaultCornerSymbol, borderColor);
+        _buffer[0, Columns - 1] = new Conxel(_defaultCornerSymbol, borderColor);
+        _buffer[Rows - 1, 0] = new Conxel(_defaultCornerSymbol, borderColor);
+        _buffer[Rows - 1, Columns - 1] = new Conxel(_defaultCornerSymbol, borderColor);
+
+        return this;
+    }
+
+    public ConxelCanvas WithSingleBorder(RgbColor borderColor)
+    {
+        return WithBorder(borderColor, _defaultVertSingleBorderSymbol, _defaultHorizSingleBorderSymbol);
+    }
+
+    public ConxelCanvas WithDoubleBorder(RgbColor borderColor)
+    {
+        return WithBorder(borderColor, _defaultVertDoubleBorderSymbol, _defaultHorizDoubleBorderSymbol);
+    }
+
+    protected ConxelCanvas WithBorder(RgbColor borderColor, string vertBorder, string horizBorder)
+    {
+        var borderedCanvas = new ConxelCanvas(Rows + 2, Columns + 2);
+        borderedCanvas.Blit(_buffer, 1, 1);
+
+        borderedCanvas.WriteText(0, 1, string.Concat(Enumerable.Repeat(horizBorder, Columns)), borderColor);
+
+        for (int i = 1; i < borderedCanvas.Rows - 1; i++)
+        {
+            borderedCanvas[i, 0] = new Conxel(vertBorder, borderColor);
+            borderedCanvas[i, borderedCanvas.Columns - 1] = new Conxel(vertBorder, borderColor);
+        }
+
+        borderedCanvas.WriteText(borderedCanvas.Rows - 1, 1, string.Concat(Enumerable.Repeat(horizBorder, Columns)), borderColor);
+
+        return borderedCanvas;
     }
 
     public Conxel this[int row, int column]

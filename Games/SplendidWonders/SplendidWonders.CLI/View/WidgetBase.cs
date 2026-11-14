@@ -5,21 +5,6 @@ namespace SplendidWonders.CLI.View
 {
     public abstract class WidgetBase
     {
-        private static string _horizSingleBorderSymbol = "-";
-        private static string _vertSingleBorderSymbol = "|";
-        private static string _horizDoubleBorderSymbol = "=";
-        private static string _vertDoubleBorderSymbol = "\u2551";
-        private static string _cornerSymbol = "+";
-
-        protected ConxelCanvas Cornered(ConxelCanvas targetCanvas, RgbColor borderColor)
-        {
-            targetCanvas[0, 0] = new Conxel(_cornerSymbol, borderColor);
-            targetCanvas[0, targetCanvas.Columns - 1] = new Conxel(_cornerSymbol, borderColor);
-            targetCanvas[targetCanvas.Rows - 1, 0] = new Conxel(_cornerSymbol, borderColor);
-            targetCanvas[targetCanvas.Rows - 1, targetCanvas.Columns - 1] = new Conxel(_cornerSymbol, borderColor);
-
-            return targetCanvas;
-        }
 
         protected ConxelCanvas ColoredBlock(RgbColor fillColor, int width)
         {
@@ -37,44 +22,16 @@ namespace SplendidWonders.CLI.View
             return line;
         }
 
-        protected ConxelCanvas SingleBorder(ConxelCanvas innerCanvas, RgbColor borderColor)
-        {
-            return BorderBlock(innerCanvas, borderColor, _vertSingleBorderSymbol, _horizSingleBorderSymbol);
-        }
-
-        protected ConxelCanvas DoubleBorder(ConxelCanvas innerCanvas, RgbColor borderColor)
-        {
-            return BorderBlock(innerCanvas, borderColor, _vertDoubleBorderSymbol, _horizDoubleBorderSymbol);
-        }
-
-        protected ConxelCanvas BorderBlock(ConxelCanvas innerCanvas, RgbColor borderColor, string vertBorder, string horizBorder)
-        {
-            var borderedCanvas = new ConxelCanvas(innerCanvas.Rows + 2, innerCanvas.Columns + 2);
-            borderedCanvas.Blit(innerCanvas, 1, 1);
-
-            borderedCanvas.WriteText(0, 1, string.Concat(Enumerable.Repeat(horizBorder, innerCanvas.Columns)), borderColor);
-
-            for (int i = 1; i < borderedCanvas.Rows - 1; i++)
-            {
-                borderedCanvas[i, 0] = new Conxel(vertBorder, borderColor);
-                borderedCanvas[i, borderedCanvas.Columns - 1] = new Conxel(vertBorder, borderColor);
-            }
-
-            borderedCanvas.WriteText(borderedCanvas.Rows - 1, 1, string.Concat(Enumerable.Repeat(horizBorder, innerCanvas.Columns)), borderColor);
-
-            return borderedCanvas;
-        }
-
         protected RgbColor GetDarkDevelopmentColor(DevelopmentColor bonus)
         {
             return bonus switch
             {
-                DevelopmentColor.Yellow => RgbColor.DarkSetYellow,
-                DevelopmentColor.Blue => RgbColor.DarkSetBlue,
-                DevelopmentColor.Green => RgbColor.DarkSetGreen,
-                DevelopmentColor.Brown => RgbColor.DarkSetBrown,
-                DevelopmentColor.Red => RgbColor.DarkSetRed,
-                _ => RgbColor.DarkSetDefault
+                DevelopmentColor.Yellow => WidgetHelper.DarkSetYellow,
+                DevelopmentColor.Blue => WidgetHelper.DarkSetBlue,
+                DevelopmentColor.Green => WidgetHelper.DarkSetGreen,
+                DevelopmentColor.Brown => WidgetHelper.DarkSetBrown,
+                DevelopmentColor.Red => WidgetHelper.DarkSetRed,
+                _ => WidgetHelper.DarkSetDefault
             };
         }
 
@@ -82,12 +39,12 @@ namespace SplendidWonders.CLI.View
         {
             return bonus switch
             {
-                DevelopmentColor.Yellow => RgbColor.LightSetYellow,
-                DevelopmentColor.Blue => RgbColor.LightSetBlue,
-                DevelopmentColor.Green => RgbColor.LightSetGreen,
-                DevelopmentColor.Brown => RgbColor.LightSetBrown,
-                DevelopmentColor.Red => RgbColor.LightSetRed,
-                _ => RgbColor.LightSetDefault
+                DevelopmentColor.Yellow => WidgetHelper.LightSetYellow,
+                DevelopmentColor.Blue => WidgetHelper.LightSetBlue,
+                DevelopmentColor.Green => WidgetHelper.LightSetGreen,
+                DevelopmentColor.Brown => WidgetHelper.LightSetBrown,
+                DevelopmentColor.Red => WidgetHelper.LightSetRed,
+                _ => WidgetHelper.LightSetDefault
             };
         }
     }

@@ -31,17 +31,21 @@ public class SplendidWondersLayoutManager : ILayoutManager
         _playerAreaWidget = playerAreaWidget;
     }
 
-    public ConxelCanvas BuildCanvas(IGameState state, IReadOnlyList<GameAction>? legalActions, string? errorMessage)
+    public ConxelCanvas BuildCanvas(IGameState state, IReadOnlyList<GameAction> legalActions, string? errorMessage)
     {
         var canvas = new ConxelCanvas(CanvasHeight, CanvasWidth);
+
+        var swState = (GameState)state;
+
+        //if (swState.Leaders.Any())
+        //{
+        //    canvas.Blit(_leaderAreaWidget.RenderToBuffer(state, legalActions), startRow: 85, startY: 0);
+        //}
 
         canvas.Blit(_tokenSupplyWidget.RenderToBuffer(state, legalActions), startRow: 2, startColumn: 0);
         canvas.Blit(_decksWidget.RenderToBuffer(state, legalActions), startRow: 0, startColumn: 7);
         canvas.Blit(_marketWidget.RenderToBuffer(state, legalActions), startRow: 0, startColumn: 28);
-
         canvas.Blit(_playerAreaWidget.RenderToBuffer(state, legalActions), startRow: 27, startColumn: 7);
-
-        //canvas.Blit(_leaderAreaWidget.RenderToBuffer(state, legalActions), startX: 85, startY: 0);
 
         //if (!string.IsNullOrEmpty(errorMessage))
         //{
