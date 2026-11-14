@@ -11,13 +11,13 @@ namespace SplendidWonders.Gameplay.Explorers
 
             foreach (var leader in gameState.Leaders)
             {
-                Dictionary<DevelopmentBonus, int> requirements = new Dictionary<DevelopmentBonus, int>()
+                Dictionary<DevelopmentColor, int> requirements = new Dictionary<DevelopmentColor, int>()
                 {
-                    { DevelopmentBonus.Yellow, leader.Requirements.Yellow },
-                    { DevelopmentBonus.Blue, leader.Requirements.Blue },
-                    { DevelopmentBonus.Green, leader.Requirements.Green },
-                    { DevelopmentBonus.Brown, leader.Requirements.Brown },
-                    { DevelopmentBonus.Red, leader.Requirements.Red },
+                    { DevelopmentColor.Yellow, leader.Requirements.Yellow },
+                    { DevelopmentColor.Blue, leader.Requirements.Blue },
+                    { DevelopmentColor.Green, leader.Requirements.Green },
+                    { DevelopmentColor.Brown, leader.Requirements.Brown },
+                    { DevelopmentColor.Red, leader.Requirements.Red },
                 };
 
                 bool hasFailedRequirement = false;

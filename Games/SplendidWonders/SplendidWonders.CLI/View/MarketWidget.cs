@@ -39,7 +39,7 @@ namespace SplendidWonders.CLI.View
 
         private ConxelCanvas RenderCard(DevelopmentCard developmentCard, PurchaseAction respectivePurchaseAction)
         {
-            var cardColor = GetDarkBonusColor(developmentCard.Bonus);
+            var cardColor = GetDarkDevelopmentColor(developmentCard.Bonus);
             var borderColor = respectivePurchaseAction == null
                                 ? cardColor
                                 : respectivePurchaseAction.RequiredPolymathsCount == 0
@@ -84,14 +84,12 @@ namespace SplendidWonders.CLI.View
 
         private ConxelCanvas RequirementsLine(RgbColor borderColor, TokenGroup cost, int victoryPoints)
         {
-            var requirements = GetRequirementsEnumerable(cost);
-
             var reqLine = new ConxelCanvas(1, _cardInnerWidth);
 
             int i = 1;
-            foreach (var requirement in requirements)
+            foreach (var requirement in cost.AsEnumerable().Where(kvp => kvp.Value > 0))
             {
-                reqLine[0, i] = new Conxel(requirement.Value.ToString(), requirement.Key);
+                reqLine[0, i] = new Conxel(requirement.Value.ToString(), GetLightDevelopmentColor(requirement.Key));
                 i += 2;
             }
 

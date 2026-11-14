@@ -24,11 +24,11 @@ namespace SplendidWonders.Gameplay.Reducers
 
             int[] playerBonuses =
             [
-                baseState.ActivePlayer.Tableau.Count(c => c.Bonus == DevelopmentBonus.Yellow),
-                baseState.ActivePlayer.Tableau.Count(c => c.Bonus == DevelopmentBonus.Blue),
-                baseState.ActivePlayer.Tableau.Count(c => c.Bonus == DevelopmentBonus.Green),
-                baseState.ActivePlayer.Tableau.Count(c => c.Bonus == DevelopmentBonus.Brown),
-                baseState.ActivePlayer.Tableau.Count(c => c.Bonus == DevelopmentBonus.Red),
+                baseState.ActivePlayer.Tableau.Count(c => c.Bonus == DevelopmentColor.Yellow),
+                baseState.ActivePlayer.Tableau.Count(c => c.Bonus == DevelopmentColor.Blue),
+                baseState.ActivePlayer.Tableau.Count(c => c.Bonus == DevelopmentColor.Green),
+                baseState.ActivePlayer.Tableau.Count(c => c.Bonus == DevelopmentColor.Brown),
+                baseState.ActivePlayer.Tableau.Count(c => c.Bonus == DevelopmentColor.Red),
             ];
 
             int totalUsedPolymaths = 0;

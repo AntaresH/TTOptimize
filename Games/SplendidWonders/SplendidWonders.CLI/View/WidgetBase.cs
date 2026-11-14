@@ -65,29 +65,29 @@ namespace SplendidWonders.CLI.View
             return borderedCanvas;
         }
 
-        protected RgbColor GetDarkBonusColor(DevelopmentBonus bonus)
+        protected RgbColor GetDarkDevelopmentColor(DevelopmentColor bonus)
         {
             return bonus switch
             {
-                DevelopmentBonus.Yellow => RgbColor.DarkSetYellow,
-                DevelopmentBonus.Blue => RgbColor.DarkSetBlue,
-                DevelopmentBonus.Green => RgbColor.DarkSetGreen,
-                DevelopmentBonus.Brown => RgbColor.DarkSetBrown,
-                DevelopmentBonus.Red => RgbColor.DarkSetRed,
-                _ => RgbColor.FullWhite
+                DevelopmentColor.Yellow => RgbColor.DarkSetYellow,
+                DevelopmentColor.Blue => RgbColor.DarkSetBlue,
+                DevelopmentColor.Green => RgbColor.DarkSetGreen,
+                DevelopmentColor.Brown => RgbColor.DarkSetBrown,
+                DevelopmentColor.Red => RgbColor.DarkSetRed,
+                _ => RgbColor.DarkSetDefault
             };
         }
 
-        protected RgbColor GetLightBonusColor(DevelopmentBonus bonus)
+        protected RgbColor GetLightDevelopmentColor(DevelopmentColor bonus)
         {
             return bonus switch
             {
-                DevelopmentBonus.Yellow => RgbColor.DarkSetYellow,
-                DevelopmentBonus.Blue => RgbColor.DarkSetBlue,
-                DevelopmentBonus.Green => RgbColor.DarkSetGreen,
-                DevelopmentBonus.Brown => RgbColor.DarkSetBrown,
-                DevelopmentBonus.Red => RgbColor.DarkSetRed,
-                _ => RgbColor.FullWhite
+                DevelopmentColor.Yellow => RgbColor.LightSetYellow,
+                DevelopmentColor.Blue => RgbColor.LightSetBlue,
+                DevelopmentColor.Green => RgbColor.LightSetGreen,
+                DevelopmentColor.Brown => RgbColor.LightSetBrown,
+                DevelopmentColor.Red => RgbColor.LightSetRed,
+                _ => RgbColor.LightSetDefault
             };
         }
     }

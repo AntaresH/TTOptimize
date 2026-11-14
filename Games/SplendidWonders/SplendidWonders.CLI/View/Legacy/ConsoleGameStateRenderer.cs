@@ -39,11 +39,11 @@ namespace SplendidWonders.CLI.View.Legacy
             int deckTotalHeight = DeckLevelCount * DeckBlockHeight;
             var tokenBlocks = new[]
             {
-                (Lines: BuildTokenBlock(gameState.TokenSupply.Yellow), BorderColor: GetRgbColor(DevelopmentBonus.Yellow), BackgroundColor: GetTableauCountBackgroundColor(DevelopmentBonus.Yellow), NumberColor: new RgbColor(255, 255, 255)),
-                (Lines: BuildTokenBlock(gameState.TokenSupply.Blue), BorderColor: GetRgbColor(DevelopmentBonus.Blue), BackgroundColor: GetTableauCountBackgroundColor(DevelopmentBonus.Blue), NumberColor: new RgbColor(255, 255, 255)),
-                (Lines: BuildTokenBlock(gameState.TokenSupply.Green), BorderColor: GetRgbColor(DevelopmentBonus.Green), BackgroundColor: GetTableauCountBackgroundColor(DevelopmentBonus.Green), NumberColor: new RgbColor(255, 255, 255)),
-                (Lines: BuildTokenBlock(gameState.TokenSupply.Brown), BorderColor: GetRgbColor(DevelopmentBonus.Brown), BackgroundColor: GetTableauCountBackgroundColor(DevelopmentBonus.Brown), NumberColor: new RgbColor(255, 255, 255)),
-                (Lines: BuildTokenBlock(gameState.TokenSupply.Red), BorderColor: GetRgbColor(DevelopmentBonus.Red), BackgroundColor: GetTableauCountBackgroundColor(DevelopmentBonus.Red), NumberColor: new RgbColor(255, 255, 255)),
+                (Lines: BuildTokenBlock(gameState.TokenSupply.Yellow), BorderColor: GetRgbColor(DevelopmentColor.Yellow), BackgroundColor: GetTableauCountBackgroundColor(DevelopmentColor.Yellow), NumberColor: new RgbColor(255, 255, 255)),
+                (Lines: BuildTokenBlock(gameState.TokenSupply.Blue), BorderColor: GetRgbColor(DevelopmentColor.Blue), BackgroundColor: GetTableauCountBackgroundColor(DevelopmentColor.Blue), NumberColor: new RgbColor(255, 255, 255)),
+                (Lines: BuildTokenBlock(gameState.TokenSupply.Green), BorderColor: GetRgbColor(DevelopmentColor.Green), BackgroundColor: GetTableauCountBackgroundColor(DevelopmentColor.Green), NumberColor: new RgbColor(255, 255, 255)),
+                (Lines: BuildTokenBlock(gameState.TokenSupply.Brown), BorderColor: GetRgbColor(DevelopmentColor.Brown), BackgroundColor: GetTableauCountBackgroundColor(DevelopmentColor.Brown), NumberColor: new RgbColor(255, 255, 255)),
+                (Lines: BuildTokenBlock(gameState.TokenSupply.Red), BorderColor: GetRgbColor(DevelopmentColor.Red), BackgroundColor: GetTableauCountBackgroundColor(DevelopmentColor.Red), NumberColor: new RgbColor(255, 255, 255)),
                 (Lines: BuildTokenBlock(gameState.TokenSupply.Polymath, isPolymath: true), BorderColor: new RgbColor(255, 255, 255), BackgroundColor: new RgbColor(255, 255, 255), NumberColor: new RgbColor(96, 96, 96))
             };
             int tokenTotalHeight = tokenBlocks.Length * TokenBlockHeight;
@@ -161,7 +161,7 @@ namespace SplendidWonders.CLI.View.Legacy
             text.Append(number);
         }
 
-        private static void AppendTableauCount(StringBuilder text, List<ColorRange> colorRanges, int count, DevelopmentBonus bonus, RgbColor numberColor)
+        private static void AppendTableauCount(StringBuilder text, List<ColorRange> colorRanges, int count, DevelopmentColor bonus, RgbColor numberColor)
         {
             const int blockWidth = 3;
             if (text.Length > 0)
@@ -180,23 +180,23 @@ namespace SplendidWonders.CLI.View.Legacy
 
         private static void AppendBonusNumbers(StringBuilder text, List<ColorRange> colorRanges, TokenGroup bonuses)
         {
-            if (bonuses.Yellow > 0) AppendColoredNumber(text, colorRanges, bonuses.Yellow, GetRgbColor(DevelopmentBonus.Yellow));
-            if (bonuses.Blue > 0) AppendColoredNumber(text, colorRanges, bonuses.Blue, GetRgbColor(DevelopmentBonus.Blue));
-            if (bonuses.Green > 0) AppendColoredNumber(text, colorRanges, bonuses.Green, GetRgbColor(DevelopmentBonus.Green));
-            if (bonuses.Brown > 0) AppendColoredNumber(text, colorRanges, bonuses.Brown, GetRgbColor(DevelopmentBonus.Brown));
-            if (bonuses.Red > 0) AppendColoredNumber(text, colorRanges, bonuses.Red, GetRgbColor(DevelopmentBonus.Red));
+            if (bonuses.Yellow > 0) AppendColoredNumber(text, colorRanges, bonuses.Yellow, GetRgbColor(DevelopmentColor.Yellow));
+            if (bonuses.Blue > 0) AppendColoredNumber(text, colorRanges, bonuses.Blue, GetRgbColor(DevelopmentColor.Blue));
+            if (bonuses.Green > 0) AppendColoredNumber(text, colorRanges, bonuses.Green, GetRgbColor(DevelopmentColor.Green));
+            if (bonuses.Brown > 0) AppendColoredNumber(text, colorRanges, bonuses.Brown, GetRgbColor(DevelopmentColor.Brown));
+            if (bonuses.Red > 0) AppendColoredNumber(text, colorRanges, bonuses.Red, GetRgbColor(DevelopmentColor.Red));
         }
 
         private static void AppendLeaderRequirements(StringBuilder text, List<ColorRange> colorRanges, TokenGroup requirements, RgbColor backgroundColor)
         {
-            AppendLeaderRequirement(text, colorRanges, requirements.Yellow, DevelopmentBonus.Yellow, backgroundColor);
-            AppendLeaderRequirement(text, colorRanges, requirements.Blue, DevelopmentBonus.Blue, backgroundColor);
-            AppendLeaderRequirement(text, colorRanges, requirements.Green, DevelopmentBonus.Green, backgroundColor);
-            AppendLeaderRequirement(text, colorRanges, requirements.Brown, DevelopmentBonus.Brown, backgroundColor);
-            AppendLeaderRequirement(text, colorRanges, requirements.Red, DevelopmentBonus.Red, backgroundColor);
+            AppendLeaderRequirement(text, colorRanges, requirements.Yellow, DevelopmentColor.Yellow, backgroundColor);
+            AppendLeaderRequirement(text, colorRanges, requirements.Blue, DevelopmentColor.Blue, backgroundColor);
+            AppendLeaderRequirement(text, colorRanges, requirements.Green, DevelopmentColor.Green, backgroundColor);
+            AppendLeaderRequirement(text, colorRanges, requirements.Brown, DevelopmentColor.Brown, backgroundColor);
+            AppendLeaderRequirement(text, colorRanges, requirements.Red, DevelopmentColor.Red, backgroundColor);
         }
 
-        private static void AppendLeaderRequirement(StringBuilder text, List<ColorRange> colorRanges, int count, DevelopmentBonus bonus, RgbColor backgroundColor)
+        private static void AppendLeaderRequirement(StringBuilder text, List<ColorRange> colorRanges, int count, DevelopmentColor bonus, RgbColor backgroundColor)
         {
             const int blockWidth = 3;
             if (count <= 0)
@@ -432,11 +432,11 @@ namespace SplendidWonders.CLI.View.Legacy
                 var storage = player.Store;
                 var storageText = new StringBuilder();
                 var storageColorRanges = new List<ColorRange>();
-                AppendColoredNumber(storageText, storageColorRanges, storage.Yellow, GetRgbColor(DevelopmentBonus.Yellow));
-                AppendColoredNumber(storageText, storageColorRanges, storage.Blue, GetRgbColor(DevelopmentBonus.Blue));
-                AppendColoredNumber(storageText, storageColorRanges, storage.Green, GetRgbColor(DevelopmentBonus.Green));
-                AppendColoredNumber(storageText, storageColorRanges, storage.Brown, GetRgbColor(DevelopmentBonus.Brown));
-                AppendColoredNumber(storageText, storageColorRanges, storage.Red, GetRgbColor(DevelopmentBonus.Red));
+                AppendColoredNumber(storageText, storageColorRanges, storage.Yellow, GetRgbColor(DevelopmentColor.Yellow));
+                AppendColoredNumber(storageText, storageColorRanges, storage.Blue, GetRgbColor(DevelopmentColor.Blue));
+                AppendColoredNumber(storageText, storageColorRanges, storage.Green, GetRgbColor(DevelopmentColor.Green));
+                AppendColoredNumber(storageText, storageColorRanges, storage.Brown, GetRgbColor(DevelopmentColor.Brown));
+                AppendColoredNumber(storageText, storageColorRanges, storage.Red, GetRgbColor(DevelopmentColor.Red));
                 AppendColoredNumber(storageText, storageColorRanges, storage.Polymath, new RgbColor(255, 255, 255), "  ");
                 storageText.Append("   ").Append(string.Format(Strings.ReservedCardsCountFormat, player.ReservedCards?.Count ?? 0));
                 storageText.Append("  ");
@@ -471,11 +471,11 @@ namespace SplendidWonders.CLI.View.Legacy
                         {
                             switch (card.Bonus)
                             {
-                                case DevelopmentBonus.Yellow: yellowCount++; break;
-                                case DevelopmentBonus.Blue: blueCount++; break;
-                                case DevelopmentBonus.Green: greenCount++; break;
-                                case DevelopmentBonus.Brown: brownCount++; break;
-                                case DevelopmentBonus.Red: redCount++; break;
+                                case DevelopmentColor.Yellow: yellowCount++; break;
+                                case DevelopmentColor.Blue: blueCount++; break;
+                                case DevelopmentColor.Green: greenCount++; break;
+                                case DevelopmentColor.Brown: brownCount++; break;
+                                case DevelopmentColor.Red: redCount++; break;
                             }
                         }
                     }
@@ -486,11 +486,11 @@ namespace SplendidWonders.CLI.View.Legacy
                 var passiveNumberColor = ReferenceEquals(player, gameState.ActivePlayer)
                     ? new RgbColor(255, 255, 255)
                     : new RgbColor(220, 220, 220);
-                AppendTableauCount(tableauSummary, tableauSummaryColorRanges, yellowCount, DevelopmentBonus.Yellow, passiveNumberColor);
-                AppendTableauCount(tableauSummary, tableauSummaryColorRanges, blueCount, DevelopmentBonus.Blue, passiveNumberColor);
-                AppendTableauCount(tableauSummary, tableauSummaryColorRanges, greenCount, DevelopmentBonus.Green, passiveNumberColor);
-                AppendTableauCount(tableauSummary, tableauSummaryColorRanges, brownCount, DevelopmentBonus.Brown, passiveNumberColor);
-                AppendTableauCount(tableauSummary, tableauSummaryColorRanges, redCount, DevelopmentBonus.Red, passiveNumberColor);
+                AppendTableauCount(tableauSummary, tableauSummaryColorRanges, yellowCount, DevelopmentColor.Yellow, passiveNumberColor);
+                AppendTableauCount(tableauSummary, tableauSummaryColorRanges, blueCount, DevelopmentColor.Blue, passiveNumberColor);
+                AppendTableauCount(tableauSummary, tableauSummaryColorRanges, greenCount, DevelopmentColor.Green, passiveNumberColor);
+                AppendTableauCount(tableauSummary, tableauSummaryColorRanges, brownCount, DevelopmentColor.Brown, passiveNumberColor);
+                AppendTableauCount(tableauSummary, tableauSummaryColorRanges, redCount, DevelopmentColor.Red, passiveNumberColor);
                 tableauLines.Add(string.Empty);
                 tableauLineColorRanges.Add(new List<ColorRange>());
                 tableauLines.Add(tableauSummary.ToString());
@@ -986,28 +986,28 @@ namespace SplendidWonders.CLI.View.Legacy
             return new string(' ', leftPadding) + value + new string(' ', width - value.Length - leftPadding);
         }
 
-        private static RgbColor GetRgbColor(DevelopmentBonus bonus)
+        private static RgbColor GetRgbColor(DevelopmentColor bonus)
         {
             return bonus switch
             {
-                DevelopmentBonus.Yellow => new RgbColor(208, 208, 0),
-                DevelopmentBonus.Blue => new RgbColor(80, 145, 255),
-                DevelopmentBonus.Green => new RgbColor(0, 220, 50),
-                DevelopmentBonus.Brown => new RgbColor(145, 92, 42),
-                DevelopmentBonus.Red => new RgbColor(220, 80, 80),
+                DevelopmentColor.Yellow => new RgbColor(208, 208, 0),
+                DevelopmentColor.Blue => new RgbColor(80, 145, 255),
+                DevelopmentColor.Green => new RgbColor(0, 220, 50),
+                DevelopmentColor.Brown => new RgbColor(145, 92, 42),
+                DevelopmentColor.Red => new RgbColor(220, 80, 80),
                 _ => new RgbColor(192, 192, 192)
             };
         }
 
-        private static RgbColor GetTableauCountBackgroundColor(DevelopmentBonus bonus)
+        private static RgbColor GetTableauCountBackgroundColor(DevelopmentColor bonus)
         {
             return bonus switch
             {
-                DevelopmentBonus.Yellow => new RgbColor(138, 116, 0),
-                DevelopmentBonus.Blue => new RgbColor(30, 60, 165),
-                DevelopmentBonus.Green => new RgbColor(0, 125, 30),
-                DevelopmentBonus.Brown => new RgbColor(100, 45, 0),
-                DevelopmentBonus.Red => new RgbColor(180, 10, 20),
+                DevelopmentColor.Yellow => new RgbColor(138, 116, 0),
+                DevelopmentColor.Blue => new RgbColor(30, 60, 165),
+                DevelopmentColor.Green => new RgbColor(0, 125, 30),
+                DevelopmentColor.Brown => new RgbColor(100, 45, 0),
+                DevelopmentColor.Red => new RgbColor(180, 10, 20),
                 _ => new RgbColor(96, 96, 96)
             };
         }

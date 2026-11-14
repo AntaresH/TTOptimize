@@ -46,11 +46,11 @@ namespace SplendidWonders.Gameplay.Explorers
 
         private int CalculateDeficit(TokenGroup cardCosts, TokenGroup playerStore, ImmutableList<DevelopmentCard> playerTableau)
         {
-            int playerYellowBonuses = playerTableau.Count(c => c.Bonus == DevelopmentBonus.Yellow);
-            int playerBlueBonuses = playerTableau.Count(c => c.Bonus == DevelopmentBonus.Blue);
-            int playerGreenBonuses = playerTableau.Count(c => c.Bonus == DevelopmentBonus.Green);
-            int playerBrownBonuses = playerTableau.Count(c => c.Bonus == DevelopmentBonus.Brown);
-            int playerRedBonuses = playerTableau.Count(c => c.Bonus == DevelopmentBonus.Red);
+            int playerYellowBonuses = playerTableau.Count(c => c.Bonus == DevelopmentColor.Yellow);
+            int playerBlueBonuses = playerTableau.Count(c => c.Bonus == DevelopmentColor.Blue);
+            int playerGreenBonuses = playerTableau.Count(c => c.Bonus == DevelopmentColor.Green);
+            int playerBrownBonuses = playerTableau.Count(c => c.Bonus == DevelopmentColor.Brown);
+            int playerRedBonuses = playerTableau.Count(c => c.Bonus == DevelopmentColor.Red);
 
             return 
                 Math.Min(0, playerYellowBonuses + playerStore.Yellow - cardCosts.Yellow) +

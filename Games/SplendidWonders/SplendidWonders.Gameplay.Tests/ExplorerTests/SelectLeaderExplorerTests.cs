@@ -57,17 +57,17 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
 
             var playerTableau333 = new List<DevelopmentCard>();
 
-            playerTableau333.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Yellow).Take(3).ToList());
-            playerTableau333.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Blue).Take(3).ToList());
-            playerTableau333.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Green).Take(3).ToList());
-            playerTableau333.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Red).Take(3).ToList());
+            playerTableau333.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Yellow).Take(3).ToList());
+            playerTableau333.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Blue).Take(3).ToList());
+            playerTableau333.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Green).Take(3).ToList());
+            playerTableau333.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Red).Take(3).ToList());
 
             var playerTableau44 = new List<DevelopmentCard>();
 
-            playerTableau44.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Yellow).Take(4).ToList());
-            playerTableau44.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Blue).Take(4).ToList());
-            playerTableau44.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Green).Take(4).ToList());
-            playerTableau44.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Brown).Take(4).ToList());
+            playerTableau44.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Yellow).Take(4).ToList());
+            playerTableau44.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Blue).Take(4).ToList());
+            playerTableau44.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Green).Take(4).ToList());
+            playerTableau44.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Brown).Take(4).ToList());
 
             yield return new TestCaseData(
                 playerTableau333.ToImmutableList(),

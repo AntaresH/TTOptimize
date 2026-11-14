@@ -64,31 +64,31 @@ namespace SplendidWonders.CLI.Input
             if (leader.Requirements.Yellow > 0)
             {
                 string whiteText = GetWhiteConsoleForegroundText(leader.Requirements.Yellow.ToString());
-                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {whiteText} ", DevelopmentBonus.Yellow));
+                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {whiteText} ", DevelopmentColor.Yellow));
             }
 
             if (leader.Requirements.Blue > 0)
             {
                 string whiteText = GetWhiteConsoleForegroundText(leader.Requirements.Blue.ToString());
-                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {whiteText} ", DevelopmentBonus.Blue));
+                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {whiteText} ", DevelopmentColor.Blue));
             }
 
             if (leader.Requirements.Green > 0)
             {
                 string whiteText = GetWhiteConsoleForegroundText(leader.Requirements.Green.ToString());
-                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {whiteText} ", DevelopmentBonus.Green));
+                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {whiteText} ", DevelopmentColor.Green));
             }
 
             if (leader.Requirements.Brown > 0)
             {
                 string whiteText = GetWhiteConsoleForegroundText(leader.Requirements.Brown.ToString());
-                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {whiteText} ", DevelopmentBonus.Brown));
+                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {whiteText} ", DevelopmentColor.Brown));
             }
 
             if (leader.Requirements.Red > 0)
             {
                 string whiteText = GetWhiteConsoleForegroundText(leader.Requirements.Red.ToString());
-                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {whiteText} ", DevelopmentBonus.Red));
+                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {whiteText} ", DevelopmentColor.Red));
             }
 
             string namePadding = new string(' ', Math.Max(0, 18 - leader.Name.Length));
@@ -103,27 +103,27 @@ namespace SplendidWonders.CLI.Input
 
             if (card.Cost.Yellow > 0)
             {
-                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Yellow.ToString(), DevelopmentBonus.Yellow));
+                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Yellow.ToString(), DevelopmentColor.Yellow));
             }
 
             if (card.Cost.Blue > 0)
             {
-                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Blue.ToString(), DevelopmentBonus.Blue));
+                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Blue.ToString(), DevelopmentColor.Blue));
             }
 
             if (card.Cost.Green > 0)
             {
-                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Green.ToString(), DevelopmentBonus.Green));
+                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Green.ToString(), DevelopmentColor.Green));
             }
 
             if (card.Cost.Brown > 0)
             {
-                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Brown.ToString(), DevelopmentBonus.Brown));
+                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Brown.ToString(), DevelopmentColor.Brown));
             }
 
             if (card.Cost.Red > 0)
             {
-                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Red.ToString(), DevelopmentBonus.Red));
+                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Red.ToString(), DevelopmentColor.Red));
             }
 
             string vpDisplay = card.VictoryPoints > 0 ? $"{{{card.VictoryPoints}}}" : "   ";
@@ -143,38 +143,38 @@ namespace SplendidWonders.CLI.Input
             return $"\u001b[38;2;255;255;255m{text}\u001b[39m";
         }
 
-        private static string GetRgbColoredConsoleForeground(string text, DevelopmentBonus trueColorRgbFormat)
+        private static string GetRgbColoredConsoleForeground(string text, DevelopmentColor trueColorRgbFormat)
         {
             return $"\u001b[38;2;{ConvertBonusToLightColorSet(trueColorRgbFormat)}m{text}\u001b[39m";
         }
 
-        private static string GetRgbColoredConsoleBackground(string text, DevelopmentBonus trueColorRgbFormat)
+        private static string GetRgbColoredConsoleBackground(string text, DevelopmentColor trueColorRgbFormat)
         {
             return $"\u001b[48;2;{ConvertBonusToDarkColorSet(trueColorRgbFormat)}m{text}\u001b[49m";
         }
 
-        public static string ConvertBonusToLightColorSet(DevelopmentBonus bonus)
+        public static string ConvertBonusToLightColorSet(DevelopmentColor bonus)
         {
             return bonus switch
             {
-                DevelopmentBonus.Yellow => "208;208;0",
-                DevelopmentBonus.Blue => "80;145;255",
-                DevelopmentBonus.Green => "0;220;50",
-                DevelopmentBonus.Brown => "145;92;42",
-                DevelopmentBonus.Red => "255;80;80",
+                DevelopmentColor.Yellow => "208;208;0",
+                DevelopmentColor.Blue => "80;145;255",
+                DevelopmentColor.Green => "0;220;50",
+                DevelopmentColor.Brown => "145;92;42",
+                DevelopmentColor.Red => "255;80;80",
                 _ => "192;192;192"
             };
         }
 
-        private static string ConvertBonusToDarkColorSet(DevelopmentBonus bonus)
+        private static string ConvertBonusToDarkColorSet(DevelopmentColor bonus)
         {
             return bonus switch
             {
-                DevelopmentBonus.Yellow => "138;116;0",
-                DevelopmentBonus.Blue => "30;60;165",
-                DevelopmentBonus.Green => "0;125;30",
-                DevelopmentBonus.Brown => "100;45;0",
-                DevelopmentBonus.Red => "180;10;20",
+                DevelopmentColor.Yellow => "138;116;0",
+                DevelopmentColor.Blue => "30;60;165",
+                DevelopmentColor.Green => "0;125;30",
+                DevelopmentColor.Brown => "100;45;0",
+                DevelopmentColor.Red => "180;10;20",
                 _ => "96;96;96"
             };
         }

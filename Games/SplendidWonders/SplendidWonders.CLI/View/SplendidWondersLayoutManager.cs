@@ -39,7 +39,7 @@ public class SplendidWondersLayoutManager : ILayoutManager
         canvas.Blit(_decksWidget.RenderToBuffer(state, legalActions), startRow: 0, startColumn: 7);
         canvas.Blit(_marketWidget.RenderToBuffer(state, legalActions), startRow: 0, startColumn: 28);
 
-        canvas.Blit(_playerAreaWidget.RenderToBuffer(state, legalActions), startRow: 28, startColumn: 0);
+        canvas.Blit(_playerAreaWidget.RenderToBuffer(state, legalActions), startRow: 27, startColumn: 7);
 
         //canvas.Blit(_leaderAreaWidget.RenderToBuffer(state, legalActions), startX: 85, startY: 0);
 

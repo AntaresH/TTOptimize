@@ -140,11 +140,11 @@ namespace SplendidWonders.Common.Tests.ReducerTests
         {
             var playerTableau43423 = new List<DevelopmentCard>();
 
-            playerTableau43423.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Yellow).Take(4).ToList());
-            playerTableau43423.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Blue).Take(3).ToList());
-            playerTableau43423.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Green).Take(4).ToList());
-            playerTableau43423.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Brown).Take(2).ToList());
-            playerTableau43423.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Red).Take(3).ToList());
+            playerTableau43423.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Yellow).Take(4).ToList());
+            playerTableau43423.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Blue).Take(3).ToList());
+            playerTableau43423.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Green).Take(4).ToList());
+            playerTableau43423.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Brown).Take(2).ToList());
+            playerTableau43423.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Red).Take(3).ToList());
 
             var cardToBuy12 = Cards.Level1.First(c => c.Id == 12);
             var cardToBuy21 = Cards.Level1.First(c => c.Id == 21);

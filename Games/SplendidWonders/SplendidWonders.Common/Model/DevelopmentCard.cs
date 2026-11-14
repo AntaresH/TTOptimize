@@ -12,6 +12,6 @@
 
         public TokenGroup Cost { get; set; }
 
-        public DevelopmentBonus Bonus { get; set; }
+        public DevelopmentColor Bonus { get; set; }
     }
 }

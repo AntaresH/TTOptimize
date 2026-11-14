@@ -43,10 +43,10 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
             // Arrange
             var playerTableau42011 = new List<DevelopmentCard>();
 
-            playerTableau42011.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Yellow).Take(4).ToList());
-            playerTableau42011.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Blue).Take(2).ToList());
-            playerTableau42011.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Brown).Take(1).ToList());
-            playerTableau42011.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Red).Take(1).ToList());
+            playerTableau42011.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Yellow).Take(4).ToList());
+            playerTableau42011.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Blue).Take(2).ToList());
+            playerTableau42011.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Brown).Take(1).ToList());
+            playerTableau42011.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Red).Take(1).ToList());
 
             var gameState = _defaultBuilder
                 .WithPlayerStore(1, player1Store)
@@ -68,10 +68,10 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
             // Arrange
             var playerTableau42011 = new List<DevelopmentCard>();
 
-            playerTableau42011.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Yellow).Take(4).ToList());
-            playerTableau42011.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Blue).Take(2).ToList());
-            playerTableau42011.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Brown).Take(1).ToList());
-            playerTableau42011.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Red).Take(1).ToList());
+            playerTableau42011.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Yellow).Take(4).ToList());
+            playerTableau42011.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Blue).Take(2).ToList());
+            playerTableau42011.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Brown).Take(1).ToList());
+            playerTableau42011.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Red).Take(1).ToList());
 
             var gameState = _defaultBuilder
                 .WithPlayerStore(1, player1Store)
@@ -94,10 +94,10 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
             // Arrange
             var playerTableau20233 = new List<DevelopmentCard>();
 
-            playerTableau20233.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Yellow).Take(2).ToList());
-            playerTableau20233.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Green).Take(2).ToList());
-            playerTableau20233.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Brown).Take(3).ToList());
-            playerTableau20233.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Red).Take(3).ToList());
+            playerTableau20233.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Yellow).Take(2).ToList());
+            playerTableau20233.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Green).Take(2).ToList());
+            playerTableau20233.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Brown).Take(3).ToList());
+            playerTableau20233.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Red).Take(3).ToList());
 
             int testSeed = 12345;
 
@@ -126,10 +126,10 @@ namespace SplendidWonders.Common.Tests.ExplorerTests
             // Arrange
             var playerTableau20233 = new List<DevelopmentCard>();
 
-            playerTableau20233.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Yellow).Take(2).ToList());
-            playerTableau20233.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Green).Take(2).ToList());
-            playerTableau20233.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Brown).Take(3).ToList());
-            playerTableau20233.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentBonus.Red).Take(3).ToList());
+            playerTableau20233.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Yellow).Take(2).ToList());
+            playerTableau20233.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Green).Take(2).ToList());
+            playerTableau20233.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Brown).Take(3).ToList());
+            playerTableau20233.AddRange(Cards.Level1.Where(card => card.Bonus == DevelopmentColor.Red).Take(3).ToList());
 
             int testSeed = 12345;
 

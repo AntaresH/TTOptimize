@@ -1,6 +1,7 @@
 ﻿using SplendidWonders.Common.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.ViewAbstractions;
@@ -9,18 +10,18 @@ namespace SplendidWonders.CLI.View
 {
     public class PlayerAreaWidget : WidgetBase, IConxelWidget
     {
-        private string _horizBorderChar = "-";
-        private string _vertBorderChar = "|";
-        private string _cornerChar = "+";
-
-        private int _playerBlockHeight = 6;
-        private int _playerBlockWidth = 20;
+        private string _cardSymbol = "🂠";
+        private int _playerBlockHeight = 5;
+        private int _playerBlockWidth = 21;
 
         public ConxelCanvas RenderToBuffer(IGameState state, IReadOnlyList<GameAction> legalActions)
         {
             var swState = (GameState)state;
 
-            var playerAreaCanvas = new ConxelCanvas(_playerBlockHeight, swState.Players.Count * _playerBlockWidth + swState.Players.Count - 1);
+            var borderedPlayerBlockWidth = _playerBlockWidth + 2;
+            var borderedPlayerBlockHeight = _playerBlockHeight + 2;
+
+            var playerAreaCanvas = new ConxelCanvas(borderedPlayerBlockHeight, swState.Players.Count * borderedPlayerBlockWidth + swState.Players.Count - 1);
 
             for (int i = 0; i < swState.Players.Count; i++)
             {
@@ -28,7 +29,7 @@ namespace SplendidWonders.CLI.View
                 var isActive = swState.ActivePlayerId == player.Id;
                 var blockColor = isActive ? RgbColor.LightSetDefault : RgbColor.DarkSetDefault;
 
-                playerAreaCanvas.Blit(RenderPlayerBlock(player, blockColor), 0, i * swState.Players.Count + i);
+                playerAreaCanvas.Blit(RenderPlayerBlock(player, blockColor), 0, i * borderedPlayerBlockWidth + i);
             }
 
             return playerAreaCanvas;
@@ -38,12 +39,80 @@ namespace SplendidWonders.CLI.View
         {
             var playerBlockCanvas = new ConxelCanvas(_playerBlockHeight, _playerBlockWidth);
 
+            playerBlockCanvas.Blit(NameLine(player.Name, player.Tableau, blockColor), 0, 0);
+            playerBlockCanvas.Blit(StoreLine(player.Store, player.ReservedCards, blockColor), 2, 0);
+            playerBlockCanvas.Blit(TableauLine(player.Tableau), 4, 0);
 
-            //playerBlockCanvas.WriteText(1, 1, player.Name, blockColor);
-            //playerBlockCanvas.Blit(StoreLine(player.Store, player.ReservedCards), 2, 1);
-            //playerBlockCanvas.Blit(TableauLine(player.Tableau), 4, 1);
+            return Cornered(SingleBorder(playerBlockCanvas, blockColor), blockColor);
+        }
 
-            return playerBlockCanvas;
+        private ConxelCanvas NameLine(string name, ImmutableList<DevelopmentCard> tableau, RgbColor blockColor)
+        {
+            var nameLine = new ConxelCanvas(1, _playerBlockWidth);
+
+            nameLine.WriteText(0, 1, name, blockColor);
+
+            int totalVP = tableau.Sum(dc => dc.VictoryPoints);
+
+            if (totalVP > 0)
+            {
+                nameLine[0, 17] = new Conxel("{", blockColor);
+                nameLine[0, 18] = new Conxel(totalVP.ToString(), blockColor);
+                nameLine[0, 19] = new Conxel("}", blockColor);
+            }
+
+            return nameLine;
+        }
+
+        private ConxelCanvas StoreLine(TokenGroup store, ImmutableList<DevelopmentCard> reservedCards, RgbColor blockColor)
+        {
+            var storeLine = new ConxelCanvas(1, _playerBlockWidth);
+
+            var supply = store.AsEnumerable();
+
+            int i = 1;
+            foreach (var requirement in store.AsEnumerable().Where(kvp => kvp.Key != DevelopmentColor.Polymath))
+            {
+                storeLine[0, i] = new Conxel(requirement.Value.ToString(), GetLightDevelopmentColor(requirement.Key));
+                i += 2;
+            }
+
+            storeLine[0, 12] = new Conxel(store.Polymath.ToString(), RgbColor.FullWhite);
+
+            storeLine[0, 15] = new Conxel(_cardSymbol, blockColor);
+            storeLine[0, 17] = new Conxel(":", blockColor);
+            storeLine[0, 19] = new Conxel(reservedCards.Count.ToString(), blockColor);
+
+            return storeLine;
+        }
+
+        private ConxelCanvas TableauLine(ImmutableList<DevelopmentCard> tableau)
+        {
+            var tableauLine = new ConxelCanvas(1, _playerBlockWidth);
+            var tableauBonuses = GetTableauAsEnumerable(tableau);
+
+            int i = 1;
+            foreach (var bonus in tableauBonuses)
+            {
+                tableauLine[0, i] = new Conxel(" ", null, GetDarkDevelopmentColor(bonus.Key));
+                tableauLine[0, i + 1] = new Conxel(bonus.Value.ToString(), RgbColor.FullWhite, GetDarkDevelopmentColor(bonus.Key));
+                tableauLine[0, i + 2] = new Conxel(" ", null, GetDarkDevelopmentColor(bonus.Key));
+
+                i += 4;
+            }
+
+            return tableauLine;
+        }
+
+        private IEnumerable<KeyValuePair<DevelopmentColor, int>> GetTableauAsEnumerable(ImmutableList<DevelopmentCard> tableau)
+        {
+            yield return new KeyValuePair<DevelopmentColor, int>(DevelopmentColor.Yellow, tableau.Count(c => c.Bonus == DevelopmentColor.Yellow));
+            yield return new KeyValuePair<DevelopmentColor, int>(DevelopmentColor.Blue, tableau.Count(c => c.Bonus == DevelopmentColor.Blue));
+            yield return new KeyValuePair<DevelopmentColor, int>(DevelopmentColor.Green, tableau.Count(c => c.Bonus == DevelopmentColor.Green));
+            yield return new KeyValuePair<DevelopmentColor, int>(DevelopmentColor.Brown, tableau.Count(c => c.Bonus == DevelopmentColor.Brown));
+            yield return new KeyValuePair<DevelopmentColor, int>(DevelopmentColor.Red, tableau.Count(c => c.Bonus == DevelopmentColor.Red));
+
+            yield break;
         }
     }
 }

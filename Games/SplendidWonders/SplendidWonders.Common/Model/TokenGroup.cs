@@ -24,6 +24,21 @@
             return returnTokenGroup;
         }
 
+        public IEnumerable<KeyValuePair<DevelopmentColor, int>> AsEnumerable()
+        {
+            var costs = new Dictionary<DevelopmentColor, int>();
+
+            yield return new KeyValuePair<DevelopmentColor, int>(DevelopmentColor.Yellow, Yellow);
+            yield return new KeyValuePair<DevelopmentColor, int>(DevelopmentColor.Blue, Blue);
+            yield return new KeyValuePair<DevelopmentColor, int>(DevelopmentColor.Green, Green);
+            yield return new KeyValuePair<DevelopmentColor, int>(DevelopmentColor.Brown, Brown);
+            yield return new KeyValuePair<DevelopmentColor, int>(DevelopmentColor.Red, Red);
+            yield return new KeyValuePair<DevelopmentColor, int>(DevelopmentColor.Polymath, Polymath);
+
+            yield break;
+        }
+
+
 
         public int[] ToArray()
         {

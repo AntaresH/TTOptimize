@@ -1,11 +1,12 @@
 ﻿namespace SplendidWonders.Common.Model
 {
-    public enum DevelopmentBonus
+    public enum DevelopmentColor
     {
         Yellow,
         Blue,
         Green,
         Brown,
-        Red
+        Red,
+        Polymath
     }
 }

@@ -129,11 +129,11 @@ namespace SplendidWonders.Gameplay.Reducers
             int[] leaderReqsArray = leader.Requirements.ToArray();
             int[] playerTableauArray =
             [
-                state.ActivePlayer.Tableau.Count(card => card.Bonus == DevelopmentBonus.Yellow),
-                    state.ActivePlayer.Tableau.Count(card => card.Bonus == DevelopmentBonus.Blue),
-                    state.ActivePlayer.Tableau.Count(card => card.Bonus == DevelopmentBonus.Green),
-                    state.ActivePlayer.Tableau.Count(card => card.Bonus == DevelopmentBonus.Brown),
-                    state.ActivePlayer.Tableau.Count(card => card.Bonus == DevelopmentBonus.Red),
+                state.ActivePlayer.Tableau.Count(card => card.Bonus == DevelopmentColor.Yellow),
+                    state.ActivePlayer.Tableau.Count(card => card.Bonus == DevelopmentColor.Blue),
+                    state.ActivePlayer.Tableau.Count(card => card.Bonus == DevelopmentColor.Green),
+                    state.ActivePlayer.Tableau.Count(card => card.Bonus == DevelopmentColor.Brown),
+                    state.ActivePlayer.Tableau.Count(card => card.Bonus == DevelopmentColor.Red),
                 ];
 
             for (int i = 0; i < 5; i++)
