@@ -54,7 +54,7 @@ namespace SplendidWonders.CLI
             services.AddKeyedScoped<MarketWidget>(Games.SPLENDID_WONDERS_KEY);
             services.AddKeyedScoped<PlayerAreaWidget>(Games.SPLENDID_WONDERS_KEY);
             services.AddKeyedScoped<ILayoutManager, SplendidWondersLayoutManager>(Games.SPLENDID_WONDERS_KEY);
-            services.AddKeyedSingleton<ITitleView, SplendidWondersTitleView>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedSingleton<IGameView, SplendidWondersView>(Games.SPLENDID_WONDERS_KEY);
 
             services.AddKeyedScoped<IConsoleCommandWizard, DrawDoubleTokensCommandWizard>(Games.SPLENDID_WONDERS_KEY);
             services.AddKeyedScoped<IConsoleCommandWizard, DrawThreeTokensCommandWizard>(Games.SPLENDID_WONDERS_KEY);

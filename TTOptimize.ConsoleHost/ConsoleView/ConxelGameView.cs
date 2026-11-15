@@ -1,9 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SplendidWonders.Common.Model;
 using TTOptimize.ConsoleHost.ConsoleView;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.ViewAbstractions;
 
-public class ConxelGameView : IGameView
+public class ConxelGameView : IGameRenderer
 {
     private readonly ILayoutManager _layoutManager;
     private readonly ConxelAnsiCompiler _compiler;
@@ -16,22 +17,12 @@ public class ConxelGameView : IGameView
         _compiler = compiler;
     }
 
-    public void DisplayGameTitle()
+    public void Render(IGameState state, IReadOnlyList<GameAction> legalActions)
     {
-        throw new NotImplementedException();
-    }
-
-    public void Render(IGameState state, IReadOnlyList<GameAction> legalActions, string errorMessage)
-    {
-        ConxelCanvas canvas = _layoutManager.BuildCanvas(state, legalActions, errorMessage);
+        ConxelCanvas canvas = _layoutManager.BuildCanvas(state, legalActions);
         string frame = _compiler.Compile(canvas);
 
         Console.SetCursorPosition(0, 0);
         Console.Write(frame);
-    }
-
-    public void RenderFinalState(IGameState gameState, object finalStandingsData)
-    {
-        throw new NotImplementedException();
     }
 }

@@ -1,12 +1,14 @@
-﻿using TTOptimize.Core.GameAbstractions;
-using TTOptimize.Core.InputAbstractions;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using TTOptimize.Core.GameAbstractions;
 
 namespace TTOptimize.Core.ViewAbstractions
 {
     public interface IGameView
     {
-        void Render(IGameState gameState, IReadOnlyList<GameAction> validActions, string customMessage);
-        //void Render(IGameState gameState, IEnumerable<GameAction> validActions);
-        void RenderFinalState(IGameState gameState, object finalStandingsData);
+        void DisplayGameTitle();
+        void DisplayGameOver(IGameState gameState, IGameRules finalStandings);
+        void DisplayValidationFailure(string lastValidationFailure);
     }
 }

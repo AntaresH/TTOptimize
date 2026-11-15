@@ -11,7 +11,8 @@ namespace TTOptimize.Engine;
 public class GameSessionManager
 {
     private readonly IServiceProvider _rootServiceProvider;
-    private IGameView _currentView;
+    private IGameRenderer _renderer;
+    private IGameView _view;
 
     private string _lastValidationFailure;
 
@@ -38,7 +39,8 @@ public class GameSessionManager
                 }
             }
 
-            _currentView = scopeProvider.GetRequiredKeyedService<IGameView>(gameId);
+            _renderer = scopeProvider.GetRequiredKeyedService<IGameRenderer>(gameId);
+            _view = scopeProvider.GetRequiredKeyedService<IGameView>(gameId);
 
             var initialState = stateFactory.Create(configuration);
 
@@ -46,8 +48,7 @@ public class GameSessionManager
 
             var finalState = RunGame(orchestrator, out TimeSpan elapsed);
 
-            var finalStandings = rules.GetFinalStandings(finalState);
-            _currentView.RenderFinalState(finalState, finalStandings);
+            _view.DisplayGameOver(finalState, rules);
 
             Console.WriteLine($"Futási idő: {Math.Round(elapsed.TotalSeconds, 4)} másodperc");
         }
@@ -55,7 +56,7 @@ public class GameSessionManager
 
     private IGameState RunGame(GameOrchestrator orchestrator, out TimeSpan elapsed)
     {
-        if (_currentView != null)
+        if (_renderer != null)
         {
             orchestrator.TurnStarted += Orchestrator_TurnStarted;
             orchestrator.ValidationFailed += Orchestrator_ValidationFailed;
@@ -78,7 +79,8 @@ public class GameSessionManager
     {
         if (activeAgent is HumanAgent)
         {
-            _currentView?.Render(currentState, validActions, _lastValidationFailure);
+            _renderer?.Render(currentState, validActions);
+            _view.DisplayValidationFailure(_lastValidationFailure);
             _lastValidationFailure = null;
         }
     }

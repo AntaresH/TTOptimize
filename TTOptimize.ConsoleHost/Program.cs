@@ -47,7 +47,7 @@ public class Program
         services.AddSingleton((isp) => new ArgumentService(args));
         services.AddSingleton<ConxelAnsiCompiler>();
         
-        services.AddKeyedScoped<IGameView>(Games.SPLENDID_WONDERS_KEY, (sp, key) =>
+        services.AddKeyedScoped<IGameRenderer>(Games.SPLENDID_WONDERS_KEY, (sp, key) =>
         {
             var layoutManager = sp.GetRequiredKeyedService<ILayoutManager>(key);
             var compiler = sp.GetRequiredService<ConxelAnsiCompiler>();

@@ -30,7 +30,7 @@ public class SetupService
     {   
         if (_isInterActive)
         {
-            var titleView = _serviceProvider.GetRequiredKeyedService<ITitleView>(selectedManifest.GameId);
+            var titleView = _serviceProvider.GetRequiredKeyedService<IGameView>(selectedManifest.GameId);
 
             Console.Clear();
             titleView.DisplayGameTitle();
