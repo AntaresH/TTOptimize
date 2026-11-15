@@ -66,8 +66,9 @@ namespace SplendidWonders.CLI.View
 
             if (victoryPoints > 0)
             {
-                nameLine[0, 17] = new Conxel("{", blockColor);
-                nameLine[0, 18] = new Conxel(victoryPoints.ToString(), blockColor);
+                int startIndex = victoryPoints < 10 ? 17 : 16;
+                nameLine[0, startIndex] = new Conxel("{", blockColor);
+                nameLine.WriteText(0, startIndex + 1, victoryPoints.ToString(), blockColor);
                 nameLine[0, 19] = new Conxel("}", blockColor);
             }
 

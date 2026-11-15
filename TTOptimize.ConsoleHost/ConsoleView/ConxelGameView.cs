@@ -22,7 +22,7 @@ public class ConxelGameView : IGameRenderer
         ConxelCanvas canvas = _layoutManager.BuildCanvas(state, legalActions);
         string frame = _compiler.Compile(canvas);
 
-        Console.SetCursorPosition(0, 0);
+        Console.Clear();
         Console.Write(frame);
     }
 }

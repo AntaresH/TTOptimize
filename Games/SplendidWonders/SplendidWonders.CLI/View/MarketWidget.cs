@@ -28,7 +28,7 @@ namespace SplendidWonders.CLI.View
                 for (int j = 0; j < 4; j++)
                 {
                     var developmentCard = swState[3 - i][j + 1];
-                    var purchaseAction = legalActions.OfType<PurchaseAction>().FirstOrDefault(pa => pa.Card == developmentCard);
+                    var purchaseAction = legalActions?.OfType<PurchaseAction>()?.FirstOrDefault(pa => pa.Card == developmentCard);
 
                     var cardCanvas = developmentCard == Cards.Empty
                                         ? EmptyCard(WidgetHelper.DarkSetDefault)

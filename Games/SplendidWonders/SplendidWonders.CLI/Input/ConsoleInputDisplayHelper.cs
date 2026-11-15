@@ -16,7 +16,11 @@ namespace SplendidWonders.CLI.Input
 
             Console.WriteLine(
                 GetRgbColoredConsoleBackground(
-                    GetRgbColoredConsoleForeground(Strings.ValidCommands.PadRight(Console.WindowWidth), "255;250;235"), "50;50;50"));
+                    GetRgbColoredConsoleForeground(new string('*', Console.WindowWidth), "255;255;255"), "50;50;50"));
+
+            Console.WriteLine(
+                GetRgbColoredConsoleBackground(
+                    GetRgbColoredConsoleForeground(Strings.ValidCommands.PadRight(Console.WindowWidth), "230;225;205"), "50;50;50"));
 
             foreach (var wizard in activeWizards)
             {
@@ -30,9 +34,12 @@ namespace SplendidWonders.CLI.Input
                 {
                     Console.WriteLine(
                         GetRgbColoredConsoleBackground(
-                            GetRgbColoredConsoleForeground($"{wizard.CommandKey} - {wizard.Description}".PadRight(Console.WindowWidth), "255;250;235"), "50;50;50"));
+                            GetRgbColoredConsoleForeground($"{wizard.CommandKey} - {wizard.Description}".PadRight(Console.WindowWidth), "230;225;205"), "50;50;50"));
                 }
             }
+            Console.WriteLine(
+                GetRgbColoredConsoleBackground(
+                    GetRgbColoredConsoleForeground(new string('*', Console.WindowWidth), "255;255;255"), "50;50;50"));
             Console.WriteLine();
         }
 
