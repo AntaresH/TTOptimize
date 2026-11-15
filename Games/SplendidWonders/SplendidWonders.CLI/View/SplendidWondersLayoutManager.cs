@@ -8,7 +8,7 @@ namespace SplendidWonders.CLI.View;
 
 public class SplendidWondersLayoutManager : ILayoutManager
 {
-    private const int MinCanvasRows = 35;
+    private const int MinCanvasRows = 34;
     private const int MinCanvasColumns = 140;
 
     private readonly LeaderAreaWidget _leaderAreaWidget;

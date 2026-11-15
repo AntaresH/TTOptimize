@@ -11,20 +11,28 @@ namespace SplendidWonders.CLI.Input
     {
         public static void DisplayActions(IEnumerable<IConsoleCommandWizard> activeWizards)
         {
-            Console.WriteLine(Strings.ValidCommands);
+            var previousForeground = Console.ForegroundColor;
+            var previousBackground = Console.BackgroundColor;
+
+            Console.WriteLine(
+                GetRgbColoredConsoleBackground(
+                    GetRgbColoredConsoleForeground(Strings.ValidCommands.PadRight(Console.WindowWidth), "255;250;235"), "50;50;50"));
 
             foreach (var wizard in activeWizards)
             {
                 if (wizard is PresentationWizard)
                 {
-                    PrintColoredLine($"{wizard.CommandKey} - {wizard.Description}", ConsoleColor.Yellow);
+                    Console.WriteLine(
+                        GetRgbColoredConsoleBackground(
+                            GetRgbColoredConsoleForeground($"{wizard.CommandKey} - {wizard.Description}".PadRight(Console.WindowWidth), "255;230;80"), "50;50;50"));
                 }
                 else
                 {
-                    Console.WriteLine($"{wizard.CommandKey} - {wizard.Description}");
+                    Console.WriteLine(
+                        GetRgbColoredConsoleBackground(
+                            GetRgbColoredConsoleForeground($"{wizard.CommandKey} - {wizard.Description}".PadRight(Console.WindowWidth), "255;250;235"), "50;50;50"));
                 }
             }
-
             Console.WriteLine();
         }
 
@@ -51,6 +59,7 @@ namespace SplendidWonders.CLI.Input
                 PrintLeader(leader);
             }
         }
+
         public static void ClearFromLine(int startLine)
         {
             Console.SetCursorPosition(0, startLine);
@@ -141,6 +150,16 @@ namespace SplendidWonders.CLI.Input
         private static string GetWhiteConsoleForegroundText(string text)
         {
             return $"\u001b[38;2;255;255;255m{text}\u001b[39m";
+        }
+
+        private static string GetRgbColoredConsoleForeground(string text, string trueColorRgb)
+        {
+            return $"\u001b[38;2;{trueColorRgb}m{text}\u001b[39m";
+        }
+
+        private static string GetRgbColoredConsoleBackground(string text, string trueColorRgb)
+        {
+            return $"\u001b[48;2;{trueColorRgb}m{text}\u001b[49m";
         }
 
         private static string GetRgbColoredConsoleForeground(string text, DevelopmentColor trueColorRgbFormat)

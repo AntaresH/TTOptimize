@@ -53,6 +53,7 @@ namespace SplendidWonders.CLI.View
             Console.ForegroundColor = color;
             Console.WriteLine(text);
             Console.ForegroundColor = previousColor;
+            Console.WriteLine();
         }
     }
 }
