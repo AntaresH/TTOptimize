@@ -10,18 +10,23 @@ namespace SplendidWonders.CLI.View
 {
     public class PlayerAreaWidget : WidgetBase, IConxelWidget
     {
-        private string _cardSymbol = "🂠";
+        public int Rows => _playerBlockHeight + 2;
+        public int Columns => _playerCount * (_playerBlockWidth + 2) + _spacing * (_playerCount - 1);
+
+        private int _spacing = 4;
+        private int _playerCount;
+
         private int _playerBlockHeight = 5;
         private int _playerBlockWidth = 21;
+
+        private string _cardSymbol = "🂠";
 
         public ConxelCanvas RenderToBuffer(IGameState state, IReadOnlyList<GameAction> legalActions)
         {
             var swState = (GameState)state;
+            _playerCount = swState.Players.Count;
 
-            var borderedPlayerBlockWidth = _playerBlockWidth + 2;
-            var borderedPlayerBlockHeight = _playerBlockHeight + 2;
-
-            var playerAreaCanvas = new ConxelCanvas(borderedPlayerBlockHeight, swState.Players.Count * borderedPlayerBlockWidth + swState.Players.Count - 1);
+            var playerAreaCanvas = new ConxelCanvas(Rows, Columns);
 
             for (int i = 0; i < swState.Players.Count; i++)
             {
@@ -29,13 +34,18 @@ namespace SplendidWonders.CLI.View
                 var isActive = swState.ActivePlayerId == player.Id;
                 var blockColor = isActive ? WidgetHelper.LightSetDefault : WidgetHelper.DarkSetDefault;
 
-                playerAreaCanvas.Blit(RenderPlayerBlock(player, blockColor), 0, i * borderedPlayerBlockWidth + i);
+                playerAreaCanvas.Blit(PlayerBlock(player, blockColor), 0, i * (_playerBlockWidth + 2) + _spacing * i);
             }
 
             return playerAreaCanvas;
         }
 
-        private ConxelCanvas RenderPlayerBlock(Player player, RgbColor blockColor)
+        public void CalculateDynamicWidth(GameState state)
+        {
+            _playerCount = state.Players.Count;
+        }
+
+        private ConxelCanvas PlayerBlock(Player player, RgbColor blockColor)
         {
             var playerBlockCanvas = new ConxelCanvas(_playerBlockHeight, _playerBlockWidth);
 

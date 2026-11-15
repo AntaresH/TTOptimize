@@ -11,17 +11,17 @@ namespace SplendidWonders.CLI.View
 {
     public class MarketWidget : WidgetBase, IConxelWidget
     {
-        private int _cardInnerHeight = 6;
-        private int _cardInnerWidth = 24;
+        public int Rows => 3 * (_cardHeight + 2) + 2;
+        public int Columns => 4 * (_cardWidth + 2) + 3;
+
+        private int _cardHeight = 6;
+        private int _cardWidth = 24;
 
         public ConxelCanvas RenderToBuffer(IGameState state, IReadOnlyList<GameAction> legalActions)
         {
             var swState = (GameState)state;
 
-            var borderedCardHeight = _cardInnerHeight + 2;
-            var borderedCardWidth = _cardInnerWidth + 2;
-
-            var marketCanvas = new ConxelCanvas(3 * borderedCardHeight + 2, 4 * borderedCardWidth + 3);
+            var marketCanvas = new ConxelCanvas(Rows, Columns);
 
             for (int i = 0; i < 3; i++)
             {
@@ -34,7 +34,7 @@ namespace SplendidWonders.CLI.View
                                         ? EmptyCard(WidgetHelper.DarkSetDefault)
                                         : Card(developmentCard, purchaseAction);
 
-                    marketCanvas.Blit(cardCanvas, i * borderedCardHeight +i, j * borderedCardWidth + j);
+                    marketCanvas.Blit(cardCanvas, i * (_cardHeight + 2) + i, j * (_cardWidth + 2) + j);
                 }
             }
 
@@ -43,9 +43,9 @@ namespace SplendidWonders.CLI.View
 
         private ConxelCanvas EmptyCard(RgbColor cardColor)
         {
-            var cardCanvas = new ConxelCanvas(_cardInnerHeight, _cardInnerWidth);
+            var cardCanvas = new ConxelCanvas(_cardHeight, _cardWidth);
 
-            return new ConxelCanvas(_cardInnerHeight, _cardInnerWidth).WithSingleBorder(cardColor).WithCorners(cardColor);
+            return new ConxelCanvas(_cardHeight, _cardWidth).WithSingleBorder(cardColor).WithCorners(cardColor);
         }
 
         private ConxelCanvas Card(DevelopmentCard developmentCard, PurchaseAction respectivePurchaseAction)
@@ -59,10 +59,10 @@ namespace SplendidWonders.CLI.View
 
             var needsDoubleBorder = respectivePurchaseAction != null;
 
-            var cardCanvas = new ConxelCanvas(_cardInnerHeight, _cardInnerWidth);
+            var cardCanvas = new ConxelCanvas(_cardHeight, _cardWidth);
 
             cardCanvas.Blit(CardHeaderLines(borderColor, cardColor, developmentCard.Name), 0, 0);
-            cardCanvas.Blit(EmptyBlock(_cardInnerWidth), 4, 0);
+            cardCanvas.Blit(EmptyBlock(_cardWidth), 4, 0);
             cardCanvas.Blit(RequirementsLine(borderColor, developmentCard.Cost, developmentCard.VictoryPoints), 5, 0);
 
             return needsDoubleBorder
@@ -72,22 +72,22 @@ namespace SplendidWonders.CLI.View
 
         private ConxelCanvas CardHeaderLines(RgbColor borderColor, RgbColor cardColor, string title)
         {
-            var header = new ConxelCanvas(4, _cardInnerWidth);
+            var header = new ConxelCanvas(4, _cardWidth);
 
-            var (nameLine1, nameLine2) = WidgetRenderingHelper.WrapAndCenterText(title, _cardInnerWidth - 2);
+            var (nameLine1, nameLine2) = WidgetHelper.WrapAndCenterText(title, _cardWidth - 2);
 
-            header.Blit(ColoredBlock(cardColor, _cardInnerWidth), 0, 0);
+            header.Blit(ColoredBlock(cardColor, _cardWidth), 0, 0);
             header.WriteText(1, 0, $" " + nameLine1 + " ", RgbColor.FullWhite, cardColor);
 
             if (string.IsNullOrWhiteSpace(nameLine2))
             {
-                header.Blit(ColoredBlock(cardColor, _cardInnerWidth), 2, 0);
-                header.Blit(EmptyBlock(_cardInnerWidth), 3, 0);
+                header.Blit(ColoredBlock(cardColor, _cardWidth), 2, 0);
+                header.Blit(EmptyBlock(_cardWidth), 3, 0);
             }
             else
             {
                 header.WriteText(2, 0, $" " + nameLine2 + " ", RgbColor.FullWhite, cardColor);
-                header.Blit(ColoredBlock(cardColor, _cardInnerWidth), 3, 0);
+                header.Blit(ColoredBlock(cardColor, _cardWidth), 3, 0);
             }
 
             return header;
@@ -95,7 +95,7 @@ namespace SplendidWonders.CLI.View
 
         private ConxelCanvas RequirementsLine(RgbColor borderColor, TokenGroup cost, int victoryPoints)
         {
-            var reqLine = new ConxelCanvas(1, _cardInnerWidth);
+            var reqLine = new ConxelCanvas(1, _cardWidth);
 
             int i = 1;
             foreach (var requirement in cost.AsEnumerable().Where(kvp => kvp.Value > 0))
@@ -106,9 +106,9 @@ namespace SplendidWonders.CLI.View
 
             if (victoryPoints > 0)
             {
-                reqLine[0, _cardInnerWidth - 4] = new Conxel("{", RgbColor.FullWhite);
-                reqLine[0, _cardInnerWidth - 3] = new Conxel(victoryPoints.ToString(), RgbColor.FullWhite);
-                reqLine[0, _cardInnerWidth - 2] = new Conxel("}", RgbColor.FullWhite);
+                reqLine[0, _cardWidth - 4] = new Conxel("{", RgbColor.FullWhite);
+                reqLine[0, _cardWidth - 3] = new Conxel(victoryPoints.ToString(), RgbColor.FullWhite);
+                reqLine[0, _cardWidth - 2] = new Conxel("}", RgbColor.FullWhite);
             }
 
             return reqLine;

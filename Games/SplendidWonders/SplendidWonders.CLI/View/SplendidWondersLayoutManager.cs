@@ -8,8 +8,8 @@ namespace SplendidWonders.CLI.View;
 
 public class SplendidWondersLayoutManager : ILayoutManager
 {
-    private const int CanvasWidth = 140;
-    private const int CanvasHeight = 42;
+    private const int MinCanvasRows = 35;
+    private const int MinCanvasColumns = 140;
 
     private readonly LeaderAreaWidget _leaderAreaWidget;
     private readonly TokenSupplyWidget _tokenSupplyWidget;
@@ -31,26 +31,43 @@ public class SplendidWondersLayoutManager : ILayoutManager
         _playerAreaWidget = playerAreaWidget;
     }
 
-    public ConxelCanvas BuildCanvas(IGameState state, IReadOnlyList<GameAction> legalActions, string? errorMessage)
+    public ConxelCanvas BuildCanvas(IGameState state, IReadOnlyList<GameAction> legalActions)
     {
-        var canvas = new ConxelCanvas(CanvasHeight, CanvasWidth);
-
         var swState = (GameState)state;
 
-        //if (swState.Leaders.Any())
-        //{
-        //    canvas.Blit(_leaderAreaWidget.RenderToBuffer(state, legalActions), startRow: 85, startY: 0);
-        //}
+        return swState.Leaders.Any()
+            ? BoardWithLeaders(swState, legalActions)
+            : BoardWithoutLeaders(swState, legalActions);
+    }
 
-        canvas.Blit(_tokenSupplyWidget.RenderToBuffer(state, legalActions), startRow: 2, startColumn: 0);
-        canvas.Blit(_decksWidget.RenderToBuffer(state, legalActions), startRow: 0, startColumn: 7);
-        canvas.Blit(_marketWidget.RenderToBuffer(state, legalActions), startRow: 0, startColumn: 28);
-        canvas.Blit(_playerAreaWidget.RenderToBuffer(state, legalActions), startRow: 27, startColumn: 7);
+    private ConxelCanvas BoardWithoutLeaders(GameState state, IReadOnlyList<GameAction> legalActions)
+    {
+        var canvas = new ConxelCanvas(MinCanvasRows, MinCanvasColumns);
 
-        //if (!string.IsNullOrEmpty(errorMessage))
-        //{
-        //    canvas.WriteText(0, CanvasHeight - 1, $"[HIBA] {errorMessage}", foreground: new RgbColor(255, 80, 80));
-        //}
+        canvas.Blit(_tokenSupplyWidget.RenderToBuffer(state, legalActions), startRow: 2, startColumn: 1);
+        
+        canvas.Blit(_decksWidget.RenderToBuffer(state, legalActions), startRow: 0, startColumn: 8);
+        
+        canvas.Blit(_marketWidget.RenderToBuffer(state, legalActions), startRow: 0, startColumn: 29);
+
+        _playerAreaWidget.CalculateDynamicWidth(state);
+        var playerStartColumn = _tokenSupplyWidget.Columns + 3 + (_decksWidget.Columns + _marketWidget.Columns + 1 - _playerAreaWidget.Columns) / 2;
+
+        canvas.Blit(_playerAreaWidget.RenderToBuffer(state, legalActions), startRow: 27, startColumn: playerStartColumn);
+
+        return canvas;
+    }
+
+    private ConxelCanvas BoardWithLeaders(GameState state, IReadOnlyList<GameAction> legalActions)
+    {
+        var canvas = new ConxelCanvas(MinCanvasRows + _leaderAreaWidget.Rows + 1, MinCanvasColumns);
+
+        _leaderAreaWidget.CalculateDynamicWidth(state);
+
+        var leaderStartColumn = _tokenSupplyWidget.Columns + 3 + (_decksWidget.Columns +_marketWidget.Columns + 1 - _leaderAreaWidget.Columns) / 2;
+
+        canvas.Blit(_leaderAreaWidget.RenderToBuffer(state, legalActions), startRow: 0, startColumn: leaderStartColumn);
+        canvas.Blit(BoardWithoutLeaders(state, legalActions), startRow: _leaderAreaWidget.Rows + 1, startColumn: 0);
 
         return canvas;
     }

@@ -11,6 +11,7 @@ public readonly record struct RgbColor(byte R, byte G, byte B)
     public static readonly RgbColor DarkMagenta = new RgbColor(160, 0, 80);
     public static readonly RgbColor WarmWhite = new RgbColor(255, 250, 220);
     public static readonly RgbColor FullWhite = new RgbColor(255, 255, 255);
+    public static readonly RgbColor DarkRed = new RgbColor(80, 0, 0);
 }
 
 public readonly record struct Conxel(

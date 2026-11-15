@@ -5,6 +5,13 @@ namespace SplendidWonders.CLI.View
 {
     public abstract class WidgetBase
     {
+        protected ConxelCanvas CenteredTextLine(RgbColor deckColor, string deckTitle, int width)
+        {
+            var retBuffer = new ConxelCanvas(1, width);
+            retBuffer.WriteText(0, 0, WidgetHelper.CenterText(deckTitle, width), RgbColor.FullWhite, deckColor);
+
+            return retBuffer;
+        }
 
         protected ConxelCanvas ColoredBlock(RgbColor fillColor, int width)
         {
