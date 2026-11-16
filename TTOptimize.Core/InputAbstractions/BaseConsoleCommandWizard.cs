@@ -6,11 +6,11 @@ public abstract class BaseConsoleCommandWizard : IConsoleCommandWizard
 {
     public abstract string CommandKey { get; }
     public abstract string Description { get; }
-    public IConsolePromptContext PromptContext { get; }
+    public IConsolePromptContext _promptContext { get; }
 
     public BaseConsoleCommandWizard(IConsolePromptContext promptContext)
     {
-        PromptContext = promptContext;
+        _promptContext = promptContext;
     }
 
     public abstract bool CanExecute(IGameState state, IEnumerable<GameAction> validActions);
@@ -21,42 +21,52 @@ public abstract class BaseConsoleCommandWizard : IConsoleCommandWizard
 
     protected GameCommand PromptForParameter()
     {
-        int promptStartTop = Console.CursorTop;
+        _promptContext.BeginZone();
 
-        while (true)
+        try
         {
-            ClearFromLine(promptStartTop);
-
-            string? input = ReadLineOrEscape();
-
-            if (input is null)
+            while (true)
             {
-                throw new ConsoleUserBackException();
-            }
+                string? input = ReadLineOrEscape();
 
-            if (string.IsNullOrEmpty(input))
-                continue;
-
-            if (input.ToUpper() == "X")
-                throw new ConsoleUserAbortException();
-
-            GameAction? generatedAction = ParseInput(input);
-
-            if (generatedAction != null)
-            {
-                return new GameCommand()
+                if (input is null)
                 {
-                    Action = generatedAction,
-                    CommandText = $"{CommandKey} {input}"
-                };
+                    _promptContext.ResetZone();
+                    throw new ConsoleUserBackException();
+                }
+
+                if (string.IsNullOrEmpty(input))
+                {
+                    _promptContext.ResetZone();
+                    continue;
+                }
+
+                if (input.ToUpper() == "X")
+                {
+                    _promptContext.ResetZone();
+                    throw new ConsoleUserAbortException();
+                }
+
+                GameAction? generatedAction = ParseInput(input);
+
+                if (generatedAction != null)
+                {
+                    return new GameCommand()
+                    {
+                        Action = generatedAction,
+                        CommandText = $"{CommandKey} {input}"
+                    };
+                }
+                else
+                {
+                    _promptContext.ResetZone();
+                }
             }
         }
-    }
-
-    protected void ClearFromLine(int startLine)
-    {
-        Console.SetCursorPosition(0, startLine);
-        Console.Write("\x1b[J");
+        finally
+        {
+            _promptContext.EndZone();
+        }
     }
 
     public string? ReadLineOrEscape()

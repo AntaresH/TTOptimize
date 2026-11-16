@@ -45,7 +45,7 @@ namespace SplendidWonders.CLI.Input
 
                     if (inputKey == "X")
                     {
-                        _promptContext.EndZone();
+                        _promptContext.ResetZone();
                         throw new ConsoleUserAbortException();
                     }
 
