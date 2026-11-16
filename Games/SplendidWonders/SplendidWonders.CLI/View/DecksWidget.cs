@@ -29,9 +29,9 @@ namespace SplendidWonders.CLI.View
 
             var decksCanvas = new ConxelCanvas(Rows, Columns);
 
-            decksCanvas.Blit(Deck($"{_level3Icon} {Strings.Level3Title}", swState.Level3.Deck.Count, RgbColor.DarkMagenta), 0, 0);
-            decksCanvas.Blit(Deck($"{_level2Icon} {Strings.Level2Title}", swState.Level2.Deck.Count, RgbColor.Turqoise), _innerHeight + 3, 0);
-            decksCanvas.Blit(Deck($"{_level1Icon} {Strings.Level1Title}", swState.Level1.Deck.Count, RgbColor.Orange), 2 * _innerHeight + 6, 0);
+            decksCanvas.Blit(Deck($"{_level3Icon} {Strings.Level3Title}", swState.Level3.Deck.Count, ColorHelper.DarkMagenta), 0, 0);
+            decksCanvas.Blit(Deck($"{_level2Icon} {Strings.Level2Title}", swState.Level2.Deck.Count, ColorHelper.Turqoise), _innerHeight + 3, 0);
+            decksCanvas.Blit(Deck($"{_level1Icon} {Strings.Level1Title}", swState.Level1.Deck.Count, ColorHelper.Orange), 2 * _innerHeight + 6, 0);
 
             return decksCanvas;
         }

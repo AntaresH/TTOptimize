@@ -31,7 +31,7 @@ namespace SplendidWonders.CLI.View
                     var purchaseAction = legalActions?.OfType<PurchaseAction>()?.FirstOrDefault(pa => pa.Card == developmentCard);
 
                     var cardCanvas = developmentCard == Cards.Empty
-                                        ? EmptyCard(WidgetHelper.DarkSetDefault)
+                                        ? EmptyCard(ColorHelper.DarkSetDefault)
                                         : Card(developmentCard, purchaseAction);
 
                     marketCanvas.Blit(cardCanvas, i * (_cardHeight + 2) + i, j * (_cardWidth + 2) + j);
@@ -50,12 +50,12 @@ namespace SplendidWonders.CLI.View
 
         private ConxelCanvas Card(DevelopmentCard developmentCard, PurchaseAction respectivePurchaseAction)
         {
-            var cardColor = GetDarkDevelopmentColor(developmentCard.Bonus);
+            var cardColor = ColorHelper.DarkSetColor(developmentCard.Bonus);
             var borderColor = respectivePurchaseAction == null
                                 ? cardColor
                                 : respectivePurchaseAction.RequiredTokens.Polymath == 0
-                                    ? WidgetHelper.LightSetYellow
-                                    : RgbColor.WarmWhite;
+                                    ? ColorHelper.LightSetYellow
+                                    : ColorHelper.WarmWhite;
 
             var needsDoubleBorder = respectivePurchaseAction != null;
 
@@ -74,10 +74,10 @@ namespace SplendidWonders.CLI.View
         {
             var header = new ConxelCanvas(4, _cardWidth);
 
-            var (nameLine1, nameLine2) = WidgetHelper.WrapAndCenterText(title, _cardWidth - 2);
+            var (nameLine1, nameLine2) = WrapAndCenterText(title, _cardWidth - 2);
 
             header.Blit(ColoredBlock(cardColor, _cardWidth), 0, 0);
-            header.WriteText(1, 0, $" " + nameLine1 + " ", RgbColor.FullWhite, cardColor);
+            header.WriteText(1, 0, $" " + nameLine1 + " ", ColorHelper.FullWhite, cardColor);
 
             if (string.IsNullOrWhiteSpace(nameLine2))
             {
@@ -86,7 +86,7 @@ namespace SplendidWonders.CLI.View
             }
             else
             {
-                header.WriteText(2, 0, $" " + nameLine2 + " ", RgbColor.FullWhite, cardColor);
+                header.WriteText(2, 0, $" " + nameLine2 + " ", ColorHelper.FullWhite, cardColor);
                 header.Blit(ColoredBlock(cardColor, _cardWidth), 3, 0);
             }
 
@@ -100,15 +100,15 @@ namespace SplendidWonders.CLI.View
             int i = 1;
             foreach (var requirement in cost.AsEnumerable().Where(kvp => kvp.Value > 0))
             {
-                reqLine[0, i] = new Conxel(requirement.Value.ToString(), GetLightDevelopmentColor(requirement.Key));
+                reqLine[0, i] = new Conxel(requirement.Value.ToString(), ColorHelper.LightSetColor(requirement.Key));
                 i += 2;
             }
 
             if (victoryPoints > 0)
             {
-                reqLine[0, _cardWidth - 4] = new Conxel("{", RgbColor.FullWhite);
-                reqLine[0, _cardWidth - 3] = new Conxel(victoryPoints.ToString(), RgbColor.FullWhite);
-                reqLine[0, _cardWidth - 2] = new Conxel("}", RgbColor.FullWhite);
+                reqLine[0, _cardWidth - 4] = new Conxel("{", ColorHelper.FullWhite);
+                reqLine[0, _cardWidth - 3] = new Conxel(victoryPoints.ToString(), ColorHelper.FullWhite);
+                reqLine[0, _cardWidth - 2] = new Conxel("}", ColorHelper.FullWhite);
             }
 
             return reqLine;

@@ -184,7 +184,7 @@
     <value>{0} köre.</value>
   </data>
   <data name="PromptThreeTokens" xml:space="preserve">
-    <value>Kérlek add meg, hogy milyen színű lapkákat szeretnél húzni (S - sárga, K - kék, Z - zöld, B - barna, P - piros). Például, "S B P". Háromnál kevesebb színt is megadhatsz, ha nem tudnál úgysem a játéktérről eleget felhúzni:</value>
+    <value>Milyen színű lapkákat szeretnél húzni? (S - sárga, K - kék, Z - zöld, B - barna, P - piros). Például, "S B P". Háromnál kevesebb színt is megadhatsz.</value>
   </data>
   <data name="PromptDoubleTokens" xml:space="preserve">
     <value>Kérlek add meg, hogy milyen színű lapkából szeretnél kettőt húzni (S - sárga, K - kék, Z - zöld, B - barna, P - piros). Például, "K".</value>
@@ -269,5 +269,8 @@
   </data>
   <data name="FreePurchase" xml:space="preserve">
     <value>INGYENES</value>
+  </data>
+  <data name="EscapeToMainCommand" xml:space="preserve">
+    <value>Esc - Mégse</value>
   </data>
 </root>

@@ -25,7 +25,7 @@ namespace SplendidWonders.CLI.Input.Wizards
         {
             _availablePurchases = validActions.OfType<PurchaseFromBoardAction>();
 
-            Console.WriteLine(Strings.PromptPurchaseFromBoard);
+            ConsoleInputDisplayHelper.PrintSubCommandBlock(CommandKey, Strings.PromptPurchaseFromBoard);
             ConsoleInputDisplayHelper.DisplayCards(_availablePurchases);
 
             return PromptForParameter();
@@ -37,9 +37,9 @@ namespace SplendidWonders.CLI.Input.Wizards
 
             if (match.Success)
             {
-                int cardId = int.Parse(match.Groups[0].Value);
+                int key = int.Parse(match.Groups[0].Value);
 
-                var selectedPurchase = _availablePurchases.FirstOrDefault(pa => pa.Card.Id == cardId);
+                var selectedPurchase = _availablePurchases.ElementAtOrDefault(key - 1);
 
                 if (selectedPurchase != null)
                 {

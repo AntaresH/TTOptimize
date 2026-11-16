@@ -124,6 +124,15 @@ namespace SplendidWonders.CLI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Esc - Mégse.
+        /// </summary>
+        internal static string EscapeToMainCommand {
+            get {
+                return ResourceManager.GetString("EscapeToMainCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Végső pontszámok:.
         /// </summary>
         internal static string FinalScores {
@@ -349,7 +358,7 @@ namespace SplendidWonders.CLI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kérlek add meg, hogy milyen színű lapkákat szeretnél húzni (S - sárga, K - kék, Z - zöld, B - barna, P - piros). Például, &quot;S B P&quot;. Háromnál kevesebb színt is megadhatsz, ha nem tudnál úgysem a játéktérről eleget felhúzni:.
+        ///   Looks up a localized string similar to Milyen színű lapkákat szeretnél húzni? (S - sárga, K - kék, Z - zöld, B - barna, P - piros). Például, &quot;S B P&quot;. Háromnál kevesebb színt is megadhatsz..
         /// </summary>
         internal static string PromptThreeTokens {
             get {

@@ -22,9 +22,12 @@ namespace SplendidWonders.CLI.Input
 
         public GameCommand ReadCommand(IGameState state, IEnumerable<GameAction> validActions)
         {
+            int blockTop = Console.CursorTop;
+
             var activeWizards = _wizards.Where(w => w.CanExecute(state, validActions));
 
-            ConsoleInputDisplayHelper.DisplayActions(activeWizards);
+            ConsoleInputDisplayHelper.PrintCommandsBlock(activeWizards, null);
+
             int promptStartTop = Console.CursorTop;
 
             while (true)
@@ -33,18 +36,23 @@ namespace SplendidWonders.CLI.Input
 
                 try
                 {
-                    string commandInput = (Console.ReadLine() ?? "").Trim().ToUpper();
+                    var inputKey = Console.ReadKey(intercept: true).KeyChar.ToString().ToUpper();
 
-                    if (commandInput == "X")
+                    ConsoleInputDisplayHelper.ClearFromLine(promptStartTop);
+
+                    if (inputKey == "X")
                     {
                         throw new ConsoleUserAbortException();
                     }
 
-                    var wizard = activeWizards.FirstOrDefault(wiz => wiz.CommandKey == commandInput);
+                    var wizard = activeWizards.FirstOrDefault(wiz => wiz.CommandKey == inputKey);
 
                     if (wizard != null)
                     {
-                        GameCommand? command = wizard.RunConsoleDialog(state, validActions);
+                        ConsoleInputDisplayHelper.ClearFromLine(blockTop);
+                        ConsoleInputDisplayHelper.PrintCommandsBlock(activeWizards, wizard);
+
+                        GameCommand? command = wizard.RunConsoleDialog(state, validActions, promptStartTop);
 
                         if (command != null) 
                             return command;
@@ -54,6 +62,8 @@ namespace SplendidWonders.CLI.Input
                 }
                 catch (ConsoleUserBackException)
                 {
+                    ConsoleInputDisplayHelper.ClearFromLine(blockTop);
+                    ConsoleInputDisplayHelper.PrintCommandsBlock(activeWizards, null);
                     continue;
                 }
             }

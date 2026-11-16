@@ -27,7 +27,7 @@ namespace SplendidWonders.CLI.Input.Wizards
         {
             _gameState = (GameState)state;
 
-            Console.WriteLine(Strings.PromptReserveFromDeck);
+            ConsoleInputDisplayHelper.PrintSubCommandBlock(CommandKey, Strings.PromptReserveFromDeck);
 
             return PromptForParameter();
         }

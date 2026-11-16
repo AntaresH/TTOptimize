@@ -25,7 +25,7 @@ namespace SplendidWonders.CLI.Input.Wizards
         {
             _eligibleLeaders = validActions.OfType<SelectLeaderAction>().Select(a => a.Leader);
 
-            Console.WriteLine(Strings.PromptSelectLeader);
+            ConsoleInputDisplayHelper.PrintSubCommandBlock(CommandKey, Strings.PromptSelectLeader);
             ConsoleInputDisplayHelper.DisplayLeaders(_eligibleLeaders);
 
             return PromptForParameter();

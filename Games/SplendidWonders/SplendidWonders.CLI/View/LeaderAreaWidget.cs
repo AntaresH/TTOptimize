@@ -48,32 +48,34 @@ namespace SplendidWonders.CLI.View
         {
             var leaderCanvas = new ConxelCanvas(_leaderBlockHeight, _leaderBlockWidth);
 
-            leaderCanvas.Blit(ColoredBlock(RgbColor.DarkRed, _leaderBlockWidth), 0, 0);
-            leaderCanvas.Blit(CenteredTextLine(RgbColor.DarkRed, $"{_leaderSymbol} {leader.Name}", _leaderBlockWidth), 1, 0);
-            leaderCanvas.Blit(ColoredBlock(RgbColor.DarkRed, _leaderBlockWidth), 2, 0);
+            leaderCanvas.Blit(ColoredBlock(ColorHelper.DarkRed, _leaderBlockWidth), 0, 0);
+            leaderCanvas.Blit(CenteredTextLine(ColorHelper.DarkRed, $"{_leaderSymbol} {leader.Name}", _leaderBlockWidth), 1, 0);
+            leaderCanvas.Blit(ColoredBlock(ColorHelper.DarkRed, _leaderBlockWidth), 2, 0);
             leaderCanvas.Blit(RequirementsLine(leader), 3, 0);
-            leaderCanvas.Blit(ColoredBlock(RgbColor.DarkRed, _leaderBlockWidth), 4, 0);
+            leaderCanvas.Blit(ColoredBlock(ColorHelper.DarkRed, _leaderBlockWidth), 4, 0);
 
-            return leaderCanvas.WithDoubleBorder(RgbColor.DarkRed).WithCorners(RgbColor.DarkRed);
+            return leaderCanvas.WithDoubleBorder(ColorHelper.DarkRed).WithCorners(ColorHelper.DarkRed);
         }
 
         private ConxelCanvas RequirementsLine(Leader leader)
         {
-            var reqLine = ColoredBlock(RgbColor.DarkRed, _leaderBlockWidth);
+            var reqLine = ColoredBlock(ColorHelper.DarkRed, _leaderBlockWidth);
 
             int i = 2;
             foreach (var bonus in leader.Requirements.AsEnumerable().Where(kvp => kvp.Value > 0))
             {
-                reqLine[0, i] = new Conxel(" ", null, GetDarkDevelopmentColor(bonus.Key));
-                reqLine[0, i + 1] = new Conxel(bonus.Value.ToString(), RgbColor.FullWhite, GetDarkDevelopmentColor(bonus.Key));
-                reqLine[0, i + 2] = new Conxel(" ", null, GetDarkDevelopmentColor(bonus.Key));
+                var bonusBackgroundColor = ColorHelper.DarkSetColor(bonus.Key);
+
+                reqLine[0, i] = new Conxel(" ", null, bonusBackgroundColor);
+                reqLine[0, i + 1] = new Conxel(bonus.Value.ToString(), ColorHelper.FullWhite, bonusBackgroundColor);
+                reqLine[0, i + 2] = new Conxel(" ", null, bonusBackgroundColor);
 
                 i += 4;
             }
 
-            reqLine[0, _leaderBlockWidth - 4] = new Conxel("{", RgbColor.FullWhite, RgbColor.DarkRed);
-            reqLine[0, _leaderBlockWidth - 3] = new Conxel("3", RgbColor.FullWhite, RgbColor.DarkRed);
-            reqLine[0, _leaderBlockWidth - 2] = new Conxel("}", RgbColor.FullWhite, RgbColor.DarkRed);
+            reqLine[0, _leaderBlockWidth - 4] = new Conxel("{", ColorHelper.FullWhite, ColorHelper.DarkRed);
+            reqLine[0, _leaderBlockWidth - 3] = new Conxel("3", ColorHelper.FullWhite, ColorHelper.DarkRed);
+            reqLine[0, _leaderBlockWidth - 2] = new Conxel("}", ColorHelper.FullWhite, ColorHelper.DarkRed);
 
             return reqLine;
         }

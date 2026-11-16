@@ -32,7 +32,7 @@ namespace SplendidWonders.CLI.View
             {
                 var player = swState.Players[i];
                 var isActive = swState.ActivePlayerId == player.Id;
-                var blockColor = isActive ? WidgetHelper.LightSetDefault : WidgetHelper.DarkSetDefault;
+                var blockColor = isActive ? ColorHelper.LightSetDefault : ColorHelper.DarkSetDefault;
 
                 playerAreaCanvas.Blit(PlayerBlock(player, blockColor), 0, i * (_playerBlockWidth + 2) + _spacing * i);
             }
@@ -84,11 +84,11 @@ namespace SplendidWonders.CLI.View
             int i = 1;
             foreach (var requirement in store.AsEnumerable().Where(kvp => kvp.Key != DevelopmentColor.Polymath))
             {
-                storeLine[0, i] = new Conxel(requirement.Value.ToString(), GetLightDevelopmentColor(requirement.Key));
+                storeLine[0, i] = new Conxel(requirement.Value.ToString(), ColorHelper.LightSetColor(requirement.Key));
                 i += 2;
             }
 
-            storeLine[0, 12] = new Conxel(store.Polymath.ToString(), RgbColor.FullWhite);
+            storeLine[0, 12] = new Conxel(store.Polymath.ToString(), ColorHelper.FullWhite);
 
             storeLine[0, 15] = new Conxel(_cardSymbol, blockColor);
             storeLine[0, 17] = new Conxel(":", blockColor);
@@ -105,9 +105,9 @@ namespace SplendidWonders.CLI.View
             int i = 1;
             foreach (var bonus in tableauBonuses)
             {
-                tableauLine[0, i] = new Conxel(" ", null, GetDarkDevelopmentColor(bonus.Key));
-                tableauLine[0, i + 1] = new Conxel(bonus.Value.ToString(), RgbColor.FullWhite, GetDarkDevelopmentColor(bonus.Key));
-                tableauLine[0, i + 2] = new Conxel(" ", null, GetDarkDevelopmentColor(bonus.Key));
+                tableauLine[0, i] = new Conxel(" ", null, ColorHelper.DarkSetColor(bonus.Key));
+                tableauLine[0, i + 1] = new Conxel(bonus.Value.ToString(), ColorHelper.FullWhite, ColorHelper.DarkSetColor(bonus.Key));
+                tableauLine[0, i + 2] = new Conxel(" ", null, ColorHelper.DarkSetColor(bonus.Key));
 
                 i += 4;
             }

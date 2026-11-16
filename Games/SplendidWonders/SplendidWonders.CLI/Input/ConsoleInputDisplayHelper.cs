@@ -1,61 +1,77 @@
-﻿using SplendidWonders.CLI.View;
-using SplendidWonders.Common.Model;
+﻿using SplendidWonders.Common.Model;
 using SplendidWonders.Common.Setup;
 using SplendidWonders.Gameplay.Actions;
+using System.Runtime.CompilerServices;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
+using TTOptimize.Core.ViewAbstractions;
 
 namespace SplendidWonders.CLI.Input
 {
     public static class ConsoleInputDisplayHelper
     {
-        public static void DisplayActions(IEnumerable<IConsoleCommandWizard> activeWizards)
+        private static RgbColor _defaultForeground = new RgbColor(230, 225, 205);
+        private static RgbColor _defaultBackground = new RgbColor(0, 0, 0);
+
+        private static RgbColor _commandsBlockForeground = new RgbColor(255, 255, 255);
+        private static RgbColor _activeCommandForeground = new RgbColor(255, 255, 50);
+        private static RgbColor _escCommandForeground = new RgbColor(255, 200, 200);
+        private static RgbColor _presentationCommandForeground = new RgbColor(180, 200, 170);
+        private static RgbColor _commandsBlockBackground = new RgbColor(50, 50, 50);
+
+        public static void PrintCommandsBlock(IEnumerable<IConsoleCommandWizard> availableWizards, IConsoleCommandWizard activeWizard)
         {
             var previousForeground = Console.ForegroundColor;
             var previousBackground = Console.BackgroundColor;
 
-            Console.WriteLine(
-                GetRgbColoredConsoleBackground(
-                    GetRgbColoredConsoleForeground(new string('*', Console.WindowWidth), "255;255;255"), "50;50;50"));
+            Console.WriteLine(GetColorizedConsoleText(new string('-', Console.WindowWidth), _commandsBlockForeground, _commandsBlockBackground));
+            Console.WriteLine(GetColorizedConsoleText(Strings.ValidCommands.PadRight(Console.WindowWidth), _commandsBlockForeground, _commandsBlockBackground));
 
-            Console.WriteLine(
-                GetRgbColoredConsoleBackground(
-                    GetRgbColoredConsoleForeground(Strings.ValidCommands.PadRight(Console.WindowWidth), "230;225;205"), "50;50;50"));
-
-            foreach (var wizard in activeWizards)
+            foreach (var wizard in availableWizards)
             {
-                if (wizard is PresentationWizard)
-                {
-                    Console.WriteLine(
-                        GetRgbColoredConsoleBackground(
-                            GetRgbColoredConsoleForeground($"{wizard.CommandKey} - {wizard.Description}".PadRight(Console.WindowWidth), "255;230;80"), "50;50;50"));
-                }
-                else
-                {
-                    Console.WriteLine(
-                        GetRgbColoredConsoleBackground(
-                            GetRgbColoredConsoleForeground($"{wizard.CommandKey} - {wizard.Description}".PadRight(Console.WindowWidth), "230;225;205"), "50;50;50"));
-                }
+                PrintCommand(wizard, activeWizard == wizard);
             }
-            Console.WriteLine(
-                GetRgbColoredConsoleBackground(
-                    GetRgbColoredConsoleForeground(new string('*', Console.WindowWidth), "255;255;255"), "50;50;50"));
-            Console.WriteLine();
+
+            Console.WriteLine(GetColorizedConsoleText(new string('-', Console.WindowWidth), _commandsBlockForeground, _commandsBlockBackground));
+        }
+
+        private static void PrintCommand(IConsoleCommandWizard wizard, bool isActive)
+        {
+            string commandDisplayText = $"  {wizard.CommandKey} - {wizard.Description}";
+
+            var foreGround = isActive ? _activeCommandForeground : wizard is PresentationWizard ? _presentationCommandForeground : _commandsBlockForeground;
+
+            Console.WriteLine(GetColorizedConsoleText(commandDisplayText.PadRight(Console.WindowWidth), foreGround, _commandsBlockBackground));
+        }
+        public static void PrintSubCommandBlock(string commandKey, string subCommand)
+        {
+            string commandKeyRaw = $"| {commandKey} |";
+            string commandKeyColored = GetColorizedConsoleText(commandKeyRaw, _activeCommandForeground, _commandsBlockBackground);
+
+            string escRaw = Strings.EscapeToMainCommand;
+            string escColored = GetColorizedConsoleText(escRaw, _escCommandForeground, _commandsBlockBackground);
+
+            string subCommandRaw = $" - {subCommand}".PadRight(Console.WindowWidth - escRaw.Length - commandKeyRaw.Length);
+            string subCommandColored = GetColorizedConsoleText(subCommandRaw, _commandsBlockForeground, _commandsBlockBackground);
+
+            Console.Write($"{commandKeyColored}{subCommandColored}{escColored}");
+            Console.WriteLine(GetColorizedConsoleText(new string('-', Console.WindowWidth), _commandsBlockForeground, _commandsBlockBackground));
         }
 
         public static void DisplayCards(IEnumerable<DevelopmentCard> cards)
         {
             foreach (var card in cards)
             {
-                PrintCard(card);
+                PrintCardWithCosts(card);
             }
         }
 
         public static void DisplayCards(IEnumerable<PurchaseAction> purchaseActions)
         {
+            int key = 1;
             foreach (var purchase in purchaseActions)
             {
-                PrintCard(purchase.Card, purchase.RequiredTokens);
+                PrintCardWithSpendingInfo(key++, purchase.Card, purchase.RequiredTokens);
             }
         }
 
@@ -79,32 +95,27 @@ namespace SplendidWonders.CLI.Input
 
             if (leader.Requirements.Yellow > 0)
             {
-                string whiteText = GetWhiteConsoleForegroundText(leader.Requirements.Yellow.ToString());
-                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {whiteText} ", DevelopmentColor.Yellow));
+                colorCostTexts.Add(GetColorizedConsoleText($" {leader.Requirements.Yellow} ", ColorHelper.FullWhite, ColorHelper.DarkSetColor(DevelopmentColor.Yellow)));
             }
 
             if (leader.Requirements.Blue > 0)
             {
-                string whiteText = GetWhiteConsoleForegroundText(leader.Requirements.Blue.ToString());
-                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {whiteText} ", DevelopmentColor.Blue));
+                colorCostTexts.Add(GetColorizedConsoleText($" {leader.Requirements.Blue} ", ColorHelper.FullWhite, ColorHelper.DarkSetColor(DevelopmentColor.Blue)));
             }
 
             if (leader.Requirements.Green > 0)
             {
-                string whiteText = GetWhiteConsoleForegroundText(leader.Requirements.Green.ToString());
-                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {whiteText} ", DevelopmentColor.Green));
+                colorCostTexts.Add(GetColorizedConsoleText($" {leader.Requirements.Green} ", ColorHelper.FullWhite, ColorHelper.DarkSetColor(DevelopmentColor.Green)));
             }
 
             if (leader.Requirements.Brown > 0)
             {
-                string whiteText = GetWhiteConsoleForegroundText(leader.Requirements.Brown.ToString());
-                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {whiteText} ", DevelopmentColor.Brown));
+                colorCostTexts.Add(GetColorizedConsoleText($" {leader.Requirements.Brown} ", ColorHelper.FullWhite, ColorHelper.DarkSetColor(DevelopmentColor.Brown)));
             }
 
             if (leader.Requirements.Red > 0)
             {
-                string whiteText = GetWhiteConsoleForegroundText(leader.Requirements.Red.ToString());
-                colorCostTexts.Add(GetRgbColoredConsoleBackground($" {whiteText} ", DevelopmentColor.Red));
+                colorCostTexts.Add(GetColorizedConsoleText($" {leader.Requirements.Red} ", ColorHelper.FullWhite, ColorHelper.DarkSetColor(DevelopmentColor.Red)));
             }
 
             string namePadding = new string(' ', Math.Max(0, 18 - leader.Name.Length));
@@ -113,39 +124,39 @@ namespace SplendidWonders.CLI.Input
             Console.WriteLine($"{leader.Id,-5} {leader.Name}{namePadding} Feltételek: {colorCost}");
         }
 
-        private static void PrintCard(DevelopmentCard card)
+        private static void PrintCardWithCosts(DevelopmentCard card)
         {
             List<string> colorCostSubTexts = new List<string>();
 
             if (card.Cost.Yellow > 0)
             {
-                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Yellow.ToString(), DevelopmentColor.Yellow));
+                colorCostSubTexts.Add(GetColorizedConsoleText(card.Cost.Yellow, ColorHelper.LightSetYellow));
             }
 
             if (card.Cost.Blue > 0)
             {
-                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Blue.ToString(), DevelopmentColor.Blue));
+                colorCostSubTexts.Add(GetColorizedConsoleText(card.Cost.Blue, ColorHelper.LightSetBlue));
             }
 
             if (card.Cost.Green > 0)
             {
-                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Green.ToString(), DevelopmentColor.Green));
+                colorCostSubTexts.Add(GetColorizedConsoleText(card.Cost.Green, ColorHelper.LightSetGreen));
             }
 
             if (card.Cost.Brown > 0)
             {
-                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Brown.ToString(), DevelopmentColor.Brown));
+                colorCostSubTexts.Add(GetColorizedConsoleText(card.Cost.Brown, ColorHelper.LightSetBrown));
             }
 
             if (card.Cost.Red > 0)
             {
-                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(card.Cost.Red.ToString(), DevelopmentColor.Red));
+                colorCostSubTexts.Add(GetColorizedConsoleText(card.Cost.Red, ColorHelper.LightSetRed));
             }
 
             string vpDisplay = card.VictoryPoints > 0 ? $"{{{card.VictoryPoints}}}" : "   ";
 
             string namePadding = new string(' ', Math.Max(0, 26 - card.Name.Length));
-            string coloredName = GetRgbColoredConsoleForeground(card.Name, card.Bonus);
+            string coloredName = GetColorizedConsoleText(card.Name, ColorHelper.LightSetColor(card.Bonus));
 
             string colorCost = string.Join(" ", colorCostSubTexts);
             string costPadding = new string(' ', Math.Max(0, 12 - colorCostSubTexts.Count * 2 - 1));
@@ -153,108 +164,64 @@ namespace SplendidWonders.CLI.Input
             Console.WriteLine($"{card.Id,-5} {coloredName}{namePadding}   {vpDisplay}   {colorCost}{costPadding}");
         }
 
-        private static void PrintCard(DevelopmentCard card, TokenGroup requiredTokens)
+        private static void PrintCardWithSpendingInfo(int key, DevelopmentCard card, TokenGroup requiredTokens)
         {
             List<string> colorCostSubTexts = new List<string>();
 
             if (requiredTokens.Yellow > 0)
             {
-                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(requiredTokens.Yellow.ToString(), DevelopmentColor.Yellow));
+                colorCostSubTexts.Add(GetColorizedConsoleText(requiredTokens.Yellow, ColorHelper.LightSetYellow));
             }
 
             if (requiredTokens.Blue > 0)
             {
-                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(requiredTokens.Blue.ToString(), DevelopmentColor.Blue));
+                colorCostSubTexts.Add(GetColorizedConsoleText(requiredTokens.Blue, ColorHelper.LightSetBlue));
             }
 
             if (requiredTokens.Green > 0)
             {
-                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(requiredTokens.Green.ToString(), DevelopmentColor.Green));
+                colorCostSubTexts.Add(GetColorizedConsoleText(requiredTokens.Green, ColorHelper.LightSetGreen));
             }
 
             if (requiredTokens.Brown > 0)
             {
-                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(requiredTokens.Brown.ToString(), DevelopmentColor.Brown));
+                colorCostSubTexts.Add(GetColorizedConsoleText(requiredTokens.Brown, ColorHelper.LightSetBrown));
             }
 
             if (requiredTokens.Red > 0)
             {
-                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(requiredTokens.Red.ToString(), DevelopmentColor.Red));
-            }
-
-            if (requiredTokens.Polymath > 0)
-            {
-                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(requiredTokens.Polymath.ToString(), DevelopmentColor.Polymath));
+                colorCostSubTexts.Add(GetColorizedConsoleText(requiredTokens.Red, ColorHelper.LightSetRed));
             }
 
             string vpDisplay = card.VictoryPoints > 0 ? $"{{{card.VictoryPoints}}}" : "   ";
 
             string namePadding = new string(' ', Math.Max(0, 26 - card.Name.Length));
-            string coloredName = GetRgbColoredConsoleForeground(card.Name, card.Bonus);
+            string coloredName = GetColorizedConsoleText(card.Name, ColorHelper.LightSetColor(card.Bonus));
 
-            string colorCost = colorCostSubTexts.Any() ? string.Join(" ", colorCostSubTexts) : $" *** {Strings.FreePurchase}***";
-            string costPadding = new string(' ', Math.Max(0, 12 - colorCostSubTexts.Count * 2 -1));
+            string colorCost = string.Join(" ", colorCostSubTexts);
+            string costPadding = new string(' ', Math.Max(0, 12 - colorCostSubTexts.Count * 2 - 1));
+            string polymathCost = GetColorizedConsoleText(new string('*', requiredTokens.Polymath), ColorHelper.FullWhite);
 
-            Console.WriteLine($"{card.Id,-5} {coloredName}{namePadding}   {vpDisplay}   {colorCost}{costPadding}");
+            string completeCostText = colorCostSubTexts.Any() || requiredTokens.Polymath > 0
+                ? $"{colorCost}{costPadding}{polymathCost}"
+                : Strings.FreePurchase;
+
+            Console.WriteLine($"{key,-5} {coloredName}{namePadding}   {vpDisplay}   {completeCostText}");
         }
 
-        private static string GetWhiteConsoleForegroundText(string text)
+        private static string GetColorizedConsoleText(object text, RgbColor? foreground = null, RgbColor? background = null)
         {
-            return $"\u001b[38;2;255;255;255m{text}\u001b[39m";
+            string foreGroundColorsRgb = ColorHelper.GetRgbColorString(foreground.HasValue ? foreground.Value : ColorHelper.DefaultConsoleForeground);
+            string backGroundColorsRgb = ColorHelper.GetRgbColorString(background.HasValue ? background.Value : ColorHelper.DefaultConsoleBackground);
+
+            string fgColorPrefix = foreground.HasValue ? $"\u001b[38;2;{foreGroundColorsRgb}m" : string.Empty;
+            string fgColorSuffix = foreground.HasValue ? "\u001b[39m" : string.Empty;
+
+            string bgColorPrefix = background.HasValue ? $"\u001b[48;2;{backGroundColorsRgb}m" : string.Empty;
+            string bgColorSuffix = background.HasValue ? "\u001b[49m" : string.Empty;
+
+            return $"{fgColorPrefix}{bgColorPrefix}{text.ToString()}{bgColorSuffix}{fgColorSuffix}";
         }
 
-        private static string GetRgbColoredConsoleForeground(string text, string trueColorRgb)
-        {
-            return $"\u001b[38;2;{trueColorRgb}m{text}\u001b[39m";
-        }
-
-        private static string GetRgbColoredConsoleBackground(string text, string trueColorRgb)
-        {
-            return $"\u001b[48;2;{trueColorRgb}m{text}\u001b[49m";
-        }
-
-        private static string GetRgbColoredConsoleForeground(string text, DevelopmentColor trueColorRgbFormat)
-        {
-            return $"\u001b[38;2;{ConvertBonusToLightColorSet(trueColorRgbFormat)}m{text}\u001b[39m";
-        }
-
-        private static string GetRgbColoredConsoleBackground(string text, DevelopmentColor trueColorRgbFormat)
-        {
-            return $"\u001b[48;2;{ConvertBonusToDarkColorSet(trueColorRgbFormat)}m{text}\u001b[49m";
-        }
-
-        public static string ConvertBonusToLightColorSet(DevelopmentColor bonus)
-        {
-            return bonus switch
-            {
-                DevelopmentColor.Yellow => "208;208;0",
-                DevelopmentColor.Blue => "80;145;255",
-                DevelopmentColor.Green => "0;220;50",
-                DevelopmentColor.Brown => "145;92;42",
-                DevelopmentColor.Red => "255;80;80",
-                _ => "192;192;192"
-            };
-        }
-
-        private static string ConvertBonusToDarkColorSet(DevelopmentColor bonus)
-        {
-            return bonus switch
-            {
-                DevelopmentColor.Yellow => "138;116;0",
-                DevelopmentColor.Blue => "30;60;165",
-                DevelopmentColor.Green => "0;125;30",
-                DevelopmentColor.Brown => "100;45;0",
-                DevelopmentColor.Red => "180;10;20",
-                _ => "96;96;96"
-            };
-        }
-
-        private static void PrintColoredLine(string text, ConsoleColor color)
-        {
-            var previousColor = Console.ForegroundColor;
-            Console.ForegroundColor = color;
-            Console.WriteLine(text);
-            Console.ForegroundColor = previousColor;
-        }
     }
 }

@@ -21,9 +21,9 @@ namespace SplendidWonders.CLI.Input.Wizards
         public override GameCommand? RunConsoleDialog(IGameState state, IEnumerable<GameAction> validActions)
         {
             ConsoleInputDisplayHelper.DisplayCards(((GameState)state).ActivePlayer.ReservedCards);
-            Console.ReadLine();
+            ReadLineOrEscape();
 
-            return null;
+            throw new ConsoleUserBackException();
         }
 
         protected override GameAction? ParseInput(string input)

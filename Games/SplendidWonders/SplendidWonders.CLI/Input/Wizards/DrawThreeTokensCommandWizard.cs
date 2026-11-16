@@ -21,7 +21,7 @@ namespace SplendidWonders.CLI.Input.Wizards
 
         public override GameCommand? RunConsoleDialog(IGameState state, IEnumerable<GameAction> validActions)
         {
-            Console.WriteLine(Strings.PromptThreeTokens);
+            ConsoleInputDisplayHelper.PrintSubCommandBlock(CommandKey, Strings.PromptThreeTokens);
 
             return PromptForParameter();
         }
