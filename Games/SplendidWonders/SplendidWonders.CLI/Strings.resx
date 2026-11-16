@@ -121,13 +121,13 @@
     <value>Húzz 2 azonos kategóriájú fejlődéslapkát!</value>
   </data>
   <data name="DrawDoubleTokensCommandKey" xml:space="preserve">
-    <value>H2</value>
+    <value>2</value>
   </data>
   <data name="DrawThreeTokensCommandDescription" xml:space="preserve">
     <value>Húzz 1-1 fejlődéslapkát három különböző kategóriákból!</value>
   </data>
   <data name="DrawThreeTokensCommandKey" xml:space="preserve">
-    <value>H3</value>
+    <value>3</value>
   </data>
   <data name="EmptyTableau" xml:space="preserve">
     <value>(üres)</value>
@@ -163,7 +163,7 @@
     <value>Csodák</value>
   </data>
   <data name="ListReservedCardsCommandKey" xml:space="preserve">
-    <value>FL</value>
+    <value>L</value>
   </data>
   <data name="NameCannotBeEmpty" xml:space="preserve">
     <value>A név nem lehet üres. Kérlek add meg újra a játékos nevét:</value>
@@ -193,7 +193,7 @@
     <value>Kérlek add meg, hogy milyen színű lapkákat szeretnél visszarakni a játéktérre!(S - sárga, K - kék, Z - zöld, B - barna, P - piros). Például, "S B P" vagy " K K"</value>
   </data>
   <data name="PurchaseFromBoardCommandKey" xml:space="preserve">
-    <value>KJ</value>
+    <value>V</value>
   </data>
   <data name="PurchaseFromBoardCommandDescription" xml:space="preserve">
     <value>Vásárolj meg egy kártyát a játéktérről!</value>
@@ -208,13 +208,13 @@
     <value>Fogljalj le 1 kártyát a játéktérről!</value>
   </data>
   <data name="ReserveFromBoardCommandKey" xml:space="preserve">
-    <value>FJ</value>
+    <value>F</value>
   </data>
   <data name="ReserveFromDeckCommandDescription" xml:space="preserve">
     <value>Foglald le egy általad kiválasztott pakli legfelső kártyáját!</value>
   </data>
   <data name="ReserveFromDeckCommandKey" xml:space="preserve">
-    <value>FP</value>
+    <value>P</value>
   </data>
   <data name="ReturnTokensCommandDescription" xml:space="preserve">
     <value>Tegyél vissza fejlődéslapkákat a játéktérre!</value>
@@ -250,13 +250,13 @@
     <value>Győztes</value>
   </data>
   <data name="PurchaseFromReservedCommandKey" xml:space="preserve">
-    <value>KK</value>
+    <value>K</value>
   </data>
   <data name="ReturnTokensCommandKey" xml:space="preserve">
-    <value>LV</value>
+    <value>T</value>
   </data>
   <data name="SelectLeaderCommandKey" xml:space="preserve">
-    <value>VV</value>
+    <value>Z</value>
   </data>
   <data name="PromptSelectLeader" xml:space="preserve">
     <value>Kérlek Válaszd ki a vezért, aki csatlakozzon a birodalmadhoz. Add meg a vezér számát az alábbi listából:</value>
@@ -266,5 +266,8 @@
   </data>
   <data name="GameDescription" xml:space="preserve">
     <value>Erőforrás-menedzsment és tablóépítő kártyajáték.</value>
+  </data>
+  <data name="FreePurchase" xml:space="preserve">
+    <value>INGYENES</value>
   </data>
 </root>

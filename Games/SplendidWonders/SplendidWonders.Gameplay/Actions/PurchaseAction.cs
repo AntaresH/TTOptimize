@@ -1,8 +1,10 @@
-﻿namespace SplendidWonders.Gameplay.Actions
+﻿using SplendidWonders.Common.Model;
+
+namespace SplendidWonders.Gameplay.Actions
 {
     public abstract class PurchaseAction : CardAction
     {
-        public int RequiredPolymathsCount { get; set; }
+        public TokenGroup RequiredTokens { get; set; }
     }
 
     public class PurchaseFromBoardAction : PurchaseAction
@@ -11,7 +13,7 @@
         {
             if (obj is PurchaseAction other)
             {
-                return Card.Equals(other.Card) && RequiredPolymathsCount == other.RequiredPolymathsCount;
+                return Card.Equals(other.Card) && RequiredTokens == other.RequiredTokens;
             }
 
             return base.Equals(obj);
@@ -24,7 +26,7 @@
         {
             if (obj is PurchaseAction other)
             {
-                return Card.Equals(other.Card) && RequiredPolymathsCount == other.RequiredPolymathsCount;
+                return Card.Equals(other.Card) && RequiredTokens == other.RequiredTokens;
             }
             return base.Equals(obj);
         }

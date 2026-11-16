@@ -28,7 +28,7 @@ namespace SplendidWonders.CLI.View.Legacy
         {
             var purchaseCardRequirements = purchaseActions?
                 .GroupBy(action => action.Card.Id)
-                .ToDictionary(group => group.Key, group => group.Any(action => action.RequiredPolymathsCount > 0))
+                .ToDictionary(group => group.Key, group => group.Any(action => action.RequiredTokens.Polymath > 0))
                 ?? new Dictionary<int, bool>();
             var playerPanels = BuildPlayerPanels(gameState);
             var playerPanelLines = BuildPlayerPanelLines(playerPanels);

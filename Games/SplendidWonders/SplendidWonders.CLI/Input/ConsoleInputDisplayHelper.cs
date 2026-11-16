@@ -55,7 +55,7 @@ namespace SplendidWonders.CLI.Input
         {
             foreach (var purchase in purchaseActions)
             {
-                PrintCard(purchase.Card, purchase.RequiredPolymathsCount);
+                PrintCard(purchase.Card, purchase.RequiredTokens);
             }
         }
 
@@ -113,7 +113,7 @@ namespace SplendidWonders.CLI.Input
             Console.WriteLine($"{leader.Id,-5} {leader.Name}{namePadding} Feltételek: {colorCost}");
         }
 
-        private static void PrintCard(DevelopmentCard card, int requiredPolymathsCount = 0)
+        private static void PrintCard(DevelopmentCard card)
         {
             List<string> colorCostSubTexts = new List<string>();
 
@@ -148,10 +148,54 @@ namespace SplendidWonders.CLI.Input
             string coloredName = GetRgbColoredConsoleForeground(card.Name, card.Bonus);
 
             string colorCost = string.Join(" ", colorCostSubTexts);
-            string costPadding = new string(' ', Math.Max(0, 12 - colorCostSubTexts.Count * 2 -1));
-            string polymathsDisplay = requiredPolymathsCount > 0 ? $"Polihisztor: {requiredPolymathsCount}" : string.Empty;
+            string costPadding = new string(' ', Math.Max(0, 12 - colorCostSubTexts.Count * 2 - 1));
 
-            Console.WriteLine($"{card.Id,-5} {coloredName}{namePadding}   {vpDisplay}   Költségek: {colorCost}{costPadding} {polymathsDisplay}");
+            Console.WriteLine($"{card.Id,-5} {coloredName}{namePadding}   {vpDisplay}   {colorCost}{costPadding}");
+        }
+
+        private static void PrintCard(DevelopmentCard card, TokenGroup requiredTokens)
+        {
+            List<string> colorCostSubTexts = new List<string>();
+
+            if (requiredTokens.Yellow > 0)
+            {
+                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(requiredTokens.Yellow.ToString(), DevelopmentColor.Yellow));
+            }
+
+            if (requiredTokens.Blue > 0)
+            {
+                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(requiredTokens.Blue.ToString(), DevelopmentColor.Blue));
+            }
+
+            if (requiredTokens.Green > 0)
+            {
+                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(requiredTokens.Green.ToString(), DevelopmentColor.Green));
+            }
+
+            if (requiredTokens.Brown > 0)
+            {
+                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(requiredTokens.Brown.ToString(), DevelopmentColor.Brown));
+            }
+
+            if (requiredTokens.Red > 0)
+            {
+                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(requiredTokens.Red.ToString(), DevelopmentColor.Red));
+            }
+
+            if (requiredTokens.Polymath > 0)
+            {
+                colorCostSubTexts.Add(GetRgbColoredConsoleForeground(requiredTokens.Polymath.ToString(), DevelopmentColor.Polymath));
+            }
+
+            string vpDisplay = card.VictoryPoints > 0 ? $"{{{card.VictoryPoints}}}" : "   ";
+
+            string namePadding = new string(' ', Math.Max(0, 26 - card.Name.Length));
+            string coloredName = GetRgbColoredConsoleForeground(card.Name, card.Bonus);
+
+            string colorCost = colorCostSubTexts.Any() ? string.Join(" ", colorCostSubTexts) : $" *** {Strings.FreePurchase}***";
+            string costPadding = new string(' ', Math.Max(0, 12 - colorCostSubTexts.Count * 2 -1));
+
+            Console.WriteLine($"{card.Id,-5} {coloredName}{namePadding}   {vpDisplay}   {colorCost}{costPadding}");
         }
 
         private static string GetWhiteConsoleForegroundText(string text)

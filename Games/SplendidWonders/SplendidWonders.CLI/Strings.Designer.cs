@@ -70,7 +70,7 @@ namespace SplendidWonders.CLI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to H2.
+        ///   Looks up a localized string similar to 2.
         /// </summary>
         internal static string DrawDoubleTokensCommandKey {
             get {
@@ -88,7 +88,7 @@ namespace SplendidWonders.CLI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to H3.
+        ///   Looks up a localized string similar to 3.
         /// </summary>
         internal static string DrawThreeTokensCommandKey {
             get {
@@ -129,6 +129,15 @@ namespace SplendidWonders.CLI {
         internal static string FinalScores {
             get {
                 return ResourceManager.GetString("FinalScores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to INGYENES.
+        /// </summary>
+        internal static string FreePurchase {
+            get {
+                return ResourceManager.GetString("FreePurchase", resourceCulture);
             }
         }
         
@@ -214,7 +223,7 @@ namespace SplendidWonders.CLI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to FL.
+        ///   Looks up a localized string similar to L.
         /// </summary>
         internal static string ListReservedCardsCommandKey {
             get {
@@ -358,7 +367,7 @@ namespace SplendidWonders.CLI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to KJ.
+        ///   Looks up a localized string similar to V.
         /// </summary>
         internal static string PurchaseFromBoardCommandKey {
             get {
@@ -376,7 +385,7 @@ namespace SplendidWonders.CLI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to KK.
+        ///   Looks up a localized string similar to K.
         /// </summary>
         internal static string PurchaseFromReservedCommandKey {
             get {
@@ -403,7 +412,7 @@ namespace SplendidWonders.CLI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to FJ.
+        ///   Looks up a localized string similar to F.
         /// </summary>
         internal static string ReserveFromBoardCommandKey {
             get {
@@ -421,7 +430,7 @@ namespace SplendidWonders.CLI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to FP.
+        ///   Looks up a localized string similar to P.
         /// </summary>
         internal static string ReserveFromDeckCommandKey {
             get {
@@ -439,7 +448,7 @@ namespace SplendidWonders.CLI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LV.
+        ///   Looks up a localized string similar to T.
         /// </summary>
         internal static string ReturnTokensCommandKey {
             get {
@@ -457,7 +466,7 @@ namespace SplendidWonders.CLI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to VV.
+        ///   Looks up a localized string similar to Z.
         /// </summary>
         internal static string SelectLeaderCommandKey {
             get {

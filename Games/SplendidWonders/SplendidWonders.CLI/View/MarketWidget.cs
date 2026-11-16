@@ -53,7 +53,7 @@ namespace SplendidWonders.CLI.View
             var cardColor = GetDarkDevelopmentColor(developmentCard.Bonus);
             var borderColor = respectivePurchaseAction == null
                                 ? cardColor
-                                : respectivePurchaseAction.RequiredPolymathsCount == 0
+                                : respectivePurchaseAction.RequiredTokens.Polymath == 0
                                     ? WidgetHelper.LightSetYellow
                                     : RgbColor.WarmWhite;
 

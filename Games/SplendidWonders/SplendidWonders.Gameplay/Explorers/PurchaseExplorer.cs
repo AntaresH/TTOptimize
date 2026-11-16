@@ -20,44 +20,59 @@ namespace SplendidWonders.Gameplay.Explorers
                     if (card == null || card == Cards.Empty)
                         continue;
 
-                    int deficit = CalculateDeficit(card.Cost, gameState.ActivePlayer.Store, gameState.ActivePlayer.Tableau);
+                    var requiredTokens = CalculateRequiredTokens(card.Cost, gameState.ActivePlayer.Store, gameState.ActivePlayer.Tableau);
                     int availablePolymaths = gameState.ActivePlayer.Store.Polymath - card.Cost.Polymath;
 
-                    if (deficit == 0 || availablePolymaths + deficit >= 0)
+                    if (availablePolymaths - requiredTokens.Polymath >= 0)
                     {
-                        purchaseActions.Add(new PurchaseFromBoardAction() { Card = card, RequiredPolymathsCount = -deficit });
+                        purchaseActions.Add(new PurchaseFromBoardAction() { Card = card, RequiredTokens = requiredTokens });
                     }
                 }
             }
 
             foreach (var card in gameState.ActivePlayer.ReservedCards)
             {
-                int deficit = CalculateDeficit(card.Cost, gameState.ActivePlayer.Store, gameState.ActivePlayer.Tableau);
+                var requiredTokens = CalculateRequiredTokens(card.Cost, gameState.ActivePlayer.Store, gameState.ActivePlayer.Tableau);
                 int availablePolymaths = gameState.ActivePlayer.Store.Polymath - card.Cost.Polymath;
 
-                if (deficit == 0 || availablePolymaths + deficit >= 0)
+                if (availablePolymaths - requiredTokens.Polymath >= 0)
                 {
-                    purchaseActions.Add(new PurchaseFromReservedAction() { Card = card, RequiredPolymathsCount = -deficit });
+                    purchaseActions.Add(new PurchaseFromReservedAction() { Card = card, RequiredTokens = requiredTokens });
                 }
             }
 
             return purchaseActions;
         }
 
-        private int CalculateDeficit(TokenGroup cardCosts, TokenGroup playerStore, ImmutableList<DevelopmentCard> playerTableau)
+        private TokenGroup CalculateRequiredTokens(TokenGroup cardCosts, TokenGroup playerStore, ImmutableList<DevelopmentCard> playerTableau)
         {
-            int playerYellowBonuses = playerTableau.Count(c => c.Bonus == DevelopmentColor.Yellow);
-            int playerBlueBonuses = playerTableau.Count(c => c.Bonus == DevelopmentColor.Blue);
-            int playerGreenBonuses = playerTableau.Count(c => c.Bonus == DevelopmentColor.Green);
-            int playerBrownBonuses = playerTableau.Count(c => c.Bonus == DevelopmentColor.Brown);
-            int playerRedBonuses = playerTableau.Count(c => c.Bonus == DevelopmentColor.Red);
+            int yellowBonuses = playerTableau.Count(c => c.Bonus == DevelopmentColor.Yellow);
+            int blueBonuses = playerTableau.Count(c => c.Bonus == DevelopmentColor.Blue);
+            int greenBonuses = playerTableau.Count(c => c.Bonus == DevelopmentColor.Green);
+            int brownBonuses = playerTableau.Count(c => c.Bonus == DevelopmentColor.Brown);
+            int redBonuses = playerTableau.Count(c => c.Bonus == DevelopmentColor.Red);
 
-            return 
-                Math.Min(0, playerYellowBonuses + playerStore.Yellow - cardCosts.Yellow) +
-                Math.Min(0, playerBlueBonuses + playerStore.Blue - cardCosts.Blue) +
-                Math.Min(0, playerGreenBonuses + playerStore.Green - cardCosts.Green) +
-                Math.Min(0, playerBrownBonuses + playerStore.Brown - cardCosts.Brown) +
-                Math.Min(0, playerRedBonuses + playerStore.Red - cardCosts.Red);
+            int yellowToSpend = Math.Max(cardCosts.Yellow - yellowBonuses, 0);
+            int blueToSpend = Math.Max(cardCosts.Blue - blueBonuses, 0);
+            int greenToSpend = Math.Max(cardCosts.Green - greenBonuses, 0);
+            int brownToSpend = Math.Max(cardCosts.Brown - brownBonuses, 0);
+            int redToSpend = Math.Max(cardCosts.Red - redBonuses, 0);
+
+            int deficit = Math.Max(0, yellowToSpend - playerStore.Yellow) +
+                          Math.Max(0, blueToSpend - playerStore.Blue) +
+                          Math.Max(0, greenToSpend - playerStore.Green) +
+                          Math.Max(0, brownToSpend - playerStore.Brown) +
+                          Math.Max(0, redToSpend - playerStore.Red);
+
+            return new TokenGroup()
+            {
+                Yellow = Math.Min(playerStore.Yellow, yellowToSpend),
+                Blue = Math.Min(playerStore.Blue, blueToSpend),
+                Green = Math.Min(playerStore.Green, greenToSpend),
+                Brown = Math.Min(playerStore.Brown, brownToSpend),
+                Red = Math.Min(playerStore.Red, redToSpend),
+                Polymath = deficit
+            };
         }
     }
 }
