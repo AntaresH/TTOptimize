@@ -65,6 +65,7 @@ namespace SplendidWonders.CLI
             services.AddKeyedScoped<IConsoleCommandWizard, ReturnTokensCommandWizard>(Games.SPLENDID_WONDERS_KEY);
             services.AddKeyedScoped<IConsoleCommandWizard, SelectLeaderCommandWizard>(Games.SPLENDID_WONDERS_KEY);
             services.AddKeyedScoped<IConsoleCommandWizard, ShowReservedCardsCommandWizard>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<ISplendidWondersInputPresenter, SplendidWondersInputPresenter>(Games.SPLENDID_WONDERS_KEY);
             services.AddKeyedScoped<IGameInput, ConsoleGameInput>(Games.SPLENDID_WONDERS_KEY);
 
             services.AddKeyedScoped<IGameStateFactory, StateFactory>(Games.SPLENDID_WONDERS_KEY);

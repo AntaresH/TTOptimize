@@ -14,15 +14,15 @@ namespace TTOptimize.ConsoleHost;
 public class SetupService
 {
     private readonly IServiceProvider _serviceProvider;
-    private readonly ArgumentService _argumentService;
+    private readonly SettingsService _settingsService;
     private readonly bool _isInterActive;
 
     public SetupService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-        _argumentService = serviceProvider.GetRequiredService<ArgumentService>();
+        _settingsService = serviceProvider.GetRequiredService<SettingsService>();
 
-        var interActiveModeArg = _argumentService.GetArgument(TTOptArguments.INTERACTIVE_MODE);
+        var interActiveModeArg = _settingsService.GetSetting(TTOptArguments.INTERACTIVE_MODE);
         _isInterActive = bool.TryParse(interActiveModeArg, out bool parsed) ? parsed : true;
     }
 
@@ -77,12 +77,12 @@ public class SetupService
 
             if (property.PropertyType == typeof(int))
             {
-                SetPropertyFromArgumentOrPrompt(property, configInstance, attribute.Min,
+                SetPropertyFromSettingOrPrompt(property, configInstance, attribute.Min,
                     def => PromptInt(attribute.DisplayName, attribute.Min, attribute.Max, def));
             }
             else if (property.PropertyType == typeof(bool))
             {
-                SetPropertyFromArgumentOrPrompt(property, configInstance, false,
+                SetPropertyFromSettingOrPrompt(property, configInstance, false,
                     def => PromptBool(attribute.DisplayName, def));
             }
         }
@@ -102,8 +102,8 @@ public class SetupService
             if (_isInterActive)
                 Console.WriteLine($"\n--- {i + 1}. {Strings.Player} ---");
 
-            string name = FromArgumentOrPrompt(string.Format(Strings.PlayerNameArgumentKeyFormat, i + 1), () => PromptString(string.Format(Strings.PlayerNamePrompt, i + 1), $"{Strings.Player} {i + 1}"));
-            int agentType = FromArgumentOrPrompt(string.Format(Strings.AgentTypeArgumentKeyFormat, i + 1), () => PromptInt(Strings.AgentTypePrompt, 1, 2, 1));
+            string name = FromSettingOrPrompt(string.Format(Strings.PlayerNameArgumentKeyFormat, i + 1), () => PromptString(string.Format(Strings.PlayerNamePrompt, i + 1), $"{Strings.Player} {i + 1}"));
+            int agentType = FromSettingOrPrompt(string.Format(Strings.AgentTypeArgumentKeyFormat, i + 1), () => PromptInt(Strings.AgentTypePrompt, 1, 2, 1));
 
             IPlayerAgent agent = agentType switch
             {
@@ -118,12 +118,12 @@ public class SetupService
         return agents;
     }
 
-    private void SetPropertyFromArgumentOrPrompt<T>(PropertyInfo property, object configInstance, 
+    private void SetPropertyFromSettingOrPrompt<T>(PropertyInfo property, object configInstance, 
         T fallbackDefault, Func<T, T> promptUser) where T : IParsable<T>
     {
         T defaultValue = (T)(property.GetValue(configInstance) ?? fallbackDefault!);
 
-        string? propArg = _argumentService.GetArgument(property.Name);
+        string? propArg = _settingsService.GetSetting(property.Name);
 
         if (T.TryParse(propArg, null, out T parsedValue))
         {
@@ -136,9 +136,9 @@ public class SetupService
         }
     }
 
-    private T FromArgumentOrPrompt<T>(string formattedArgumentKey, Func<T> promptUser) where T : IParsable<T>
+    private T FromSettingOrPrompt<T>(string formattedArgumentKey, Func<T> promptUser) where T : IParsable<T>
     {
-        string propertyArg = _argumentService.GetArgument(formattedArgumentKey);
+        string propertyArg = _settingsService.GetSetting(formattedArgumentKey);
 
         if (T.TryParse(propertyArg, null, out T parsedArg))
         {

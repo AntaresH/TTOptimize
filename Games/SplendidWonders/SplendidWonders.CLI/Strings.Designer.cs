@@ -124,7 +124,7 @@ namespace SplendidWonders.CLI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Esc - Mégse.
+        ///   Looks up a localized string similar to Mégse.
         /// </summary>
         internal static string EscapeToMainCommand {
             get {
@@ -399,6 +399,15 @@ namespace SplendidWonders.CLI {
         internal static string PurchaseFromReservedCommandKey {
             get {
                 return ResourceManager.GetString("PurchaseFromReservedCommandKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kilépés.
+        /// </summary>
+        internal static string QuitGame {
+            get {
+                return ResourceManager.GetString("QuitGame", resourceCulture);
             }
         }
         

@@ -6,18 +6,15 @@ public abstract class BaseConsoleCommandWizard : IConsoleCommandWizard
 {
     public abstract string CommandKey { get; }
     public abstract string Description { get; }
+    public IConsolePromptContext PromptContext { get; }
 
-    private int _promptStartTop;
-
-    public abstract bool CanExecute(IGameState state, IEnumerable<GameAction> validActions);
-
-    public GameCommand? RunConsoleDialog(IGameState state, IEnumerable<GameAction> validActions, int promptStartTop)
+    public BaseConsoleCommandWizard(IConsolePromptContext promptContext)
     {
-        _promptStartTop = promptStartTop;
-
-        return RunConsoleDialog(state, validActions);
+        PromptContext = promptContext;
     }
 
+    public abstract bool CanExecute(IGameState state, IEnumerable<GameAction> validActions);
+    
     public abstract GameCommand? RunConsoleDialog(IGameState state, IEnumerable<GameAction> validActions);
 
     protected abstract GameAction? ParseInput(string input);
@@ -99,4 +96,9 @@ public abstract class BaseConsoleCommandWizard : IConsoleCommandWizard
     }
 }
 
-public abstract class PresentationWizard : BaseConsoleCommandWizard { }
+public abstract class PresentationWizard : BaseConsoleCommandWizard
+{
+    protected PresentationWizard(IConsolePromptContext promptContext) : base(promptContext)
+    {
+    }
+}

@@ -1,13 +1,15 @@
-﻿using SplendidWonders.Common.Model;
+﻿using Microsoft.Extensions.DependencyInjection;
+using SplendidWonders.Common.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TTOptimize.Core;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
 
 namespace SplendidWonders.CLI.Input.Wizards
 {
-    public class ShowReservedCardsCommandWizard : PresentationWizard
+    public class ShowReservedCardsCommandWizard : SplendidWondersPresentationWizard
     {
         public override string CommandKey => Strings.ListReservedCardsCommandKey;
 
@@ -18,9 +20,16 @@ namespace SplendidWonders.CLI.Input.Wizards
             return ((GameState)state).ActivePlayer.ReservedCards.Any();
         }
 
+        public ShowReservedCardsCommandWizard(
+            IConsolePromptContext promptContext,
+            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] ISplendidWondersInputPresenter inputPresenter) : base(promptContext, inputPresenter)
+        {
+            _inputPresenter = inputPresenter;
+        }
+
         public override GameCommand? RunConsoleDialog(IGameState state, IEnumerable<GameAction> validActions)
         {
-            ConsoleInputDisplayHelper.DisplayCards(((GameState)state).ActivePlayer.ReservedCards);
+            _inputPresenter.DisplayCards(((GameState)state).ActivePlayer.ReservedCards);
             ReadLineOrEscape();
 
             throw new ConsoleUserBackException();

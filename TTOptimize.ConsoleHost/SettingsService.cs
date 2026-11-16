@@ -15,11 +15,11 @@ namespace TTOptimize.ConsoleHost
         public const string SEED = "randomseed";
     }
 
-    public class ArgumentService
+    public class SettingsService
     {
-        private Dictionary<string, object> _commandArguments { get; set; } = new Dictionary<string, object>();
+        private Dictionary<string, object> _settings { get; set; } = new Dictionary<string, object>();
 
-        public ArgumentService(string[] cmdLineArgs)
+        public SettingsService(string[] cmdLineArgs)
         {
             foreach (var argument in cmdLineArgs)
             {
@@ -27,30 +27,30 @@ namespace TTOptimize.ConsoleHost
 
                 if (match.Success)
                 {
-                    string argumentType = match.Groups[1].Value;
-                    string argumentValue = match.Groups[2].Value;
+                    string settingId = match.Groups[1].Value;
+                    string settingValue = match.Groups[2].Value;
 
-                    switch (argumentType)
+                    switch (settingId)
                     {
                         case TTOptArguments.GAMEID:
                         case TTOptArguments.PLAYER1NAME:
                         case TTOptArguments.PLAYER2NAME:
-                            _commandArguments.Add(argumentType, argumentValue);
+                            _settings.Add(settingId, settingValue);
                             break;
                         case TTOptArguments.PLAYERCOUNT:
                         case TTOptArguments.PLAYER1TYPE:
                         case TTOptArguments.PLAYER2TYPE:
                         case TTOptArguments.SEED:
-                            if (int.TryParse(argumentValue, out int parsedNum))
+                            if (int.TryParse(settingValue, out int parsedNum))
                             {
-                                _commandArguments.Add(argumentType, parsedNum);
+                                _settings.Add(settingId, parsedNum);
                             }
                             break;
                         case TTOptArguments.INTERACTIVE_MODE:
                         case TTOptArguments.USERANDOMSEED:
-                            if (bool.TryParse(argumentValue, out bool parsedBool))
+                            if (bool.TryParse(settingValue, out bool parsedBool))
                             {
-                                _commandArguments.Add(argumentType, parsedBool);
+                                _settings.Add(settingId, parsedBool);
                             }
                             break;
                         default:
@@ -60,11 +60,11 @@ namespace TTOptimize.ConsoleHost
             }
         }
 
-        public string GetArgument(string argumentType)
+        public string GetSetting(string settingId)
         {
-            if (_commandArguments.TryGetValue(argumentType.ToLower(), out object argumentValue))
+            if (_settings.TryGetValue(settingId.ToLower(), out object settingValue))
             {
-                return argumentValue.ToString();
+                return settingValue.ToString();
             }
 
             return null;
@@ -72,7 +72,7 @@ namespace TTOptimize.ConsoleHost
 
         public string QuickRead(string argumentType)
         {
-            var argument = GetArgument(argumentType);
+            var argument = GetSetting(argumentType);
 
             return string.IsNullOrEmpty(argument) ? Console.ReadLine().Trim() : argument;
         }

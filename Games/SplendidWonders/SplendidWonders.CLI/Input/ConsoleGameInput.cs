@@ -13,59 +13,64 @@ namespace SplendidWonders.CLI.Input
     public class ConsoleGameInput : IGameInput
     {
         private readonly IEnumerable<IConsoleCommandWizard> _wizards;
+        private readonly IConsolePromptContext _promptContext;
+        private readonly ISplendidWondersInputPresenter _inputPresenter;
 
         public ConsoleGameInput(
-            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IEnumerable<IConsoleCommandWizard> wizards)
+            IConsolePromptContext promptContext,
+            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IEnumerable<IConsoleCommandWizard> wizards,
+            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] ISplendidWondersInputPresenter inputPresenter)
         {
             _wizards = wizards;
+            _promptContext = promptContext;
+            _inputPresenter = inputPresenter;
         }
 
         public GameCommand ReadCommand(IGameState state, IEnumerable<GameAction> validActions)
         {
-            int blockTop = Console.CursorTop;
+            _promptContext.BeginZone();
 
-            var activeWizards = _wizards.Where(w => w.CanExecute(state, validActions));
+            var activeWizards = _wizards
+                .Where(w => w.CanExecute(state, validActions))
+                .ToDictionary(w => w.CommandKey.ToUpper());
 
-            ConsoleInputDisplayHelper.PrintCommandsBlock(activeWizards, null);
-
-            int promptStartTop = Console.CursorTop;
-
-            while (true)
+            try
             {
-                ConsoleInputDisplayHelper.ClearFromLine(promptStartTop);
-
-                try
+                while (true)
                 {
-                    var inputKey = Console.ReadKey(intercept: true).KeyChar.ToString().ToUpper();
+                    _promptContext.ResetZone();
+                    _inputPresenter.DisplayCommandBlock(activeWizards.Values, null);
 
-                    ConsoleInputDisplayHelper.ClearFromLine(promptStartTop);
+                    var inputKey = Console.ReadKey(intercept: true).KeyChar.ToString().ToUpper();
 
                     if (inputKey == "X")
                     {
+                        _promptContext.EndZone();
                         throw new ConsoleUserAbortException();
                     }
 
-                    var wizard = activeWizards.FirstOrDefault(wiz => wiz.CommandKey == inputKey);
-
-                    if (wizard != null)
+                    if (activeWizards.TryGetValue(inputKey, out var selectedWizard))
                     {
-                        ConsoleInputDisplayHelper.ClearFromLine(blockTop);
-                        ConsoleInputDisplayHelper.PrintCommandsBlock(activeWizards, wizard);
+                        try
+                        {
+                            _promptContext.ResetZone();
+                            _inputPresenter.DisplayCommandBlock(activeWizards.Values, selectedWizard);
 
-                        GameCommand? command = wizard.RunConsoleDialog(state, validActions, promptStartTop);
+                            GameCommand? command = selectedWizard.RunConsoleDialog(state, validActions);
 
-                        if (command != null) 
-                            return command;
-
-                        continue;
+                            if (command != null)
+                                return command;
+                        }
+                        catch (ConsoleUserBackException)
+                        {
+                            continue;
+                        }
                     }
                 }
-                catch (ConsoleUserBackException)
-                {
-                    ConsoleInputDisplayHelper.ClearFromLine(blockTop);
-                    ConsoleInputDisplayHelper.PrintCommandsBlock(activeWizards, null);
-                    continue;
-                }
+            }
+            finally
+            {
+                _promptContext.EndZone();
             }
         }
     }

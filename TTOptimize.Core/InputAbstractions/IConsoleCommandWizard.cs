@@ -9,5 +9,5 @@ public interface IConsoleCommandWizard
 
     bool CanExecute(IGameState state, IEnumerable<GameAction> validActions);
 
-    GameCommand? RunConsoleDialog(IGameState state, IEnumerable<GameAction> validActions, int promptStartTop);
+    GameCommand? RunConsoleDialog(IGameState state, IEnumerable<GameAction> validActions);
 }

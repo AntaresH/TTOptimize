@@ -271,6 +271,9 @@
     <value>INGYENES</value>
   </data>
   <data name="EscapeToMainCommand" xml:space="preserve">
-    <value>Esc - Mégse</value>
+    <value>Mégse</value>
+  </data>
+  <data name="QuitGame" xml:space="preserve">
+    <value>Kilépés</value>
   </data>
 </root>

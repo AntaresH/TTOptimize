@@ -44,8 +44,9 @@ public class Program
 
         services.AddSingleton<SetupService>();
         services.AddSingleton<GameSelectionService>();
-        services.AddSingleton((isp) => new ArgumentService(args));
+        services.AddSingleton((isp) => new SettingsService(args));
         services.AddSingleton<ConxelAnsiCompiler>();
+        services.AddSingleton<IConsolePromptContext, ConsolePromptContext>();
         
         services.AddKeyedScoped<IGameRenderer>(Games.SPLENDID_WONDERS_KEY, (sp, key) =>
         {
@@ -58,7 +59,7 @@ public class Program
 
         var gameSelectionService = rootProvider.GetRequiredService<GameSelectionService>();
         var setupService = rootProvider.GetRequiredService<SetupService>();
-        var argumentService = rootProvider.GetRequiredService<ArgumentService>();
+        var settingsService = rootProvider.GetRequiredService<SettingsService>();
 
         bool stayInApp = true;
 
@@ -66,7 +67,7 @@ public class Program
         {
             bool stayInGame = true;
 
-            string interactiveModeArg = argumentService.GetArgument(TTOptArguments.INTERACTIVE_MODE);
+            string interactiveModeArg = settingsService.GetSetting(TTOptArguments.INTERACTIVE_MODE);
             bool interActiveMode = bool.TryParse(interactiveModeArg, out bool parsed) ? parsed : true;
 
             if (interActiveMode)

@@ -17,7 +17,7 @@ namespace TTOptimize.ConsoleHost
 
         public IGameManifest SelectGame()
         {
-            var argumentService = _serviceProvider.GetRequiredService<ArgumentService>();
+            var settingsService = _serviceProvider.GetRequiredService<SettingsService>();
             var manifests = _serviceProvider.GetServices<IGameManifest>().ToList();
 
             for (int i = 0; i < manifests.Count; i++)
@@ -27,7 +27,7 @@ namespace TTOptimize.ConsoleHost
 
             while (true)
             {
-                string gameId = argumentService.QuickRead(TTOptArguments.GAMEID);
+                string gameId = settingsService.QuickRead(TTOptArguments.GAMEID);
 
                 if (int.TryParse(gameId, out int parsedNum) && parsedNum > 0 && parsedNum <= manifests.Count)
                 {

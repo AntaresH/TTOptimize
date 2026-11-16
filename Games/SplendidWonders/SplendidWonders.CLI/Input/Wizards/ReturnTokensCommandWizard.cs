@@ -1,15 +1,17 @@
-﻿using SplendidWonders.Common.Model;
+﻿using Microsoft.Extensions.DependencyInjection;
+using SplendidWonders.Common.Model;
 using SplendidWonders.Gameplay.Actions;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using TTOptimize.Core;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
 
 namespace SplendidWonders.CLI.Input.Wizards
 {
-    public class ReturnTokensCommandWizard : BaseConsoleCommandWizard
+    public class ReturnTokensCommandWizard : SplendidWondersBaseWizard
     {
         public override string CommandKey => Strings.ReturnTokensCommandKey;
 
@@ -18,9 +20,16 @@ namespace SplendidWonders.CLI.Input.Wizards
         public override bool CanExecute(IGameState state, IEnumerable<GameAction> validActions)
             => validActions.OfType<ReturnTokensAction>().Any();
 
+        public ReturnTokensCommandWizard(
+            IConsolePromptContext promptContext,
+            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] ISplendidWondersInputPresenter inputPresenter) : base(promptContext, inputPresenter)
+        {
+            _inputPresenter = inputPresenter;
+        }
+
         public override GameCommand? RunConsoleDialog(IGameState state, IEnumerable<GameAction> validActions)
         {
-            ConsoleInputDisplayHelper.PrintSubCommandBlock(CommandKey, Strings.PromptReturnTokens);
+            _inputPresenter.DisplaySubCommandBlock(CommandKey, Strings.PromptReturnTokens);
 
             return PromptForParameter();
         }

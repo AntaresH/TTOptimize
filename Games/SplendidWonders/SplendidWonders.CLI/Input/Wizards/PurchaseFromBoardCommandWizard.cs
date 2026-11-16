@@ -1,16 +1,18 @@
-﻿using SplendidWonders.Common.Model;
+﻿using Microsoft.Extensions.DependencyInjection;
+using SplendidWonders.Common.Model;
 using SplendidWonders.Gameplay.Actions;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using TTOptimize.Core;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
 using static System.Collections.Specialized.BitVector32;
 
 namespace SplendidWonders.CLI.Input.Wizards
 {
-    public class PurchaseFromBoardCommandWizard : BaseConsoleCommandWizard
+    public class PurchaseFromBoardCommandWizard : SplendidWondersBaseWizard
     {
         public override string CommandKey => Strings.PurchaseFromBoardCommandKey;
 
@@ -21,12 +23,19 @@ namespace SplendidWonders.CLI.Input.Wizards
         public override bool CanExecute(IGameState state, IEnumerable<GameAction> validActions)
             => validActions.OfType<PurchaseFromBoardAction>().Any();
 
+        public PurchaseFromBoardCommandWizard(
+            IConsolePromptContext promptContext,
+            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] ISplendidWondersInputPresenter inputPresenter) : base(promptContext, inputPresenter)
+        {
+            _inputPresenter = inputPresenter;
+        }
+
         public override GameCommand? RunConsoleDialog(IGameState state, IEnumerable<GameAction> validActions)
         {
             _availablePurchases = validActions.OfType<PurchaseFromBoardAction>();
 
-            ConsoleInputDisplayHelper.PrintSubCommandBlock(CommandKey, Strings.PromptPurchaseFromBoard);
-            ConsoleInputDisplayHelper.DisplayCards(_availablePurchases);
+            _inputPresenter.DisplaySubCommandBlock(CommandKey, Strings.PromptPurchaseFromBoard);
+            _inputPresenter.DisplayPurchases(_availablePurchases);
 
             return PromptForParameter();
         }
