@@ -1,8 +1,9 @@
-﻿using TTOptimize.Core.ViewAbstractions;
+﻿using TTOptimize.ConsoleUI.View;
+using TTOptimize.Core.ViewAbstractions;
 
-namespace TTOptimize.Engine;
+namespace TTOptimize.ConsoleUI.Input;
 
-public class CommandPaneBuilder : IPaneBuilder<CommandRenderData>
+public class CommandPaneBuilder : IConxelPaneBuilder<CommandRenderData>
 {
     private const int Width = 149;
     private const int Height = 12;

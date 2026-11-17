@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TTOptimize.Core;
-using TTOptimize.Core.GameAbstractions;
+﻿using TTOptimize.ConsoleUI;
 using TTOptimize.Core.InputAbstractions;
 
-namespace SplendidWonders.CLI.Input.Wizards
-{
-    public abstract class SplendidWondersBaseWizard : BaseConsoleCommandWizard
-    {
-        protected ISplendidWondersInputPresenter _inputPresenter;
+namespace SplendidWonders.CLI.Input.Wizards;
 
-        protected SplendidWondersBaseWizard(ICommandTerminal commandTerminal, ISplendidWondersInputPresenter inputPresenter) : base(commandTerminal)
-        {
-            _inputPresenter = inputPresenter;
-        }
+public abstract class SplendidWondersBaseWizard : BaseTerminalWizard
+{
+    protected ISplendidWondersInputPresenter _inputPresenter;
+
+    protected SplendidWondersBaseWizard(ICommandTerminal commandTerminal, ISplendidWondersInputPresenter inputPresenter) : base(commandTerminal)
+    {
+        _inputPresenter = inputPresenter;
     }
 }

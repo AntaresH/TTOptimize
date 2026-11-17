@@ -1,6 +1,6 @@
 ﻿using TTOptimize.Core.GameAbstractions;
 
-namespace TTOptimize.Core.ViewAbstractions;
+namespace TTOptimize.ConsoleUI.View;
 
 public interface IConxelWidget
 {

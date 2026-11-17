@@ -1,19 +1,14 @@
 ﻿using SplendidWonders.Common.Actions;
 using SplendidWonders.Common.Model;
-using SplendidWonders.Common.Setup;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using TTOptimize.Core.InputAbstractions;
 
-namespace SplendidWonders.CLI.Input
+namespace SplendidWonders.CLI.Input;
+
+public interface ISplendidWondersInputPresenter
 {
-    public interface ISplendidWondersInputPresenter
-    {
-        void DisplayCommandBlock(IEnumerable<IConsoleCommandWizard> wizards, IConsoleCommandWizard activeWizard);
-        void DisplaySubCommandBlock(string commandKey, string subCommand);
-        void DisplayCards(IEnumerable<DevelopmentCard> cards);
-        void DisplayPurchases(IEnumerable<PurchaseAction> purchaseActions);
-        void DisplayLeaders(IEnumerable<Leader> leaders);
-    }
+    void DisplayCommandBlock(IEnumerable<ITerminalWizard> wizards, ITerminalWizard activeWizard);
+    void DisplaySubCommandBlock(string commandKey, string subCommand);
+    void DisplayCards(IEnumerable<DevelopmentCard> cards);
+    void DisplayPurchases(IEnumerable<PurchaseAction> purchaseActions);
+    void DisplayLeaders(IEnumerable<Leader> leaders);
 }

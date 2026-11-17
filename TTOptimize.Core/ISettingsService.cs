@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace TTOptimize.Core;
 
-namespace TTOptimize.Core
+public interface ISettingsService
 {
-    public interface ISettingsService
-    {
-        string GetSetting(string settingId);
+    string GetSetting(string settingId);
 
-        string this[string settingType] { get; }
-    }
+    string this[string settingType] { get; }
 }

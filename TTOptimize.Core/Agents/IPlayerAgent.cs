@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TTOptimize.Core.GameAbstractions;
+﻿using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
 
-namespace TTOptimize.Core.Agents
-{
-    public interface IPlayerAgent
-    {
-        string Name { get; }
-        GameCommand DecideCommand(IGameState gameState, IReadOnlyList<GameAction> validActions);
-    }
+namespace TTOptimize.Core.Agents;
 
-    public interface IPlayerResult
-    {
-        IPlayerAgent Player { get; }
-        
-        int Result { get; }
-    }
+public interface IPlayerAgent
+{
+    string Name { get; }
+    GameCommand DecideCommand(IGameState gameState, IReadOnlyList<GameAction> validActions);
+}
+
+public interface IPlayerResult
+{
+    IPlayerAgent Player { get; }
+    
+    int Result { get; }
 }

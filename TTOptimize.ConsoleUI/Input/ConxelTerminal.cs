@@ -1,7 +1,7 @@
-﻿using TTOptimize.Core;
+﻿using TTOptimize.Core.InputAbstractions;
 using TTOptimize.Core.ViewAbstractions;
 
-public class ConxelCommandTerminal : ICommandTerminal
+public class ConxelTerminal : ICommandTerminal
 {
     private readonly List<string> _lines = new();
     private readonly Stack<int> _zoneStartIndices = new();
@@ -9,7 +9,7 @@ public class ConxelCommandTerminal : ICommandTerminal
 
     public event Action<CommandRenderData>? OutputChanged;
 
-    public ConxelCommandTerminal()
+    public ConxelTerminal()
     {
     }
 

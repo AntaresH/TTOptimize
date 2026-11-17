@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TTOptimize.Core.ViewAbstractions;
+﻿using System.Text;
 
-namespace TTOptimize.ConsoleHost.ConsoleView;
+namespace TTOptimize.ConsoleUI.View;
 
-public class ConxelAnsiCompiler
+public class ConxelCompiler
 {
-    public void RenderPane(ScreenPane pane)
+    public void RenderPane(ConxelPane pane)
     {
         var canvas = pane.Canvas;
         var sb = new StringBuilder(canvas.Width * canvas.Height * 2);

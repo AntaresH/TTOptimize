@@ -1,4 +1,4 @@
-﻿namespace TTOptimize.Core.ViewAbstractions;
+﻿namespace TTOptimize.ConsoleUI.View;
 
 public enum PaneId
 {

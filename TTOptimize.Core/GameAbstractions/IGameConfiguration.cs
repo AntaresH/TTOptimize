@@ -1,8 +1,7 @@
-﻿namespace TTOptimize.Core.GameAbstractions
+﻿namespace TTOptimize.Core.GameAbstractions;
+
+public interface IGameConfiguration
 {
-    public interface IGameConfiguration
-    {
-        int PlayerCount { get; set; }
-        List<string> PlayerNames { get; set; }
-    }
+    int PlayerCount { get; set; }
+    List<string> PlayerNames { get; set; }
 }

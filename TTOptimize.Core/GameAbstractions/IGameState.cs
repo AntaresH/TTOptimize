@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace TTOptimize.Core.GameAbstractions;
 
-namespace TTOptimize.Core.GameAbstractions
+public interface IGameState
 {
-    public interface IGameState
-    {
-        GameProgression GameProgression { get; }
+    GameProgression GameProgression { get; }
 
-        int ActivePlayerId { get; }
-    }
+    int ActivePlayerId { get; }
 }

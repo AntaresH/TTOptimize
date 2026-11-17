@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace TTOptimize.Core.ViewAbstractions;
+namespace TTOptimize.ConsoleUI.View;
 
 public class ConxelCanvas
 {

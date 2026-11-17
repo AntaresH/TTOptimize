@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System.Data;
 using System.Diagnostics;
 using TTOptimize.Core;
 using TTOptimize.Core.Agents;

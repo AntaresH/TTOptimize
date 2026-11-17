@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace TTOptimize.Core.GameAbstractions;
 
-namespace TTOptimize.Core.GameAbstractions
+public interface IGameStateFactory
 {
-    public interface IGameStateFactory
-    {
-        IGameState Create(IGameConfiguration gameConfiguration);
-    }
+    IGameState Create(IGameConfiguration gameConfiguration);
 }

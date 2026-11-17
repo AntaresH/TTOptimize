@@ -1,14 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualBasic;
 using SplendidWonders.CLI;
-using SplendidWonders.CLI.View;
-using SplendidWonders.Common.Setup;
-using System.Net.Http.Headers;
 using System.Runtime.InteropServices;
-using TTOptimize.ConsoleHost.ConsoleView;
+using TTOptimize.ConsoleUI.Input;
+using TTOptimize.ConsoleUI.View;
 using TTOptimize.Core;
-using TTOptimize.Core.Agents;
-using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
 using TTOptimize.Core.ViewAbstractions;
 using TTOptimize.Engine;
@@ -97,11 +92,11 @@ public class Program
         services.AddSingleton<SetupService>();
         services.AddSingleton<GameSelectionService>();
         services.AddSingleton<ISettingsService>((isp) => new SettingsService(args));
-        services.AddSingleton<ConxelAnsiCompiler>();
+        services.AddSingleton<ConxelCompiler>();
 
-        services.AddKeyedScoped<IGameView, ConxelGameView>(Games.SPLENDID_WONDERS_KEY);
-        services.AddScoped<IPaneBuilder<CommandRenderData>, CommandPaneBuilder>();
-        services.AddScoped<ICommandTerminal, ConxelCommandTerminal>();
+        services.AddKeyedScoped<IGameView, ConxelView>(Games.SPLENDID_WONDERS_KEY);
+        services.AddScoped<IConxelPaneBuilder<CommandRenderData>, CommandPaneBuilder>();
+        services.AddScoped<ICommandTerminal, ConxelTerminal>();
     }
 
     private static void DisplayTTOptimizeTitle()

@@ -1,6 +1,6 @@
 ﻿using TTOptimize.Core.ViewAbstractions;
 
-namespace TTOptimize.Core;
+namespace TTOptimize.Core.InputAbstractions;
 
 public interface ICommandTerminal
 {

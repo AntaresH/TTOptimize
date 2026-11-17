@@ -1,12 +1,11 @@
 ﻿using TTOptimize.Core.Agents;
 
-namespace TTOptimize.Core.GameAbstractions
-{
-    public record class ActionLogEntry
-    {
-        public int TurnNumber { get; set; }
-        public IPlayerAgent Agent { get; set; }
+namespace TTOptimize.Core.GameAbstractions;
 
-        public GameAction Action { get; set; }
-    }
+public record class ActionLogEntry
+{
+    public int TurnNumber { get; set; }
+    public IPlayerAgent Agent { get; set; }
+
+    public GameAction Action { get; set; }
 }

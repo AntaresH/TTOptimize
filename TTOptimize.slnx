@@ -8,6 +8,7 @@
     <Project Path="Games/SplendidWonders/SplendidWonders.Gameplay.Tests/SplendidWonders.Gameplay.Tests.csproj" />
   </Folder>
   <Project Path="TTOptimize.ConsoleHost/TTOptimize.ConsoleHost.csproj" />
+  <Project Path="TTOptimize.ConsoleUI/TTOptimize.ConsoleUI.csproj" Id="68774929-e5fb-4b9c-965d-4ac087004e95" />
   <Project Path="TTOptimize.Core/TTOptimize.Core.csproj" />
   <Project Path="TTOptimize.Engine/TTOptimize.Engine.csproj" Id="f6e6af29-9052-4d81-9592-8f7460d8ac3b" />
 </Solution>

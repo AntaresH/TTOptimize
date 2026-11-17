@@ -1,12 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SplendidWonders.Common.Model;
+using TTOptimize.ConsoleUI.View;
 using TTOptimize.Core;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.ViewAbstractions;
 
 namespace SplendidWonders.CLI.View;
 
-public class SplendidWondersBoardBuilder : IPaneBuilder<BoardRenderData>
+public class SplendidWondersBoardBuilder : IConxelPaneBuilder<BoardRenderData>
 {
     private const int MinCanvasRows = 34;
     private const int MinCanvasColumns = 140;

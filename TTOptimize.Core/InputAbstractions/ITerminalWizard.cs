@@ -2,7 +2,7 @@
 
 namespace TTOptimize.Core.InputAbstractions;
 
-public interface IConsoleCommandWizard
+public interface ITerminalWizard
 {
     string CommandKey { get; }
     string Description { get; }

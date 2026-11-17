@@ -1,25 +1,19 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SplendidWonders.CLI.View.Legacy;
-using System.ComponentModel.Design;
 using System.Reflection;
 using TTOptimize.Core;
 using TTOptimize.Core.Agents;
 using TTOptimize.Core.GameAbstractions;
-using TTOptimize.Core.InputAbstractions;
-using TTOptimize.Core.ViewAbstractions;
 using TTOptimize.Engine;
 
 namespace TTOptimize.ConsoleHost;
 
 public class SetupService
 {
-    private readonly IServiceProvider _serviceProvider;
     private readonly ISettingsService _settingsService;
     private readonly bool _isInterActive;
 
     public SetupService(IServiceProvider serviceProvider)
     {
-        _serviceProvider = serviceProvider;
         _settingsService = serviceProvider.GetRequiredService<ISettingsService>();
 
         var interActiveModeArg = _settingsService.GetSetting(TTOptArguments.INTERACTIVE_MODE);

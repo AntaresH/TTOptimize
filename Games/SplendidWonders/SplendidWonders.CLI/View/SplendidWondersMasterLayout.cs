@@ -1,8 +1,8 @@
-﻿using TTOptimize.Core.ViewAbstractions;
+﻿using TTOptimize.ConsoleUI.View;
 
 namespace SplendidWonders.CLI.View;
 
-public class SplendidWondersMasterLayout : IMasterLayout
+public class SplendidWondersMasterLayout : IConxelMasterLayout
 {
     private const int MarginX = 1;
     private const int MarginY = 1;
@@ -17,17 +17,17 @@ public class SplendidWondersMasterLayout : IMasterLayout
     private const int BottomPaneWidth = BoardWidth + Gap + EventsWidth;
     private const int BottomPaneHeight = 12;
 
-    public IReadOnlyList<ScreenPane> CreatePanes()
+    public IReadOnlyList<ConxelPane> CreatePanes()
     {
         int eventsStartX = MarginX + BoardWidth + Gap;
         int bottomStartY = MarginY + BoardHeight + 5;
 
-        return new List<ScreenPane>
+        return new List<ConxelPane>
         {
-            new ScreenPane(PaneId.Board, MarginY, MarginX, BoardHeight, BoardWidth),
-            new ScreenPane(PaneId.Events, MarginY, eventsStartX, EventsHeight, EventsWidth),
-            new ScreenPane(PaneId.Commands, bottomStartY, MarginX, BottomPaneHeight, BottomPaneWidth),
-            new ScreenPane(PaneId.Results, bottomStartY, MarginX,  BottomPaneHeight, BottomPaneWidth)
+            new ConxelPane(PaneId.Board, MarginY, MarginX, BoardHeight, BoardWidth),
+            new ConxelPane(PaneId.Events, MarginY, eventsStartX, EventsHeight, EventsWidth),
+            new ConxelPane(PaneId.Commands, bottomStartY, MarginX, BottomPaneHeight, BottomPaneWidth),
+            new ConxelPane(PaneId.Results, bottomStartY, MarginX,  BottomPaneHeight, BottomPaneWidth)
         };
     }
 }

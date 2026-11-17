@@ -1,14 +1,15 @@
 ﻿using TTOptimize.Core.GameAbstractions;
+using TTOptimize.Core.InputAbstractions;
 
-namespace TTOptimize.Core.InputAbstractions;
+namespace TTOptimize.ConsoleUI;
 
-public abstract class BaseConsoleCommandWizard : IConsoleCommandWizard
+public abstract class BaseTerminalWizard : ITerminalWizard
 {
     public abstract string CommandKey { get; }
     public abstract string Description { get; }
     public ICommandTerminal _commandTerminal { get; }
 
-    public BaseConsoleCommandWizard(ICommandTerminal commandTerminal)
+    public BaseTerminalWizard(ICommandTerminal commandTerminal)
     {
         _commandTerminal = commandTerminal;
     }
@@ -103,12 +104,5 @@ public abstract class BaseConsoleCommandWizard : IConsoleCommandWizard
                 Console.Write(keyInfo.KeyChar);
             }
         }
-    }
-}
-
-public abstract class PresentationWizard : BaseConsoleCommandWizard
-{
-    protected PresentationWizard(ICommandTerminal commandTerminal) : base(commandTerminal)
-    {
     }
 }

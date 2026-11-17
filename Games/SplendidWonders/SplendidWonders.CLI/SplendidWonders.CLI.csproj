@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\TTOptimize.ConsoleUI\TTOptimize.ConsoleUI.csproj" />
     <ProjectReference Include="..\..\..\TTOptimize.Core\TTOptimize.Core.csproj" />
     <ProjectReference Include="..\SplendidWonders.Common\SplendidWonders.Common.csproj" />
     <ProjectReference Include="..\SplendidWonders.Gameplay\SplendidWonders.Gameplay.csproj" />

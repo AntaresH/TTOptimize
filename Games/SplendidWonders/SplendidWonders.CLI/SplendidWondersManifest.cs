@@ -1,8 +1,7 @@
-﻿using SplendidWonders.CLI;
-using SplendidWonders.Common.Setup;
+﻿using SplendidWonders.Common.Setup;
 using TTOptimize.Core;
 
-namespace SplendidWonders.Gameplay;
+namespace SplendidWonders.CLI;
 
 public class SplendidWondersManifest : IGameManifest
 {

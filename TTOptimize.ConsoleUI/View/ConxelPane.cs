@@ -1,14 +1,13 @@
-﻿namespace TTOptimize.Core.ViewAbstractions;
+﻿namespace TTOptimize.ConsoleUI.View;
 
-
-public class ScreenPane
+public class ConxelPane
 {
     public PaneId PaneId { get; }
     public int StartX { get; }
     public int StartY { get; }
     public ConxelCanvas Canvas { get; }
 
-    public ScreenPane(PaneId paneId, int startY, int startX, int rows, int columns)
+    public ConxelPane(PaneId paneId, int startY, int startX, int rows, int columns)
     {
         PaneId = paneId;
         StartX = startX;

@@ -1,6 +1,4 @@
-﻿using TTOptimize.Core;
-
-public static class TTOptArguments
+﻿public static class TTOptArguments
 {
     public const string INTERACTIVE_MODE = "interactive";
     public const string GAMEID = "gameid";
