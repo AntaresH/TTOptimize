@@ -1,7 +1,11 @@
-﻿namespace TTOptimize.Core;
+﻿using TTOptimize.Core.ViewAbstractions;
 
-public interface IConsolePromptContext
+namespace TTOptimize.Core;
+
+public interface ICommandTerminal
 {
+    event Action<CommandRenderData>? OutputChanged;
+
     void BeginZone();       
     void ResetZone();    
     void EndZone();        

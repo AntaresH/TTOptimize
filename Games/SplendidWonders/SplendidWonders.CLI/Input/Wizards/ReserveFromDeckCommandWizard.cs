@@ -26,8 +26,8 @@ namespace SplendidWonders.CLI.Input.Wizards
             => validActions.OfType<ReserveFromDeckAction>().Any();
 
         public ReserveFromDeckCommandWizard(
-            IConsolePromptContext promptContext,
-            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] ISplendidWondersInputPresenter inputPresenter) : base(promptContext, inputPresenter)
+            ICommandTerminal commandTerminal,
+            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] ISplendidWondersInputPresenter inputPresenter) : base(commandTerminal, inputPresenter)
         {
             _inputPresenter = inputPresenter;
         }

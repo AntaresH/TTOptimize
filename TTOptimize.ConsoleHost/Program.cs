@@ -98,9 +98,10 @@ public class Program
         services.AddSingleton<GameSelectionService>();
         services.AddSingleton<ISettingsService>((isp) => new SettingsService(args));
         services.AddSingleton<ConxelAnsiCompiler>();
-        services.AddSingleton<IConsolePromptContext, ConsolePromptContext>();
 
         services.AddKeyedScoped<IGameView, ConxelGameView>(Games.SPLENDID_WONDERS_KEY);
+        services.AddScoped<IPaneBuilder<CommandRenderData>, CommandPaneBuilder>();
+        services.AddScoped<ICommandTerminal, ConxelCommandTerminal>();
     }
 
     private static void DisplayTTOptimizeTitle()

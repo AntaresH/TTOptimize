@@ -6,11 +6,11 @@ public abstract class BaseConsoleCommandWizard : IConsoleCommandWizard
 {
     public abstract string CommandKey { get; }
     public abstract string Description { get; }
-    public IConsolePromptContext _promptContext { get; }
+    public ICommandTerminal _commandTerminal { get; }
 
-    public BaseConsoleCommandWizard(IConsolePromptContext promptContext)
+    public BaseConsoleCommandWizard(ICommandTerminal commandTerminal)
     {
-        _promptContext = promptContext;
+        _commandTerminal = commandTerminal;
     }
 
     public abstract bool CanExecute(IGameState state, IEnumerable<GameAction> validActions);
@@ -21,7 +21,7 @@ public abstract class BaseConsoleCommandWizard : IConsoleCommandWizard
 
     protected GameCommand PromptForParameter()
     {
-        _promptContext.BeginZone();
+        _commandTerminal.BeginZone();
 
         try
         {
@@ -31,19 +31,19 @@ public abstract class BaseConsoleCommandWizard : IConsoleCommandWizard
 
                 if (input is null)
                 {
-                    _promptContext.ResetZone();
+                    _commandTerminal.ResetZone();
                     throw new ConsoleUserBackException();
                 }
 
                 if (string.IsNullOrEmpty(input))
                 {
-                    _promptContext.ResetZone();
+                    _commandTerminal.ResetZone();
                     continue;
                 }
 
                 if (input.ToUpper() == "X")
                 {
-                    _promptContext.ResetZone();
+                    _commandTerminal.ResetZone();
                     throw new ConsoleUserAbortException();
                 }
 
@@ -59,13 +59,13 @@ public abstract class BaseConsoleCommandWizard : IConsoleCommandWizard
                 }
                 else
                 {
-                    _promptContext.ResetZone();
+                    _commandTerminal.ResetZone();
                 }
             }
         }
         finally
         {
-            _promptContext.EndZone();
+            _commandTerminal.EndZone();
         }
     }
 
@@ -108,7 +108,7 @@ public abstract class BaseConsoleCommandWizard : IConsoleCommandWizard
 
 public abstract class PresentationWizard : BaseConsoleCommandWizard
 {
-    protected PresentationWizard(IConsolePromptContext promptContext) : base(promptContext)
+    protected PresentationWizard(ICommandTerminal commandTerminal) : base(commandTerminal)
     {
     }
 }

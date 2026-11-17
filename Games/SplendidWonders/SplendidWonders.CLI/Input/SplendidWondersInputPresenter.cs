@@ -20,11 +20,11 @@ namespace SplendidWonders.CLI.Input
         private static RgbColor _presentationCommandForeground = new RgbColor(180, 200, 170);
         private static RgbColor _commandsBlockBackground = new RgbColor(50, 50, 50);
 
-        private readonly IConsolePromptContext _promptContext;
+        private readonly ICommandTerminal _commandTerminal;
 
-        public SplendidWondersInputPresenter(IConsolePromptContext promptContext)
+        public SplendidWondersInputPresenter(ICommandTerminal commandTerminal)
         {
-            _promptContext = promptContext;
+            _commandTerminal = commandTerminal;
         }
 
         public void DisplayCommandBlock(IEnumerable<IConsoleCommandWizard> wizards, IConsoleCommandWizard activeWizard)
@@ -32,7 +32,7 @@ namespace SplendidWonders.CLI.Input
             var previousForeground = Console.ForegroundColor;
             var previousBackground = Console.BackgroundColor;
 
-            _promptContext.WriteLine(GetColorizedConsoleText(new string('-', Console.WindowWidth), _commandsBlockForeground, _commandsBlockBackground));
+            _commandTerminal.WriteLine(GetColorizedConsoleText(new string('-', Console.WindowWidth), _commandsBlockForeground, _commandsBlockBackground));
 
             string escRaw = "X";
             string escSeparator = " - ";
@@ -44,7 +44,7 @@ namespace SplendidWonders.CLI.Input
             string validCommandsRaw = (" " + Strings.ValidCommands).PadRight(Console.WindowWidth - escLength);
             string validCommandsColored = GetColorizedConsoleText(validCommandsRaw, _commandsBlockForeground, _commandsBlockBackground);
 
-            _promptContext.WriteLine($"{validCommandsColored}{escColored}");
+            _commandTerminal.WriteLine($"{validCommandsColored}{escColored}");
 
             foreach (var wizard in wizards)
             {
@@ -52,7 +52,7 @@ namespace SplendidWonders.CLI.Input
                 PrintCommand(wizard, activeWizard == wizard);
             }
 
-            _promptContext.WriteLine(GetColorizedConsoleText(new string('-', Console.WindowWidth), _commandsBlockForeground, _commandsBlockBackground));
+            _commandTerminal.WriteLine(GetColorizedConsoleText(new string('-', Console.WindowWidth), _commandsBlockForeground, _commandsBlockBackground));
         }
 
         public void DisplaySubCommandBlock(string commandKey, string subCommand)
@@ -70,8 +70,8 @@ namespace SplendidWonders.CLI.Input
             string subCommandRaw = $" - {subCommand}".PadRight(Console.WindowWidth - escLength - commandKeyRaw.Length);
             string subCommandColored = GetColorizedConsoleText(subCommandRaw, _commandsBlockForeground, _commandsBlockBackground);
 
-            _promptContext.Write($"{commandKeyColored}{subCommandColored}{escColored}");
-            _promptContext.WriteLine(GetColorizedConsoleText(new string('-', Console.WindowWidth), _commandsBlockForeground, _commandsBlockBackground));
+            _commandTerminal.Write($"{commandKeyColored}{subCommandColored}{escColored}");
+            _commandTerminal.WriteLine(GetColorizedConsoleText(new string('-', Console.WindowWidth), _commandsBlockForeground, _commandsBlockBackground));
         }
 
         public void DisplayCards(IEnumerable<DevelopmentCard> cards)
@@ -105,7 +105,7 @@ namespace SplendidWonders.CLI.Input
 
             var foreGround = isActive ? _activeCommandForeground : wizard is PresentationWizard ? _presentationCommandForeground : _commandsBlockForeground;
 
-            _promptContext.WriteLine(GetColorizedConsoleText(commandDisplayText.PadRight(Console.WindowWidth), foreGround, _commandsBlockBackground));
+            _commandTerminal.WriteLine(GetColorizedConsoleText(commandDisplayText.PadRight(Console.WindowWidth), foreGround, _commandsBlockBackground));
         }
 
         private void PrintLeader(Leader leader)
@@ -140,7 +140,7 @@ namespace SplendidWonders.CLI.Input
             string namePadding = new string(' ', Math.Max(0, 18 - leader.Name.Length));
             string colorCost = string.Join(" ", colorCostTexts);
 
-            _promptContext.WriteLine($"{leader.Id,-5} {leader.Name}{namePadding} Feltételek: {colorCost}");
+            _commandTerminal.WriteLine($"{leader.Id,-5} {leader.Name}{namePadding} Feltételek: {colorCost}");
         }
 
         private void PrintCardWithCosts(DevelopmentCard card)
@@ -180,7 +180,7 @@ namespace SplendidWonders.CLI.Input
             string colorCost = string.Join(" ", colorCostSubTexts);
             string costPadding = new string(' ', Math.Max(0, 12 - colorCostSubTexts.Count * 2 - 1));
 
-            _promptContext.WriteLine($"{card.Id,-5} {coloredName}{namePadding}   {vpDisplay}   {colorCost}{costPadding}");
+            _commandTerminal.WriteLine($"{card.Id,-5} {coloredName}{namePadding}   {vpDisplay}   {colorCost}{costPadding}");
         }
 
         private void PrintCardWithSpendingInfo(int key, DevelopmentCard card, TokenGroup requiredTokens)
@@ -225,7 +225,7 @@ namespace SplendidWonders.CLI.Input
                 ? $"{colorCost}{costPadding}{polymathCost}"
                 : Strings.FreePurchase;
 
-            _promptContext.WriteLine($"{key,-5} {coloredName}{namePadding}   {vpDisplay}   {completeCostText}");
+            _commandTerminal.WriteLine($"{key,-5} {coloredName}{namePadding}   {vpDisplay}   {completeCostText}");
         }
 
         private string GetColorizedConsoleText(object text, RgbColor? foreground = null, RgbColor? background = null)

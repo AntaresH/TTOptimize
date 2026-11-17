@@ -9,9 +9,9 @@ namespace SplendidWonders.CLI.Input.Wizards
         protected ISplendidWondersInputPresenter _inputPresenter;
 
         protected SplendidWondersPresentationWizard(
-            IConsolePromptContext promptContext,
+            ICommandTerminal commandTerminal,
             ISplendidWondersInputPresenter inputPresenter
-            ) : base(promptContext)
+            ) : base(commandTerminal)
         {
             _inputPresenter = inputPresenter;
         }

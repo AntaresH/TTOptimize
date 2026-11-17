@@ -11,7 +11,7 @@ namespace SplendidWonders.CLI.Input.Wizards
     {
         protected ISplendidWondersInputPresenter _inputPresenter;
 
-        protected SplendidWondersBaseWizard(IConsolePromptContext promptContext, ISplendidWondersInputPresenter inputPresenter) : base(promptContext)
+        protected SplendidWondersBaseWizard(ICommandTerminal commandTerminal, ISplendidWondersInputPresenter inputPresenter) : base(commandTerminal)
         {
             _inputPresenter = inputPresenter;
         }

@@ -12,22 +12,22 @@ namespace SplendidWonders.CLI.Input
     public class ConsoleGameInput : IGameInput
     {
         private readonly IEnumerable<IConsoleCommandWizard> _wizards;
-        private readonly IConsolePromptContext _promptContext;
+        private readonly ICommandTerminal _commandTerminal;
         private readonly ISplendidWondersInputPresenter _inputPresenter;
 
         public ConsoleGameInput(
-            IConsolePromptContext promptContext,
+            ICommandTerminal commandTerminal,
             [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IEnumerable<IConsoleCommandWizard> wizards,
             [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] ISplendidWondersInputPresenter inputPresenter)
         {
             _wizards = wizards;
-            _promptContext = promptContext;
+            _commandTerminal = commandTerminal;
             _inputPresenter = inputPresenter;
         }
 
         public GameCommand ReadCommand(IGameState state, IEnumerable<GameAction> validActions)
         {
-            _promptContext.BeginZone();
+            _commandTerminal.BeginZone();
 
             var activeWizards = _wizards
                 .Where(w => w.CanExecute(state, validActions))
@@ -37,14 +37,14 @@ namespace SplendidWonders.CLI.Input
             {
                 while (true)
                 {
-                    _promptContext.ResetZone();
+                    _commandTerminal.ResetZone();
                     _inputPresenter.DisplayCommandBlock(activeWizards.Values, null);
 
                     var inputKey = Console.ReadKey(intercept: true).KeyChar.ToString().ToUpper();
 
                     if (inputKey == "X")
                     {
-                        _promptContext.ResetZone();
+                        _commandTerminal.ResetZone();
                         throw new ConsoleUserAbortException();
                     }
 
@@ -52,7 +52,7 @@ namespace SplendidWonders.CLI.Input
                     {
                         try
                         {
-                            _promptContext.ResetZone();
+                            _commandTerminal.ResetZone();
                             _inputPresenter.DisplayCommandBlock(activeWizards.Values, selectedWizard);
 
                             GameCommand? command = selectedWizard.RunConsoleDialog(state, validActions);
@@ -69,7 +69,7 @@ namespace SplendidWonders.CLI.Input
             }
             finally
             {
-                _promptContext.EndZone();
+                _commandTerminal.EndZone();
             }
         }
     }

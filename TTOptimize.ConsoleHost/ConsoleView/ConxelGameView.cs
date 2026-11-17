@@ -14,17 +14,23 @@ public class ConxelGameView : IGameView
     private readonly ConxelAnsiCompiler _compiler;
     private readonly IPaneBuilder<BoardRenderData> _boardBuilder;
     private readonly IPaneBuilder<EventLogRenderData> _eventLogBuilder;
+    private readonly IPaneBuilder<CommandRenderData> _commandPaneBuilder;
 
     public ConxelGameView(
+        ICommandTerminal terminal,
         [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IMasterLayout masterLayout,
         ConxelAnsiCompiler compiler,
         [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IPaneBuilder<BoardRenderData> boardBuilder,
-        [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IPaneBuilder<EventLogRenderData> eventLogBuilder)
+        [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IPaneBuilder<EventLogRenderData> eventLogBuilder,
+        IPaneBuilder<CommandRenderData> commandPaneBuilder)
     {
         _panes = masterLayout.CreatePanes().ToDictionary(p => p.PaneId);
         _compiler = compiler;
         _boardBuilder = boardBuilder;
         _eventLogBuilder = eventLogBuilder;
+        _commandPaneBuilder = commandPaneBuilder;
+
+        terminal.OutputChanged += RefreshCommands;
     }
 
     public void InitializeScreen()
@@ -40,7 +46,7 @@ public class ConxelGameView : IGameView
         => UpdatePane(PaneId.Events, _eventLogBuilder.Build(data));
 
     public void RefreshCommands(CommandRenderData data)
-        => throw new NotImplementedException(); // UpdatePane(PaneId.Commands, _commandBuilder.Build(data));
+        => UpdatePane(PaneId.Commands, _commandPaneBuilder.Build(data));
 
     public void ShowResults(ResultsRenderData data)     // UpdatePane(PaneId.Results, _resultsBuilder.Build(data));
     {
@@ -57,6 +63,7 @@ public class ConxelGameView : IGameView
         {
             Console.WriteLine($"#{i + 1}: {players[i].Name} - {players[i].Tableau.Sum(c => c.VictoryPoints) + players[i].AcquiredLeaders.Count * 3} {Strings.VP}");
         }
+
         Console.WriteLine();
     }
 
