@@ -41,6 +41,7 @@ public class GameOrchestrator
             if (!_rules.Validate(command.Action))
             {
                 ValidationFailed?.Invoke(command.CommandText, activeAgent);
+                continue;
             }
 
             currentState = _rules.Reduce(currentState, command.Action);
