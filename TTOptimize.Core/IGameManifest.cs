@@ -2,6 +2,8 @@
 
 public interface IGameManifest
 {
+    string AsciiLogo { get; }
+
     string GameId { get; }
 
     string DisplayName { get; }

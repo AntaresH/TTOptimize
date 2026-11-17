@@ -5,6 +5,8 @@ namespace TTOptimize.Core.ViewAbstractions;
 public class ConxelCanvas
 {
     private readonly Conxel[,] _buffer;
+    public int Width => Columns;
+    public int Height => Rows;
     public int Columns { get; }
     public int Rows { get; }
     private static string _defaultHorizSingleBorderSymbol = "-";

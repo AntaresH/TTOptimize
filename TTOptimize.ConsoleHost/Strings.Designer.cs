@@ -88,6 +88,24 @@ namespace TTOptimize.ConsoleHost {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Végső pontszámok:.
+        /// </summary>
+        internal static string FinalScores {
+            get {
+                return ResourceManager.GetString("FinalScores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vége a játéknak.
+        /// </summary>
+        internal static string GameOverTitle {
+            get {
+                return ResourceManager.GetString("GameOverTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to JÁTÉK BEÁLLÍTÁSOK.
         /// </summary>
         internal static string GameSettings {
@@ -192,6 +210,24 @@ namespace TTOptimize.ConsoleHost {
         internal static string PromptStayInGame {
             get {
                 return ResourceManager.GetString("PromptStayInGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GyP.
+        /// </summary>
+        internal static string VP {
+            get {
+                return ResourceManager.GetString("VP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Győztes.
+        /// </summary>
+        internal static string Winner {
+            get {
+                return ResourceManager.GetString("Winner", resourceCulture);
             }
         }
         

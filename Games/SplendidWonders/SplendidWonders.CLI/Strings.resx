@@ -138,12 +138,6 @@
   <data name="ErrorDuringGameFormat" xml:space="preserve">
     <value>Hiba történt a játék során: {0}</value>
   </data>
-  <data name="FinalScores" xml:space="preserve">
-    <value>Végső pontszámok:</value>
-  </data>
-  <data name="GameOverTitle" xml:space="preserve">
-    <value>Vége a játéknak</value>
-  </data>
   <data name="InvalidCommandState" xml:space="preserve">
     <value>A megadott parancs nem érvényes a jelenlegi játékállapotban!</value>
   </data>
@@ -243,12 +237,6 @@
   <data name="ValidCommands" xml:space="preserve">
     <value>Kérlek adj meg egy végrehajtandó parancsot az alábbiak közül:</value>
   </data>
-  <data name="VP" xml:space="preserve">
-    <value>GyP</value>
-  </data>
-  <data name="Winner" xml:space="preserve">
-    <value>Győztes</value>
-  </data>
   <data name="PurchaseFromReservedCommandKey" xml:space="preserve">
     <value>S</value>
   </data>
@@ -275,5 +263,8 @@
   </data>
   <data name="QuitGame" xml:space="preserve">
     <value>Kilépés</value>
+  </data>
+  <data name="EventLogTitle" xml:space="preserve">
+    <value>ESEMÉNYNAPLÓ</value>
   </data>
 </root>

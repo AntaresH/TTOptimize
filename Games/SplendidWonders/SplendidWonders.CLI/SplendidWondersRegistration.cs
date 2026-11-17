@@ -53,8 +53,9 @@ namespace SplendidWonders.CLI
             services.AddKeyedScoped<DecksWidget>(Games.SPLENDID_WONDERS_KEY);
             services.AddKeyedScoped<MarketWidget>(Games.SPLENDID_WONDERS_KEY);
             services.AddKeyedScoped<PlayerAreaWidget>(Games.SPLENDID_WONDERS_KEY);
-            services.AddKeyedScoped<ILayoutManager, SplendidWondersLayoutManager>(Games.SPLENDID_WONDERS_KEY);
-            services.AddKeyedSingleton<IGameView, SplendidWondersView>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IMasterLayout, SplendidWondersMasterLayout>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IPaneBuilder<BoardRenderData>, SplendidWondersBoardBuilder>(Games.SPLENDID_WONDERS_KEY);
+            services.AddKeyedScoped<IPaneBuilder<EventLogRenderData>, SplendidWondersEventLogBuilder>(Games.SPLENDID_WONDERS_KEY);
 
             services.AddKeyedScoped<IConsoleCommandWizard, DrawDoubleTokensCommandWizard>(Games.SPLENDID_WONDERS_KEY);
             services.AddKeyedScoped<IConsoleCommandWizard, DrawThreeTokensCommandWizard>(Games.SPLENDID_WONDERS_KEY);

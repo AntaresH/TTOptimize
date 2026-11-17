@@ -6,7 +6,7 @@ using TTOptimize.Core.ViewAbstractions;
 
 namespace SplendidWonders.CLI.View;
 
-public class SplendidWondersLayoutManager : ILayoutManager
+public class SplendidWondersBoardBuilder : IPaneBuilder<BoardRenderData>
 {
     private const int MinCanvasRows = 34;
     private const int MinCanvasColumns = 140;
@@ -17,7 +17,7 @@ public class SplendidWondersLayoutManager : ILayoutManager
     private readonly MarketWidget _marketWidget;
     private readonly PlayerAreaWidget _playerAreaWidget;
 
-    public SplendidWondersLayoutManager(
+    public SplendidWondersBoardBuilder(
         [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] TokenSupplyWidget tokenSupplyWidget,
         [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] DecksWidget decksWidget,
         [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] LeaderAreaWidget leaderAreaWidget,
@@ -31,13 +31,14 @@ public class SplendidWondersLayoutManager : ILayoutManager
         _playerAreaWidget = playerAreaWidget;
     }
 
-    public ConxelCanvas BuildCanvas(IGameState state, IReadOnlyList<GameAction> legalActions)
+    public ConxelCanvas Build(BoardRenderData paneData)
     {
-        var swState = (GameState)state;
+        var swState = (GameState)paneData.State;
+        var validActions = paneData.ValidActions;
 
         return swState.Leaders.Any()
-            ? BoardWithLeaders(swState, legalActions)
-            : BoardWithoutLeaders(swState, legalActions);
+            ? BoardWithLeaders(swState, validActions)
+            : BoardWithoutLeaders(swState, validActions);
     }
 
     private ConxelCanvas BoardWithoutLeaders(GameState state, IReadOnlyList<GameAction> legalActions)

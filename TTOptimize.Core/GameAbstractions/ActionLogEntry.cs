@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TTOptimize.Core.Agents;
-using TTOptimize.Core.GameAbstractions;
+﻿using TTOptimize.Core.Agents;
 
-namespace TTOptimize.Engine
+namespace TTOptimize.Core.GameAbstractions
 {
     public record class ActionLogEntry
     {

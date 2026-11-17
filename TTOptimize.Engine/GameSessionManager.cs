@@ -12,7 +12,6 @@ namespace TTOptimize.Engine;
 public class GameSessionManager
 {
     private readonly IServiceProvider _rootServiceProvider;
-    private IGameRenderer _renderer;
     private IGameView _view;
 
     private string _lastValidationFailure;
@@ -42,7 +41,6 @@ public class GameSessionManager
                 }
             }
 
-            _renderer = scopeProvider.GetRequiredKeyedService<IGameRenderer>(gameId);
             _view = scopeProvider.GetRequiredKeyedService<IGameView>(gameId);
 
             var initialState = stateFactory.Create(configuration);
@@ -52,19 +50,13 @@ public class GameSessionManager
             var finalState = RunGame(orchestrator, out TimeSpan elapsed);
 
             if (agents.OfType<HumanAgent>().Any())
-                _renderer.Render(finalState, null);
-
-            _view.DisplayGameOver(finalState, rules);
+                _view.ShowResults(new ResultsRenderData(finalState, rules));
 
             string interactiveModeArg = settings.GetSetting(TTOptArguments.INTERACTIVE_MODE);
             bool interActiveMode = bool.TryParse(interactiveModeArg, out bool parsed) ? parsed : true;
 
             if (!interActiveMode)
             {
-                foreach (var logEntry in _actionHistory)
-                {
-                    Console.WriteLine($"#{logEntry.TurnNumber}: {logEntry.Agent.Name} - {logEntry.Action.Description}");
-                }
             }
 
             Console.WriteLine($"Futási idő: {Math.Round(elapsed.TotalSeconds, 4)} másodperc");
@@ -73,12 +65,10 @@ public class GameSessionManager
 
     private IGameState RunGame(GameOrchestrator orchestrator, out TimeSpan elapsed)
     {
-        if (_renderer != null)
-        {
-            orchestrator.TurnStarted += Orchestrator_TurnStarted;
-            orchestrator.ValidationFailed += Orchestrator_ValidationFailed;
-            orchestrator.ActionExecuted += Orchestrator_ActionExecuted;
-        }
+        orchestrator.TurnStarted += Orchestrator_TurnStarted;
+        orchestrator.ValidationFailed += Orchestrator_ValidationFailed;
+        orchestrator.ActionExecuted += Orchestrator_ActionExecuted;
+
         try
         {
             long startTime = Stopwatch.GetTimestamp();
@@ -108,12 +98,15 @@ public class GameSessionManager
     {
         if (activeAgent is HumanAgent)
         {
-            _renderer?.Render(currentState, validActions);
+            _view.RefreshBoard(new BoardRenderData(currentState, validActions));
+            _view.RefreshEvents(new EventLogRenderData(_actionHistory));
 
             if (!string.IsNullOrEmpty(_lastValidationFailure))
                 _view.DisplayValidationFailure(_lastValidationFailure);
 
             _lastValidationFailure = null;
+
+            Console.SetCursorPosition(Console.CursorLeft, Console.CursorTop + 3);
         }
     }
 

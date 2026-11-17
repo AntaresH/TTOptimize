@@ -44,7 +44,7 @@ namespace SplendidWonders.Gameplay
             return _stateReducer.Reduce(baseState, actionToApply);
         }
 
-        object IGameRules.GetFinalStandings(IGameState gameState)
+        public object GetFinalStandings(IGameState gameState)
         {
             var swGameState = (GameState)gameState;
 

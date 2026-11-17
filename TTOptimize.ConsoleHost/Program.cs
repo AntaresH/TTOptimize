@@ -39,24 +39,15 @@ public class Program
 
         var services = new ServiceCollection();
 
-        services.AddTTOptimizeEngine();
-        services.AddSplendidWonders();
-
-        services.AddSingleton<SetupService>();
-        services.AddSingleton<GameSelectionService>();
-        services.AddSingleton<ISettingsService>((isp) => new SettingsService(args));
-        services.AddSingleton<ConxelAnsiCompiler>();
-        services.AddSingleton<IConsolePromptContext, ConsolePromptContext>();
-        
-        services.AddKeyedScoped<IGameRenderer>(Games.SPLENDID_WONDERS_KEY, (sp, key) =>
-        {
-            var layoutManager = sp.GetRequiredKeyedService<ILayoutManager>(key);
-            var compiler = sp.GetRequiredService<ConxelAnsiCompiler>();
-            return new ConxelGameView(layoutManager, compiler);
-        });
+        RegisterServices(args, services);
 
         var rootProvider = services.BuildServiceProvider();
 
+        RunApp(rootProvider);
+    }
+
+    private static void RunApp(ServiceProvider rootProvider)
+    {
         var gameSelectionService = rootProvider.GetRequiredService<GameSelectionService>();
         var setupService = rootProvider.GetRequiredService<SetupService>();
         var settingsService = rootProvider.GetRequiredService<ISettingsService>();
@@ -96,6 +87,20 @@ public class Program
 
             stayInApp = interActiveMode ? StayPrompter(Strings.PromptStayInApp) : false;
         }
+    }
+
+    private static void RegisterServices(string[] args, ServiceCollection services)
+    {
+        services.AddTTOptimizeEngine();
+        services.AddSplendidWonders();
+
+        services.AddSingleton<SetupService>();
+        services.AddSingleton<GameSelectionService>();
+        services.AddSingleton<ISettingsService>((isp) => new SettingsService(args));
+        services.AddSingleton<ConxelAnsiCompiler>();
+        services.AddSingleton<IConsolePromptContext, ConsolePromptContext>();
+
+        services.AddKeyedScoped<IGameView, ConxelGameView>(Games.SPLENDID_WONDERS_KEY);
     }
 
     private static void DisplayTTOptimizeTitle()

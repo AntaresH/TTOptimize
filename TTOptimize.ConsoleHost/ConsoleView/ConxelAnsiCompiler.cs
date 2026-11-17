@@ -7,36 +7,35 @@ namespace TTOptimize.ConsoleHost.ConsoleView;
 
 public class ConxelAnsiCompiler
 {
-    public string Compile(ConxelCanvas canvas)
+    public void RenderPane(ScreenPane pane)
     {
-        var sb = new StringBuilder(canvas.Columns * canvas.Rows * 2);
+        var canvas = pane.Canvas;
+        var sb = new StringBuilder(canvas.Width * canvas.Height * 2);
 
-        for (int row = 0; row < canvas.Rows; row++)
+        for (int row = 0; row < canvas.Height; row++)
         {
+            sb.Append($"\u001b[{pane.StartY + row + 1};{pane.StartX + 1}H");
+
             RgbColor? currentFg = null;
             RgbColor? currentBg = null;
 
-            for (int column = 0; column < canvas.Columns; column++)
+            for (int column = 0; column < canvas.Width; column++)
             {
                 Conxel cell = canvas.GetAt(row, column);
 
                 if (cell.Foreground != currentFg)
                 {
-                    if (cell.Foreground is RgbColor fg)
-                        sb.Append($"\u001b[38;2;{fg.R};{fg.G};{fg.B}m");
-                    else
-                        sb.Append("\u001b[39m"); 
-
+                    sb.Append(cell.Foreground is RgbColor fg
+                        ? $"\u001b[38;2;{fg.R};{fg.G};{fg.B}m"
+                        : "\u001b[39m");
                     currentFg = cell.Foreground;
                 }
 
                 if (cell.Background != currentBg)
                 {
-                    if (cell.Background is RgbColor bg)
-                        sb.Append($"\u001b[48;2;{bg.R};{bg.G};{bg.B}m");
-                    else
-                        sb.Append("\u001b[49m"); 
-
+                    sb.Append(cell.Background is RgbColor bg
+                        ? $"\u001b[48;2;{bg.R};{bg.G};{bg.B}m"
+                        : "\u001b[49m");
                     currentBg = cell.Background;
                 }
 
@@ -47,10 +46,8 @@ public class ConxelAnsiCompiler
             {
                 sb.Append("\u001b[0m");
             }
-
-            sb.AppendLine();
         }
 
-        return sb.ToString();
+        Console.Write(sb.ToString());
     }
 }

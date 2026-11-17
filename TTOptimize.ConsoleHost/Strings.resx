@@ -168,4 +168,16 @@
   <data name="PlayerNamePrompt" xml:space="preserve">
     <value>Játékos neve (Enter = Játékos {0}): </value>
   </data>
+  <data name="Winner" xml:space="preserve">
+    <value>Győztes</value>
+  </data>
+  <data name="GameOverTitle" xml:space="preserve">
+    <value>Vége a játéknak</value>
+  </data>
+  <data name="FinalScores" xml:space="preserve">
+    <value>Végső pontszámok:</value>
+  </data>
+  <data name="VP" xml:space="preserve">
+    <value>GyP</value>
+  </data>
 </root>
