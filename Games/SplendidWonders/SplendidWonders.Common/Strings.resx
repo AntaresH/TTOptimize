@@ -117,6 +117,33 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ActionDesc_DoubleTokensFormat" xml:space="preserve">
+    <value>húz 2 azonos színű lapkát {0}</value>
+  </data>
+  <data name="ActionDesc_PurchaseFromBoardFormat" xml:space="preserve">
+    <value>megvásárolja a(z) {0} kártyát a játéktérről</value>
+  </data>
+  <data name="ActionDesc_PurchaseFromReservedFormat" xml:space="preserve">
+    <value>megvásárolja a(z) {0} kártyát a kezéből</value>
+  </data>
+  <data name="ActionDesc_ReserveFromBoardFormat" xml:space="preserve">
+    <value>lefoglalja a(z) {0} kártyát</value>
+  </data>
+  <data name="ActionDesc_ReserveFromDeckFormat" xml:space="preserve">
+    <value>foglal 1 kártyát a(z) {0} pakliból</value>
+  </data>
+  <data name="ActionDesc_ReturnTokensFormat" xml:space="preserve">
+    <value>visszaad {0} lapkát ({1})</value>
+  </data>
+  <data name="ActionDesc_SelectLeaderFormat" xml:space="preserve">
+    <value>kiválasztja {0} vezért</value>
+  </data>
+  <data name="ActionDesc_ThreeTokensFormat" xml:space="preserve">
+    <value>húz {0} különböző színű lapkát ({1})</value>
+  </data>
+  <data name="TokenKey_Blue" xml:space="preserve">
+    <value>K</value>
+  </data>
   <data name="Card_Abece" xml:space="preserve">
     <value>Ábécé</value>
   </data>
@@ -446,5 +473,26 @@
   </data>
   <data name="Leader_Szuppiluliumasz" xml:space="preserve">
     <value>Szuppiluliumasz</value>
+  </data>
+  <data name="TokenKey_Green" xml:space="preserve">
+    <value>Z</value>
+  </data>
+  <data name="TokenKey_Yellow" xml:space="preserve">
+    <value>S</value>
+  </data>
+  <data name="TokenKey_Red" xml:space="preserve">
+    <value>P</value>
+  </data>
+  <data name="TokenKey_Brown" xml:space="preserve">
+    <value>B</value>
+  </data>
+  <data name="Level1DeckName" xml:space="preserve">
+    <value>Épület</value>
+  </data>
+  <data name="Level2DeckName" xml:space="preserve">
+    <value>Technológia</value>
+  </data>
+  <data name="Level3DeckName" xml:space="preserve">
+    <value>Csoda</value>
   </data>
 </root>

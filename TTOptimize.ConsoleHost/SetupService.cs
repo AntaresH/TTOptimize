@@ -14,13 +14,13 @@ namespace TTOptimize.ConsoleHost;
 public class SetupService
 {
     private readonly IServiceProvider _serviceProvider;
-    private readonly SettingsService _settingsService;
+    private readonly ISettingsService _settingsService;
     private readonly bool _isInterActive;
 
     public SetupService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-        _settingsService = serviceProvider.GetRequiredService<SettingsService>();
+        _settingsService = serviceProvider.GetRequiredService<ISettingsService>();
 
         var interActiveModeArg = _settingsService.GetSetting(TTOptArguments.INTERACTIVE_MODE);
         _isInterActive = bool.TryParse(interActiveModeArg, out bool parsed) ? parsed : true;

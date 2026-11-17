@@ -1,6 +1,6 @@
-﻿using SplendidWonders.Common.Model;
+﻿using SplendidWonders.Common.Actions;
+using SplendidWonders.Common.Model;
 using SplendidWonders.Common.Tests.TestDataModel;
-using SplendidWonders.Gameplay.Actions;
 using SplendidWonders.Gameplay.Explorers;
 
 namespace SplendidWonders.Common.Tests.ExplorerTests

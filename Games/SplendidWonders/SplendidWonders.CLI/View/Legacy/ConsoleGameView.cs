@@ -1,6 +1,6 @@
 ﻿using SplendidWonders.CLI.Input;
+using SplendidWonders.Common.Actions;
 using SplendidWonders.Common.Model;
-using SplendidWonders.Gameplay.Actions;
 using System.Collections.Immutable;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;

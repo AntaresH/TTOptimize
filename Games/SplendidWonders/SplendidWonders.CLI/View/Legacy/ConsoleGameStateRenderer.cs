@@ -1,8 +1,6 @@
 using System.Text;
+using SplendidWonders.Common.Actions;
 using SplendidWonders.Common.Model;
-using SplendidWonders.Gameplay.Actions;
-using TTOptimize.Core;
-using TTOptimize.Core.GameAbstractions;
 
 namespace SplendidWonders.CLI.View.Legacy
 {

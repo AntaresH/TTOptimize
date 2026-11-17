@@ -1,9 +1,9 @@
 ﻿using SplendidWonders.Common.Tests.TestDataModel;
 using System.Collections.Immutable;
 using SplendidWonders.Gameplay.Reducers;
-using SplendidWonders.Gameplay.Actions;
 using SplendidWonders.Common.Model;
 using SplendidWonders.Common.Setup;
+using SplendidWonders.Common.Actions;
 
 namespace SplendidWonders.Common.Tests.ReducerTests
 {

@@ -38,8 +38,6 @@
             yield break;
         }
 
-
-
         public int[] ToArray()
         {
             return [ Yellow, Blue, Green, Brown, Red, Polymath ];

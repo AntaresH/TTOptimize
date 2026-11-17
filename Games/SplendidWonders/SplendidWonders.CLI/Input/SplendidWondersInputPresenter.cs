@@ -1,5 +1,5 @@
-﻿using SplendidWonders.Common.Model;
-using SplendidWonders.Gameplay.Actions;
+﻿using SplendidWonders.Common.Actions;
+using SplendidWonders.Common.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;

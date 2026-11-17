@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Data;
 using System.Diagnostics;
+using TTOptimize.Core;
 using TTOptimize.Core.Agents;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
@@ -15,6 +16,7 @@ public class GameSessionManager
     private IGameView _view;
 
     private string _lastValidationFailure;
+    private readonly List<ActionLogEntry> _actionHistory = new();
 
     public GameSessionManager(IServiceProvider rootServiceProvider)
     {
@@ -27,6 +29,7 @@ public class GameSessionManager
         {
             IServiceProvider scopeProvider = scope.ServiceProvider;
 
+            var settings = scopeProvider.GetRequiredService<ISettingsService>();
             var stateFactory = scopeProvider.GetRequiredKeyedService<IGameStateFactory>(gameId);
             var rules = scopeProvider.GetRequiredKeyedService<IGameRules>(gameId);
             var input = scopeProvider.GetRequiredKeyedService<IGameInput>(gameId);
@@ -53,6 +56,17 @@ public class GameSessionManager
 
             _view.DisplayGameOver(finalState, rules);
 
+            string interactiveModeArg = settings.GetSetting(TTOptArguments.INTERACTIVE_MODE);
+            bool interActiveMode = bool.TryParse(interactiveModeArg, out bool parsed) ? parsed : true;
+
+            if (!interActiveMode)
+            {
+                foreach (var logEntry in _actionHistory)
+                {
+                    Console.WriteLine($"#{logEntry.TurnNumber}: {logEntry.Agent.Name} - {logEntry.Action.Description}");
+                }
+            }
+
             Console.WriteLine($"Futási idő: {Math.Round(elapsed.TotalSeconds, 4)} másodperc");
         }
     }
@@ -63,6 +77,7 @@ public class GameSessionManager
         {
             orchestrator.TurnStarted += Orchestrator_TurnStarted;
             orchestrator.ValidationFailed += Orchestrator_ValidationFailed;
+            orchestrator.ActionExecuted += Orchestrator_ActionExecuted;
         }
         try
         {
@@ -75,7 +90,18 @@ public class GameSessionManager
         {
             orchestrator.TurnStarted -= Orchestrator_TurnStarted;
             orchestrator.ValidationFailed -= Orchestrator_ValidationFailed;
+            orchestrator.ActionExecuted -= Orchestrator_ActionExecuted;
         }
+    }
+
+    private void Orchestrator_ActionExecuted(GameAction action, IPlayerAgent agent)
+    {
+        _actionHistory.Add(new ActionLogEntry()
+        {
+            TurnNumber = _actionHistory.Count + 1,
+            Action = action,
+            Agent = agent
+        });
     }
 
     private void Orchestrator_TurnStarted(IGameState currentState, IReadOnlyList<GameAction> validActions, IPlayerAgent activeAgent)
@@ -83,7 +109,10 @@ public class GameSessionManager
         if (activeAgent is HumanAgent)
         {
             _renderer?.Render(currentState, validActions);
-            _view.DisplayValidationFailure(_lastValidationFailure);
+
+            if (!string.IsNullOrEmpty(_lastValidationFailure))
+                _view.DisplayValidationFailure(_lastValidationFailure);
+
             _lastValidationFailure = null;
         }
     }

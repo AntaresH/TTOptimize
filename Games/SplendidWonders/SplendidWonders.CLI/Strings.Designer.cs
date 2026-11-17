@@ -70,7 +70,7 @@ namespace SplendidWonders.CLI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2.
+        ///   Looks up a localized string similar to D.
         /// </summary>
         internal static string DrawDoubleTokensCommandKey {
             get {
@@ -79,7 +79,7 @@ namespace SplendidWonders.CLI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Húzz 1-1 fejlődéslapkát három különböző kategóriákból!.
+        ///   Looks up a localized string similar to Húzz 1-1 fejlődéslapkát három különböző kategóriából!.
         /// </summary>
         internal static string DrawThreeTokensCommandDescription {
             get {
@@ -88,7 +88,7 @@ namespace SplendidWonders.CLI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 3.
+        ///   Looks up a localized string similar to K.
         /// </summary>
         internal static string DrawThreeTokensCommandKey {
             get {
@@ -394,7 +394,7 @@ namespace SplendidWonders.CLI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to K.
+        ///   Looks up a localized string similar to S.
         /// </summary>
         internal static string PurchaseFromReservedCommandKey {
             get {

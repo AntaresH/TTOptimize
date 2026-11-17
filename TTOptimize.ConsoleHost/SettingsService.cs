@@ -1,21 +1,10 @@
-﻿using System.Text.RegularExpressions;
+﻿using SplendidWonders.Common.Model;
+using System.Text.RegularExpressions;
+using TTOptimize.Core;
 
 namespace TTOptimize.ConsoleHost
 {
-    public static class TTOptArguments
-    {
-        public const string INTERACTIVE_MODE = "interactive";
-        public const string GAMEID = "gameid";
-        public const string PLAYERCOUNT = "playercount";
-        public const string PLAYER1NAME = "player1name";
-        public const string PLAYER2NAME = "player2name";
-        public const string PLAYER1TYPE = "player1type";
-        public const string PLAYER2TYPE = "player2type";
-        public const string USERANDOMSEED = "userandomseed";
-        public const string SEED = "randomseed";
-    }
-
-    public class SettingsService
+    public class SettingsService : ISettingsService
     {
         private Dictionary<string, object> _settings { get; set; } = new Dictionary<string, object>();
 
@@ -75,6 +64,14 @@ namespace TTOptimize.ConsoleHost
             var argument = GetSetting(argumentType);
 
             return string.IsNullOrEmpty(argument) ? Console.ReadLine().Trim() : argument;
+        }
+
+        public string this[string settingType]
+        {
+            get
+            {
+                return _settings.ContainsKey(settingType) ? _settings[settingType].ToString() : null;
+            }
         }
     }
 }

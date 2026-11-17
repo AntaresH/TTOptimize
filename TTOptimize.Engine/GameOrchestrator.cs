@@ -12,7 +12,8 @@ public class GameOrchestrator
     private readonly IReadOnlyList<IPlayerAgent> _playerAgents;
     private readonly IGameRules _rules;
     public event Action<IGameState, IReadOnlyList<GameAction>, IPlayerAgent>? TurnStarted;
-    public event Action<string, IPlayerAgent>? ValidationFailed;
+    public event Action<string, IPlayerAgent>? ValidationFailed; 
+    public event Action<GameAction, IPlayerAgent>? ActionExecuted;
 
     public GameOrchestrator(
         IGameState initialState,
@@ -37,14 +38,13 @@ public class GameOrchestrator
 
             var command = activeAgent.DecideCommand(currentState, validActions);
 
-            if (_rules.Validate(command.Action))
-            {
-                currentState = _rules.Reduce(currentState, command.Action);
-            }
-            else
+            if (!_rules.Validate(command.Action))
             {
                 ValidationFailed?.Invoke(command.CommandText, activeAgent);
             }
+
+            currentState = _rules.Reduce(currentState, command.Action);
+            ActionExecuted?.Invoke(command.Action, activeAgent);
         }
 
         return currentState;

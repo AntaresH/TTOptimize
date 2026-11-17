@@ -44,7 +44,7 @@ public class Program
 
         services.AddSingleton<SetupService>();
         services.AddSingleton<GameSelectionService>();
-        services.AddSingleton((isp) => new SettingsService(args));
+        services.AddSingleton<ISettingsService>((isp) => new SettingsService(args));
         services.AddSingleton<ConxelAnsiCompiler>();
         services.AddSingleton<IConsolePromptContext, ConsolePromptContext>();
         
@@ -59,7 +59,7 @@ public class Program
 
         var gameSelectionService = rootProvider.GetRequiredService<GameSelectionService>();
         var setupService = rootProvider.GetRequiredService<SetupService>();
-        var settingsService = rootProvider.GetRequiredService<SettingsService>();
+        var settingsService = rootProvider.GetRequiredService<ISettingsService>();
 
         bool stayInApp = true;
 

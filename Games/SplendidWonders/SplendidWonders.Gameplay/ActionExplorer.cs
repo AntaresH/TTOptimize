@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SplendidWonders.Common.Actions;
 using SplendidWonders.Common.Model;
-using SplendidWonders.Gameplay.Actions;
 using SplendidWonders.Gameplay.Explorers;
 using TTOptimize.Core;
 using TTOptimize.Core.GameAbstractions;

@@ -17,17 +17,24 @@ namespace TTOptimize.ConsoleHost
 
         public IGameManifest SelectGame()
         {
-            var settingsService = _serviceProvider.GetRequiredService<SettingsService>();
+            var settingsService = _serviceProvider.GetRequiredService<ISettingsService>();
             var manifests = _serviceProvider.GetServices<IGameManifest>().ToList();
 
-            for (int i = 0; i < manifests.Count; i++)
+            string interactiveModeArg = settingsService.GetSetting(TTOptArguments.INTERACTIVE_MODE);
+            bool interActiveMode = bool.TryParse(interactiveModeArg, out bool parsed) ? parsed : true;
+
+            if (interActiveMode)
             {
-                Console.WriteLine($"({i + 1}) - {manifests[i].DisplayName} - {manifests[i].Description}");
+                for (int i = 0; i < manifests.Count; i++)
+                {
+                    Console.WriteLine($"({i + 1}) - {manifests[i].DisplayName} - {manifests[i].Description}");
+                }
             }
 
             while (true)
             {
-                string gameId = settingsService.QuickRead(TTOptArguments.GAMEID);
+                object gameArg = settingsService[TTOptArguments.GAMEID];
+                string gameId = gameArg != null ? gameArg.ToString() : Console.ReadLine().Trim();
 
                 if (int.TryParse(gameId, out int parsedNum) && parsedNum > 0 && parsedNum <= manifests.Count)
                 {

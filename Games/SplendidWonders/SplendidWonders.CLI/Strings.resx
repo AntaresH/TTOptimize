@@ -121,13 +121,13 @@
     <value>Húzz 2 azonos kategóriájú fejlődéslapkát!</value>
   </data>
   <data name="DrawDoubleTokensCommandKey" xml:space="preserve">
-    <value>2</value>
+    <value>D</value>
   </data>
   <data name="DrawThreeTokensCommandDescription" xml:space="preserve">
-    <value>Húzz 1-1 fejlődéslapkát három különböző kategóriákból!</value>
+    <value>Húzz 1-1 fejlődéslapkát három különböző kategóriából!</value>
   </data>
   <data name="DrawThreeTokensCommandKey" xml:space="preserve">
-    <value>3</value>
+    <value>K</value>
   </data>
   <data name="EmptyTableau" xml:space="preserve">
     <value>(üres)</value>
@@ -250,7 +250,7 @@
     <value>Győztes</value>
   </data>
   <data name="PurchaseFromReservedCommandKey" xml:space="preserve">
-    <value>K</value>
+    <value>S</value>
   </data>
   <data name="ReturnTokensCommandKey" xml:space="preserve">
     <value>T</value>

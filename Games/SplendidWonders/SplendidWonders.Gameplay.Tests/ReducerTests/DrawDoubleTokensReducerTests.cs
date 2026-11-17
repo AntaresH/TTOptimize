@@ -1,7 +1,7 @@
 ﻿using SplendidWonders.Common.Tests.TestDataModel;
 using SplendidWonders.Gameplay.Reducers;
-using SplendidWonders.Gameplay.Actions;
 using SplendidWonders.Common.Model;
+using SplendidWonders.Common.Actions;
 
 namespace SplendidWonders.Common.Tests.ReducerTests
 {

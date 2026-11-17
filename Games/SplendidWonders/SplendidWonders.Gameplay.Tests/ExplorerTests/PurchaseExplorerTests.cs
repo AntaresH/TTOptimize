@@ -2,8 +2,8 @@
 using SplendidWonders.Common.Setup;
 using SplendidWonders.Common.Tests.TestDataModel;
 using System.Collections.Immutable;
-using SplendidWonders.Gameplay.Actions;
 using SplendidWonders.Gameplay.Explorers;
+using SplendidWonders.Common.Actions;
 
 namespace SplendidWonders.Common.Tests.ExplorerTests
 {

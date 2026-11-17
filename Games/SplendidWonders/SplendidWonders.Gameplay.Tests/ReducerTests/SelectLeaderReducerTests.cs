@@ -1,7 +1,7 @@
-﻿using SplendidWonders.Common.Model;
+﻿using SplendidWonders.Common.Actions;
+using SplendidWonders.Common.Model;
 using SplendidWonders.Common.Setup;
 using SplendidWonders.Common.Tests.TestDataModel;
-using SplendidWonders.Gameplay.Actions;
 using SplendidWonders.Gameplay.Reducers;
 using System.Collections.Immutable;
 

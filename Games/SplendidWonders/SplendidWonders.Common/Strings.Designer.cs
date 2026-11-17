@@ -61,6 +61,78 @@ namespace SplendidWonders.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to húz 2 azonos színű lapkát {0}.
+        /// </summary>
+        internal static string ActionDesc_DoubleTokensFormat {
+            get {
+                return ResourceManager.GetString("ActionDesc_DoubleTokensFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to megvásárolja a(z) {0} kártyát a játéktérről.
+        /// </summary>
+        internal static string ActionDesc_PurchaseFromBoardFormat {
+            get {
+                return ResourceManager.GetString("ActionDesc_PurchaseFromBoardFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to megvásárolja a(z) {0} kártyát a kezéből.
+        /// </summary>
+        internal static string ActionDesc_PurchaseFromReservedFormat {
+            get {
+                return ResourceManager.GetString("ActionDesc_PurchaseFromReservedFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to lefoglalja a(z) {0} kártyát.
+        /// </summary>
+        internal static string ActionDesc_ReserveFromBoardFormat {
+            get {
+                return ResourceManager.GetString("ActionDesc_ReserveFromBoardFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to foglal 1 kártyát a(z) {0} pakliból.
+        /// </summary>
+        internal static string ActionDesc_ReserveFromDeckFormat {
+            get {
+                return ResourceManager.GetString("ActionDesc_ReserveFromDeckFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to visszaad {0} lapkát ({1}).
+        /// </summary>
+        internal static string ActionDesc_ReturnTokensFormat {
+            get {
+                return ResourceManager.GetString("ActionDesc_ReturnTokensFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to kiválasztja {0} vezért.
+        /// </summary>
+        internal static string ActionDesc_SelectLeaderFormat {
+            get {
+                return ResourceManager.GetString("ActionDesc_SelectLeaderFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to húz {0} különböző színű lapkát ({1}).
+        /// </summary>
+        internal static string ActionDesc_ThreeTokensFormat {
+            get {
+                return ResourceManager.GetString("ActionDesc_ThreeTokensFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ábécé.
         /// </summary>
         internal static string Card_Abece {
@@ -1047,6 +1119,78 @@ namespace SplendidWonders.Common {
         internal static string Leader_Szuppiluliumasz {
             get {
                 return ResourceManager.GetString("Leader_Szuppiluliumasz", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Épület.
+        /// </summary>
+        internal static string Level1DeckName {
+            get {
+                return ResourceManager.GetString("Level1DeckName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Technológia.
+        /// </summary>
+        internal static string Level2DeckName {
+            get {
+                return ResourceManager.GetString("Level2DeckName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Csoda.
+        /// </summary>
+        internal static string Level3DeckName {
+            get {
+                return ResourceManager.GetString("Level3DeckName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to K.
+        /// </summary>
+        internal static string TokenKey_Blue {
+            get {
+                return ResourceManager.GetString("TokenKey_Blue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to B.
+        /// </summary>
+        internal static string TokenKey_Brown {
+            get {
+                return ResourceManager.GetString("TokenKey_Brown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Z.
+        /// </summary>
+        internal static string TokenKey_Green {
+            get {
+                return ResourceManager.GetString("TokenKey_Green", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to P.
+        /// </summary>
+        internal static string TokenKey_Red {
+            get {
+                return ResourceManager.GetString("TokenKey_Red", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to S.
+        /// </summary>
+        internal static string TokenKey_Yellow {
+            get {
+                return ResourceManager.GetString("TokenKey_Yellow", resourceCulture);
             }
         }
     }
