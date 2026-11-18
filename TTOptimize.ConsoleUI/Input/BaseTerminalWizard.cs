@@ -1,7 +1,7 @@
 ﻿using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
 
-namespace TTOptimize.ConsoleUI;
+namespace TTOptimize.ConsoleUI.Input;
 
 public abstract class BaseTerminalWizard : ITerminalWizard
 {

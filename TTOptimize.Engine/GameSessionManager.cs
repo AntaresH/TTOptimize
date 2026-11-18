@@ -48,15 +48,7 @@ public class GameSessionManager
 
             var finalState = RunGame(orchestrator, out TimeSpan elapsed);
 
-            if (agents.OfType<HumanAgent>().Any())
-                _view.ShowResults(new ResultsRenderData(finalState, rules));
-
-            string interactiveModeArg = settings.GetSetting(TTOptArguments.INTERACTIVE_MODE);
-            bool interActiveMode = bool.TryParse(interactiveModeArg, out bool parsed) ? parsed : true;
-
-            if (!interActiveMode)
-            {
-            }
+            _view.ShowResults(new ResultsRenderData(finalState, rules));
 
             Console.WriteLine($"Futási idő: {Math.Round(elapsed.TotalSeconds, 4)} másodperc");
         }

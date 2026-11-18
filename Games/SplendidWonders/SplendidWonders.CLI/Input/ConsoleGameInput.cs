@@ -1,8 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SplendidWonders.CLI.View;
-using SplendidWonders.Common.Model;
-using SplendidWonders.Common.Setup;
-using System.Text.RegularExpressions;
+using TTOptimize.ConsoleUI.Input;
 using TTOptimize.Core;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
@@ -39,6 +36,7 @@ public class ConsoleGameInput : IGameInput
             {
                 _commandTerminal.ResetZone();
                 _inputPresenter.DisplayCommandBlock(activeWizards.Values, null);
+                _commandTerminal.Flush();
 
                 var inputKey = Console.ReadKey(intercept: true).KeyChar.ToString().ToUpper();
 
@@ -54,6 +52,7 @@ public class ConsoleGameInput : IGameInput
                     {
                         _commandTerminal.ResetZone();
                         _inputPresenter.DisplayCommandBlock(activeWizards.Values, selectedWizard);
+                        _commandTerminal.Flush();
 
                         GameCommand? command = selectedWizard.RunConsoleDialog(state, validActions);
 

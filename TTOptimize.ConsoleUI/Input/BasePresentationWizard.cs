@@ -1,6 +1,4 @@
-﻿using TTOptimize.Core.InputAbstractions;
-
-namespace TTOptimize.ConsoleUI.Input;
+﻿namespace TTOptimize.ConsoleUI.Input;
 
 public abstract class BasePresentationWizard : BaseTerminalWizard
 {

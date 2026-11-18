@@ -142,6 +142,15 @@ namespace SplendidWonders.CLI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Végső pontszámok:.
+        /// </summary>
+        internal static string FinalScores {
+            get {
+                return ResourceManager.GetString("FinalScores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to INGYENES.
         /// </summary>
         internal static string FreePurchase {
@@ -156,6 +165,15 @@ namespace SplendidWonders.CLI {
         internal static string GameDescription {
             get {
                 return ResourceManager.GetString("GameDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vége a játéknak.
+        /// </summary>
+        internal static string GameOverTitle {
+            get {
+                return ResourceManager.GetString("GameOverTitle", resourceCulture);
             }
         }
         
@@ -507,6 +525,24 @@ namespace SplendidWonders.CLI {
         internal static string ValidCommands {
             get {
                 return ResourceManager.GetString("ValidCommands", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GyP.
+        /// </summary>
+        internal static string VP {
+            get {
+                return ResourceManager.GetString("VP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Győztes.
+        /// </summary>
+        internal static string Winner {
+            get {
+                return ResourceManager.GetString("Winner", resourceCulture);
             }
         }
     }

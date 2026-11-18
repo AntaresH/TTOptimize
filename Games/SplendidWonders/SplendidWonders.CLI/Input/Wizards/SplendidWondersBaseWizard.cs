@@ -1,5 +1,4 @@
-﻿using TTOptimize.ConsoleUI;
-using TTOptimize.Core.InputAbstractions;
+﻿using TTOptimize.ConsoleUI.Input;
 
 namespace SplendidWonders.CLI.Input.Wizards;
 

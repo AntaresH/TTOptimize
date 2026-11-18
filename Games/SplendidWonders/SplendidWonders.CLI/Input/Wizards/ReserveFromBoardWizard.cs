@@ -3,6 +3,7 @@ using SplendidWonders.Common.Actions;
 using SplendidWonders.Common.Model;
 using SplendidWonders.Common.Setup;
 using System.Text.RegularExpressions;
+using TTOptimize.ConsoleUI.Input;
 using TTOptimize.Core;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;

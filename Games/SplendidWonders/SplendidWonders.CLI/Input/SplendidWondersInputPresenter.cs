@@ -8,9 +8,6 @@ namespace SplendidWonders.CLI.Input;
 
 public class SplendidWondersInputPresenter : ISplendidWondersInputPresenter
 {
-    private static RgbColor _defaultForeground = new RgbColor(230, 225, 205);
-    private static RgbColor _defaultBackground = new RgbColor(0, 0, 0);
-
     private static RgbColor _commandsBlockForeground = new RgbColor(255, 255, 255);
     private static RgbColor _activeCommandForeground = new RgbColor(255, 255, 50);
     private static RgbColor _escCommandForeground = new RgbColor(255, 200, 200);
@@ -26,49 +23,28 @@ public class SplendidWondersInputPresenter : ISplendidWondersInputPresenter
 
     public void DisplayCommandBlock(IEnumerable<ITerminalWizard> wizards, ITerminalWizard activeWizard)
     {
-        var previousForeground = Console.ForegroundColor;
-        var previousBackground = Console.BackgroundColor;
+        _commandTerminal.WriteDivider(_commandsBlockForeground, _commandsBlockBackground);
 
-        _commandTerminal.WriteLine(GetColorizedConsoleText(new string('-', Console.WindowWidth), _commandsBlockForeground, _commandsBlockBackground));
-
-        string escRaw = "X";
-        string escSeparator = " - ";
-        string escText = Strings.QuitGame + "  ";
-        string escColored = GetColorizedConsoleText($"{escRaw}{escSeparator}{escText}", _escCommandForeground, _commandsBlockBackground);
-
-        int escLength = escRaw.Length + escSeparator.Length + escText.Length;
-
-        string validCommandsRaw = (" " + Strings.ValidCommands).PadRight(Console.WindowWidth - escLength);
-        string validCommandsColored = GetColorizedConsoleText(validCommandsRaw, _commandsBlockForeground, _commandsBlockBackground);
-
-        _commandTerminal.WriteLine($"{validCommandsColored}{escColored}");
+        _commandTerminal.Write(" " + Strings.ValidCommands, _commandsBlockForeground, _commandsBlockBackground);
+        _commandTerminal.WriteRight($"X - {Strings.QuitGame}  ", _escCommandForeground, _commandsBlockBackground);
+        _commandTerminal.WriteLine();
 
         foreach (var wizard in wizards)
         {
-
             PrintCommand(wizard, activeWizard == wizard);
         }
 
-        _commandTerminal.WriteLine(GetColorizedConsoleText(new string('-', Console.WindowWidth), _commandsBlockForeground, _commandsBlockBackground));
+        _commandTerminal.WriteDivider(_commandsBlockForeground, _commandsBlockBackground);
     }
 
     public void DisplaySubCommandBlock(string commandKey, string subCommand)
     {
-        string commandKeyRaw = $" | {commandKey} |";
-        string commandKeyColored = GetColorizedConsoleText(commandKeyRaw, _activeCommandForeground, _commandsBlockBackground);
+        _commandTerminal.Write($" | {commandKey} |", _activeCommandForeground, _commandsBlockBackground);
+        _commandTerminal.Write($" - {subCommand}", _commandsBlockForeground, _commandsBlockBackground);
+        _commandTerminal.WriteRight($"Esc - {Strings.EscapeToMainCommand}  ", _escCommandForeground, _commandsBlockBackground);
+        _commandTerminal.WriteLine();
 
-        string escRaw = "Esc";
-        string escSeparator = " - ";
-        string escText = Strings.EscapeToMainCommand + "  ";
-        string escColored = GetColorizedConsoleText($"{escRaw}{escSeparator}{escText}", _escCommandForeground, _commandsBlockBackground);
-
-        int escLength = escRaw.Length + escSeparator.Length + escText.Length;
-
-        string subCommandRaw = $" - {subCommand}".PadRight(Console.WindowWidth - escLength - commandKeyRaw.Length);
-        string subCommandColored = GetColorizedConsoleText(subCommandRaw, _commandsBlockForeground, _commandsBlockBackground);
-
-        _commandTerminal.Write($"{commandKeyColored}{subCommandColored}{escColored}");
-        _commandTerminal.WriteLine(GetColorizedConsoleText(new string('-', Console.WindowWidth), _commandsBlockForeground, _commandsBlockBackground));
+        _commandTerminal.WriteDivider(_commandsBlockForeground, _commandsBlockBackground);
     }
 
     public void DisplayCards(IEnumerable<DevelopmentCard> cards)
@@ -98,11 +74,7 @@ public class SplendidWondersInputPresenter : ISplendidWondersInputPresenter
 
     private void PrintCommand(ITerminalWizard wizard, bool isActive)
     {
-        string commandDisplayText = $"  {wizard.CommandKey} - {wizard.Description}";
-
-        var foreGround = isActive ? _activeCommandForeground : wizard is BasePresentationWizard ? _presentationCommandForeground : _commandsBlockForeground;
-
-        _commandTerminal.WriteLine(GetColorizedConsoleText(commandDisplayText.PadRight(Console.WindowWidth), foreGround, _commandsBlockBackground));
+        _commandTerminal.WriteLine($"  {wizard.CommandKey} - {wizard.Description}", _presentationCommandForeground, _commandsBlockBackground);
     }
 
     private void PrintLeader(Leader leader)

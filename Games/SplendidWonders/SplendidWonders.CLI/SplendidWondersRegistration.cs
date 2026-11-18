@@ -57,6 +57,7 @@ public static class SplendidWondersRegistration
         services.AddKeyedScoped<IConxelMasterLayout, SplendidWondersMasterLayout>(Games.SPLENDID_WONDERS_KEY);
         services.AddKeyedScoped<IConxelPaneBuilder<BoardRenderData>, SplendidWondersBoardBuilder>(Games.SPLENDID_WONDERS_KEY);
         services.AddKeyedScoped<IConxelPaneBuilder<EventLogRenderData>, SplendidWondersEventLogBuilder>(Games.SPLENDID_WONDERS_KEY);
+        services.AddKeyedScoped<IConxelPaneBuilder<ResultsRenderData>, SplendidWondersResultsBuilder>(Games.SPLENDID_WONDERS_KEY);
 
         services.AddKeyedScoped<ITerminalWizard, DrawDoubleTokensWizard>(Games.SPLENDID_WONDERS_KEY);
         services.AddKeyedScoped<ITerminalWizard, DrawThreeTokensWizard>(Games.SPLENDID_WONDERS_KEY);
