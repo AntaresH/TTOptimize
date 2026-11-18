@@ -13,5 +13,8 @@ public interface ICommandTerminal
     void WriteLine(string text = "", RgbColor? foreground = null, RgbColor? background = null);
     void WriteRight(string text, RgbColor? foreground = null, RgbColor? background = null);
     void WriteDivider(RgbColor? foreground = null, RgbColor? background = null);
+
+    void SetActiveLineBackground(RgbColor? background = null);
+
     void Flush();
 }

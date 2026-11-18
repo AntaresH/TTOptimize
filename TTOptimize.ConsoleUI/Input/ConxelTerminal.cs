@@ -43,10 +43,6 @@ public class ConxelTerminal : ICommandTerminal
         if (string.IsNullOrEmpty(text)) return;
 
         _activeLine.LeftSpans.Add(new TerminalSpan(text, foreground, background));
-        if (background != null && _activeLine.LineBackground == null)
-        {
-            _activeLine.LineBackground = background;
-        }
     }
 
     public void WriteRight(string text, RgbColor? foreground = null, RgbColor? background = null)
@@ -54,10 +50,6 @@ public class ConxelTerminal : ICommandTerminal
         if (string.IsNullOrEmpty(text)) return;
 
         _activeLine.RightSpans.Add(new TerminalSpan(text, foreground, background));
-        if (background != null && _activeLine.LineBackground == null)
-        {
-            _activeLine.LineBackground = background;
-        }
     }
 
     public void WriteLine(string text = "", RgbColor? foreground = null, RgbColor? background = null)
@@ -65,10 +57,6 @@ public class ConxelTerminal : ICommandTerminal
         if (!string.IsNullOrEmpty(text))
         {
             _activeLine.LeftSpans.Add(new TerminalSpan(text, foreground, background));
-            if (background != null && _activeLine.LineBackground == null)
-            {
-                _activeLine.LineBackground = background;
-            }
         }
 
         _committedLines.Add(_activeLine);
@@ -101,5 +89,10 @@ public class ConxelTerminal : ICommandTerminal
         }
 
         OutputChanged?.Invoke(new CommandRenderData(allLines));
+    }
+
+    public void SetActiveLineBackground(RgbColor? background = null)
+    {
+        _activeLine.LineBackground = background;
     }
 }

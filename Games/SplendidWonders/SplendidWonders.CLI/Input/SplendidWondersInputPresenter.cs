@@ -28,6 +28,7 @@ public class SplendidWondersInputPresenter : ISplendidWondersInputPresenter
 
         _commandTerminal.Write(" " + Strings.ValidCommands, _commandsBlockForeground, _commandsBlockBackground);
         _commandTerminal.WriteRight($"X - {Strings.QuitGame}  ", _escCommandForeground, _commandsBlockBackground);
+        _commandTerminal.SetActiveLineBackground(_commandsBlockBackground);
         _commandTerminal.WriteLine();
 
         foreach (var wizard in wizards)
@@ -43,6 +44,7 @@ public class SplendidWondersInputPresenter : ISplendidWondersInputPresenter
         _commandTerminal.Write($" | {commandKey} |", _activeCommandForeground, _commandsBlockBackground);
         _commandTerminal.Write($" - {subCommand}", _commandsBlockForeground, _commandsBlockBackground);
         _commandTerminal.WriteRight($"Esc - {Strings.EscapeToMainCommand}  ", _escCommandForeground, _commandsBlockBackground);
+        _commandTerminal.SetActiveLineBackground(_commandsBlockBackground);
         _commandTerminal.WriteLine();
 
         _commandTerminal.WriteDivider(_commandsBlockForeground, _commandsBlockBackground);
@@ -81,6 +83,7 @@ public class SplendidWondersInputPresenter : ISplendidWondersInputPresenter
                 ? _presentationCommandForeground 
                 : _commandsBlockForeground;
 
+        _commandTerminal.SetActiveLineBackground(_commandsBlockBackground);
         _commandTerminal.WriteLine($"  {wizard.CommandKey} - {wizard.Description}", fgColor, _commandsBlockBackground);
     }
 
@@ -147,19 +150,5 @@ public class SplendidWondersInputPresenter : ISplendidWondersInputPresenter
         }
 
         _commandTerminal.WriteLine();
-    }
-
-    private string GetColorizedConsoleText(object text, RgbColor? foreground = null, RgbColor? background = null)
-    {
-        string foreGroundColorsRgb = ColorHelper.GetRgbColorString(foreground.HasValue ? foreground.Value : ColorHelper.DefaultConsoleForeground);
-        string backGroundColorsRgb = ColorHelper.GetRgbColorString(background.HasValue ? background.Value : ColorHelper.DefaultConsoleBackground);
-
-        string fgColorPrefix = foreground.HasValue ? $"\u001b[38;2;{foreGroundColorsRgb}m" : string.Empty;
-        string fgColorSuffix = foreground.HasValue ? "\u001b[39m" : string.Empty;
-
-        string bgColorPrefix = background.HasValue ? $"\u001b[48;2;{backGroundColorsRgb}m" : string.Empty;
-        string bgColorSuffix = background.HasValue ? "\u001b[49m" : string.Empty;
-
-        return $"{fgColorPrefix}{bgColorPrefix}{text.ToString()}{bgColorSuffix}{fgColorSuffix}";
     }
 }
