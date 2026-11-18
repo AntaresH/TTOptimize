@@ -52,7 +52,6 @@ public class ConsoleGameInput : IGameInput
                     {
                         _commandTerminal.ResetZone();
                         _inputPresenter.DisplayCommandBlock(activeWizards.Values, selectedWizard);
-                        _commandTerminal.Flush();
 
                         GameCommand? command = selectedWizard.RunConsoleDialog(state, validActions);
 

@@ -1,5 +1,6 @@
 ﻿using SplendidWonders.Common.Actions;
 using SplendidWonders.Common.Model;
+using SplendidWonders.Common.Setup;
 using TTOptimize.ConsoleUI.Input;
 using TTOptimize.ConsoleUI.View;
 using TTOptimize.Core.InputAbstractions;
@@ -74,127 +75,78 @@ public class SplendidWondersInputPresenter : ISplendidWondersInputPresenter
 
     private void PrintCommand(ITerminalWizard wizard, bool isActive)
     {
-        _commandTerminal.WriteLine($"  {wizard.CommandKey} - {wizard.Description}", _presentationCommandForeground, _commandsBlockBackground);
+        var fgColor = isActive 
+            ? _activeCommandForeground : 
+                wizard is BasePresentationWizard 
+                ? _presentationCommandForeground 
+                : _commandsBlockForeground;
+
+        _commandTerminal.WriteLine($"  {wizard.CommandKey} - {wizard.Description}", fgColor, _commandsBlockBackground);
     }
 
     private void PrintLeader(Leader leader)
     {
-        List<string> colorCostTexts = new List<string>();
+        string namePadding = new string(' ', Math.Max(0, 20 - leader.Name.Length));
 
-        if (leader.Requirements.Yellow > 0)
+        _commandTerminal.Write($"{leader.Id,-8}{leader.Name}{namePadding}");
+
+        var conditionList = leader.Requirements.AsEnumerable().Where(dc => dc.Value > 0);
+
+        foreach (var condition in conditionList)
         {
-            colorCostTexts.Add(GetColorizedConsoleText($" {leader.Requirements.Yellow} ", ColorHelper.FullWhite, ColorHelper.DarkSetColor(DevelopmentColor.Yellow)));
+            _commandTerminal.Write($" {condition.Value} ", ColorHelper.FullWhite, ColorHelper.DarkSetColor(condition.Key));
+            _commandTerminal.Write($" ");
         }
 
-        if (leader.Requirements.Blue > 0)
-        {
-            colorCostTexts.Add(GetColorizedConsoleText($" {leader.Requirements.Blue} ", ColorHelper.FullWhite, ColorHelper.DarkSetColor(DevelopmentColor.Blue)));
-        }
-
-        if (leader.Requirements.Green > 0)
-        {
-            colorCostTexts.Add(GetColorizedConsoleText($" {leader.Requirements.Green} ", ColorHelper.FullWhite, ColorHelper.DarkSetColor(DevelopmentColor.Green)));
-        }
-
-        if (leader.Requirements.Brown > 0)
-        {
-            colorCostTexts.Add(GetColorizedConsoleText($" {leader.Requirements.Brown} ", ColorHelper.FullWhite, ColorHelper.DarkSetColor(DevelopmentColor.Brown)));
-        }
-
-        if (leader.Requirements.Red > 0)
-        {
-            colorCostTexts.Add(GetColorizedConsoleText($" {leader.Requirements.Red} ", ColorHelper.FullWhite, ColorHelper.DarkSetColor(DevelopmentColor.Red)));
-        }
-
-        string namePadding = new string(' ', Math.Max(0, 18 - leader.Name.Length));
-        string colorCost = string.Join(" ", colorCostTexts);
-
-        _commandTerminal.WriteLine($"{leader.Id,-5} {leader.Name}{namePadding} Feltételek: {colorCost}");
+        _commandTerminal.WriteLine();
     }
 
     private void PrintCardWithCosts(DevelopmentCard card)
     {
-        List<string> colorCostSubTexts = new List<string>();
-
-        if (card.Cost.Yellow > 0)
-        {
-            colorCostSubTexts.Add(GetColorizedConsoleText(card.Cost.Yellow, ColorHelper.LightSetYellow));
-        }
-
-        if (card.Cost.Blue > 0)
-        {
-            colorCostSubTexts.Add(GetColorizedConsoleText(card.Cost.Blue, ColorHelper.LightSetBlue));
-        }
-
-        if (card.Cost.Green > 0)
-        {
-            colorCostSubTexts.Add(GetColorizedConsoleText(card.Cost.Green, ColorHelper.LightSetGreen));
-        }
-
-        if (card.Cost.Brown > 0)
-        {
-            colorCostSubTexts.Add(GetColorizedConsoleText(card.Cost.Brown, ColorHelper.LightSetBrown));
-        }
-
-        if (card.Cost.Red > 0)
-        {
-            colorCostSubTexts.Add(GetColorizedConsoleText(card.Cost.Red, ColorHelper.LightSetRed));
-        }
-
         string vpDisplay = card.VictoryPoints > 0 ? $"{{{card.VictoryPoints}}}" : "   ";
-
         string namePadding = new string(' ', Math.Max(0, 26 - card.Name.Length));
-        string coloredName = GetColorizedConsoleText(card.Name, ColorHelper.LightSetColor(card.Bonus));
 
-        string colorCost = string.Join(" ", colorCostSubTexts);
-        string costPadding = new string(' ', Math.Max(0, 12 - colorCostSubTexts.Count * 2 - 1));
+        _commandTerminal.Write($"{card.Id,-5} ");
+        _commandTerminal.Write(card.Name, ColorHelper.LightSetColor(card.Bonus));
+        _commandTerminal.Write($"{namePadding}   {vpDisplay}   ");
 
-        _commandTerminal.WriteLine($"{card.Id,-5} {coloredName}{namePadding}   {vpDisplay}   {colorCost}{costPadding}");
+        var conditionList = card.Cost.AsEnumerable().Where(dc => dc.Value > 0 && dc.Key != DevelopmentColor.Polymath);
+
+        foreach (var condition in conditionList)
+        {
+            _commandTerminal.Write($"{condition.Value} ", ColorHelper.LightSetColor(condition.Key));
+        }
+
+        _commandTerminal.WriteLine();
     }
 
     private void PrintCardWithSpendingInfo(int key, DevelopmentCard card, TokenGroup requiredTokens)
     {
-        List<string> colorCostSubTexts = new List<string>();
-
-        if (requiredTokens.Yellow > 0)
-        {
-            colorCostSubTexts.Add(GetColorizedConsoleText(requiredTokens.Yellow, ColorHelper.LightSetYellow));
-        }
-
-        if (requiredTokens.Blue > 0)
-        {
-            colorCostSubTexts.Add(GetColorizedConsoleText(requiredTokens.Blue, ColorHelper.LightSetBlue));
-        }
-
-        if (requiredTokens.Green > 0)
-        {
-            colorCostSubTexts.Add(GetColorizedConsoleText(requiredTokens.Green, ColorHelper.LightSetGreen));
-        }
-
-        if (requiredTokens.Brown > 0)
-        {
-            colorCostSubTexts.Add(GetColorizedConsoleText(requiredTokens.Brown, ColorHelper.LightSetBrown));
-        }
-
-        if (requiredTokens.Red > 0)
-        {
-            colorCostSubTexts.Add(GetColorizedConsoleText(requiredTokens.Red, ColorHelper.LightSetRed));
-        }
-
         string vpDisplay = card.VictoryPoints > 0 ? $"{{{card.VictoryPoints}}}" : "   ";
-
         string namePadding = new string(' ', Math.Max(0, 26 - card.Name.Length));
-        string coloredName = GetColorizedConsoleText(card.Name, ColorHelper.LightSetColor(card.Bonus));
+        
+        _commandTerminal.Write($"{key, -5} ");
+        _commandTerminal.Write(card.Name, ColorHelper.LightSetColor(card.Bonus));
+        _commandTerminal.Write($"{namePadding}   {vpDisplay}   ");
 
-        string colorCost = string.Join(" ", colorCostSubTexts);
-        string costPadding = new string(' ', Math.Max(0, 12 - colorCostSubTexts.Count * 2 - 1));
-        string polymathCost = GetColorizedConsoleText(new string('*', requiredTokens.Polymath), ColorHelper.FullWhite);
+        var conditionList = requiredTokens.AsEnumerable().Where(dc => dc.Value > 0 && dc.Key != DevelopmentColor.Polymath);
 
-        string completeCostText = colorCostSubTexts.Any() || requiredTokens.Polymath > 0
-            ? $"{colorCost}{costPadding}{polymathCost}"
-            : Strings.FreePurchase;
+        if (!conditionList.Any())
+            _commandTerminal.Write(Strings.FreePurchase);
 
-        _commandTerminal.WriteLine($"{key,-5} {coloredName}{namePadding}   {vpDisplay}   {completeCostText}");
+        foreach (var condition in conditionList)
+        {
+            _commandTerminal.Write($"{condition.Value} ", ColorHelper.LightSetColor(condition.Key));
+        }
+
+        if (requiredTokens.Polymath > 0)
+        {
+            string costPadding = new string(' ', Math.Max(0, 10 - conditionList.Count() * 2));
+            string polymaths = new string('*', requiredTokens.Polymath);
+            _commandTerminal.Write($"{costPadding}{polymaths}", ColorHelper.FullWhite);
+        }
+
+        _commandTerminal.WriteLine();
     }
 
     private string GetColorizedConsoleText(object text, RgbColor? foreground = null, RgbColor? background = null)

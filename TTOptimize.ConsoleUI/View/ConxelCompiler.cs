@@ -45,6 +45,12 @@ public class ConxelCompiler
             }
         }
 
+        if (pane.Canvas.CursorPosition is var (cy, cx))
+        {
+            sb.Append($"\u001b[{pane.StartY + cy + 1};{pane.StartX + cx + 1}H");
+            sb.Append("\u001b[?25h");
+        }
+
         Console.Write(sb.ToString());
     }
 }

@@ -28,6 +28,8 @@ public class ShowReservedCardsWizard : SplendidWondersPresentationWizard
     public override GameCommand? RunConsoleDialog(IGameState state, IEnumerable<GameAction> validActions)
     {
         _inputPresenter.DisplayCards(((GameState)state).ActivePlayer.ReservedCards);
+        _commandTerminal.Flush();
+
         ReadLineOrEscape();
 
         throw new ConsoleUserBackException();

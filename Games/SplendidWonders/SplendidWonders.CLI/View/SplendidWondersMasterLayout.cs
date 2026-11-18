@@ -15,12 +15,12 @@ public class SplendidWondersMasterLayout : IConxelMasterLayout
     private const int EventsHeight = 40; 
 
     private const int BottomPaneWidth = BoardWidth + Gap + EventsWidth;
-    private const int BottomPaneHeight = 12;
+    private const int BottomPaneHeight = 20;
 
     public IReadOnlyList<ConxelPane> CreatePanes()
     {
         int eventsStartX = MarginX + BoardWidth + Gap;
-        int bottomStartY = MarginY + BoardHeight + 5;
+        int bottomStartY = MarginY + BoardHeight;
 
         return new List<ConxelPane>
         {

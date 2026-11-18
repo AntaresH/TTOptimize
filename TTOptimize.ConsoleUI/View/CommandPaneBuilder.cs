@@ -4,8 +4,8 @@ namespace TTOptimize.ConsoleUI.View;
 
 public class CommandPaneBuilder : IConxelPaneBuilder<CommandRenderData>
 {
-    private int _columns = 149;
-    private int _rows = 12;
+    private int _columns = 223;
+    private int _rows = 20;
 
     public ConxelCanvas Build(CommandRenderData data)
     {
@@ -50,6 +50,8 @@ public class CommandPaneBuilder : IConxelPaneBuilder<CommandRenderData>
                 }
             }
         }
+
+        canvas.CursorPosition = (data.Lines.Count + 1, 0);
 
         return canvas;
     }

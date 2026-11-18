@@ -96,8 +96,6 @@ public class GameSessionManager
                 _view.DisplayValidationFailure(_lastValidationFailure);
 
             _lastValidationFailure = null;
-
-            Console.SetCursorPosition(Console.CursorLeft, Console.CursorTop + 3);
         }
     }
 

@@ -30,6 +30,8 @@ public class ConxelTerminal : ICommandTerminal
 
     public void EndZone()
     {
+        ResetZone();
+
         if (_zoneCheckpoints.Count > 0)
         {
             _zoneCheckpoints.Pop();

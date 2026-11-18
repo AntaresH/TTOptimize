@@ -15,6 +15,8 @@ public class ConxelCanvas
     private static string _defaultVertDoubleBorderSymbol = "\u2551";
     private static string _defaultCornerSymbol = "+";
 
+    public (int Y, int X)? CursorPosition { get; set; }
+
     public ConxelCanvas(int rows, int columns)
     {
         Columns = columns;
@@ -49,6 +51,7 @@ public class ConxelCanvas
             }
         }
     }
+
     public void Blit(ConxelCanvas source, int startRow, int startColumn)
     {
         Blit(source._buffer, startRow, startColumn);

@@ -65,6 +65,7 @@ public class ConxelView : IGameView
 
         pane.Canvas.Clear();
         pane.Canvas.Blit(content, 0, 0);
+        pane.Canvas.CursorPosition = content.CursorPosition;
         _compiler.RenderPane(pane);
     }
 

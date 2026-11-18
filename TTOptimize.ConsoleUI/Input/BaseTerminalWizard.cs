@@ -22,6 +22,7 @@ public abstract class BaseTerminalWizard : ITerminalWizard
 
     protected GameCommand PromptForParameter()
     {
+        _commandTerminal.Flush();
         _commandTerminal.BeginZone();
 
         try
