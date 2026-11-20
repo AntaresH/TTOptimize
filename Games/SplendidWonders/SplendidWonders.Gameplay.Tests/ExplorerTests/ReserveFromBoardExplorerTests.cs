@@ -4,18 +4,18 @@ using SplendidWonders.Gameplay.Explorers;
 using SplendidWonders.Common.Model;
 using SplendidWonders.Common.Setup;
 using SplendidWonders.Common.Actions;
+using SplendidWonders.Gameplay.Tests.ExplorerTests;
 
 namespace SplendidWonders.Common.Tests.ExplorerTests
 {
-    public class ReserveFromBoardExplorerTests
+    public class ReserveFromBoardExplorerTests : ActionExplorerTestsBase
     {
-        private GameStateBuilder _defaultBuilder;
         private IActionExplorer<ReserveFromBoardAction> _sut;
 
         [SetUp]
         public void Setup()
         {
-            _defaultBuilder = GameStateBuilder.Default;
+            SetupDefaultGameState();
 
             _sut = new ReserveFromBoardExplorer();
         }

@@ -3,19 +3,19 @@ using SplendidWonders.Common.Model;
 using SplendidWonders.Common.Setup;
 using SplendidWonders.Common.Tests.TestDataModel;
 using SplendidWonders.Gameplay.Explorers;
+using SplendidWonders.Gameplay.Tests.ExplorerTests;
 using System.Collections.Immutable;
 
 namespace SplendidWonders.Common.Tests.ExplorerTests
 {
-    public class ReserveFromDeckExplorerTests
+    public class ReserveFromDeckExplorerTests : ActionExplorerTestsBase
     {
-        private GameStateBuilder _defaultBuilder;
         private IActionExplorer<ReserveFromDeckAction> _sut;
 
         [SetUp]
         public void Setup()
         {
-            _defaultBuilder = GameStateBuilder.Default;
+            SetupDefaultGameState();
 
             _sut = new ReserveFromDeckExplorer();
         }

@@ -2,18 +2,18 @@
 using SplendidWonders.Common.Model;
 using SplendidWonders.Common.Tests.TestDataModel;
 using SplendidWonders.Gameplay.Explorers;
+using SplendidWonders.Gameplay.Tests.ExplorerTests;
 
 namespace SplendidWonders.Common.Tests.ExplorerTests
 {
-    public class DrawDoubleTokensExplorerTests
+    public class DrawDoubleTokensExplorerTests : ActionExplorerTestsBase
     {
-        private GameStateBuilder _defaultBuilder;
         private IActionExplorer<DrawDoubleTokensAction> _sut;
 
         [SetUp]
         public void Setup()
         {
-            _defaultBuilder = GameStateBuilder.Default;
+            SetupDefaultGameState();
 
             _sut = new DrawDoubleTokensExplorer();
         }

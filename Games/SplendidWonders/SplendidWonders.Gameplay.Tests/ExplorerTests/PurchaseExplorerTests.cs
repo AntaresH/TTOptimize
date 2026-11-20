@@ -4,18 +4,18 @@ using SplendidWonders.Common.Tests.TestDataModel;
 using System.Collections.Immutable;
 using SplendidWonders.Gameplay.Explorers;
 using SplendidWonders.Common.Actions;
+using SplendidWonders.Gameplay.Tests.ExplorerTests;
 
 namespace SplendidWonders.Common.Tests.ExplorerTests
 {
-    public class PurchaseExplorerTests
+    public class PurchaseExplorerTests : ActionExplorerTestsBase
     {
-        private GameStateBuilder _defaultBuilder;
         private IActionExplorer<PurchaseAction> _sut;
 
         [SetUp]
         public void Setup()
         {
-            _defaultBuilder = GameStateBuilder.Default;
+            SetupDefaultGameState();
 
             _sut = new PurchaseExplorer();
         }

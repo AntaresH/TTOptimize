@@ -2,18 +2,18 @@
 using SplendidWonders.Gameplay.Explorers;
 using SplendidWonders.Common.Model;
 using SplendidWonders.Common.Actions;
+using SplendidWonders.Gameplay.Tests.ExplorerTests;
 
 namespace SplendidWonders.Common.Tests.ExplorerTests
 {
-    public class DrawThreeTokensExplorerTests
+    public class DrawThreeTokensExplorerTests : ActionExplorerTestsBase
     {
-        private GameStateBuilder _defaultBuilder;
         private IActionExplorer<DrawThreeTokensAction> _sut;
 
         [SetUp]
         public void Setup()
         {
-            _defaultBuilder = GameStateBuilder.Default;
+            SetupDefaultGameState();
 
             _sut = new DrawThreeTokensExplorer();
         }
