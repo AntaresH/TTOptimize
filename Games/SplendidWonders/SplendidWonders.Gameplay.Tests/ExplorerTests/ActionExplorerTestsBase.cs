@@ -1,4 +1,4 @@
-﻿using SplendidWonders.Common.Tests.TestDataModel;
+﻿using SplendidWonders.Gameplay.Tests.TestDataModel;
 
 namespace SplendidWonders.Gameplay.Tests.ExplorerTests;
 

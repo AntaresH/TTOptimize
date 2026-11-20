@@ -1,12 +1,10 @@
 ﻿using SplendidWonders.Common.Model;
 using SplendidWonders.Common.Setup;
-using SplendidWonders.Common.Tests.TestDataModel;
 using System.Collections.Immutable;
 using SplendidWonders.Gameplay.Explorers;
 using SplendidWonders.Common.Actions;
-using SplendidWonders.Gameplay.Tests.ExplorerTests;
 
-namespace SplendidWonders.Common.Tests.ExplorerTests
+namespace SplendidWonders.Gameplay.Tests.ExplorerTests
 {
     public class PurchaseExplorerTests : ActionExplorerTestsBase
     {

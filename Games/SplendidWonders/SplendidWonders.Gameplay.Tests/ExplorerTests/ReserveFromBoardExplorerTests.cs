@@ -1,144 +1,141 @@
-﻿using SplendidWonders.Common.Tests.TestDataModel;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using SplendidWonders.Gameplay.Explorers;
 using SplendidWonders.Common.Model;
 using SplendidWonders.Common.Setup;
 using SplendidWonders.Common.Actions;
-using SplendidWonders.Gameplay.Tests.ExplorerTests;
 
-namespace SplendidWonders.Common.Tests.ExplorerTests
+namespace SplendidWonders.Gameplay.Tests.ExplorerTests;
+
+public class ReserveFromBoardExplorerTests : ActionExplorerTestsBase
 {
-    public class ReserveFromBoardExplorerTests : ActionExplorerTestsBase
+    private IActionExplorer<ReserveFromBoardAction> _sut;
+
+    [SetUp]
+    public void Setup()
     {
-        private IActionExplorer<ReserveFromBoardAction> _sut;
+        SetupDefaultGameState();
 
-        [SetUp]
-        public void Setup()
+        _sut = new ReserveFromBoardExplorer();
+    }
+
+
+    [TestCaseSource(nameof(ReserveFromBoardActionCases))]
+    public void Explore_WithDifferentPlayerAndMarketSetup_ShouldReturnExpectedReserveFromBoardActions(ImmutableList<DevelopmentCard> player1Reserved, CardGroup[] cardSetup, ReserveFromBoardAction[] expectedActions)
+    {
+        // Arrange
+        var gameState = _defaultBuilder
+            .WithCurrentPlayer(1)
+            .WithLevel1(cardSetup[0])
+            .WithLevel2(cardSetup[1])
+            .WithLevel3(cardSetup[2])
+            .WithPlayerReservedCards(1, player1Reserved)
+            .Build();
+
+        // Act
+        var validActions = _sut.Explore(gameState);
+
+        // Assert
+        Assert.That(validActions, Is.Not.Null);
+        Assert.That(validActions, Is.EquivalentTo(expectedActions));
+    }
+
+    private static IEnumerable<TestCaseData> ReserveFromBoardActionCases()
+    {
+        var defaultCards = GameFactory.GetRandomizedCardSetup();
+
+        var shortLevel1 = new CardGroup()
         {
-            SetupDefaultGameState();
+            Deck = Cards.Level1.Skip(4).ToImmutableList(),
+            Market = Cards.Level1.Take(3).ToImmutableList().Add(Cards.Empty)
+        };
 
-            _sut = new ReserveFromBoardExplorer();
-        }
-
-
-        [TestCaseSource(nameof(ReserveFromBoardActionCases))]
-        public void Explore_WithDifferentPlayerAndMarketSetup_ShouldReturnExpectedReserveFromBoardActions(ImmutableList<DevelopmentCard> player1Reserved, CardGroup[] cardSetup, ReserveFromBoardAction[] expectedActions)
+        var shortLevel2 = new CardGroup()
         {
-            // Arrange
-            var gameState = _defaultBuilder
-                .WithCurrentPlayer(1)
-                .WithLevel1(cardSetup[0])
-                .WithLevel2(cardSetup[1])
-                .WithLevel3(cardSetup[2])
-                .WithPlayerReservedCards(1, player1Reserved)
-                .Build();
+            Deck = Cards.Level2.Skip(4).ToImmutableList(),
+            Market = Cards.Level2.Take(3).ToImmutableList().Add(Cards.Empty)
+        };
 
-            // Act
-            var validActions = _sut.Explore(gameState);
-
-            // Assert
-            Assert.That(validActions, Is.Not.Null);
-            Assert.That(validActions, Is.EquivalentTo(expectedActions));
-        }
-
-        private static IEnumerable<TestCaseData> ReserveFromBoardActionCases()
+        var shortLevel3 = new CardGroup()
         {
-            var defaultCards = GameFactory.GetRandomizedCardSetup();
+            Deck = Cards.Level3.Skip(4).ToImmutableList(),
+            Market = Cards.Level3.Take(3).ToImmutableList().Add(Cards.Empty)
+        };
 
-            var shortLevel1 = new CardGroup()
+        var shortCardsSetup1 = new CardGroup[] { shortLevel1, defaultCards[1], defaultCards[2] };
+
+        var shortCardsSetup2 = new CardGroup[] { defaultCards[0], shortLevel2, shortLevel3 };
+
+        yield return new TestCaseData(
+            ImmutableList<DevelopmentCard>.Empty,
+            defaultCards,
+            new[]
             {
-                Deck = Cards.Level1.Skip(4).ToImmutableList(),
-                Market = Cards.Level1.Take(3).ToImmutableList().Add(Cards.Empty)
-            };
+                new ReserveFromBoardAction() { Card = defaultCards[0][1] },
+                new ReserveFromBoardAction() { Card = defaultCards[0][2] },
+                new ReserveFromBoardAction() { Card = defaultCards[0][3] },
+                new ReserveFromBoardAction() { Card = defaultCards[0][4] },
+                new ReserveFromBoardAction() { Card = defaultCards[1][1] },
+                new ReserveFromBoardAction() { Card = defaultCards[1][2] },
+                new ReserveFromBoardAction() { Card = defaultCards[1][3] },
+                new ReserveFromBoardAction() { Card = defaultCards[1][4] },
+                new ReserveFromBoardAction() { Card = defaultCards[2][1] },
+                new ReserveFromBoardAction() { Card = defaultCards[2][2] },
+                new ReserveFromBoardAction() { Card = defaultCards[2][3] },
+                new ReserveFromBoardAction() { Card = defaultCards[2][4] },
+            })
+            .SetName("Reserve From Board - Zero reserved cards + full market");
 
-            var shortLevel2 = new CardGroup()
+        yield return new TestCaseData(
+            defaultCards[0].Deck.Take(3).ToImmutableList(),
+            defaultCards,
+            new ReserveFromBoardAction[] { })
+            .SetName("Reserve From Board - Three reserved cards + full market");
+
+
+        yield return new TestCaseData(
+            ImmutableList<DevelopmentCard>.Empty,
+            shortCardsSetup1,
+            new[]
             {
-                Deck = Cards.Level2.Skip(4).ToImmutableList(),
-                Market = Cards.Level2.Take(3).ToImmutableList().Add(Cards.Empty)
-            };
+                new ReserveFromBoardAction() { Card = defaultCards[0][1] },
+                new ReserveFromBoardAction() { Card = defaultCards[0][2] },
+                new ReserveFromBoardAction() { Card = defaultCards[0][3] },
+         //     new ReserveFromBoardAction() { Card = defaultCards[0][4] },
+                new ReserveFromBoardAction() { Card = defaultCards[1][1] },
+                new ReserveFromBoardAction() { Card = defaultCards[1][2] },
+                new ReserveFromBoardAction() { Card = defaultCards[1][3] },
+                new ReserveFromBoardAction() { Card = defaultCards[1][4] },
+                new ReserveFromBoardAction() { Card = defaultCards[2][1] },
+                new ReserveFromBoardAction() { Card = defaultCards[2][2] },
+                new ReserveFromBoardAction() { Card = defaultCards[2][3] },
+                new ReserveFromBoardAction() { Card = defaultCards[2][4] },
+            })
+            .SetName("Reserve From Board - Zero reserved cards + short market");
 
-            var shortLevel3 = new CardGroup()
+        yield return new TestCaseData(
+            ImmutableList<DevelopmentCard>.Empty,
+            shortCardsSetup2,
+            new[]
             {
-                Deck = Cards.Level3.Skip(4).ToImmutableList(),
-                Market = Cards.Level3.Take(3).ToImmutableList().Add(Cards.Empty)
-            };
+                new ReserveFromBoardAction() { Card = defaultCards[0][1] },
+                new ReserveFromBoardAction() { Card = defaultCards[0][2] },
+                new ReserveFromBoardAction() { Card = defaultCards[0][3] },
+                new ReserveFromBoardAction() { Card = defaultCards[0][4] },
+                new ReserveFromBoardAction() { Card = defaultCards[1][1] },
+                new ReserveFromBoardAction() { Card = defaultCards[1][2] },
+                new ReserveFromBoardAction() { Card = defaultCards[1][3] },
+            //  new ReserveFromBoardAction() { Card = defaultCards[1][4] },
+                new ReserveFromBoardAction() { Card = defaultCards[2][1] },
+                new ReserveFromBoardAction() { Card = defaultCards[2][2] },
+                new ReserveFromBoardAction() { Card = defaultCards[2][3] },
+            //  new ReserveFromBoardAction() { Card = defaultCards[2][4] },
+            })
+            .SetName("Reserve From Board - Zero reserved cards + very short market");
 
-            var shortCardsSetup1 = new CardGroup[] { shortLevel1, defaultCards[1], defaultCards[2] };
-
-            var shortCardsSetup2 = new CardGroup[] { defaultCards[0], shortLevel2, shortLevel3 };
-
-            yield return new TestCaseData(
-                ImmutableList<DevelopmentCard>.Empty,
-                defaultCards,
-                new[]
-                {
-                    new ReserveFromBoardAction() { Card = defaultCards[0][1] },
-                    new ReserveFromBoardAction() { Card = defaultCards[0][2] },
-                    new ReserveFromBoardAction() { Card = defaultCards[0][3] },
-                    new ReserveFromBoardAction() { Card = defaultCards[0][4] },
-                    new ReserveFromBoardAction() { Card = defaultCards[1][1] },
-                    new ReserveFromBoardAction() { Card = defaultCards[1][2] },
-                    new ReserveFromBoardAction() { Card = defaultCards[1][3] },
-                    new ReserveFromBoardAction() { Card = defaultCards[1][4] },
-                    new ReserveFromBoardAction() { Card = defaultCards[2][1] },
-                    new ReserveFromBoardAction() { Card = defaultCards[2][2] },
-                    new ReserveFromBoardAction() { Card = defaultCards[2][3] },
-                    new ReserveFromBoardAction() { Card = defaultCards[2][4] },
-                })
-                .SetName("Reserve From Board - Zero reserved cards + full market");
-
-            yield return new TestCaseData(
-                defaultCards[0].Deck.Take(3).ToImmutableList(),
-                defaultCards,
-                new ReserveFromBoardAction[] { })
-                .SetName("Reserve From Board - Three reserved cards + full market");
-
-
-            yield return new TestCaseData(
-                ImmutableList<DevelopmentCard>.Empty,
-                shortCardsSetup1,
-                new[]
-                {
-                    new ReserveFromBoardAction() { Card = defaultCards[0][1] },
-                    new ReserveFromBoardAction() { Card = defaultCards[0][2] },
-                    new ReserveFromBoardAction() { Card = defaultCards[0][3] },
-             //     new ReserveFromBoardAction() { Card = defaultCards[0][4] },
-                    new ReserveFromBoardAction() { Card = defaultCards[1][1] },
-                    new ReserveFromBoardAction() { Card = defaultCards[1][2] },
-                    new ReserveFromBoardAction() { Card = defaultCards[1][3] },
-                    new ReserveFromBoardAction() { Card = defaultCards[1][4] },
-                    new ReserveFromBoardAction() { Card = defaultCards[2][1] },
-                    new ReserveFromBoardAction() { Card = defaultCards[2][2] },
-                    new ReserveFromBoardAction() { Card = defaultCards[2][3] },
-                    new ReserveFromBoardAction() { Card = defaultCards[2][4] },
-                })
-                .SetName("Reserve From Board - Zero reserved cards + short market");
-
-            yield return new TestCaseData(
-                ImmutableList<DevelopmentCard>.Empty,
-                shortCardsSetup2,
-                new[]
-                {
-                    new ReserveFromBoardAction() { Card = defaultCards[0][1] },
-                    new ReserveFromBoardAction() { Card = defaultCards[0][2] },
-                    new ReserveFromBoardAction() { Card = defaultCards[0][3] },
-                    new ReserveFromBoardAction() { Card = defaultCards[0][4] },
-                    new ReserveFromBoardAction() { Card = defaultCards[1][1] },
-                    new ReserveFromBoardAction() { Card = defaultCards[1][2] },
-                    new ReserveFromBoardAction() { Card = defaultCards[1][3] },
-                //  new ReserveFromBoardAction() { Card = defaultCards[1][4] },
-                    new ReserveFromBoardAction() { Card = defaultCards[2][1] },
-                    new ReserveFromBoardAction() { Card = defaultCards[2][2] },
-                    new ReserveFromBoardAction() { Card = defaultCards[2][3] },
-                //  new ReserveFromBoardAction() { Card = defaultCards[2][4] },
-                })
-                .SetName("Reserve From Board - Zero reserved cards + very short market");
-
-            yield return new TestCaseData(
-                defaultCards[0].Deck.Take(3).ToImmutableList(),
-                shortCardsSetup1,
-                new ReserveFromBoardAction[] { })
-                .SetName("Reserve From Board - Three reserved cards + short market");
-        }
+        yield return new TestCaseData(
+            defaultCards[0].Deck.Take(3).ToImmutableList(),
+            shortCardsSetup1,
+            new ReserveFromBoardAction[] { })
+            .SetName("Reserve From Board - Three reserved cards + short market");
     }
 }

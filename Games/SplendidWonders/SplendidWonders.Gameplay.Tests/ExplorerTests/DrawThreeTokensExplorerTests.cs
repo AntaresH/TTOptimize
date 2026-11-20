@@ -1,10 +1,8 @@
-﻿using SplendidWonders.Common.Tests.TestDataModel;
-using SplendidWonders.Gameplay.Explorers;
+﻿using SplendidWonders.Gameplay.Explorers;
 using SplendidWonders.Common.Model;
 using SplendidWonders.Common.Actions;
-using SplendidWonders.Gameplay.Tests.ExplorerTests;
 
-namespace SplendidWonders.Common.Tests.ExplorerTests
+namespace SplendidWonders.Gameplay.Tests.ExplorerTests
 {
     public class DrawThreeTokensExplorerTests : ActionExplorerTestsBase
     {

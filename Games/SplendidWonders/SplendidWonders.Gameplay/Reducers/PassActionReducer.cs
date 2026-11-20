@@ -10,8 +10,7 @@ namespace SplendidWonders.Gameplay.Reducers
     {
         public GameState Reduce(GameState state, PassAction action)
         {
-            return state.Transform(Pass)
-                        .Transform(AdvanceTurn, action);
+            return state.Transform(AdvanceTurn, action);
         }
     }
 }
