@@ -70,6 +70,15 @@ namespace SplendidWonders.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to nem tud végrehajtani akciót és passzol.
+        /// </summary>
+        internal static string ActionDesc_Pass {
+            get {
+                return ResourceManager.GetString("ActionDesc_Pass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to megvásárolja a(z) {0} kártyát a játéktérről.
         /// </summary>
         internal static string ActionDesc_PurchaseFromBoardFormat {

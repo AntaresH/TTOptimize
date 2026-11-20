@@ -47,8 +47,9 @@ public class GameSessionManager
             var orchestrator = new GameOrchestrator(initialState, agents, rules);
 
             var finalState = RunGame(orchestrator, out TimeSpan elapsed);
+            var finalStandings = rules.GetFinalStandings(finalState);
 
-            _view.ShowResults(new ResultsRenderData(finalState, rules));
+            _view.ShowResults(new ResultsRenderData(finalState, finalStandings));
 
             Console.WriteLine($"Futási idő: {Math.Round(elapsed.TotalSeconds, 4)} másodperc");
         }

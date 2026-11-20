@@ -84,7 +84,23 @@ namespace SplendidWonders.Gameplay.Reducers
                     .UpdateAvailableLeaders(availableLeaders);
         }
 
-        protected GameState AdvanceTurn(GameState baseState)
+        protected GameState Pass(GameState baseState)
+        {
+            if (baseState.ConsecutivePasses == baseState.Players.Count)
+            {
+                return baseState with
+                {
+                    GameOverReason = GameOverReason.Stalemate,
+                    GameProgression = GameProgression.GameOver
+                };
+            }
+            else
+            {
+                return baseState with { ConsecutivePasses = baseState.ConsecutivePasses + 1 };
+            }
+        }
+
+        protected GameState AdvanceTurn(GameState baseState, GameAction action)
         {
             bool tokenOverflow = CheckTokenOverflow(baseState);
             bool multipleLeadersEligible = CheckMultipleLeadersEligible(baseState);
@@ -94,14 +110,22 @@ namespace SplendidWonders.Gameplay.Reducers
 
             if (advanceToNextPlayer && isLastPlayer && baseState.IsFinalTurn)
             {
-                return baseState with { GameProgression = GameProgression.GameOver };
+                return baseState with 
+                { 
+                    GameOverReason = GameOverReason.VictoryConditionMet,
+                    GameProgression = GameProgression.GameOver 
+                };
             }
 
             int nextPlayerId = advanceToNextPlayer
                 ? baseState.ActivePlayer.Id % baseState.Players.Count + 1
                 : baseState.ActivePlayer.Id;
 
-            return baseState with { ActivePlayer = baseState.Players[nextPlayerId - 1] };
+            return baseState with 
+            { 
+                ActivePlayer = baseState.Players[nextPlayerId - 1],
+                ConsecutivePasses = action is PassAction ? baseState.ConsecutivePasses + 1 : 0
+            };
         }
 
         private bool CheckMultipleLeadersEligible(GameState baseState)

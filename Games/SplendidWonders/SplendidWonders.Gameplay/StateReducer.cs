@@ -15,6 +15,7 @@ namespace SplendidWonders.Gameplay
         private readonly IStateReducer<ReserveFromDeckAction> _reserveFromDeckReducer;
         private readonly IStateReducer<PurchaseAction> _purchaseReducer;
         private readonly IStateReducer<SelectLeaderAction> _selectLeaderReducer;
+        private readonly IStateReducer<PassAction> _passReducer;
         private readonly IStateReducer<ReturnTokensAction> _returnTokensReducer;
 
         public StateReducer(
@@ -24,7 +25,9 @@ namespace SplendidWonders.Gameplay
             [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IStateReducer<ReserveFromBoardAction> reserveFromBoardReducer,
             [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IStateReducer<ReserveFromDeckAction> reserveFromDeckReducer,
             [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IStateReducer<PurchaseAction> purchaseReducer,
-            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IStateReducer<SelectLeaderAction> selectLeaderReducer
+            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IStateReducer<SelectLeaderAction> selectLeaderReducer,
+            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IStateReducer<PassAction> passReducer
+
             )
         {
             _drawThreeTokensReducer = drawThreeTokensReducer;
@@ -33,6 +36,7 @@ namespace SplendidWonders.Gameplay
             _reserveFromDeckReducer = reserveFromDeckReducer;
             _purchaseReducer = purchaseReducer;
             _selectLeaderReducer = selectLeaderReducer;
+            _passReducer = passReducer;
             _returnTokensReducer = returnTokensReducer;
         }
 
@@ -49,6 +53,7 @@ namespace SplendidWonders.Gameplay
                 ReserveFromBoardAction a => _reserveFromBoardReducer.Reduce(swGameState, a),
                 ReserveFromDeckAction a => _reserveFromDeckReducer.Reduce(swGameState, a),
                 SelectLeaderAction a => _selectLeaderReducer.Reduce(swGameState, a),
+                PassAction a => _passReducer.Reduce(swGameState, a),
                 _ => throw new InvalidOperationException("This action is not supported... yet"),
             };
         }

@@ -15,16 +15,14 @@ namespace SplendidWonders.CLI.View
             var conxelCanvas = new ConxelCanvas(_rows, _columns);
 
             var swState = (GameState)data.State;
-            var swRules = (Rules)data.Rules;
+            var swPlayers = (List<Player>)data.FinalStandingsData;
 
-            var players = (List<Player>)swRules.GetFinalStandings(swState);
-
-            conxelCanvas.WriteText(0, 0, $"{Strings.GameOverTitle} - {Strings.Winner}: {players.First().Name}");
+            conxelCanvas.WriteText(0, 0, $"{Strings.GameOverTitle} - {Strings.Winner}: {swPlayers.First().Name}");
             conxelCanvas.WriteText(2, 0, Strings.FinalScores);
 
-            for (int i = 3; i < players.Count; i++)
+            for (int i = 3; i < swPlayers.Count; i++)
             {
-                conxelCanvas.WriteText(i, 0, $"#{i + 1}: {players[i].Name} - {players[i].Tableau.Sum(c => c.VictoryPoints) + players[i].AcquiredLeaders.Count * 3} {Strings.VP}");
+                conxelCanvas.WriteText(i, 0, $"#{i + 1}: {swPlayers[i].Name} - {swPlayers[i].Tableau.Sum(c => c.VictoryPoints) + swPlayers[i].AcquiredLeaders.Count * 3} {Strings.VP}");
             }
 
             return conxelCanvas;

@@ -268,6 +268,24 @@ namespace SplendidWonders.CLI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Passzolnod kell. Nem tudsz akciót végrehajtani!.
+        /// </summary>
+        internal static string PassCommandDescription {
+            get {
+                return ResourceManager.GetString("PassCommandDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to P.
+        /// </summary>
+        internal static string PassCommandKey {
+            get {
+                return ResourceManager.GetString("PassCommandKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Saját készlet.
         /// </summary>
         internal static string PlayerStorageTitle {

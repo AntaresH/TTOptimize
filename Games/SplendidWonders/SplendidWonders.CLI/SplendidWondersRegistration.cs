@@ -41,6 +41,7 @@ public static class SplendidWondersRegistration
 
         services.AddKeyedScoped<IStateReducer<PurchaseAction>, PurchaseReducer>(Games.SPLENDID_WONDERS_KEY);
         services.AddKeyedScoped<IStateReducer<SelectLeaderAction>, SelectLeaderReducer>(Games.SPLENDID_WONDERS_KEY);
+        services.AddKeyedScoped<IStateReducer<PassAction>, PassActionReducer>(Games.SPLENDID_WONDERS_KEY);
         services.AddKeyedScoped<IStateReducer, StateReducer>(Games.SPLENDID_WONDERS_KEY);
 
         services.AddKeyedScoped<IGameRules, Rules>(Games.SPLENDID_WONDERS_KEY);
@@ -66,6 +67,7 @@ public static class SplendidWondersRegistration
         services.AddKeyedScoped<ITerminalWizard, ReserveFromBoardWizard>(Games.SPLENDID_WONDERS_KEY);
         services.AddKeyedScoped<ITerminalWizard, ReserveFromDeckWizard>(Games.SPLENDID_WONDERS_KEY);
         services.AddKeyedScoped<ITerminalWizard, ReturnTokensWizard>(Games.SPLENDID_WONDERS_KEY);
+        services.AddKeyedScoped<ITerminalWizard, PassWizard>(Games.SPLENDID_WONDERS_KEY);
         services.AddKeyedScoped<ITerminalWizard, SelectLeaderWizard>(Games.SPLENDID_WONDERS_KEY);
         services.AddKeyedScoped<ITerminalWizard, ShowReservedCardsWizard>(Games.SPLENDID_WONDERS_KEY);
         services.AddKeyedScoped<ISplendidWondersInputPresenter, SplendidWondersInputPresenter>(Games.SPLENDID_WONDERS_KEY);

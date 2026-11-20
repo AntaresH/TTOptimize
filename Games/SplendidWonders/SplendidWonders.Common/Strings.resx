@@ -495,4 +495,7 @@
   <data name="Level3DeckName" xml:space="preserve">
     <value>Csoda</value>
   </data>
+  <data name="ActionDesc_Pass" xml:space="preserve">
+    <value>nem tud végrehajtani akciót és passzol</value>
+  </data>
 </root>

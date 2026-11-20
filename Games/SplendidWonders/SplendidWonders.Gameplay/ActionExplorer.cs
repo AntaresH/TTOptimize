@@ -64,6 +64,11 @@ namespace SplendidWonders.Gameplay
                 validActions.AddRange(_purchaseExplorer.Explore(swGameState));
             }
 
+            if (!validActions.Any())
+            {
+                validActions.Add(new PassAction());
+            }
+
             return validActions;
         }
     }

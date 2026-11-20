@@ -11,7 +11,7 @@ namespace SplendidWonders.Gameplay.Reducers
                 .Transform(DrawPolymath)
                 .Transform(ReserveFromBoard, action)
                 .Transform(ReplaceCard, action)
-                .Transform(AdvanceTurn);
+                .Transform(AdvanceTurn, action);
         }
 
         public GameState Reduce(GameState baseState, ReserveFromDeckAction action)
@@ -20,7 +20,7 @@ namespace SplendidWonders.Gameplay.Reducers
                 .Transform(DrawPolymath)
                 .Transform(ReserveFromDeck, action)
                 .Transform(DecreaseDeck, action)
-                .Transform(AdvanceTurn);
+                .Transform(AdvanceTurn, action);
         }
 
         private GameState DrawPolymath(GameState baseState)

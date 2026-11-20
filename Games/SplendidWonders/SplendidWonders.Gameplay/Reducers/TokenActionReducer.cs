@@ -9,21 +9,21 @@ namespace SplendidWonders.Gameplay.Reducers
         {
             return baseState
                 .Transform(DrawTokens, action.Tokens.ToArray())
-                .Transform(AdvanceTurn);
+                .Transform(AdvanceTurn, action);
         }
 
         public GameState Reduce(GameState baseState, DrawDoubleTokensAction action)
         {
             return baseState
                 .Transform(DrawTokens, action.Tokens.ToArray())
-                .Transform(AdvanceTurn);
+                .Transform(AdvanceTurn, action);
         }
 
         public GameState Reduce(GameState baseState, ReturnTokensAction action)
         {
             return baseState
                 .Transform(ReturnTokens, action.Tokens.ToArray())
-                .Transform(AdvanceTurn);
+                .Transform(AdvanceTurn, action);
 
         }
     }

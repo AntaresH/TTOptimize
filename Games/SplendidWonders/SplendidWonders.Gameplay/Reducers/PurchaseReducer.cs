@@ -13,7 +13,7 @@ namespace SplendidWonders.Gameplay.Reducers
                 .Transform(ReplaceCard, action)
                 .Transform(AcquireLeader)
                 .Transform(TriggerEndgame)
-                .Transform(AdvanceTurn);
+                .Transform(AdvanceTurn, action);
         }
 
         private GameState ReturnTokens(GameState baseState, PurchaseAction action)

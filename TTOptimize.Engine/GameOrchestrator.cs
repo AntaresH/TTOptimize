@@ -24,7 +24,7 @@ public class GameOrchestrator
 
     public IGameState Run()
     {
-        IGameState currentState = _initialState;
+        IGameState currentState = _initialState.Start();
 
         while (currentState.GameProgression != GameProgression.GameOver)
         {

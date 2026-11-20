@@ -279,4 +279,10 @@
   <data name="FinalScores" xml:space="preserve">
     <value>Végső pontszámok:</value>
   </data>
+  <data name="PassCommandKey" xml:space="preserve">
+    <value>P</value>
+  </data>
+  <data name="PassCommandDescription" xml:space="preserve">
+    <value>Passzolnod kell. Nem tudsz akciót végrehajtani!</value>
+  </data>
 </root>

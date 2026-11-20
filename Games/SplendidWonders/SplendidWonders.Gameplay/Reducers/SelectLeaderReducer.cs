@@ -10,7 +10,7 @@ namespace SplendidWonders.Gameplay.Reducers
             return baseState
                 .Transform(AcquireLeader, action.Leader)
                 .Transform(TriggerEndgame)
-                .Transform(AdvanceTurn);
+                .Transform(AdvanceTurn, action);
         }
     }
 }

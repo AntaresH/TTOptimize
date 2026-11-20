@@ -36,6 +36,8 @@ namespace SplendidWonders.Common.Model
         public bool IsFinalTurn { get; set; }
 
         public GameProgression GameProgression { get; set; }
+        public GameOverReason GameOverReason { get; set; }
+        public int ConsecutivePasses { get; set; }
 
         public CardGroup this[int level]
         {
@@ -49,6 +51,11 @@ namespace SplendidWonders.Common.Model
                     _ => throw new ArgumentException("Level must be between 1 and 3")
                 };
             }
+        }
+
+        public IGameState Start()
+        {
+            return this with { GameProgression = GameProgression.InProgress };
         }
     }
 }
