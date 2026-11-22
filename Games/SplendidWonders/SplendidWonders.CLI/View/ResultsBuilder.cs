@@ -5,14 +5,14 @@ using TTOptimize.Core.ViewAbstractions;
 
 namespace SplendidWonders.CLI.View
 {
-    public class SplendidWondersResultsBuilder : IConxelPaneBuilder<ResultsRenderData>
+    public class ResultsBuilder : IConxelPaneBuilder<ResultsRenderData>
     {
-        private int _columns = 149;
-        private int _rows = 12;
+        private int _height = LayoutConstants.BOTTOMPANEHEIGHT;
+        private int _width = LayoutConstants.BORDERWIDTH + LayoutConstants.PANEGAP + LayoutConstants.EVENTSWIDTH;
 
         public ConxelCanvas Build(ResultsRenderData data)
         {
-            var conxelCanvas = new ConxelCanvas(_rows, _columns);
+            var conxelCanvas = new ConxelCanvas(_height, _width);
 
             var swState = (GameState)data.State;
             var swPlayers = (List<Player>)data.FinalStandingsData;

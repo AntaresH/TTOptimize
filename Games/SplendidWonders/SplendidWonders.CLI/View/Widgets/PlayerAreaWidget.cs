@@ -3,18 +3,18 @@ using System.Collections.Immutable;
 using TTOptimize.ConsoleUI.View;
 using TTOptimize.Core.GameAbstractions;
 
-namespace SplendidWonders.CLI.View;
+namespace SplendidWonders.CLI.View.Widgets;
 
 public class PlayerAreaWidget : WidgetBase, IConxelWidget
 {
-    public int Rows => _playerBlockHeight + 2;
-    public int Columns => _playerCount * (_playerBlockWidth + 2) + _spacing * (_playerCount - 1);
+    public int Height => _playerBlockHeight + 2 * _defaultBorderWidth;
+    public int Width => _playerCount * (_playerBlockWidth + 2 * _defaultBorderWidth) + _playerSpacing * (_playerCount - 1);
 
-    private int _spacing = 4;
+    private int _playerSpacing = 4;
     private int _playerCount;
 
-    private int _playerBlockHeight = 5;
-    private int _playerBlockWidth = 21;
+    private int _playerBlockHeight = LayoutConstants.PLAYERHEIGHT;
+    private int _playerBlockWidth = LayoutConstants.PLAYERWIDTH;
 
     private string _cardSymbol = "🂠";
 
@@ -23,7 +23,7 @@ public class PlayerAreaWidget : WidgetBase, IConxelWidget
         var swState = (GameState)state;
         _playerCount = swState.Players.Count;
 
-        var playerAreaCanvas = new ConxelCanvas(Rows, Columns);
+        var playerAreaCanvas = new ConxelCanvas(Height, Width);
 
         for (int i = 0; i < swState.Players.Count; i++)
         {
@@ -31,7 +31,7 @@ public class PlayerAreaWidget : WidgetBase, IConxelWidget
             var isActive = swState.ActivePlayerId == player.Id;
             var blockColor = isActive ? ColorHelper.LightSetDefault : ColorHelper.DarkSetDefault;
 
-            playerAreaCanvas.Blit(PlayerBlock(player, blockColor), 0, i * (_playerBlockWidth + 2) + _spacing * i);
+            playerAreaCanvas.Blit(PlayerBlock(player, blockColor), 0, i * (_playerBlockWidth + 2) + _playerSpacing * i);
         }
 
         return playerAreaCanvas;

@@ -2,15 +2,15 @@
 using TTOptimize.ConsoleUI.View;
 using TTOptimize.Core.GameAbstractions;
 
-namespace SplendidWonders.CLI.View;
+namespace SplendidWonders.CLI.View.Widgets;
 
 public class DecksWidget : WidgetBase, IConxelWidget
 {
-    public int Rows => 3 * (_innerHeight + 2) + 3;
-    public int Columns => _innerWidth + 2;
+    public int Height => 3 * (_innerHeight + 2 * _defaultBorderWidth) + 2 * _defaultSpacing;
+    public int Width => _innerWidth + 2 * _defaultBorderWidth;
 
-    private int _innerHeight = 6;
-    private int _innerWidth = 18;
+    private int _innerHeight = LayoutConstants.DECKSHEIGHT;
+    private int _innerWidth = LayoutConstants.DECKSWIDTH;
 
     private string _level3Icon = "\uD83C\uDFDB "; // the extra space is VERY necessary as the 🏛 is a UTF16 surrogate-pair which is condensed into one column
     private string _level2Icon = "⛯";
@@ -23,7 +23,7 @@ public class DecksWidget : WidgetBase, IConxelWidget
         var borderedDeckHeight = _innerHeight + 2;
         var borderedDeckWidth = _innerWidth + 2;
 
-        var decksCanvas = new ConxelCanvas(Rows, Columns);
+        var decksCanvas = new ConxelCanvas(Height, Width);
 
         decksCanvas.Blit(Deck($"{_level3Icon} {Strings.Level3Title}", swState.Level3.Deck.Count, ColorHelper.DarkMagenta), 0, 0);
         decksCanvas.Blit(Deck($"{_level2Icon} {Strings.Level2Title}", swState.Level2.Deck.Count, ColorHelper.Turqoise), _innerHeight + 3, 0);

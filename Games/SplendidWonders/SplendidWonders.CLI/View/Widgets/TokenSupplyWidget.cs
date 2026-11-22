@@ -2,23 +2,23 @@
 using TTOptimize.ConsoleUI.View;
 using TTOptimize.Core.GameAbstractions;
 
-namespace SplendidWonders.CLI.View;
+namespace SplendidWonders.CLI.View.Widgets;
 
 public class TokenSupplyWidget : WidgetBase, IConxelWidget
 {
-    public int Rows => 6 * (_pileHeight + 2) + 5;
+    public int Height => 6 * (_pileHeight + 2 * _defaultBorderWidth) + 5 * _defaultSpacing;
 
-    public int Columns => _pileWidth + 2;
+    public int Width => _pileWidth + 2 * _defaultBorderWidth;
 
-    private int _pileHeight = 1;
+    private int _pileHeight = LayoutConstants.TOKENPILEHEIGHT;
 
-    private int _pileWidth = 3;
+    private int _pileWidth = LayoutConstants.TOKENPILEWIDTH;
 
     public ConxelCanvas RenderToBuffer(IGameState state, IReadOnlyList<GameAction> legalActions)
     {
         var swState = (GameState)state;
 
-        var tokenSupplyCanvas = new ConxelCanvas(Rows, Columns);
+        var tokenSupplyCanvas = new ConxelCanvas(Height, Width);
 
         tokenSupplyCanvas.Blit(NormalPile(swState.TokenSupply.Yellow, ColorHelper.LightSetYellow), 0, 0);
         tokenSupplyCanvas.Blit(NormalPile(swState.TokenSupply.Blue, ColorHelper.LightSetBlue), 4, 0);
@@ -42,7 +42,7 @@ public class TokenSupplyWidget : WidgetBase, IConxelWidget
 
     private ConxelCanvas Pile(int tokens, RgbColor foreGroundColor)
     {
-        var pileBuffer = new ConxelCanvas(1, 3);
+        var pileBuffer = new ConxelCanvas(_pileHeight, _pileWidth);
 
         pileBuffer[0, 1] = new Conxel(tokens.ToString(), foreGroundColor);
 

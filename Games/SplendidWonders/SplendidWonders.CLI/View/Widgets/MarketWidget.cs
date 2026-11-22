@@ -4,21 +4,22 @@ using SplendidWonders.Common.Setup;
 using TTOptimize.ConsoleUI.View;
 using TTOptimize.Core.GameAbstractions;
 
-namespace SplendidWonders.CLI.View;
+namespace SplendidWonders.CLI.View.Widgets;
 
 public class MarketWidget : WidgetBase, IConxelWidget
 {
-    public int Rows => 3 * (_cardHeight + 2) + 2;
-    public int Columns => 4 * (_cardWidth + 2) + 3;
+    public int Height => 3 * (_cardHeight + 2 * _defaultBorderWidth) + 2 * _spacing;
+    public int Width => 4 * (_cardWidth + 2 * _defaultBorderWidth) + 3 * _spacing;
 
-    private int _cardHeight = 6;
-    private int _cardWidth = 24;
+    private int _spacing = LayoutConstants.SINGLESPACING;
+    private int _cardHeight = LayoutConstants.CARDHEIGHT;
+    private int _cardWidth = LayoutConstants.CARDWIDTH;
 
     public ConxelCanvas RenderToBuffer(IGameState state, IReadOnlyList<GameAction> legalActions)
     {
         var swState = (GameState)state;
 
-        var marketCanvas = new ConxelCanvas(Rows, Columns);
+        var marketCanvas = new ConxelCanvas(Height, Width);
 
         for (int i = 0; i < 3; i++)
         {

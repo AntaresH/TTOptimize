@@ -3,10 +3,13 @@ using System.Globalization;
 using TTOptimize.ConsoleUI.View;
 using TTOptimize.Core.ViewAbstractions;
 
-namespace SplendidWonders.CLI.View;
+namespace SplendidWonders.CLI.View.Widgets;
 
 public abstract class WidgetBase
 {
+    protected int _defaultSpacing = LayoutConstants.SINGLESPACING;
+    protected int _defaultBorderWidth = LayoutConstants.BORDERWIDTH;
+
     protected ConxelCanvas CenteredTextLine(RgbColor deckColor, string deckTitle, int width)
     {
         var retBuffer = new ConxelCanvas(1, width);

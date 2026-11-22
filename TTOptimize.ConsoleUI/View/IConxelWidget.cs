@@ -4,7 +4,7 @@ namespace TTOptimize.ConsoleUI.View;
 
 public interface IConxelWidget
 {
-    public int Rows { get; }
-    public int Columns { get; }
+    public int Height { get; }
+    public int Width { get; }
     ConxelCanvas RenderToBuffer(IGameState state, IReadOnlyList<GameAction> legalActions);
 }
