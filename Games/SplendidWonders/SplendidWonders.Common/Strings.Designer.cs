@@ -61,7 +61,7 @@ namespace SplendidWonders.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to húz 2 azonos színű lapkát {0}.
+        ///   Looks up a localized string similar to húz 2 azonos színű lapkát ({0}).
         /// </summary>
         internal static string ActionDesc_DoubleTokensFormat {
             get {

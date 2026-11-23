@@ -11,29 +11,33 @@ public class EventLogBuilder : IConxelPaneBuilder<EventLogRenderData>
 
     public ConxelCanvas Build(EventLogRenderData paneData)
     {
-        var conxelCanvas = new ConxelCanvas(_eventLogHeight - 2, _eventLogWidth - 4);
+        var conxelCanvas = new ConxelCanvas(_eventLogHeight, _eventLogWidth);
 
-        conxelCanvas.WriteText(0, 0, WidgetBase.CenterText(Strings.EventLogTitle, _eventLogWidth), ColorHelper.LightSetRed);
+        for (int i = 2; i < _eventLogHeight - 3; i++)
+            for (int j = 0; j < _eventLogWidth; j++)
+                conxelCanvas[i, j] = new Conxel(" ", ColorHelper.WarmWhite, ColorHelper.LightBlackBackground);
+
+        conxelCanvas.WriteText(0, 0, WidgetBase.CenterText(Strings.EventLogTitle, _eventLogWidth).Replace(' ', '-'), ColorHelper.LightSetRed);
 
         int logRow = 2;
-        foreach (var logEntry in paneData.History.Reverse().Take(_eventLogHeight-5))
+        foreach (var logEntry in paneData.History.Reverse().Take(_eventLogHeight-3))
         {
-            var fgColor = GetForegroundColor(logEntry.Agent.PlayerId);
+            var fgColor = GetEventsForeground(logEntry.Agent.PlayerId);
 
             conxelCanvas.WriteText(logRow++, 0, $"#{logEntry.TurnNumber}: {logEntry.Agent.Name} - {logEntry.Action.Description}", fgColor);
         }
 
-        return conxelCanvas.WithSingleBorder(ColorHelper.LightSetRed);
+        return conxelCanvas;
     }
 
-    private RgbColor GetForegroundColor(int activePlayer)
+    private RgbColor GetEventsForeground(int activePlayer)
     {
         return activePlayer switch
         {
-            1 => ColorHelper.LightSetYellow,
-            2 => ColorHelper.Salmon,
-            3 => ColorHelper.LightSetGreen,
-            4 => ColorHelper.LightSetBlue,
+            1 => ColorHelper.PaleSetBlue,
+            2 => ColorHelper.PaleSetYellow,
+            3 => ColorHelper.PaleSetGreen,
+            4 => ColorHelper.PaleSetRed,
             _ => throw new InvalidOperationException("Player count mzst be between 1 and 4!")
         };
     }

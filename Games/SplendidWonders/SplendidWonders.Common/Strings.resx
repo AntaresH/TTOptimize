@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ActionDesc_DoubleTokensFormat" xml:space="preserve">
-    <value>húz 2 azonos színű lapkát {0}</value>
+    <value>húz 2 azonos színű lapkát ({0})</value>
   </data>
   <data name="ActionDesc_PurchaseFromBoardFormat" xml:space="preserve">
     <value>megvásárolja a(z) {0} kártyát a játéktérről</value>
