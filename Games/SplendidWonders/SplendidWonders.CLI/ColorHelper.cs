@@ -34,6 +34,13 @@ public static class ColorHelper
     public static readonly RgbColor PaleSetBlue = new RgbColor(140, 195, 255);
     public static readonly RgbColor PaleSetGreen = new RgbColor(150, 255, 170);
     public static readonly RgbColor PaleSetRed = new RgbColor(255, 160, 120);
+
+    public static readonly RgbColor PaleSetDarkYellow = new RgbColor(180, 180, 100);
+    public static readonly RgbColor PaleSetDarkBlue = new RgbColor(40, 95, 155);
+    public static readonly RgbColor PaleSetDarkGreen = new RgbColor(100, 205, 120);
+    public static readonly RgbColor PaleSetDarkRed = new RgbColor(205, 90, 70);
+
+
     public static readonly RgbColor LightBlackBackground = new RgbColor(25, 25, 25);
 
     public static RgbColor DarkSetColor(DevelopmentColor bonus)
