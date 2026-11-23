@@ -23,11 +23,15 @@ public class SettingsService : ISettingsService
                     case TTOptArguments.GAMEID:
                     case TTOptArguments.PLAYER1NAME:
                     case TTOptArguments.PLAYER2NAME:
+                    case TTOptArguments.PLAYER3NAME:
+                    case TTOptArguments.PLAYER4NAME:
                         _settings.Add(settingId, settingValue);
                         break;
                     case TTOptArguments.PLAYERCOUNT:
                     case TTOptArguments.PLAYER1TYPE:
                     case TTOptArguments.PLAYER2TYPE:
+                    case TTOptArguments.PLAYER3TYPE:
+                    case TTOptArguments.PLAYER4TYPE:
                     case TTOptArguments.SEED:
                         if (int.TryParse(settingValue, out int parsedNum))
                         {

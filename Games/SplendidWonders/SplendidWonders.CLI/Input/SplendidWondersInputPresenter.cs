@@ -140,12 +140,12 @@ public class SplendidWondersInputPresenter : ISplendidWondersInputPresenter
         _commandTerminal.Write(card.Name, ColorHelper.LightSetColor(card.Bonus));
         _commandTerminal.Write($"{namePadding}   {vpDisplay}   ");
 
-        var conditionList = requiredTokens.AsEnumerable().Where(dc => dc.Value > 0 && dc.Key != DevelopmentColor.Polymath);
+        var conditionList = requiredTokens.AsEnumerable().Where(dc => dc.Value > 0);
 
         if (!conditionList.Any())
             _commandTerminal.Write(Strings.FreePurchase);
 
-        foreach (var condition in conditionList)
+        foreach (var condition in conditionList.Where(dc => dc.Key != DevelopmentColor.Polymath))
         {
             _commandTerminal.Write($"{condition.Value} ", ColorHelper.LightSetColor(condition.Key));
         }
