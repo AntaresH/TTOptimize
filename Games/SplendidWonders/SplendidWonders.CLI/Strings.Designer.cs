@@ -187,7 +187,7 @@ namespace SplendidWonders.CLI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A megadott parancs ({0}) a paramétereivel nem végrehajtható a játék jelenlegi állapotában!.
+        ///   Looks up a localized string similar to *** HIBA: A megadott parancs ({0}) a paramétereivel nem végrehajtható a játék jelenlegi állapotában! ***.
         /// </summary>
         internal static string InvalidCommandTypeStateFormat {
             get {

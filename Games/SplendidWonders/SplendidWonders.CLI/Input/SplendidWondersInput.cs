@@ -6,13 +6,13 @@ using TTOptimize.Core.InputAbstractions;
 
 namespace SplendidWonders.CLI.Input;
 
-public class ConsoleGameInput : IGameInput
+public class SplendidWondersInput : IGameInput
 {
     private readonly IEnumerable<ITerminalWizard> _wizards;
     private readonly ICommandTerminal _commandTerminal;
     private readonly ISplendidWondersInputPresenter _inputPresenter;
 
-    public ConsoleGameInput(
+    public SplendidWondersInput(
         ICommandTerminal commandTerminal,
         [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IEnumerable<ITerminalWizard> wizards,
         [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] ISplendidWondersInputPresenter inputPresenter)
@@ -20,6 +20,15 @@ public class ConsoleGameInput : IGameInput
         _wizards = wizards;
         _commandTerminal = commandTerminal;
         _inputPresenter = inputPresenter;
+    }
+
+    public void ValidationFailed(string validationFailureString)
+    {
+        _commandTerminal.BeginZone();
+        _inputPresenter.DisplayValidationFailure(string.Format(Strings.InvalidCommandTypeStateFormat, validationFailureString));
+        _commandTerminal.Flush();
+        Console.ReadKey();
+        _commandTerminal.EndZone();
     }
 
     public GameCommand ReadCommand(IGameState state, IEnumerable<GameAction> validActions)

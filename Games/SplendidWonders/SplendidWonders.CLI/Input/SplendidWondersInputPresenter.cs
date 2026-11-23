@@ -75,6 +75,14 @@ public class SplendidWondersInputPresenter : ISplendidWondersInputPresenter
         }
     }
 
+    public void DisplayValidationFailure(string validationFailureMessage)
+    {
+        _commandTerminal.WriteDivider(ColorHelper.LightSetYellow, ColorHelper.DarkRed);
+        _commandTerminal.SetActiveLineBackground(ColorHelper.DarkRed);
+        _commandTerminal.WriteLine(validationFailureMessage, ColorHelper.LightSetYellow, ColorHelper.DarkRed);
+        _commandTerminal.WriteDivider(ColorHelper.LightSetYellow, ColorHelper.DarkRed);
+    }
+
     private void PrintCommand(ITerminalWizard wizard, bool isActive)
     {
         var fgColor = isActive 

@@ -2,7 +2,6 @@
 using TTOptimize.ConsoleUI.Input;
 using TTOptimize.Core;
 using TTOptimize.Core.ViewAbstractions;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TTOptimize.ConsoleUI.View;
 
@@ -23,7 +22,7 @@ public class ConxelView : IGameView
         [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IConxelPaneBuilder<BoardRenderData> boardBuilder,
         [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IConxelPaneBuilder<EventLogRenderData> eventLogBuilder,
         [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IConxelPaneBuilder<ResultsRenderData> resultsBuilder,
-        IConxelPaneBuilder<CommandRenderData> commandBuilder)
+        [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IConxelPaneBuilder<CommandRenderData> commandBuilder)
     {
         _panes = masterLayout.CreatePanes().ToDictionary(p => p.PaneId);
         _compiler = compiler;
@@ -67,21 +66,6 @@ public class ConxelView : IGameView
         pane.Canvas.Blit(content, 0, 0);
         pane.Canvas.CursorPosition = content.CursorPosition;
         _compiler.RenderPane(pane);
-    }
-
-    public void DisplayValidationFailure(string lastValidationFailure)
-    {
-        Console.WriteLine();
-        PrintColoredLine(lastValidationFailure, ConsoleColor.Red);
-    }
-
-    private void PrintColoredLine(string text, ConsoleColor color)
-    {
-        var previousColor = Console.ForegroundColor;
-        Console.ForegroundColor = color;
-        Console.WriteLine(text);
-        Console.ForegroundColor = previousColor;
-        Console.WriteLine();
     }
 
     public void Dispose()

@@ -60,6 +60,8 @@ public static class SplendidWondersRegistration
         services.AddKeyedScoped<IConxelPaneBuilder<BoardRenderData>, BoardBuilder>(Games.SPLENDID_WONDERS_KEY);
         services.AddKeyedScoped<IConxelPaneBuilder<EventLogRenderData>, EventLogBuilder>(Games.SPLENDID_WONDERS_KEY);
         services.AddKeyedScoped<IConxelPaneBuilder<ResultsRenderData>, ResultsBuilder>(Games.SPLENDID_WONDERS_KEY);
+        services.AddKeyedScoped<IConxelPaneBuilder<CommandRenderData>, CommandPaneBuilder>(Games.SPLENDID_WONDERS_KEY,
+            (_, _) => new CommandPaneBuilder(LayoutConstants.BOTTOMPANEHEIGHT, LayoutConstants.BOARDWIDTH + LayoutConstants.PANEGAP + LayoutConstants.EVENTSWIDTH));
 
         services.AddKeyedScoped<ITerminalWizard, DrawDoubleTokensWizard>(Games.SPLENDID_WONDERS_KEY);
         services.AddKeyedScoped<ITerminalWizard, DrawThreeTokensWizard>(Games.SPLENDID_WONDERS_KEY);
@@ -72,7 +74,7 @@ public static class SplendidWondersRegistration
         services.AddKeyedScoped<ITerminalWizard, SelectLeaderWizard>(Games.SPLENDID_WONDERS_KEY);
         services.AddKeyedScoped<ITerminalWizard, ShowReservedCardsWizard>(Games.SPLENDID_WONDERS_KEY);
         services.AddKeyedScoped<ISplendidWondersInputPresenter, SplendidWondersInputPresenter>(Games.SPLENDID_WONDERS_KEY);
-        services.AddKeyedScoped<IGameInput, ConsoleGameInput>(Games.SPLENDID_WONDERS_KEY);
+        services.AddKeyedScoped<IGameInput, SplendidWondersInput>(Games.SPLENDID_WONDERS_KEY);
 
         services.AddKeyedScoped<IGameStateFactory, StateFactory>(Games.SPLENDID_WONDERS_KEY);
 

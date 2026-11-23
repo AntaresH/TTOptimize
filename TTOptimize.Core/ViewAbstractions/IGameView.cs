@@ -7,6 +7,4 @@ public interface IGameView
     void RefreshBoard(BoardRenderData boardRenderData);
     void RefreshEvents(EventLogRenderData eventLogRenderData);
     void ShowResults(ResultsRenderData resultsRenderData);
-
-    void DisplayValidationFailure(string lastValidationFailure);
 }

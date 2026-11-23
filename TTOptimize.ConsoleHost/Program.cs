@@ -95,7 +95,6 @@ public class Program
         services.AddSingleton<ConxelCompiler>();
 
         services.AddKeyedScoped<IGameView, ConxelView>(Games.SPLENDID_WONDERS_KEY);
-        services.AddScoped<IConxelPaneBuilder<CommandRenderData>, CommandPaneBuilder>();
         services.AddScoped<ICommandTerminal, ConxelTerminal>();
     }
 

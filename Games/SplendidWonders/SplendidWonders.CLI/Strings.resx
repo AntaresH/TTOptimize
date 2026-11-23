@@ -142,7 +142,7 @@
     <value>A megadott parancs nem érvényes a jelenlegi játékállapotban!</value>
   </data>
   <data name="InvalidCommandTypeStateFormat" xml:space="preserve">
-    <value>A megadott parancs ({0}) a paramétereivel nem végrehajtható a játék jelenlegi állapotában!</value>
+    <value>*** HIBA: A megadott parancs ({0}) a paramétereivel nem végrehajtható a játék jelenlegi állapotában! ***</value>
   </data>
   <data name="InvalidYesNo" xml:space="preserve">
     <value>Érvénytelen válasz. Kérlek válassz 'i' vagy 'n'!</value>

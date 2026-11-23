@@ -12,12 +12,11 @@ namespace SplendidWonders.CLI.View
 
         public const int BOARDWIDTH = 140;
         public const int BOARDHEIGHT = 42;
-        public const int EVENTSWIDTH = 80;
-        public const int EVENTSHEIGHT = 42;
+        public const int EVENTSWIDTH = 78;
+        public const int EVENTSHEIGHT = 40;
         public const int BOTTOMPANEHEIGHT = 20;
 
         public const int BORDERWIDTH = 1;
-
         public const int SINGLESPACING = 1;
         public const int DOUBLESPACING = 2;
 

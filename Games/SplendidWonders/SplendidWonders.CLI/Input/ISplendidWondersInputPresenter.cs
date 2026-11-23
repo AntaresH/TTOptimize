@@ -6,6 +6,7 @@ namespace SplendidWonders.CLI.Input;
 
 public interface ISplendidWondersInputPresenter
 {
+    void DisplayValidationFailure(string validationFailureMessage);
     void DisplayCommandBlock(IEnumerable<ITerminalWizard> wizards, ITerminalWizard activeWizard);
     void DisplaySubCommandBlock(string commandKey, string subCommand);
     void DisplayCards(IEnumerable<DevelopmentCard> cards);

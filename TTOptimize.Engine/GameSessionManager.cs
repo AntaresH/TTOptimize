@@ -12,8 +12,8 @@ public class GameSessionManager
 {
     private readonly IServiceProvider _rootServiceProvider;
     private IGameView _view;
+    private IGameInput _input;
 
-    private string _lastValidationFailure;
     private readonly List<ActionLogEntry> _actionHistory = new();
 
     public GameSessionManager(IServiceProvider rootServiceProvider)
@@ -23,6 +23,8 @@ public class GameSessionManager
 
     public void StartNewMatch(string gameId, IGameConfiguration configuration, IReadOnlyList<IPlayerAgent> agents)
     {
+        Console.Clear();
+
         using (IServiceScope scope = _rootServiceProvider.CreateScope())
         {
             IServiceProvider scopeProvider = scope.ServiceProvider;
@@ -30,13 +32,13 @@ public class GameSessionManager
             var settings = scopeProvider.GetRequiredService<ISettingsService>();
             var stateFactory = scopeProvider.GetRequiredKeyedService<IGameStateFactory>(gameId);
             var rules = scopeProvider.GetRequiredKeyedService<IGameRules>(gameId);
-            var input = scopeProvider.GetRequiredKeyedService<IGameInput>(gameId);
+            _input = scopeProvider.GetRequiredKeyedService<IGameInput>(gameId);
 
             foreach (var agent in agents)
             {
                 if (agent is HumanAgent hAgent)
                 {
-                    hAgent.SetInputMethod(input);
+                    hAgent.SetInputMethod(_input);
                 }
             }
 
@@ -92,16 +94,11 @@ public class GameSessionManager
         {
             _view.RefreshBoard(new BoardRenderData(currentState, validActions));
             _view.RefreshEvents(new EventLogRenderData(_actionHistory));
-
-            if (!string.IsNullOrEmpty(_lastValidationFailure))
-                _view.DisplayValidationFailure(_lastValidationFailure);
-
-            _lastValidationFailure = null;
         }
     }
 
     private void Orchestrator_ValidationFailed(string invalidCommandText, IPlayerAgent activeAgent)
     {
-        _lastValidationFailure = string.Format(Strings.InvalidCommandType, invalidCommandText);
+        _input.ValidationFailed(invalidCommandText);
     }
 }

@@ -99,8 +99,8 @@ public class SetupService
 
             IPlayerAgent agent = agentType switch
             {
-                1 => new HumanAgent(name),
-                2 => new RandomAgent(name),
+                1 => new HumanAgent(name, i +1),
+                2 => new RandomAgent(name, i + 1),
                 _ => throw new InvalidOperationException("Unknown agent type.")
             };
 

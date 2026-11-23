@@ -4,8 +4,14 @@ namespace TTOptimize.ConsoleUI.View;
 
 public class CommandPaneBuilder : IConxelPaneBuilder<CommandRenderData>
 {
-    private int _columns = 223;
-    private int _rows = 20;
+    private int _columns;
+    private int _rows;
+
+    public CommandPaneBuilder(int rows, int columns)
+    {
+        _rows = rows;
+        _columns = columns;
+    }
 
     public ConxelCanvas Build(CommandRenderData data)
     {

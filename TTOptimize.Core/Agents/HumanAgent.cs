@@ -6,11 +6,15 @@ namespace TTOptimize.Core.Agents;
 public class HumanAgent : IPlayerAgent
 {
     public string Name { get; }
+
+    public int PlayerId { get; }
+
     private IGameInput _input;
 
-    public HumanAgent(string name)
+    public HumanAgent(string name, int playerId)
     {
         Name = name;
+        PlayerId = playerId;
     }
 
     public void SetInputMethod(IGameInput input)
