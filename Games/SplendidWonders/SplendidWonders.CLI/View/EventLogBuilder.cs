@@ -13,7 +13,7 @@ public class EventLogBuilder : IConxelPaneBuilder<EventLogRenderData>
     {
         var conxelCanvas = new ConxelCanvas(_eventLogHeight, _eventLogWidth);
 
-        for (int i = 2; i < _eventLogHeight - 3; i++)
+        for (int i = 2; i < _eventLogHeight - 1; i++)
             for (int j = 0; j < _eventLogWidth; j++)
                 conxelCanvas[i, j] = new Conxel(" ", ColorHelper.WarmWhite, ColorHelper.LightBlackBackground);
 

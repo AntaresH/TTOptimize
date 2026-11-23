@@ -40,9 +40,10 @@ public class PlayerAreaWidget : WidgetBase, IConxelWidget
         var player = swState.Players[i];
         var isActive = swState.ActivePlayerId == player.Id;
 
+        var blockColor = isActive ? ColorHelper.WarmWhite : ColorHelper.LightSetDefault;
         var playerColor = GetPlayerSpecificForeground(i + 1, isActive);
 
-        var playerBlock = InnerBlock(player, playerColor);
+        var playerBlock = InnerBlock(player, playerColor, blockColor);
 
         var borderedBlock = isActive
             ? playerBlock.WithDoubleBorder(playerColor)
@@ -56,24 +57,24 @@ public class PlayerAreaWidget : WidgetBase, IConxelWidget
         _playerCount = state.Players.Count;
     }
 
-    private ConxelCanvas InnerBlock(Player player, RgbColor playerColor)
+    private ConxelCanvas InnerBlock(Player player, RgbColor playerColor, RgbColor blockColor)
     {
         var playerBlockCanvas = new ConxelCanvas(_playerBlockHeight, _playerBlockWidth);
 
         int victoryPoints = player.Tableau.Sum(dc => dc.VictoryPoints) + player.AcquiredLeaders.Count * 3;
 
-        playerBlockCanvas.Blit(NameLine(player.Name, player.Tableau, victoryPoints, playerColor), 0, 0);
-        playerBlockCanvas.Blit(StoreLine(player.Store, player.ReservedCards, playerColor), 2, 0);
+        playerBlockCanvas.Blit(NameLine(player.Name, player.Tableau, victoryPoints, playerColor, blockColor), 0, 0);
+        playerBlockCanvas.Blit(StoreLine(player.Store, player.ReservedCards, blockColor), 2, 0);
         playerBlockCanvas.Blit(TableauLine(player.Tableau), 4, 0);
 
         return playerBlockCanvas;
     }
 
-    private ConxelCanvas NameLine(string name, ImmutableList<DevelopmentCard> tableau, int victoryPoints, RgbColor blockColor)
+    private ConxelCanvas NameLine(string name, ImmutableList<DevelopmentCard> tableau, int victoryPoints, RgbColor playerColor, RgbColor blockColor)
     {
         var nameLine = new ConxelCanvas(1, _playerBlockWidth);
 
-        nameLine.WriteText(0, 1, name, blockColor);
+        nameLine.WriteText(0, 1, name, playerColor);
 
         if (victoryPoints > 0)
         {
