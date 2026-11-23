@@ -520,6 +520,15 @@ namespace SplendidWonders.CLI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to fejlesztés.
+        /// </summary>
+        internal static string TiebreakerDevelopment {
+            get {
+                return ResourceManager.GetString("TiebreakerDevelopment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Akarod használni az extra vezetőket? (i/n):.
         /// </summary>
         internal static string UseExtendedLeaders {

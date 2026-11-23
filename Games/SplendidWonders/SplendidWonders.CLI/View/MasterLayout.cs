@@ -14,7 +14,6 @@ public class MasterLayout : IConxelMasterLayout
     private const int EventsHeight = LayoutConstants.EVENTSHEIGHT;
 
     private const int BottomPaneWidth = BoardWidth + PaneGap + EventsWidth;
-    private const int BottomPaneHeight = LayoutConstants.BOTTOMPANEHEIGHT;
 
     public IReadOnlyList<ConxelPane> CreatePanes()
     {
@@ -25,8 +24,8 @@ public class MasterLayout : IConxelMasterLayout
         {
             new ConxelPane(PaneId.Board, MarginY, MarginX, BoardHeight, BoardWidth),
             new ConxelPane(PaneId.Events, MarginY, eventsStartX, EventsHeight, EventsWidth),
-            new ConxelPane(PaneId.Commands, bottomStartY, MarginX, BottomPaneHeight, BottomPaneWidth),
-            new ConxelPane(PaneId.Results, bottomStartY, MarginX,  BottomPaneHeight, BottomPaneWidth)
+            new ConxelPane(PaneId.Commands, bottomStartY, MarginX, LayoutConstants.COMMANDSPANEHEIGHT, BottomPaneWidth),
+            new ConxelPane(PaneId.Results, bottomStartY, MarginX,  LayoutConstants.RESULTSPANEHEIGHT, BottomPaneWidth)
         };
     }
 }

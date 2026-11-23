@@ -14,7 +14,8 @@ namespace SplendidWonders.CLI.View
         public const int BOARDHEIGHT = 42;
         public const int EVENTSWIDTH = 80;
         public const int EVENTSHEIGHT = 40;
-        public const int BOTTOMPANEHEIGHT = 20;
+        public const int RESULTSPANEHEIGHT = 8;
+        public const int COMMANDSPANEHEIGHT = 20;
 
         public const int BORDERWIDTH = 1;
         public const int SINGLESPACING = 1;

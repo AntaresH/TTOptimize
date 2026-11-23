@@ -14,6 +14,10 @@
     "SplendidWonders HvGGG": {
       "commandName": "Project",
       "commandLineArgs": "interactive=false gameid=splendidWonders playercount=4 userandomseed=true player1name=LastManStanding player2name=Metalhead player3name=Ironboss player4name=RoboCube player1type=1 player2type=2 player3type=2 player4type=2"
+    },
+    "SplendidWonders 4G": {
+      "commandName": "Project",
+      "commandLineArgs": "interactive=false gameid=splendidWonders playercount=4 userandomseed=true player1name=Metalhead player2name=Ironboss player3name=Robocube player4name=Wirebeast player1type=2 player2type=2 player3type=2 player4type=2"
     }
   }
 }

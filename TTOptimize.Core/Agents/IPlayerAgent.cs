@@ -14,5 +14,9 @@ public interface IPlayerResult
 {
     IPlayerAgent Player { get; }
     
-    int Result { get; }
+    int Rank { get; }
+
+    int Points { get; }
+
+    int? Tiebreaker { get; }
 }

@@ -49,10 +49,12 @@ public class GameSessionManager
             var orchestrator = new GameOrchestrator(initialState, agents, rules);
 
             var finalState = RunGame(orchestrator, out TimeSpan elapsed);
-            var finalStandings = rules.GetFinalStandings(finalState);
+            var finalStandings = rules.GetFinalStandings(finalState, agents);
 
+            _view.RefreshBoard(new BoardRenderData(finalState, null));
             _view.ShowResults(new ResultsRenderData(finalState, finalStandings));
 
+            Console.WriteLine();
             Console.WriteLine($"Futási idő: {Math.Round(elapsed.TotalSeconds, 4)} másodperc");
         }
     }

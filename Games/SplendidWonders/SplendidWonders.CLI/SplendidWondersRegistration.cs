@@ -61,7 +61,7 @@ public static class SplendidWondersRegistration
         services.AddKeyedScoped<IConxelPaneBuilder<EventLogRenderData>, EventLogBuilder>(Games.SPLENDID_WONDERS_KEY);
         services.AddKeyedScoped<IConxelPaneBuilder<ResultsRenderData>, ResultsBuilder>(Games.SPLENDID_WONDERS_KEY);
         services.AddKeyedScoped<IConxelPaneBuilder<CommandRenderData>, CommandPaneBuilder>(Games.SPLENDID_WONDERS_KEY,
-            (_, _) => new CommandPaneBuilder(LayoutConstants.BOTTOMPANEHEIGHT, LayoutConstants.BOARDWIDTH + LayoutConstants.PANEGAP + LayoutConstants.EVENTSWIDTH));
+            (_, _) => new CommandPaneBuilder(LayoutConstants.COMMANDSPANEHEIGHT, LayoutConstants.BOARDWIDTH + LayoutConstants.PANEGAP + LayoutConstants.EVENTSWIDTH));
 
         services.AddKeyedScoped<ITerminalWizard, DrawDoubleTokensWizard>(Games.SPLENDID_WONDERS_KEY);
         services.AddKeyedScoped<ITerminalWizard, DrawThreeTokensWizard>(Games.SPLENDID_WONDERS_KEY);

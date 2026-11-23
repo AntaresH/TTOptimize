@@ -47,7 +47,7 @@ public class BoardBuilder : IConxelPaneBuilder<BoardRenderData>
     {
         var canvas = new ConxelCanvas(_boardMinHeight, _boardMinWidth);
 
-        canvas.Blit(_tokenSupplyWidget.RenderToBuffer(state, legalActions), startRow: 2, startColumn: 0);
+        canvas.Blit(_tokenSupplyWidget.RenderToBuffer(state, legalActions), startRow: 2, startColumn: 1);
         
         canvas.Blit(_decksWidget.RenderToBuffer(state, legalActions), startRow: 0, startColumn: 8);
         

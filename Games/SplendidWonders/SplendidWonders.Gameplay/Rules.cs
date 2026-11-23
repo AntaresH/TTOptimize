@@ -4,7 +4,9 @@ using SplendidWonders.Common.Setup;
 using SplendidWonders.Gameplay.Explorers;
 using SplendidWonders.Gameplay.Reducers;
 using System.Data;
+using System.Numerics;
 using TTOptimize.Core;
+using TTOptimize.Core.Agents;
 using TTOptimize.Core.GameAbstractions;
 
 namespace SplendidWonders.Gameplay
@@ -44,14 +46,48 @@ namespace SplendidWonders.Gameplay
             return _stateReducer.Reduce(baseState, actionToApply);
         }
 
-        public object GetFinalStandings(IGameState gameState)
+        public IReadOnlyList<IPlayerResult> GetFinalStandings(IGameState finalState, IReadOnlyList<IPlayerAgent> playerAgents)
         {
-            var swGameState = (GameState)gameState;
+            var swGameState = (GameState)finalState;
 
-            return swGameState.Players
-                .OrderByDescending(p => p.Tableau.Sum(c => c.VictoryPoints) + p.AcquiredLeaders.Count * 3)
-                .ThenBy(p => p.Tableau.Count)
+            var orderedResults = swGameState.Players
+                .Select(p => new PlayerResult()
+                {
+                    Player = playerAgents.First(ag => ag.PlayerId == p.Id),
+                    Points = p.Tableau.Sum(c => c.VictoryPoints) + p.AcquiredLeaders.Count * 3,
+                    Tiebreaker = p.Tableau.Count
+                })
+                .OrderByDescending(pr => pr.Points)
+                .ThenBy(pr => pr.Tiebreaker)
                 .ToList();
+
+            var standings = new List<IPlayerResult>(orderedResults.Count);
+
+            for (int i = 0; i < orderedResults.Count; i++)
+            {
+                var current = orderedResults[i];
+                var prev = i > 0 ? orderedResults[i - 1] : null;
+                var next = i < orderedResults.Count - 1 ? orderedResults[i + 1] : null;
+
+                bool isExactTieWithPrev = prev != null
+                    && current.Points == prev.Points
+                    && current.Tiebreaker == prev.Tiebreaker;
+
+                int rank = isExactTieWithPrev ? standings[i - 1].Rank : i + 1;
+
+                bool hasPointsTie = (prev != null && prev.Points == current.Points)
+                                 || (next != null && next.Points == current.Points);
+
+                standings.Add(new PlayerResult()
+                {
+                    Player = current.Player,
+                    Rank = rank,
+                    Points = current.Points,
+                    Tiebreaker = hasPointsTie ? current.Tiebreaker : null
+                });
+            }
+
+            return standings;
         }
     }
 }

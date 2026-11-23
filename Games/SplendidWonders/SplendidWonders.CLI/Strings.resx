@@ -285,4 +285,7 @@
   <data name="PassCommandDescription" xml:space="preserve">
     <value>Passzolnod kell. Nem tudsz akciót végrehajtani!</value>
   </data>
+  <data name="TiebreakerDevelopment" xml:space="preserve">
+    <value>fejlesztés</value>
+  </data>
 </root>
