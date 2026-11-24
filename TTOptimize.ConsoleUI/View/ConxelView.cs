@@ -5,7 +5,7 @@ using TTOptimize.Core.ViewAbstractions;
 
 namespace TTOptimize.ConsoleUI.View;
 
-public class ConxelView : IGameView
+public class ConxelView : IGameView, IDisposable
 {
     private readonly Dictionary<PaneId, ConxelPane> _panes;
     private readonly ConxelCompiler _compiler;
@@ -17,12 +17,12 @@ public class ConxelView : IGameView
 
     public ConxelView(
         ICommandTerminal terminal,
-        [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IConxelMasterLayout masterLayout,
+        IConxelMasterLayout masterLayout,
         ConxelCompiler compiler,
-        [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IConxelPaneBuilder<BoardRenderData> boardBuilder,
-        [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IConxelPaneBuilder<EventLogRenderData> eventLogBuilder,
-        [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IConxelPaneBuilder<ResultsRenderData> resultsBuilder,
-        [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IConxelPaneBuilder<CommandRenderData> commandBuilder)
+        IConxelPaneBuilder<BoardRenderData> boardBuilder,
+        IConxelPaneBuilder<EventLogRenderData> eventLogBuilder,
+        IConxelPaneBuilder<ResultsRenderData> resultsBuilder,
+        IConxelPaneBuilder<CommandRenderData> commandBuilder)
     {
         _panes = masterLayout.CreatePanes().ToDictionary(p => p.PaneId);
         _compiler = compiler;

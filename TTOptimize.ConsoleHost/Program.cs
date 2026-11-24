@@ -72,7 +72,7 @@ public class Program
                 try
                 {
                     var sessionManager = rootProvider.GetRequiredService<GameSessionManager>();
-                    sessionManager.StartNewMatch(selectedGame.GameId, sessionData.GameConfiguration, sessionData.Agents);
+                    sessionManager.StartNewMatch(selectedGame.GameId, sessionData.GameConfiguration, sessionData.Slots);
                 }
                 catch (ConsoleUserAbortException)
                 {
@@ -87,16 +87,15 @@ public class Program
 
     private static void RegisterServices(string[] args, ServiceCollection services)
     {
-        services.AddTTOptimizeEngine();
-        services.AddSplendidWonders();
-
+        services.AddSingleton<ISettingsService>(_ => new SettingsService(args));
         services.AddSingleton<SetupService>();
         services.AddSingleton<GameSelectionService>();
-        services.AddSingleton<ISettingsService>((isp) => new SettingsService(args));
-        services.AddSingleton<ConxelCompiler>();
 
-        services.AddKeyedScoped<IGameView, ConxelView>(Games.SPLENDID_WONDERS_KEY);
-        services.AddScoped<ICommandTerminal, ConxelTerminal>();
+        services.AddTTOptimizeEngine();
+        services.AddTTOptimizeConsoleUI();
+
+        services.AddSplendidWonders();
+        services.AddConxelViewForGame(Games.SPLENDID_WONDERS_KEY);
     }
 
     private static void DisplayTTOptimizeTitle()
