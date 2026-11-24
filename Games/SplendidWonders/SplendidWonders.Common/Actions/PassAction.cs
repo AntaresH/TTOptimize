@@ -2,7 +2,7 @@
 
 namespace SplendidWonders.Common.Actions
 {
-    public class PassAction : GameAction
+    public record class PassAction : GameAction
     {
         public override string Description => Strings.ActionDesc_Pass;
     }

@@ -3,7 +3,7 @@ using TTOptimize.Core.GameAbstractions;
 
 namespace SplendidWonders.Common.Actions;
 
-public abstract class TokensAction : GameAction
+public abstract record class TokensAction : GameAction
 {
     public TokenGroup Tokens { get; set; }
 
@@ -34,7 +34,7 @@ public abstract class TokensAction : GameAction
     }
 }
 
-public abstract class CardAction : GameAction
+public abstract record class CardAction : GameAction
 {
     public DevelopmentCard Card { get; set; }
 }

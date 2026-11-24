@@ -1,6 +1,6 @@
 ﻿namespace SplendidWonders.Common.Actions;
 
-public class DrawThreeTokensAction : TokensAction
+public record class DrawThreeTokensAction : TokensAction
 {
     public override string Description
     {
@@ -10,15 +10,5 @@ public class DrawThreeTokensAction : TokensAction
 
             return string.Format(Strings.ActionDesc_ThreeTokensFormat, tokenKeyList.Count, string.Join(", ", tokenKeyList));
         }
-    }
-
-    override public bool Equals(object? obj)
-    {
-        if (obj is DrawThreeTokensAction other)
-        {
-            return Tokens == other.Tokens;
-        }
-
-        return base.Equals(obj);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace SplendidWonders.Common.Actions;
 
-public class ReserveFromDeckAction : GameAction
+public record class ReserveFromDeckAction : GameAction
 {
     public int Level { get; set; }
 
@@ -15,16 +15,6 @@ public class ReserveFromDeckAction : GameAction
 
             return string.Format(Strings.ActionDesc_ReserveFromDeckFormat, levelName);
         }
-    }
-
-    public override bool Equals(object? obj)
-    {
-        if (obj is ReserveFromDeckAction other)
-        {
-            return Level == other.Level;
-        }
-
-        return base.Equals(obj);
     }
 
     private string GetNameForLevel()
