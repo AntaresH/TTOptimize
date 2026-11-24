@@ -1,6 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System.Diagnostics;
-using TTOptimize.Core;
 using TTOptimize.Core.Agents;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
@@ -11,96 +9,54 @@ namespace TTOptimize.Engine;
 public class GameSessionManager
 {
     private readonly IServiceProvider _rootServiceProvider;
-    private IGameView _view;
-    private IGameInput _input;
-
-    private readonly List<ActionLogEntry> _actionHistory = new();
 
     public GameSessionManager(IServiceProvider rootServiceProvider)
     {
         _rootServiceProvider = rootServiceProvider;
     }
 
-    public void StartNewMatch(string gameId, IGameConfiguration configuration, IReadOnlyList<IPlayerAgent> agents)
+    public MatchResult StartNewMatch(
+        string gameId,
+        IGameConfiguration configuration,
+        IReadOnlyList<PlayerSlotConfig> slotConfigs)
     {
-        Console.Clear();
-
         using (IServiceScope scope = _rootServiceProvider.CreateScope())
         {
             IServiceProvider scopeProvider = scope.ServiceProvider;
 
-            var settings = scopeProvider.GetRequiredService<ISettingsService>();
             var stateFactory = scopeProvider.GetRequiredKeyedService<IGameStateFactory>(gameId);
             var rules = scopeProvider.GetRequiredKeyedService<IGameRules>(gameId);
-            _input = scopeProvider.GetRequiredKeyedService<IGameInput>(gameId);
+            var input = scopeProvider.GetRequiredKeyedService<IGameInput>(gameId);
+            var view = scopeProvider.GetRequiredKeyedService<IGameView>(gameId);
 
-            foreach (var agent in agents)
-            {
-                if (agent is HumanAgent hAgent)
-                {
-                    hAgent.SetInputMethod(_input);
-                }
-            }
-
-            _view = scopeProvider.GetRequiredKeyedService<IGameView>(gameId);
-
-            var initialState = stateFactory.Create(configuration);
+            IReadOnlyList<IPlayerAgent> agents = CreateAgents(slotConfigs, input);
+            IGameState initialState = stateFactory.Create(configuration);
 
             var orchestrator = new GameOrchestrator(initialState, agents, rules);
+            var session = new GameSession(orchestrator, rules, agents, view, input);
 
-            var finalState = RunGame(orchestrator, out TimeSpan elapsed);
-            var finalStandings = rules.GetFinalStandings(finalState, agents);
-
-            _view.RefreshBoard(new BoardRenderData(finalState, null));
-            _view.ShowResults(new ResultsRenderData(finalState, finalStandings));
-
-            Console.WriteLine();
-            Console.WriteLine($"Futási idő: {Math.Round(elapsed.TotalSeconds, 4)} másodperc");
+            return session.Execute();
         }
     }
 
-    private IGameState RunGame(GameOrchestrator orchestrator, out TimeSpan elapsed)
+    private static IReadOnlyList<IPlayerAgent> CreateAgents(
+        IReadOnlyList<PlayerSlotConfig> slotConfigs,
+        IGameInput input)
     {
-        orchestrator.TurnStarted += Orchestrator_TurnStarted;
-        orchestrator.ValidationFailed += Orchestrator_ValidationFailed;
-        orchestrator.ActionExecuted += Orchestrator_ActionExecuted;
+        var agents = new List<IPlayerAgent>(slotConfigs.Count);
 
-        try
+        foreach (PlayerSlotConfig slot in slotConfigs)
         {
-            long startTime = Stopwatch.GetTimestamp();
-            var finalState = orchestrator.Run();
-            elapsed = Stopwatch.GetElapsedTime(startTime);
-            return finalState;
+            IPlayerAgent agent = slot.Type switch
+            {
+                AgentType.Human => new HumanAgent(slot.Name, slot.PlayerId, input),
+                AgentType.Random => new RandomAgent(slot.Name, slot.PlayerId),
+                _ => throw new ArgumentOutOfRangeException(nameof(slot.Type), $"Ismeretlen ágens típus: {slot.Type}")
+            };
+
+            agents.Add(agent);
         }
-        finally
-        {
-            orchestrator.TurnStarted -= Orchestrator_TurnStarted;
-            orchestrator.ValidationFailed -= Orchestrator_ValidationFailed;
-            orchestrator.ActionExecuted -= Orchestrator_ActionExecuted;
-        }
-    }
 
-    private void Orchestrator_ActionExecuted(GameAction action, IPlayerAgent agent)
-    {
-        _actionHistory.Add(new ActionLogEntry()
-        {
-            TurnNumber = _actionHistory.Count + 1,
-            Action = action,
-            Agent = agent
-        });
-    }
-
-    private void Orchestrator_TurnStarted(IGameState currentState, IReadOnlyList<GameAction> validActions, IPlayerAgent activeAgent)
-    {
-        if (activeAgent is HumanAgent)
-        {
-            _view.RefreshBoard(new BoardRenderData(currentState, validActions));
-            _view.RefreshEvents(new EventLogRenderData(_actionHistory));
-        }
-    }
-
-    private void Orchestrator_ValidationFailed(string invalidCommandText, IPlayerAgent activeAgent)
-    {
-        _input.ValidationFailed(invalidCommandText);
+        return agents;
     }
 }

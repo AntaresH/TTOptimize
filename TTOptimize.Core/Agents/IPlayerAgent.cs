@@ -3,6 +3,14 @@ using TTOptimize.Core.InputAbstractions;
 
 namespace TTOptimize.Core.Agents;
 
+public enum AgentType
+{
+    Human = 1,
+    Random = 2
+}
+
+public record PlayerSlotConfig(string Name, int PlayerId, AgentType Type);
+
 public interface IPlayerAgent
 {
     string Name { get; }

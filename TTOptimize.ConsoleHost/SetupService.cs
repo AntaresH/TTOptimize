@@ -30,14 +30,14 @@ public class SetupService
         }
 
         IGameConfiguration config = ReadConfiguration(selectedManifest.ConfigurationType);
-        IReadOnlyList<IPlayerAgent> agents = CreateAgents(selectedManifest.GameId, config.PlayerCount);
+        IReadOnlyList<PlayerSlotConfig> slots = CreateAgents(selectedManifest.GameId, config.PlayerCount);
 
-        config.PlayerNames = agents.Select(ag => ag.Name).ToList();
+        config.PlayerNames = slots.Select(ag => ag.Name).ToList();
 
         return new GameSessionConfiguration()
         {
             GameConfiguration = config,
-            Agents = agents
+            Slots = slots
         };
     }
 
@@ -45,7 +45,7 @@ public class SetupService
     {
         if (!typeof(IGameConfiguration).IsAssignableFrom(configurationType))
         {
-            throw new ArgumentException($"A megadott típus nem implementálja az IGameConfiguration interfészt: {configurationType.Name}");
+            throw new ArgumentException($"IGameConfiguration intrface is not implemented: {configurationType.Name}");
         }
 
         var configInstance = (IGameConfiguration)Activator.CreateInstance(configurationType)!;
@@ -83,9 +83,9 @@ public class SetupService
         return configInstance;
     }
 
-    public IReadOnlyList<IPlayerAgent> CreateAgents(string gameId, int playerCount)
+    public IReadOnlyList<PlayerSlotConfig> CreateAgents(string gameId, int playerCount)
     {
-        var agents = new List<IPlayerAgent>(playerCount);
+        var slots = new List<PlayerSlotConfig>(playerCount);
 
         if (_isInterActive)
             Console.WriteLine($"\n=== {Strings.PlayerSettings} ===");
@@ -96,19 +96,14 @@ public class SetupService
                 Console.WriteLine($"\n--- {i + 1}. {Strings.Player} ---");
 
             string name = FromSettingOrPrompt(string.Format(Strings.PlayerNameArgumentKeyFormat, i + 1), () => PromptString(string.Format(Strings.PlayerNamePrompt, i + 1), $"{Strings.Player} {i + 1}"));
-            int agentType = FromSettingOrPrompt(string.Format(Strings.AgentTypeArgumentKeyFormat, i + 1), () => PromptInt(Strings.AgentTypePrompt, 1, 2, 1));
+            int agentTypeInt = FromSettingOrPrompt(string.Format(Strings.AgentTypeArgumentKeyFormat, i + 1), () => PromptInt(Strings.AgentTypePrompt, 1, 2, 1));
 
-            IPlayerAgent agent = agentType switch
-            {
-                1 => new HumanAgent(name, i +1),
-                2 => new RandomAgent(name, i + 1),
-                _ => throw new InvalidOperationException("Unknown agent type.")
-            };
+            var slot = new PlayerSlotConfig(name, i + 1, (AgentType)agentTypeInt);
 
-            agents.Add(agent);
+            slots.Add(slot);
         }
 
-        return agents;
+        return slots;
     }
 
     private void SetPropertyFromSettingOrPrompt<T>(PropertyInfo property, object configInstance, 

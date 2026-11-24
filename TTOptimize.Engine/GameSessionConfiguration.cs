@@ -6,5 +6,5 @@ namespace TTOptimize.Engine;
 public record class GameSessionConfiguration
 {
     public IGameConfiguration GameConfiguration { get; set; }
-    public IReadOnlyList<IPlayerAgent> Agents { get; set; }
+    public IReadOnlyList<PlayerSlotConfig> Slots { get; set; }
 }

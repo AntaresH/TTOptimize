@@ -5,25 +5,18 @@ namespace TTOptimize.Core.Agents;
 
 public class HumanAgent : IPlayerAgent
 {
-    public string Name { get; }
+    private readonly IGameInput _input;
 
+    public string Name { get; }
     public int PlayerId { get; }
 
-    private IGameInput _input;
-
-    public HumanAgent(string name, int playerId)
+    public HumanAgent(string name, int playerId, IGameInput input)
     {
         Name = name;
         PlayerId = playerId;
-    }
-
-    public void SetInputMethod(IGameInput input)
-    {
         _input = input;
     }
 
     public GameCommand DecideCommand(IGameState gameState, IReadOnlyList<GameAction> validActions)
-    {
-        return _input.ReadCommand(gameState, validActions);
-    }
+        => _input.ReadCommand(gameState, validActions);
 }
