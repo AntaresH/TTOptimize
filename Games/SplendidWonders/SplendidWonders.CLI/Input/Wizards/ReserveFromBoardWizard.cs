@@ -23,7 +23,7 @@ public class ReserveFromBoardWizard : SplendidWondersBaseWizard
 
     public ReserveFromBoardWizard(
         ICommandTerminal commandTerminal,
-        [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] ISplendidWondersInputPresenter inputPresenter) : base(commandTerminal, inputPresenter)
+        ISplendidWondersInputPresenter inputPresenter) : base(commandTerminal, inputPresenter)
     {
         _inputPresenter = inputPresenter;
     }

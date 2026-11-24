@@ -14,8 +14,8 @@ public class SplendidWondersInput : IGameInput
 
     public SplendidWondersInput(
         ICommandTerminal commandTerminal,
-        [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IEnumerable<ITerminalWizard> wizards,
-        [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] ISplendidWondersInputPresenter inputPresenter)
+        IEnumerable<ITerminalWizard> wizards,
+        ISplendidWondersInputPresenter inputPresenter)
     {
         _wizards = wizards;
         _commandTerminal = commandTerminal;

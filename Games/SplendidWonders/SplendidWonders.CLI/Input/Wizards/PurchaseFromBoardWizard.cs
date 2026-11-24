@@ -21,7 +21,7 @@ public class PurchaseFromBoardWizard : SplendidWondersBaseWizard
 
     public PurchaseFromBoardWizard(
         ICommandTerminal commandTerminal,
-        [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] ISplendidWondersInputPresenter inputPresenter) : base(commandTerminal, inputPresenter)
+        ISplendidWondersInputPresenter inputPresenter) : base(commandTerminal, inputPresenter)
     {
         _inputPresenter = inputPresenter;
     }

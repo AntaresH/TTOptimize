@@ -20,11 +20,11 @@ public class BoardBuilder : IConxelPaneBuilder<BoardRenderData>
     private readonly PlayerAreaWidget _playerAreaWidget;
 
     public BoardBuilder(
-        [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] TokenSupplyWidget tokenSupplyWidget,
-        [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] DecksWidget decksWidget,
-        [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] LeaderAreaWidget leaderAreaWidget,
-        [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] MarketWidget marketWidget,
-        [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] PlayerAreaWidget playerAreaWidget)
+        TokenSupplyWidget tokenSupplyWidget,
+        DecksWidget decksWidget,
+        LeaderAreaWidget leaderAreaWidget,
+        MarketWidget marketWidget,
+        PlayerAreaWidget playerAreaWidget)
     {
         _tokenSupplyWidget = tokenSupplyWidget;
         _decksWidget = decksWidget;

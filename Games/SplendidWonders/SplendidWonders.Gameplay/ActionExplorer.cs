@@ -18,13 +18,13 @@ namespace SplendidWonders.Gameplay
         private readonly IActionExplorer<ReturnTokensAction> _returnTokensExplorer;
 
         public ActionExplorer(
-            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IActionExplorer<DrawThreeTokensAction> drawThreeTokensExplorer,
-            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IActionExplorer<DrawDoubleTokensAction> drawDoubleTokensExplorer,
-            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IActionExplorer<ReturnTokensAction> returnTokensExplorer,
-            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IActionExplorer<ReserveFromBoardAction> reserveFromBoardExplorer,
-            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IActionExplorer<ReserveFromDeckAction> reserveFromDeckExplorer,
-            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IActionExplorer<PurchaseAction> purchaseExplorer,
-            [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] IActionExplorer<SelectLeaderAction> selectLeaderExplorer
+            IActionExplorer<DrawThreeTokensAction> drawThreeTokensExplorer,
+            IActionExplorer<DrawDoubleTokensAction> drawDoubleTokensExplorer,
+            IActionExplorer<ReturnTokensAction> returnTokensExplorer,
+            IActionExplorer<ReserveFromBoardAction> reserveFromBoardExplorer,
+            IActionExplorer<ReserveFromDeckAction> reserveFromDeckExplorer,
+            IActionExplorer<PurchaseAction> purchaseExplorer,
+            IActionExplorer<SelectLeaderAction> selectLeaderExplorer
             )
         {
             _drawThreeTokensExplorer = drawThreeTokensExplorer;

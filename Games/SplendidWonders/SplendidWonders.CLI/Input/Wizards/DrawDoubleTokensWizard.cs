@@ -20,7 +20,7 @@ public class DrawDoubleTokensWizard : SplendidWondersBaseWizard
 
     public DrawDoubleTokensWizard(
         ICommandTerminal commandTerminal,
-        [FromKeyedServices(Games.SPLENDID_WONDERS_KEY)] ISplendidWondersInputPresenter inputPresenter) : base(commandTerminal, inputPresenter)
+        ISplendidWondersInputPresenter inputPresenter) : base(commandTerminal, inputPresenter)
     {
         _inputPresenter = inputPresenter;
     }
