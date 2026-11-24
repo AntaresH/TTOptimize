@@ -3,9 +3,9 @@ using SplendidWonders.Common.Actions;
 using SplendidWonders.Common.Model;
 using System.Text.RegularExpressions;
 using TTOptimize.ConsoleUI.Input;
-using TTOptimize.Core;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
+using TTOptimize.Core.Setup;
 
 namespace SplendidWonders.CLI.Input.Wizards;
 
@@ -49,7 +49,7 @@ public class PurchaseFromReservedWizard : SplendidWondersBaseWizard
 
         if (match.Success)
         {
-            int key = int.Parse(match.Groups[0].Value);
+            int key = int.Parse(match.Groups[1].Value);
 
             var selectedPurchase = _availablePurchases.ElementAtOrDefault(key - 1);
 

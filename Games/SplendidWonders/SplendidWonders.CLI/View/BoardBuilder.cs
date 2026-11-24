@@ -2,8 +2,8 @@
 using SplendidWonders.CLI.View.Widgets;
 using SplendidWonders.Common.Model;
 using TTOptimize.ConsoleUI.View;
-using TTOptimize.Core;
 using TTOptimize.Core.GameAbstractions;
+using TTOptimize.Core.Setup;
 using TTOptimize.Core.ViewAbstractions;
 
 namespace SplendidWonders.CLI.View;

@@ -1,8 +1,4 @@
-﻿using SplendidWonders.Common;
-using SplendidWonders.Common.Model;
-using System.Runtime.Versioning;
-
-namespace SplendidWonders.Common.Actions;
+﻿namespace SplendidWonders.Common.Actions;
 
 public class DrawThreeTokensAction : TokensAction
 {

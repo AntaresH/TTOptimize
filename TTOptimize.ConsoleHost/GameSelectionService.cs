@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TTOptimize.Core;
+using TTOptimize.Core.Setup;
 
 namespace TTOptimize.ConsoleHost;
 

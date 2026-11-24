@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TTOptimize.ConsoleUI.Input;
-using TTOptimize.Core;
+using TTOptimize.Core.Setup;
 using TTOptimize.Core.ViewAbstractions;
 
 namespace TTOptimize.ConsoleUI.View;

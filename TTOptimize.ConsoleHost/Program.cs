@@ -5,6 +5,7 @@ using TTOptimize.ConsoleUI.Input;
 using TTOptimize.ConsoleUI.View;
 using TTOptimize.Core;
 using TTOptimize.Core.InputAbstractions;
+using TTOptimize.Core.Setup;
 using TTOptimize.Core.ViewAbstractions;
 using TTOptimize.Engine;
 

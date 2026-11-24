@@ -9,9 +9,9 @@ using SplendidWonders.Gameplay;
 using SplendidWonders.Gameplay.Explorers;
 using SplendidWonders.Gameplay.Reducers;
 using TTOptimize.ConsoleUI.View;
-using TTOptimize.Core;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
+using TTOptimize.Core.Setup;
 using TTOptimize.Core.ViewAbstractions;
 
 namespace SplendidWonders.CLI;

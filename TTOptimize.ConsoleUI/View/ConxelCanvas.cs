@@ -128,9 +128,4 @@ public class ConxelCanvas
     }
 
     public Conxel GetAt(int row, int column) => _buffer[row, column];
-
-    public void WriteText(int v1, int v2, object formattedResultString)
-    {
-        throw new NotImplementedException();
-    }
 }

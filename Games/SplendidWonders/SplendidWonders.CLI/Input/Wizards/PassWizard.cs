@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using TTOptimize.ConsoleUI.Input;
-using TTOptimize.Core;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
+using TTOptimize.Core.Setup;
 
 namespace SplendidWonders.CLI.Input.Wizards
 {

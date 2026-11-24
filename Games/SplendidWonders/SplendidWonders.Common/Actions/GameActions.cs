@@ -1,6 +1,4 @@
-﻿
-using SplendidWonders.Common;
-using SplendidWonders.Common.Model;
+﻿using SplendidWonders.Common.Model;
 using TTOptimize.Core.GameAbstractions;
 
 namespace SplendidWonders.Common.Actions;

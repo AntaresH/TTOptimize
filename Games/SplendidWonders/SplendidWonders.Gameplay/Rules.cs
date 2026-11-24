@@ -5,9 +5,9 @@ using SplendidWonders.Gameplay.Explorers;
 using SplendidWonders.Gameplay.Reducers;
 using System.Data;
 using System.Numerics;
-using TTOptimize.Core;
 using TTOptimize.Core.Agents;
 using TTOptimize.Core.GameAbstractions;
+using TTOptimize.Core.Setup;
 
 namespace SplendidWonders.Gameplay
 {

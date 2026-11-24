@@ -3,6 +3,7 @@ using System.Reflection;
 using TTOptimize.Core;
 using TTOptimize.Core.Agents;
 using TTOptimize.Core.GameAbstractions;
+using TTOptimize.Core.Setup;
 using TTOptimize.Engine;
 
 namespace TTOptimize.ConsoleHost;

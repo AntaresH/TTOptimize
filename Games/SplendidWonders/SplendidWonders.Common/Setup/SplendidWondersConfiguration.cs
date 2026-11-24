@@ -1,6 +1,5 @@
-﻿using SplendidWonders.Common.Model;
-using TTOptimize.Core;
-using TTOptimize.Core.GameAbstractions;
+﻿using TTOptimize.Core.GameAbstractions;
+using TTOptimize.Core.Setup;
 
 namespace SplendidWonders.Common.Setup
 {

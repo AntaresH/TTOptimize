@@ -1,4 +1,4 @@
-﻿namespace TTOptimize.Core;
+﻿namespace TTOptimize.Core.Setup;
 
 public interface IGameManifest
 {

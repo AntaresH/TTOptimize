@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SplendidWonders.Common.Model;
 using TTOptimize.ConsoleUI.Input;
-using TTOptimize.Core;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
+using TTOptimize.Core.Setup;
 
 namespace SplendidWonders.CLI.Input.Wizards;
 

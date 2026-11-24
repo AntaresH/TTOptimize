@@ -6,7 +6,7 @@ public static class EngineRegistration
 {
     public static IServiceCollection AddTTOptimizeEngine(this IServiceCollection services)
     {
-        services.AddSingleton<GameSessionManager>();
+        services.AddTransient<GameSessionManager>();
 
         return services;
     }

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TTOptimize.Core.Agents;
+﻿using TTOptimize.Core.Agents;
+using TTOptimize.Core.GameAbstractions;
 
 namespace SplendidWonders.Gameplay
 {

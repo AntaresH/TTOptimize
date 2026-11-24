@@ -42,7 +42,6 @@ namespace SplendidWonders.Gameplay.Explorers
                 List<ReturnTokensAction> result)
         {
             {
-                // All tokens have been allocated.
                 if (colorIndex == 5)
                 {
                     if (remaining == 0)
@@ -57,7 +56,6 @@ namespace SplendidWonders.Gameplay.Explorers
                     return;
                 }
 
-                // Try every possible quantity of this color.
                 int max = Math.Min(available[colorIndex], remaining);
 
                 for (int count = 0; count <= max; count++)

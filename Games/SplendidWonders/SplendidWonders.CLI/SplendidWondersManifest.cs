@@ -1,5 +1,5 @@
 ﻿using SplendidWonders.Common.Setup;
-using TTOptimize.Core;
+using TTOptimize.Core.Setup;
 
 namespace SplendidWonders.CLI;
 

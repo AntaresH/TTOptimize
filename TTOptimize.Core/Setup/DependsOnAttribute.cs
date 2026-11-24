@@ -1,4 +1,4 @@
-﻿namespace TTOptimize.Core.GameAbstractions;
+﻿namespace TTOptimize.Core.Setup;
 
 [AttributeUsage(AttributeTargets.Property)]
 public class DependsOnAttribute : Attribute

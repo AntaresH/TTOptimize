@@ -12,7 +12,7 @@ public class RandomAgent : ComputerAgent
     public override GameCommand DecideCommand(IGameState gameState, IReadOnlyList<GameAction> validActions)
     {
         int actionCount = validActions.Count;
-        int random = new Random().Next(0, actionCount - 1);
+        int random = Random.Shared.Next(validActions.Count);
 
         return new GameCommand() { Action = validActions[random] };
     }

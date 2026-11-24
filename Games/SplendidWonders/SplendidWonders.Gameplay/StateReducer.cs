@@ -2,8 +2,8 @@
 using SplendidWonders.Common.Actions;
 using SplendidWonders.Common.Model;
 using SplendidWonders.Gameplay.Reducers;
-using TTOptimize.Core;
 using TTOptimize.Core.GameAbstractions;
+using TTOptimize.Core.Setup;
 
 namespace SplendidWonders.Gameplay
 {

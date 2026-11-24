@@ -9,14 +9,3 @@ public interface IPlayerAgent
     int PlayerId { get; }
     GameCommand DecideCommand(IGameState gameState, IReadOnlyList<GameAction> validActions);
 }
-
-public interface IPlayerResult
-{
-    IPlayerAgent Player { get; }
-    
-    int Rank { get; }
-
-    int Points { get; }
-
-    int? Tiebreaker { get; }
-}

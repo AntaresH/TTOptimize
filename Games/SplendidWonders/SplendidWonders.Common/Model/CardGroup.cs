@@ -8,17 +8,6 @@ namespace SplendidWonders.Common.Model
 
         public required ImmutableList<DevelopmentCard> Market { get; set; }
 
-        public void Draw(int marketIndex)
-        {
-            if (Deck.IsEmpty)
-                return;
-
-            var card = Deck[0];
-            
-            Deck.RemoveAt(0);
-            Market.Insert(marketIndex, card);
-        }
-
         public DevelopmentCard? this[int index]
         {
             get

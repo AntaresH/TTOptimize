@@ -3,9 +3,9 @@ using SplendidWonders.Common.Actions;
 using SplendidWonders.Common.Model;
 using System.Text.RegularExpressions;
 using TTOptimize.ConsoleUI.Input;
-using TTOptimize.Core;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
+using TTOptimize.Core.Setup;
 
 namespace SplendidWonders.CLI.Input.Wizards;
 

@@ -1,4 +1,4 @@
-﻿namespace TTOptimize.Core;
+﻿namespace TTOptimize.Core.Setup;
 
 [AttributeUsage(AttributeTargets.Property)]
 public class GameConfigParamAttribute : Attribute
