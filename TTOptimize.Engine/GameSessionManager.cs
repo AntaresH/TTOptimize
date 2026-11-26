@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics;
 using TTOptimize.Core;
 using TTOptimize.Core.Agents;
 using TTOptimize.Core.GameAbstractions;
@@ -10,47 +11,65 @@ namespace TTOptimize.Engine;
 
 public class GameSessionManager
 {
-    private readonly IServiceProvider _rootServiceProvider;
+    private bool _isInteractive;
 
-    public GameSessionManager(IServiceProvider rootServiceProvider)
+    private readonly IGameContextFactory _gameContextFactory;
+    private readonly MatchMetricsCollector _metricsCollector;
+    private readonly ISettingsService? _settingsService;
+    private readonly IMatchRepository? _matchRepository;
+
+    public GameSessionManager(IGameContextFactory gameContextFactory, MatchMetricsCollector metricsCollector, 
+        ISettingsService settingsService, IMatchRepository? matchRepository)
     {
-        _rootServiceProvider = rootServiceProvider;
+        _gameContextFactory = gameContextFactory;
+        _metricsCollector = metricsCollector;
+        _settingsService = settingsService;
+        _matchRepository = matchRepository;
+
+        _isInteractive = _settingsService.IsInteractive;
+    }
+    public SessionResult RunSingleMatch(string gameId, IGameConfiguration configuration, IReadOnlyList<PlayerSlotConfig> slotConfigs)
+    {
+        var completedMatch = ExecuteMatch(gameId, configuration, slotConfigs, batchRunId: null);
+
+        _matchRepository?.SaveMatch(completedMatch.Record);
+
+        return completedMatch.SessionResult;
     }
 
-    public SessionResult StartNewMatch(
-        string gameId,
-        IGameConfiguration configuration,
-        IReadOnlyList<PlayerSlotConfig> slotConfigs)
+    public BatchExecutionResult RunBatch(string gameId, IGameConfiguration configuration, IReadOnlyList<PlayerSlotConfig> slotConfigs, int matchCount)
     {
-        using (IServiceScope scope = _rootServiceProvider.CreateScope())
+        Guid batchRunId = Guid.NewGuid();
+        var records = new List<MatchRecord>(matchCount);
+        long startTimestamp = Stopwatch.GetTimestamp();
+
+        for (int i = 0; i < matchCount; i++)
         {
-            IServiceProvider scopeProvider = scope.ServiceProvider;
+            var completedMatch = ExecuteMatch(gameId, configuration, slotConfigs, batchRunId);
 
-            var settings = _rootServiceProvider.GetRequiredService<ISettingsService>();
-
-            var stateFactory = scopeProvider.GetRequiredKeyedService<IGameStateFactory>(gameId);
-            var rules = scopeProvider.GetRequiredKeyedService<IGameRules>(gameId);
-            var input = scopeProvider.GetRequiredKeyedService<IGameInput>(gameId);
-            var view = settings.IsInteractive ? scopeProvider.GetRequiredKeyedService<IGameView>(gameId) : null;
-
-            IReadOnlyDictionary<int, IAgent> agentsBySeat = CreateAgents(slotConfigs, input);
-            IGameState initialState = stateFactory.Create(configuration);
-
-            var orchestrator = new GameOrchestrator(initialState, agentsBySeat, rules);
-            var session = new GameSession(orchestrator, rules, agentsBySeat, view, input);
-            var result = session.Execute();
-
-            var collector = new MatchMetricsCollector(scopeProvider);
-            var matchRecord = collector.Collect(gameId, experimentId: null, configuration, result.Outcome, agentsBySeat);
-
-            //if (autoPersist)
-            //{
-            //    var matchRepository = scopeProvider.GetService<IMatchRepository>();
-            //    matchRepository?.SaveMatch(matchRecord);
-            //}
-
-            return result;
+            records.Add(completedMatch.Record);
         }
+
+        _matchRepository?.SaveMatchesBulk(records);
+
+        return new BatchExecutionResult(batchRunId, matchCount, Stopwatch.GetElapsedTime(startTimestamp));
+    }
+
+    private CompletedMatch ExecuteMatch(string gameId, IGameConfiguration configuration, IReadOnlyList<PlayerSlotConfig> slotConfigs, Guid? batchRunId)
+    {
+        using GameContext context = _gameContextFactory.CreateContext(gameId);
+
+        var agentsBySeat = CreateAgents(slotConfigs, context.Input);
+        IGameState initialState = context.StateFactory.Create(configuration);
+
+        var orchestrator = new GameOrchestrator(initialState, agentsBySeat, context.Rules);
+        var session = new GameSession(orchestrator, context.Rules, context.View, context.Input);
+
+        SessionResult result = session.Execute();
+
+        MatchRecord record = _metricsCollector.Collect(gameId, batchRunId, configuration, result.Outcome, agentsBySeat, context.MetricsExtractor);
+
+        return new CompletedMatch(result, record);
     }
 
     private IReadOnlyDictionary<int, IAgent> CreateAgents(

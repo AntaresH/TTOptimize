@@ -11,7 +11,7 @@
     public const string PLAYER2TYPE = "player2type";
     public const string PLAYER3TYPE = "player3type";
     public const string PLAYER4TYPE = "player4type";
-    public const string MATCHES = "matches";
+    public const string BATCHRUNS = "batchruns";
     public const string USERANDOMSEED = "userandomseed";
     public const string SEED = "randomseed";
 }

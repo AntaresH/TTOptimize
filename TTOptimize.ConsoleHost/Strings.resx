@@ -174,4 +174,7 @@
   <data name="Seconds" xml:space="preserve">
     <value>másodperc</value>
   </data>
+  <data name="BatchExecutionTime" xml:space="preserve">
+    <value>Teljes csomag futási ideje</value>
+  </data>
 </root>

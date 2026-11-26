@@ -88,6 +88,15 @@ namespace TTOptimize.ConsoleHost {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Teljes csomag futási ideje.
+        /// </summary>
+        internal static string BatchExecutionTime {
+            get {
+                return ResourceManager.GetString("BatchExecutionTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Futási idő.
         /// </summary>
         internal static string ExecutionTime {

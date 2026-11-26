@@ -10,23 +10,17 @@ public class GameSession
 {
     private readonly GameOrchestrator _orchestrator;
     private readonly IGameRules _rules;
-    private readonly IReadOnlyDictionary<int, IAgent> _agentsBySeat;
     private readonly IGameView? _view;
     private readonly IGameInput _input;
     private readonly List<ActionLogEntry> _actionHistory;
 
-    public GameSession(
-        GameOrchestrator orchestrator,
-        IGameRules rules,
-        IReadOnlyDictionary<int, IAgent> agentsBySeat,
-        IGameView? view,
-        IGameInput input)
+    public GameSession(GameOrchestrator orchestrator, IGameRules rules, IGameView? view, IGameInput input)
     {
         _orchestrator = orchestrator;
         _rules = rules;
-        _agentsBySeat = agentsBySeat;
         _view = view;
         _input = input;
+
         _actionHistory = new List<ActionLogEntry>();
     }
 

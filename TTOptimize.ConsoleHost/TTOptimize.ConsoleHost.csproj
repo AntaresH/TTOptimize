@@ -15,6 +15,7 @@
     <ProjectReference Include="..\Games\SplendidWonders\SplendidWonders.CLI\SplendidWonders.CLI.csproj" />
     <ProjectReference Include="..\TTOptimize.ConsoleUI\TTOptimize.ConsoleUI.csproj" />
     <ProjectReference Include="..\TTOptimize.Engine\TTOptimize.Engine.csproj" />
+    <ProjectReference Include="..\TTOptimize.Persistence\TTOptimize.Persistence.csproj" />
   </ItemGroup>
 
   <ItemGroup>

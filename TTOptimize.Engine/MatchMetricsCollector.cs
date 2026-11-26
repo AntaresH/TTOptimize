@@ -7,22 +7,9 @@ namespace TTOptimize.Engine;
 
 public class MatchMetricsCollector
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    public MatchMetricsCollector(IServiceProvider serviceProvider)
+    public MatchRecord Collect(string gameId, Guid? batchRunId, IGameConfiguration configuration, MatchOutcome outcome,
+        IReadOnlyDictionary<int, IAgent> agentsBySeat, IMatchMetricsExtractor metricsExtractor)
     {
-        _serviceProvider = serviceProvider;
-    }
-
-    public MatchRecord Collect(
-        string gameId,
-        Guid? experimentId,
-        IGameConfiguration configuration,
-        MatchOutcome outcome,
-        IReadOnlyDictionary<int, IAgent> agentsBySeat)
-    {
-        var gameExtractor = _serviceProvider.GetKeyedService<IMatchMetricsExtractor>(gameId);
-
         var playerMetricsList = new List<IPlayerMetrics>(outcome.Standings.Count);
 
         foreach (IPlayerResult standing in outcome.Standings)
@@ -55,8 +42,8 @@ public class MatchMetricsCollector
                 ActionRatios = actionRatios
             };
 
-            IPlayerMetrics finalPlayerMetrics = gameExtractor != null
-                ? gameExtractor.ExtractPlayerMetrics(baseMetrics, outcome.FinalState)
+            IPlayerMetrics finalPlayerMetrics = metricsExtractor != null
+                ? metricsExtractor.ExtractPlayerMetrics(baseMetrics, outcome.FinalState)
                 : baseMetrics;
 
             playerMetricsList.Add(finalPlayerMetrics);
@@ -67,14 +54,14 @@ public class MatchMetricsCollector
             TotalTurns = outcome.ActionHistory.Count
         };
 
-        var finalGameMetrics = gameExtractor != null
-            ? gameExtractor.ExtractGameMetrics(baseGameMetrics, outcome.FinalState, outcome.ActionHistory)
+        var finalGameMetrics = metricsExtractor != null
+            ? metricsExtractor.ExtractGameMetrics(baseGameMetrics, outcome.FinalState, outcome.ActionHistory)
             : baseGameMetrics;
 
         return new MatchRecord
         {
             GameId = gameId,
-            ExperimentId = experimentId,
+            BatchRunId = batchRunId,
             GameOverReason = outcome.FinalState.GameOverReason.ToString(),
             GameConfiguration = configuration,
             PlayerMetrics = playerMetricsList,

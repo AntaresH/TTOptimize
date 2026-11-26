@@ -1,14 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SplendidWonders.CLI;
 using System.Runtime.InteropServices;
-using TTOptimize.ConsoleUI.Input;
-using TTOptimize.ConsoleUI.View;
 using TTOptimize.Core;
 using TTOptimize.Core.InputAbstractions;
 using TTOptimize.Core.Setup;
-using TTOptimize.Core.Statistics;
-using TTOptimize.Core.ViewAbstractions;
 using TTOptimize.Engine;
+using TTOptimize.Persistence;
 
 namespace TTOptimize.ConsoleHost;
 
@@ -65,16 +62,26 @@ public class Program
             var selectedGame = gameSelectionService.SelectGame();
             var sessionData = setupService.SetupGame(selectedGame);
 
-            int.TryParse(settingsService.GetSetting(TTOptArguments.MATCHES), out int matches);
+            int.TryParse(settingsService.GetSetting(TTOptArguments.BATCHRUNS), out int batchRuns);
 
             while (stayInGame)
             {
                 try
                 {
                     var sessionManager = rootProvider.GetRequiredService<GameSessionManager>();
-                    var sessionResult = sessionManager.StartNewMatch(selectedGame.GameId, sessionData.GameConfiguration, sessionData.Slots);
 
-                    Console.WriteLine($"{Strings.ExecutionTime}: {Math.Round(sessionResult.ExecutionInfo.Elapsed.TotalSeconds, 4)} {Strings.Seconds}");
+                    if (batchRuns > 1)
+                    {
+                        var batchExecutionResult = sessionManager.RunBatch(selectedGame.GameId, sessionData.GameConfiguration, sessionData.Slots, batchRuns);
+
+                        Console.WriteLine($"{Strings.BatchExecutionTime}: {Math.Round(batchExecutionResult.TotalDuration.TotalSeconds, 4)} {Strings.Seconds}");
+                    }
+                    else
+                    {
+                        var sessionResult = sessionManager.RunSingleMatch(selectedGame.GameId, sessionData.GameConfiguration, sessionData.Slots);
+
+                        Console.WriteLine($"{Strings.ExecutionTime}: {Math.Round(sessionResult.ExecutionInfo.Elapsed.TotalSeconds, 4)} {Strings.Seconds}");
+                    }
                 }
                 catch (ConsoleUserAbortException)
                 {
@@ -83,9 +90,9 @@ public class Program
                 {
                 }
 
-                matches--;
+                batchRuns--;
 
-                stayInGame = settingsService.IsInteractive ? StayPrompter(Strings.PromptStayInGame) : matches > 0;
+                stayInGame = settingsService.IsInteractive ? StayPrompter(Strings.PromptStayInGame) : false;
             }
 
             stayInApp = settingsService.IsInteractive ? StayPrompter(Strings.PromptStayInApp) : false;
@@ -101,8 +108,12 @@ public class Program
         services.AddTTOptimizeEngine();
         services.AddTTOptimizeConsoleUI();
 
+        string dbPath = Path.Combine(AppContext.BaseDirectory, "ttoptimize.db");
+        services.AddTTOptimizePersistence(dbPath);
+
         services.AddSplendidWonders();
         services.AddConxelViewForGame(Games.SPLENDID_WONDERS_KEY);
+
     }
 
     private static void DisplayTTOptimizeTitle()
