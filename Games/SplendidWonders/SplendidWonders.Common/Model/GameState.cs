@@ -39,9 +39,9 @@ namespace SplendidWonders.Common.Model
         public GameOverReason GameOverReason { get; set; }
         public int ConsecutivePasses { get; set; }
 
-        IReadOnlyList<IPlayerState> IGameState.Players => Players;
+        IReadOnlyList<IParticipant> IGameState.Players => Players;
 
-        IPlayerState IGameState.ActivePlayer => ActivePlayer;
+        IParticipant IGameState.ActivePlayer => ActivePlayer;
 
         public CardGroup this[int level]
         {

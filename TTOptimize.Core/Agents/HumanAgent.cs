@@ -3,7 +3,7 @@ using TTOptimize.Core.InputAbstractions;
 
 namespace TTOptimize.Core.Agents;
 
-public class HumanAgent : IPlayerAgent
+public class HumanAgent : IAgent
 {
     private readonly IGameInput _input;
 

@@ -11,7 +11,7 @@ public enum AgentType
 
 public record PlayerSlotConfig(string Name, int PlayerId, AgentType Type);
 
-public interface IPlayerAgent
+public interface IAgent
 {
     string Name { get; }
     string StatisticsSubjectId { get; }

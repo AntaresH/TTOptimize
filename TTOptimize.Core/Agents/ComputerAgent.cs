@@ -3,7 +3,7 @@ using TTOptimize.Core.InputAbstractions;
 
 namespace TTOptimize.Core.Agents;
 
-public abstract class ComputerAgent : IPlayerAgent
+public abstract class ComputerAgent : IAgent
 {
     public string Name { get; }
 

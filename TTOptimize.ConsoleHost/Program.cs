@@ -65,6 +65,8 @@ public class Program
             var selectedGame = gameSelectionService.SelectGame();
             var sessionData = setupService.SetupGame(selectedGame);
 
+            int.TryParse(settingsService.GetSetting(TTOptArguments.MATCHES), out int matches);
+
             while (stayInGame)
             {
                 try
@@ -72,7 +74,6 @@ public class Program
                     var sessionManager = rootProvider.GetRequiredService<GameSessionManager>();
                     var sessionResult = sessionManager.StartNewMatch(selectedGame.GameId, sessionData.GameConfiguration, sessionData.Slots);
 
-                    Console.Clear();
                     Console.WriteLine($"{Strings.ExecutionTime}: {Math.Round(sessionResult.ExecutionInfo.Elapsed.TotalSeconds, 4)} {Strings.Seconds}");
                 }
                 catch (ConsoleUserAbortException)
@@ -82,7 +83,9 @@ public class Program
                 {
                 }
 
-                stayInGame = settingsService.IsInteractive ? StayPrompter(Strings.PromptStayInGame) : false;
+                matches--;
+
+                stayInGame = settingsService.IsInteractive ? StayPrompter(Strings.PromptStayInGame) : matches > 0;
             }
 
             stayInApp = settingsService.IsInteractive ? StayPrompter(Strings.PromptStayInApp) : false;

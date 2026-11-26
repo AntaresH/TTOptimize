@@ -5,7 +5,7 @@ namespace SplendidWonders.Gameplay
 {
     public record class PlayerResult : IPlayerResult
     {
-        public required IPlayerState Player { get; set; }
+        public required IParticipant Player { get; set; }
         public int Rank { get; set; }
         public int Points { get; set; }
         public int? Tiebreaker { get; set; }

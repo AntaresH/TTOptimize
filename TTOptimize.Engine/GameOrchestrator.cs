@@ -6,15 +6,15 @@ namespace TTOptimize.Engine;
 public class GameOrchestrator
 {
     private readonly IGameState _initialState;
-    private readonly IReadOnlyDictionary<int, IPlayerAgent> _agentsBySeat;
+    private readonly IReadOnlyDictionary<int, IAgent> _agentsBySeat;
     private readonly IGameRules _rules;
-    public event Action<IGameState, IReadOnlyList<GameAction>, IPlayerAgent>? TurnStarted;
-    public event Action<string, IPlayerAgent>? ValidationFailed; 
-    public event Action<GameAction, IPlayerState>? ActionExecuted;
+    public event Action<IGameState, IReadOnlyList<GameAction>, IAgent>? TurnStarted;
+    public event Action<string, IAgent>? ValidationFailed; 
+    public event Action<GameAction, IParticipant>? ActionExecuted;
 
     public GameOrchestrator(
         IGameState initialState,
-        IReadOnlyDictionary<int, IPlayerAgent> agentsBySeat,
+        IReadOnlyDictionary<int, IAgent> agentsBySeat,
         IGameRules rules)
     {
         _initialState = initialState;

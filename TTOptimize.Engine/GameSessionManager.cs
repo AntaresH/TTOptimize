@@ -33,7 +33,7 @@ public class GameSessionManager
             var input = scopeProvider.GetRequiredKeyedService<IGameInput>(gameId);
             var view = settings.IsInteractive ? scopeProvider.GetRequiredKeyedService<IGameView>(gameId) : null;
 
-            IReadOnlyDictionary<int, IPlayerAgent> agentsBySeat = CreateAgents(slotConfigs, input);
+            IReadOnlyDictionary<int, IAgent> agentsBySeat = CreateAgents(slotConfigs, input);
             IGameState initialState = stateFactory.Create(configuration);
 
             var orchestrator = new GameOrchestrator(initialState, agentsBySeat, rules);
@@ -53,17 +53,17 @@ public class GameSessionManager
         }
     }
 
-    private IReadOnlyDictionary<int, IPlayerAgent> CreateAgents(
+    private IReadOnlyDictionary<int, IAgent> CreateAgents(
         IReadOnlyList<PlayerSlotConfig> slotConfigs,
         IGameInput input)
     {
-        var agentsBySeat = new Dictionary<int, IPlayerAgent>(slotConfigs.Count);
+        var agentsBySeat = new Dictionary<int, IAgent>(slotConfigs.Count);
 
         for (int i = 0; i < slotConfigs.Count; i++)
         {
             var slot = slotConfigs[i];
 
-            IPlayerAgent agent = slot.Type switch
+            IAgent agent = slot.Type switch
             {
                 AgentType.Human => new HumanAgent(slot.Name, input),
                 AgentType.Random => new RandomAgent(slot.Name),

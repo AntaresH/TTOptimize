@@ -52,6 +52,7 @@ public class SettingsService : ISettingsService
                     case TTOptArguments.PLAYER2TYPE:
                     case TTOptArguments.PLAYER3TYPE:
                     case TTOptArguments.PLAYER4TYPE:
+                    case TTOptArguments.MATCHES:
                     case TTOptArguments.SEED:
                         if (int.TryParse(settingValue, out int parsedNum))
                         {

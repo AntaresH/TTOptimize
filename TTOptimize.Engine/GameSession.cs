@@ -10,7 +10,7 @@ public class GameSession
 {
     private readonly GameOrchestrator _orchestrator;
     private readonly IGameRules _rules;
-    private readonly IReadOnlyDictionary<int, IPlayerAgent> _agentsBySeat;
+    private readonly IReadOnlyDictionary<int, IAgent> _agentsBySeat;
     private readonly IGameView? _view;
     private readonly IGameInput _input;
     private readonly List<ActionLogEntry> _actionHistory;
@@ -18,7 +18,7 @@ public class GameSession
     public GameSession(
         GameOrchestrator orchestrator,
         IGameRules rules,
-        IReadOnlyDictionary<int, IPlayerAgent> agentsBySeat,
+        IReadOnlyDictionary<int, IAgent> agentsBySeat,
         IGameView? view,
         IGameInput input)
     {
@@ -73,7 +73,7 @@ public class GameSession
         return new SessionResult(outcome, executionInfo);
     }
 
-    private void OnTurnStarted(IGameState currentState, IReadOnlyList<GameAction> validActions, IPlayerAgent activeAgent)
+    private void OnTurnStarted(IGameState currentState, IReadOnlyList<GameAction> validActions, IAgent activeAgent)
     {
         if (activeAgent is HumanAgent)
         {
@@ -82,12 +82,12 @@ public class GameSession
         }
     }
 
-    private void OnValidationFailed(string invalidCommandText, IPlayerAgent activeAgent)
+    private void OnValidationFailed(string invalidCommandText, IAgent activeAgent)
     {
         _input.ValidationFailed(invalidCommandText);
     }
 
-    private void OnActionExecuted(GameAction action, IPlayerState player)
+    private void OnActionExecuted(GameAction action, IParticipant player)
     {
         _actionHistory.Add(new ActionLogEntry
         {

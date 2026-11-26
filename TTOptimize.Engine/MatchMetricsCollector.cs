@@ -19,7 +19,7 @@ public class MatchMetricsCollector
         Guid? experimentId,
         IGameConfiguration configuration,
         MatchOutcome outcome,
-        IReadOnlyDictionary<int, IPlayerAgent> agentsBySeat)
+        IReadOnlyDictionary<int, IAgent> agentsBySeat)
     {
         var gameExtractor = _serviceProvider.GetKeyedService<IMatchMetricsExtractor>(gameId);
 
@@ -27,7 +27,7 @@ public class MatchMetricsCollector
 
         foreach (IPlayerResult standing in outcome.Standings)
         {
-            IPlayerState player = standing.Player;
+            IParticipant player = standing.Player;
 
             var playerActions = outcome.ActionHistory
                 .Where(entry => entry.Player.Seat == player.Seat)
