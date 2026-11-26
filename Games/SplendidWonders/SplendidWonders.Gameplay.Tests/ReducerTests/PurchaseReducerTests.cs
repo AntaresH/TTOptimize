@@ -38,7 +38,7 @@ public class PurchaseReducerTests
 
         // Assert
         Assert.That(newState, Is.Not.Null);
-        Assert.That(newState.ActivePlayer.Id, Is.EqualTo(expected.ActivePlayerId));
+        Assert.That(newState.ActivePlayer.Seat, Is.EqualTo(expected.ActivePlayerId));
         Assert.That(newState.TokenSupply, Is.EqualTo(expected.TokenSupply));
         Assert.That(newState.Players[input.ActivePlayerId - 1].Store, Is.EqualTo(expected.PlayerStore));
         Assert.That(newState.Players[input.ActivePlayerId - 1].ReservedCards, Is.EquivalentTo(expected.PlayerReservedCards));
@@ -68,7 +68,7 @@ public class PurchaseReducerTests
 
         // Assert
         Assert.That(newState, Is.Not.Null);
-        Assert.That(newState.ActivePlayer.Id, Is.EqualTo(expected.ActivePlayerId));
+        Assert.That(newState.ActivePlayer.Seat, Is.EqualTo(expected.ActivePlayerId));
         Assert.That(newState.TokenSupply, Is.EqualTo(expected.TokenSupply));
         Assert.That(newState.Players[input.ActivePlayerId - 1].Store, Is.EqualTo(expected.PlayerStore));
         Assert.That(newState.Players[input.ActivePlayerId - 1].ReservedCards, Is.EquivalentTo(expected.PlayerReservedCards));
@@ -96,7 +96,7 @@ public class PurchaseReducerTests
 
         // Assert
         Assert.That(newState, Is.Not.Null);
-        Assert.That(newState.ActivePlayer.Id, Is.EqualTo(expected.ActivePlayerId));
+        Assert.That(newState.ActivePlayer.Seat, Is.EqualTo(expected.ActivePlayerId));
         Assert.That(newState.Leaders, Is.EquivalentTo(expected.AvailableLeaders));
         Assert.That(newState.Players[input.ActivePlayerId - 1].ReservedCards, Is.EquivalentTo(expected.PlayerReservedCards));
         Assert.That(newState.Players[input.ActivePlayerId - 1].Tableau, Is.EquivalentTo(expected.PlayerTableau));
@@ -119,7 +119,7 @@ public class PurchaseReducerTests
         var newState = _sut.Reduce(baseState, actionToApply);
         // Assert
         Assert.That(newState, Is.Not.Null);
-        Assert.That(newState.ActivePlayer.Id, Is.EqualTo(expected.ActivePlayerId));
+        Assert.That(newState.ActivePlayer.Seat, Is.EqualTo(expected.ActivePlayerId));
         Assert.That(newState.IsFinalTurn, Is.EqualTo(expected.IsFinalTurn));
     }
 

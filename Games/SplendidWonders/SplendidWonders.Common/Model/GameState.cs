@@ -29,7 +29,7 @@ namespace SplendidWonders.Common.Model
             }
             set
             {
-                _activePlayerId = value.Id;
+                _activePlayerId = value.Seat;
             }
         }
 
@@ -38,6 +38,10 @@ namespace SplendidWonders.Common.Model
         public GameProgression GameProgression { get; set; }
         public GameOverReason GameOverReason { get; set; }
         public int ConsecutivePasses { get; set; }
+
+        IReadOnlyList<IPlayerState> IGameState.Players => Players;
+
+        IPlayerState IGameState.ActivePlayer => ActivePlayer;
 
         public CardGroup this[int level]
         {

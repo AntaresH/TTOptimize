@@ -14,6 +14,6 @@ public record PlayerSlotConfig(string Name, int PlayerId, AgentType Type);
 public interface IPlayerAgent
 {
     string Name { get; }
-    int PlayerId { get; }
+    string StatisticsSubjectId { get; }
     GameCommand DecideCommand(IGameState gameState, IReadOnlyList<GameAction> validActions);
 }

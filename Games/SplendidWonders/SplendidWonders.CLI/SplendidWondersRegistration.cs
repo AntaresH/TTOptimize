@@ -11,6 +11,7 @@ using SplendidWonders.Gameplay.Reducers;
 using TTOptimize.ConsoleUI.View;
 using TTOptimize.Core.GameAbstractions;
 using TTOptimize.Core.InputAbstractions;
+using TTOptimize.Core.Statistics;
 using TTOptimize.Core.Setup;
 using TTOptimize.Core.ViewAbstractions;
 
@@ -65,6 +66,8 @@ public static class SplendidWondersRegistration
         services.AddKeyedScoped<IStateReducer, StateReducer>(Games.SPLENDID_WONDERS_KEY);
         services.AddKeyedScoped<IGameRules, Rules>(Games.SPLENDID_WONDERS_KEY);
         services.AddKeyedScoped<IGameInput, SplendidWondersInput>(Games.SPLENDID_WONDERS_KEY);
+        services.AddKeyedScoped<IMatchMetricsExtractor, SplendidWondersMetricsExtractor>(Games.SPLENDID_WONDERS_KEY);
+
 
         services.AddKeyedScoped<IConxelMasterLayout, MasterLayout>(Games.SPLENDID_WONDERS_KEY);
         services.AddKeyedScoped<IConxelPaneBuilder<BoardRenderData>, BoardBuilder>(Games.SPLENDID_WONDERS_KEY);

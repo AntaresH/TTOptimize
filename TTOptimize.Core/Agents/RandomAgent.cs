@@ -5,7 +5,7 @@ namespace TTOptimize.Core.Agents;
 
 public class RandomAgent : ComputerAgent
 {
-    public RandomAgent(string name, int playerId) : base(name, playerId)
+    public RandomAgent(string name) : base(name)
     {
     }
 

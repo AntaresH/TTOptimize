@@ -168,4 +168,10 @@
   <data name="PlayerNamePrompt" xml:space="preserve">
     <value>Játékos neve (Enter = Játékos {0}): </value>
   </data>
+  <data name="ExecutionTime" xml:space="preserve">
+    <value>Futási idő</value>
+  </data>
+  <data name="Seconds" xml:space="preserve">
+    <value>másodperc</value>
+  </data>
 </root>

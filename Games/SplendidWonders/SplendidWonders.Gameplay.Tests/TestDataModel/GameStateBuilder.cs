@@ -40,7 +40,7 @@ public class GameStateBuilder
 
     public GameStateBuilder WithCurrentPlayer(int currentPlayerId)
     {
-        _currentPlayer = _players.First(p => p.Id == currentPlayerId);
+        _currentPlayer = _players.First(p => p.Seat == currentPlayerId);
         return this;
     }
 
@@ -87,28 +87,28 @@ public class GameStateBuilder
 
     public GameStateBuilder WithPlayerStore(int playerId, TokenGroup store)
     {
-        var player = _players.First(p => p.Id == playerId);
+        var player = _players.First(p => p.Seat == playerId);
         player.Store = store;
         return this;
     }
 
     public GameStateBuilder WithPlayerAcquiredLeaders(int playerId, ImmutableList<Leader> acquiredLeaders)
     {
-        var player = _players.First(p => p.Id == playerId);
+        var player = _players.First(p => p.Seat == playerId);
         player.AcquiredLeaders = acquiredLeaders;
         return this;
     }
 
     public GameStateBuilder WithPlayerReservedCards(int playerId, ImmutableList<DevelopmentCard> reservedCards)
     {
-        var player = _players.First(p => p.Id == playerId);
+        var player = _players.First(p => p.Seat == playerId);
         player.ReservedCards = reservedCards;
         return this;
     }
 
     public GameStateBuilder WithPlayerTableau(int playerId, ImmutableList<DevelopmentCard> tableau)
     {
-        var player = _players.First(p => p.Id == playerId);
+        var player = _players.First(p => p.Seat == playerId);
         player.Tableau = tableau;
         return this;
     }
@@ -156,14 +156,14 @@ public class GameStateBuilder
             {
                 new Player()
                 {
-                    Id = 1,
+                    Seat = 1,
                     Name = "Test player 1",
                     ReservedCards = ImmutableList<DevelopmentCard>.Empty,
                     Store = TokenGroup.FromArray([0, 0, 0, 0, 0, 0])
                 },
                 new Player()
                 {
-                    Id = 2,
+                    Seat = 2,
                     Name = "Test player 2",
                     ReservedCards = ImmutableList<DevelopmentCard>.Empty,
                     Store = TokenGroup.FromArray([0, 0, 0, 0, 0, 0])

@@ -6,19 +6,19 @@ namespace TTOptimize.Engine;
 public class GameOrchestrator
 {
     private readonly IGameState _initialState;
-    private readonly IReadOnlyList<IPlayerAgent> _playerAgents;
+    private readonly IReadOnlyDictionary<int, IPlayerAgent> _agentsBySeat;
     private readonly IGameRules _rules;
     public event Action<IGameState, IReadOnlyList<GameAction>, IPlayerAgent>? TurnStarted;
     public event Action<string, IPlayerAgent>? ValidationFailed; 
-    public event Action<GameAction, IPlayerAgent>? ActionExecuted;
+    public event Action<GameAction, IPlayerState>? ActionExecuted;
 
     public GameOrchestrator(
         IGameState initialState,
-        IReadOnlyList<IPlayerAgent> playerAgents,
+        IReadOnlyDictionary<int, IPlayerAgent> agentsBySeat,
         IGameRules rules)
     {
         _initialState = initialState;
-        _playerAgents = playerAgents;
+        _agentsBySeat = agentsBySeat;
         _rules = rules;
     }
 
@@ -29,7 +29,7 @@ public class GameOrchestrator
         while (currentState.GameProgression != GameProgression.GameOver)
         {
             var validActions = _rules.Explore(currentState);
-            var activeAgent = _playerAgents[currentState.ActivePlayerId - 1];
+            var activeAgent = _agentsBySeat[currentState.ActivePlayer.Seat];
 
             TurnStarted?.Invoke(currentState, validActions, activeAgent);
 
@@ -41,8 +41,8 @@ public class GameOrchestrator
                 continue;
             }
 
+            ActionExecuted?.Invoke(command.Action, currentState.ActivePlayer);
             currentState = _rules.Reduce(currentState, command.Action);
-            ActionExecuted?.Invoke(command.Action, activeAgent);
         }
 
         return currentState;

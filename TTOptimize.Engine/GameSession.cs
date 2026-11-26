@@ -10,27 +10,27 @@ public class GameSession
 {
     private readonly GameOrchestrator _orchestrator;
     private readonly IGameRules _rules;
-    private readonly IReadOnlyList<IPlayerAgent> _agents;
-    private readonly IGameView _view;
+    private readonly IReadOnlyDictionary<int, IPlayerAgent> _agentsBySeat;
+    private readonly IGameView? _view;
     private readonly IGameInput _input;
     private readonly List<ActionLogEntry> _actionHistory;
 
     public GameSession(
         GameOrchestrator orchestrator,
         IGameRules rules,
-        IReadOnlyList<IPlayerAgent> agents,
-        IGameView view,
+        IReadOnlyDictionary<int, IPlayerAgent> agentsBySeat,
+        IGameView? view,
         IGameInput input)
     {
         _orchestrator = orchestrator;
         _rules = rules;
-        _agents = agents;
+        _agentsBySeat = agentsBySeat;
         _view = view;
         _input = input;
         _actionHistory = new List<ActionLogEntry>();
     }
 
-    public MatchResult Execute()
+    public SessionResult Execute()
     {
         _orchestrator.TurnStarted += OnTurnStarted;
         _orchestrator.ValidationFailed += OnValidationFailed;
@@ -38,14 +38,19 @@ public class GameSession
 
         IGameState finalState;
         TimeSpan elapsed;
+        DateTime startedAt, finishedAt;
 
         try
         {
-            _view.InitializeScreen();
+            _view?.InitializeScreen();
 
             long startTime = Stopwatch.GetTimestamp();
+            startedAt = DateTime.UtcNow;
+            
             finalState = _orchestrator.Run();
+            
             elapsed = Stopwatch.GetElapsedTime(startTime);
+            finishedAt = DateTime.UtcNow;
         }
         finally
         {
@@ -54,12 +59,18 @@ public class GameSession
             _orchestrator.ActionExecuted -= OnActionExecuted;
         }
 
-        IReadOnlyList<IPlayerResult> finalStandings = _rules.GetFinalStandings(finalState, _agents);
+        IReadOnlyList<IPlayerResult> finalStandings = _rules.GetFinalStandings(finalState);
 
-        _view.RefreshBoard(new BoardRenderData(finalState, null));
-        _view.ShowResults(new ResultsRenderData(finalState, finalStandings));
+        if (_view != null)
+        {
+            _view.RefreshBoard(new BoardRenderData(finalState, null));
+            _view.ShowResults(new ResultsRenderData(finalState, finalStandings));
+        }
 
-        return new MatchResult(finalState, finalStandings, _actionHistory, elapsed);
+        var outcome = new MatchOutcome(finalState, finalStandings, _actionHistory);
+        var executionInfo = new MatchExecutionInfo(startedAt, finishedAt, elapsed);
+
+        return new SessionResult(outcome, executionInfo);
     }
 
     private void OnTurnStarted(IGameState currentState, IReadOnlyList<GameAction> validActions, IPlayerAgent activeAgent)
@@ -76,13 +87,13 @@ public class GameSession
         _input.ValidationFailed(invalidCommandText);
     }
 
-    private void OnActionExecuted(GameAction action, IPlayerAgent agent)
+    private void OnActionExecuted(GameAction action, IPlayerState player)
     {
         _actionHistory.Add(new ActionLogEntry
         {
             TurnNumber = _actionHistory.Count + 1,
             Action = action,
-            Agent = agent
+            Player = player
         });
     }
 }

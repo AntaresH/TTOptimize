@@ -16,7 +16,7 @@ namespace SplendidWonders.Common.Setup
 
             for (int i = 0; i < configuration.PlayerCount; i++)
             {
-                players.Add(new Player() { Id = i + 1, Name = configuration.PlayerNames[i] });
+                players.Add(new Player() { Seat = i + 1, Name = configuration.PlayerNames[i] });
             }
 
             var tokenSupply = configuration.PlayerCount switch

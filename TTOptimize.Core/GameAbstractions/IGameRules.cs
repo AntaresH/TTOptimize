@@ -5,7 +5,7 @@ namespace TTOptimize.Core.GameAbstractions;
 public interface IGameRules
 {
     IReadOnlyList<GameAction> Explore(IGameState currentState);
-    IReadOnlyList<IPlayerResult> GetFinalStandings(IGameState finalState, IReadOnlyList<IPlayerAgent> playerAgents);
+    IReadOnlyList<IPlayerResult> GetFinalStandings(IGameState finalState);
     IGameState Reduce(IGameState baseState, GameAction actionToApply);
     bool Validate(GameAction action);
 }

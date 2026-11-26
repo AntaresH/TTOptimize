@@ -6,6 +6,7 @@ using TTOptimize.ConsoleUI.View;
 using TTOptimize.Core;
 using TTOptimize.Core.InputAbstractions;
 using TTOptimize.Core.Setup;
+using TTOptimize.Core.Statistics;
 using TTOptimize.Core.ViewAbstractions;
 using TTOptimize.Engine;
 
@@ -54,10 +55,7 @@ public class Program
         {
             bool stayInGame = true;
 
-            string interactiveModeArg = settingsService.GetSetting(TTOptArguments.INTERACTIVE_MODE);
-            bool interActiveMode = bool.TryParse(interactiveModeArg, out bool parsed) ? parsed : true;
-
-            if (interActiveMode)
+            if (settingsService.IsInteractive)
             {
                 Console.Clear();
                 DisplayTTOptimizeTitle();
@@ -72,16 +70,22 @@ public class Program
                 try
                 {
                     var sessionManager = rootProvider.GetRequiredService<GameSessionManager>();
-                    sessionManager.StartNewMatch(selectedGame.GameId, sessionData.GameConfiguration, sessionData.Slots);
+                    var sessionResult = sessionManager.StartNewMatch(selectedGame.GameId, sessionData.GameConfiguration, sessionData.Slots);
+
+                    Console.Clear();
+                    Console.WriteLine($"{Strings.ExecutionTime}: {Math.Round(sessionResult.ExecutionInfo.Elapsed.TotalSeconds, 4)} {Strings.Seconds}");
                 }
                 catch (ConsoleUserAbortException)
                 {
                 }
+                finally
+                {
+                }
 
-                stayInGame = interActiveMode ? StayPrompter(Strings.PromptStayInGame) : false;
+                stayInGame = settingsService.IsInteractive ? StayPrompter(Strings.PromptStayInGame) : false;
             }
 
-            stayInApp = interActiveMode ? StayPrompter(Strings.PromptStayInApp) : false;
+            stayInApp = settingsService.IsInteractive ? StayPrompter(Strings.PromptStayInApp) : false;
         }
     }
 

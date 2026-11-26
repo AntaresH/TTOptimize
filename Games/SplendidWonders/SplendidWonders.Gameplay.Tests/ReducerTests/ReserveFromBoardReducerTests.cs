@@ -40,7 +40,7 @@ public class ReserveFromBoardReducerTests
         Assert.That(newState.TokenSupply, Is.EqualTo(expected.TokenSupply));
         Assert.That(newState.Players[input.ActivePlayerId - 1].Store, Is.EqualTo(expected.PlayerStore));
         Assert.That(newState.Players[input.ActivePlayerId - 1].ReservedCards, Is.EquivalentTo(expected.PlayerReservedCards));
-        Assert.That(newState.ActivePlayer.Id, Is.EqualTo(expected.ActivePlayerId));
+        Assert.That(newState.ActivePlayer.Seat, Is.EqualTo(expected.ActivePlayerId));
 
         AssertCardReplacement(baseState, newState, actionToApply);
     }
@@ -68,7 +68,7 @@ public class ReserveFromBoardReducerTests
         Assert.That(newState.TokenSupply, Is.EqualTo(expected.TokenSupply));
         Assert.That(newState.Players[input.ActivePlayerId - 1].Store, Is.EqualTo(expected.PlayerStore));
         Assert.That(newState.Players[input.ActivePlayerId - 1].ReservedCards, Is.EquivalentTo(expected.PlayerReservedCards));
-        Assert.That(newState.ActivePlayer.Id, Is.EqualTo(expected.ActivePlayerId));
+        Assert.That(newState.ActivePlayer.Seat, Is.EqualTo(expected.ActivePlayerId));
 
         AssertCardReplacement(baseState, newState, actionToApply);
     }
@@ -96,7 +96,7 @@ public class ReserveFromBoardReducerTests
         Assert.That(newState.TokenSupply, Is.EqualTo(expected.TokenSupply));
         Assert.That(newState.Players[input.ActivePlayerId - 1].Store, Is.EqualTo(expected.PlayerStore));
         Assert.That(newState.Players[input.ActivePlayerId - 1].ReservedCards, Is.EquivalentTo(expected.PlayerReservedCards));
-        Assert.That(newState.ActivePlayer.Id, Is.EqualTo(expected.ActivePlayerId));
+        Assert.That(newState.ActivePlayer.Seat, Is.EqualTo(expected.ActivePlayerId));
 
         AssertCardReplacement(baseState, newState, actionToApply);
     }

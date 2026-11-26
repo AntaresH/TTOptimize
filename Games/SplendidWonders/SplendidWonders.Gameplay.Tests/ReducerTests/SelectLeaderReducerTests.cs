@@ -37,7 +37,7 @@ public class SelectLeaderReducerTests
 
         // Assert
         Assert.That(newState, Is.Not.Null);
-        Assert.That(newState.ActivePlayer.Id, Is.EqualTo(expected.ActivePlayerId));
+        Assert.That(newState.ActivePlayer.Seat, Is.EqualTo(expected.ActivePlayerId));
         Assert.That(newState.Leaders, Is.EquivalentTo(expected.AvailableLeaders));
         Assert.That(newState.Players[input.ActivePlayerId - 1].AcquiredLeaders, Is.EquivalentTo(expected.PlayerAcquiredLeaders));
     }

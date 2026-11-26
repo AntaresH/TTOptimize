@@ -25,7 +25,7 @@ namespace SplendidWonders.Gameplay.Reducers
                 tokenSupply[i] -= selectedTokens[i];
             }
 
-            return baseState.UpdatePlayerData(baseState.ActivePlayer.Id, TokenGroup.FromArray(playerStore), baseState.ActivePlayer.ReservedCards, baseState.ActivePlayer.Tableau, baseState.ActivePlayer.AcquiredLeaders)
+            return baseState.UpdatePlayerData(baseState.ActivePlayer.Seat, TokenGroup.FromArray(playerStore), baseState.ActivePlayer.ReservedCards, baseState.ActivePlayer.Tableau, baseState.ActivePlayer.AcquiredLeaders)
                             .UpdateTokenSupply(TokenGroup.FromArray(tokenSupply));
         }
 
@@ -79,7 +79,7 @@ namespace SplendidWonders.Gameplay.Reducers
             var availableLeaders = baseState.Leaders.Remove(leader);
 
             return baseState
-                    .UpdatePlayerData(baseState.ActivePlayer.Id, baseState.ActivePlayer.Store,
+                    .UpdatePlayerData(baseState.ActivePlayer.Seat, baseState.ActivePlayer.Store,
                                       baseState.ActivePlayer.ReservedCards, baseState.ActivePlayer.Tableau, acquiredLeaders)
                     .UpdateAvailableLeaders(availableLeaders);
         }
@@ -106,7 +106,7 @@ namespace SplendidWonders.Gameplay.Reducers
             bool tokenOverflow = CheckTokenOverflow(baseState);
             bool multipleLeadersEligible = CheckMultipleLeadersEligible(baseState);
 
-            bool isLastPlayer = baseState.ActivePlayer.Id == baseState.Players.Count;
+            bool isLastPlayer = baseState.ActivePlayer.Seat == baseState.Players.Count;
             bool advanceToNextPlayer = !tokenOverflow && !multipleLeadersEligible;
 
             if (advanceToNextPlayer && isLastPlayer && baseState.IsFinalTurn)
@@ -119,8 +119,8 @@ namespace SplendidWonders.Gameplay.Reducers
             }
 
             int nextPlayerId = advanceToNextPlayer
-                ? baseState.ActivePlayer.Id % baseState.Players.Count + 1
-                : baseState.ActivePlayer.Id;
+                ? baseState.ActivePlayer.Seat % baseState.Players.Count + 1
+                : baseState.ActivePlayer.Seat;
 
             return baseState with 
             { 

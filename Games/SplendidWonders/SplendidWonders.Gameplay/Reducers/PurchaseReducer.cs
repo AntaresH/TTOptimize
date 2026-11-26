@@ -57,7 +57,7 @@ namespace SplendidWonders.Gameplay.Reducers
             }
 
             return baseState
-                .UpdatePlayerData(baseState.ActivePlayer.Id, baseState.ActivePlayer.Store, playerReserved, playerTableau, baseState.ActivePlayer.AcquiredLeaders);
+                .UpdatePlayerData(baseState.ActivePlayer.Seat, baseState.ActivePlayer.Store, playerReserved, playerTableau, baseState.ActivePlayer.AcquiredLeaders);
         }
 
         private GameState AcquireLeader(GameState baseState)

@@ -8,12 +8,12 @@ public class HumanAgent : IPlayerAgent
     private readonly IGameInput _input;
 
     public string Name { get; }
-    public int PlayerId { get; }
 
-    public HumanAgent(string name, int playerId, IGameInput input)
+    public string StatisticsSubjectId => $"Human:{Name}";
+
+    public HumanAgent(string name, IGameInput input)
     {
         Name = name;
-        PlayerId = playerId;
         _input = input;
     }
 

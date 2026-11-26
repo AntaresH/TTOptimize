@@ -33,7 +33,7 @@ namespace SplendidWonders.Gameplay.Tests.ReducerTests
             var newState = _sut.Reduce(baseState, passAction);
 
             // Assert
-            Assert.That(newState.ActivePlayer.Id, Is.EqualTo(nextPlayerId));
+            Assert.That(newState.ActivePlayer.Seat, Is.EqualTo(nextPlayerId));
             Assert.That(newState.ConsecutivePasses, Is.EqualTo(1));
             Assert.That(newState.GameProgression, Is.EqualTo(GameProgression.InProgress));
         }
@@ -64,9 +64,9 @@ namespace SplendidWonders.Gameplay.Tests.ReducerTests
         {
             // Arrange
             var threePlayers = new List<Player>() {
-                new Player() { Id = 1 },
-                new Player() { Id = 2 },
-                new Player() { Id = 3 }
+                new Player() { Seat = 1 },
+                new Player() { Seat = 2 },
+                new Player() { Seat = 3 }
             };
 
             var baseState = _defaultBuilder
@@ -81,7 +81,7 @@ namespace SplendidWonders.Gameplay.Tests.ReducerTests
             var newState = _sut.Reduce(baseState, passAction);
 
             // Assert
-            Assert.That(newState.ActivePlayer.Id, Is.EqualTo(nextPlayerId));
+            Assert.That(newState.ActivePlayer.Seat, Is.EqualTo(nextPlayerId));
             Assert.That(newState.ConsecutivePasses, Is.EqualTo(2));
             Assert.That(newState.GameProgression, Is.EqualTo(GameProgression.InProgress));
         }
@@ -93,9 +93,9 @@ namespace SplendidWonders.Gameplay.Tests.ReducerTests
         {
             // Arrange
             var threePlayers = new List<Player>() {
-                new Player() { Id = 1 },
-                new Player() { Id = 2 },
-                new Player() { Id = 3 }
+                new Player() { Seat = 1 },
+                new Player() { Seat = 2 },
+                new Player() { Seat = 3 }
             };
 
             var baseState = _defaultBuilder
@@ -121,10 +121,10 @@ namespace SplendidWonders.Gameplay.Tests.ReducerTests
         {
             // Arrange
             var fourPlayers = new List<Player>() { 
-                new Player() { Id = 1 }, 
-                new Player() { Id = 2 }, 
-                new Player() { Id = 3 }, 
-                new Player() { Id = 4 } 
+                new Player() { Seat = 1 }, 
+                new Player() { Seat = 2 }, 
+                new Player() { Seat = 3 }, 
+                new Player() { Seat = 4 } 
             };
 
             var baseState = _defaultBuilder
@@ -138,7 +138,7 @@ namespace SplendidWonders.Gameplay.Tests.ReducerTests
             var newState = _sut.Reduce(baseState, passAction);
 
             // Assert
-            Assert.That(newState.ActivePlayer.Id, Is.EqualTo(nextPlayerId));
+            Assert.That(newState.ActivePlayer.Seat, Is.EqualTo(nextPlayerId));
             Assert.That(newState.ConsecutivePasses, Is.EqualTo(3));
             Assert.That(newState.GameProgression, Is.EqualTo(GameProgression.InProgress));
         }
@@ -151,10 +151,10 @@ namespace SplendidWonders.Gameplay.Tests.ReducerTests
         {
             // Arrange
             var fourPlayers = new List<Player>() { 
-                new Player() { Id = 1 }, 
-                new Player() { Id = 2 }, 
-                new Player() { Id = 3 }, 
-                new Player() { Id = 4 }
+                new Player() { Seat = 1 }, 
+                new Player() { Seat = 2 }, 
+                new Player() { Seat = 3 }, 
+                new Player() { Seat = 4 }
             };
 
         var baseState = _defaultBuilder

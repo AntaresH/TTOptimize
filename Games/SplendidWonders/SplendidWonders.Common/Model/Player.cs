@@ -1,10 +1,11 @@
 ﻿using System.Collections.Immutable;
+using TTOptimize.Core.GameAbstractions;
 
 namespace SplendidWonders.Common.Model
 {
-    public record class Player
+    public record class Player : IPlayerState
     {
-        public int Id { get; set; }
+        public int Seat { get; set; }
 
         public string Name { get; set; }
 

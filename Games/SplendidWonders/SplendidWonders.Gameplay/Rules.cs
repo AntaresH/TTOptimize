@@ -46,14 +46,14 @@ namespace SplendidWonders.Gameplay
             return _stateReducer.Reduce(baseState, actionToApply);
         }
 
-        public IReadOnlyList<IPlayerResult> GetFinalStandings(IGameState finalState, IReadOnlyList<IPlayerAgent> playerAgents)
+        public IReadOnlyList<IPlayerResult> GetFinalStandings(IGameState finalState)
         {
             var swGameState = (GameState)finalState;
 
             var orderedResults = swGameState.Players
                 .Select(p => new PlayerResult()
                 {
-                    Player = playerAgents.First(ag => ag.PlayerId == p.Id),
+                    Player = p,
                     Points = p.Tableau.Sum(c => c.VictoryPoints) + p.AcquiredLeaders.Count * 3,
                     Tiebreaker = p.Tableau.Count
                 })

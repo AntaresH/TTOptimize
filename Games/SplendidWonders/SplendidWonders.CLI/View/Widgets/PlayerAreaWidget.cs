@@ -38,7 +38,7 @@ public class PlayerAreaWidget : WidgetBase, IConxelWidget
     private ConxelCanvas PlayerBlock(GameState swState, int i)
     {
         var player = swState.Players[i];
-        var isActive = swState.ActivePlayerId == player.Id;
+        var isActive = swState.ActivePlayer.Seat == player.Seat;
 
         var blockColor = isActive ? ColorHelper.WarmWhite : ColorHelper.LightSetDefault;
         var playerColor = GetPlayerSpecificForeground(i + 1, isActive);

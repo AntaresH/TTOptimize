@@ -18,10 +18,7 @@ public class GameSelectionService
         var settingsService = _serviceProvider.GetRequiredService<ISettingsService>();
         var manifests = _serviceProvider.GetServices<IGameManifest>().ToList();
 
-        string interactiveModeArg = settingsService.GetSetting(TTOptArguments.INTERACTIVE_MODE);
-        bool interActiveMode = bool.TryParse(interactiveModeArg, out bool parsed) ? parsed : true;
-
-        if (interActiveMode)
+        if (settingsService.IsInteractive)
         {
             for (int i = 0; i < manifests.Count; i++)
             {

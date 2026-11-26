@@ -11,4 +11,5 @@
   <Project Path="TTOptimize.ConsoleUI/TTOptimize.ConsoleUI.csproj" Id="68774929-e5fb-4b9c-965d-4ac087004e95" />
   <Project Path="TTOptimize.Core/TTOptimize.Core.csproj" />
   <Project Path="TTOptimize.Engine/TTOptimize.Engine.csproj" Id="f6e6af29-9052-4d81-9592-8f7460d8ac3b" />
+  <Project Path="TTOptimize.Persistence/TTOptimize.Persistence.csproj" Id="af8a1484-2178-4831-a85a-5b1292dddcc1" />
 </Solution>

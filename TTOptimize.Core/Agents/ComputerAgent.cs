@@ -7,12 +7,11 @@ public abstract class ComputerAgent : IPlayerAgent
 {
     public string Name { get; }
 
-    public int PlayerId { get; }
+    public string StatisticsSubjectId => nameof(ComputerAgent);
 
-    public ComputerAgent(string name, int playerId)
+    public ComputerAgent(string name)
     {
         Name = name;
-        PlayerId = playerId;
     }
 
     public abstract GameCommand DecideCommand(IGameState gameState, IReadOnlyList<GameAction> validActions);

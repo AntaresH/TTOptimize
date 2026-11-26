@@ -11,19 +11,15 @@ namespace TTOptimize.ConsoleHost;
 public class SetupService
 {
     private readonly ISettingsService _settingsService;
-    private readonly bool _isInterActive;
 
     public SetupService(IServiceProvider serviceProvider)
     {
         _settingsService = serviceProvider.GetRequiredService<ISettingsService>();
-
-        var interActiveModeArg = _settingsService.GetSetting(TTOptArguments.INTERACTIVE_MODE);
-        _isInterActive = bool.TryParse(interActiveModeArg, out bool parsed) ? parsed : true;
     }
 
     public GameSessionConfiguration SetupGame(IGameManifest selectedManifest)
     {   
-        if (_isInterActive)
+        if (_settingsService.IsInteractive)
         {
             Console.Clear();
             Console.Write(selectedManifest.AsciiLogo);
@@ -50,7 +46,7 @@ public class SetupService
 
         var configInstance = (IGameConfiguration)Activator.CreateInstance(configurationType)!;
 
-        if (_isInterActive)
+        if (_settingsService.IsInteractive)
             Console.WriteLine($"\n=== {Strings.GameSettings} ===");
 
         foreach (var property in configurationType.GetProperties(BindingFlags.Public | BindingFlags.Instance))
@@ -87,12 +83,12 @@ public class SetupService
     {
         var slots = new List<PlayerSlotConfig>(playerCount);
 
-        if (_isInterActive)
+        if (_settingsService.IsInteractive)
             Console.WriteLine($"\n=== {Strings.PlayerSettings} ===");
 
         for (int i = 0; i < playerCount; i++)
         {
-            if (_isInterActive)
+            if (_settingsService.IsInteractive)
                 Console.WriteLine($"\n--- {i + 1}. {Strings.Player} ---");
 
             string name = FromSettingOrPrompt(string.Format(Strings.PlayerNameArgumentKeyFormat, i + 1), () => PromptString(string.Format(Strings.PlayerNamePrompt, i + 1), $"{Strings.Player} {i + 1}"));

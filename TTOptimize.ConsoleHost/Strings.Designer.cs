@@ -88,6 +88,15 @@ namespace TTOptimize.ConsoleHost {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Futási idő.
+        /// </summary>
+        internal static string ExecutionTime {
+            get {
+                return ResourceManager.GetString("ExecutionTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to JÁTÉK BEÁLLÍTÁSOK.
         /// </summary>
         internal static string GameSettings {
@@ -192,6 +201,15 @@ namespace TTOptimize.ConsoleHost {
         internal static string PromptStayInGame {
             get {
                 return ResourceManager.GetString("PromptStayInGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to másodperc.
+        /// </summary>
+        internal static string Seconds {
+            get {
+                return ResourceManager.GetString("Seconds", resourceCulture);
             }
         }
         

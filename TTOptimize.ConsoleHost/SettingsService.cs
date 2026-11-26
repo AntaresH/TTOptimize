@@ -5,6 +5,26 @@ namespace TTOptimize.ConsoleHost;
 
 public class SettingsService : ISettingsService
 {
+    public bool IsInteractive { get; init; }
+
+    public string? GetSetting(string settingId)
+    {
+        if (_settings.TryGetValue(settingId.ToLower(), out object settingValue))
+        {
+            return settingValue.ToString();
+        }
+
+        return null;
+    }
+
+    public string? this[string settingType]
+    {
+        get
+        {
+            return _settings.GetValueOrDefault(settingType)?.ToString();
+        }
+    }
+
     private Dictionary<string, object> _settings { get; set; } = new Dictionary<string, object>();
 
     public SettingsService(string[] cmdLineArgs)
@@ -50,30 +70,9 @@ public class SettingsService : ISettingsService
                 }
             }
         }
-    }
 
-    public string GetSetting(string settingId)
-    {
-        if (_settings.TryGetValue(settingId.ToLower(), out object settingValue))
-        {
-            return settingValue.ToString();
-        }
-
-        return null;
-    }
-
-    public string QuickRead(string argumentType)
-    {
-        var argument = GetSetting(argumentType);
-
-        return string.IsNullOrEmpty(argument) ? Console.ReadLine().Trim() : argument;
-    }
-
-    public string this[string settingType]
-    {
-        get
-        {
-            return _settings.ContainsKey(settingType) ? _settings[settingType].ToString() : null;
-        }
+        IsInteractive = _settings.TryGetValue(TTOptArguments.INTERACTIVE_MODE, out object? isInteractive) && isInteractive is bool b
+        ? b
+        : true;
     }
 }

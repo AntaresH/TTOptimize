@@ -55,7 +55,7 @@ namespace SplendidWonders.Gameplay.Reducers
             var playerReserved = baseState.ActivePlayer.ReservedCards;
             playerReserved = playerReserved.Add(card);
 
-            return baseState.UpdatePlayerData(baseState.ActivePlayer.Id, playerStore, playerReserved, baseState.ActivePlayer.Tableau, baseState.ActivePlayer.AcquiredLeaders)
+            return baseState.UpdatePlayerData(baseState.ActivePlayer.Seat, playerStore, playerReserved, baseState.ActivePlayer.Tableau, baseState.ActivePlayer.AcquiredLeaders)
                             .UpdateTokenSupply(tokenSupply);
         }
     }

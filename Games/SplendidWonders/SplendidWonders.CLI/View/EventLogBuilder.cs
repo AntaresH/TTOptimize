@@ -22,9 +22,9 @@ public class EventLogBuilder : IConxelPaneBuilder<EventLogRenderData>
         int logRow = 2;
         foreach (var logEntry in paneData.History.Reverse().Take(_eventLogHeight-3))
         {
-            var fgColor = GetPlayerSpecificForeground(logEntry.Agent.PlayerId);
+            var fgColor = GetPlayerSpecificForeground(logEntry.Player.Seat);
 
-            conxelCanvas.WriteText(logRow++, 0, $"#{logEntry.TurnNumber}: {logEntry.Agent.Name} - {logEntry.Action.Description}", fgColor);
+            conxelCanvas.WriteText(logRow++, 0, $"#{logEntry.TurnNumber}: {logEntry.Player.Name} - {logEntry.Action.Description}", fgColor);
         }
 
         return conxelCanvas;

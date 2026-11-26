@@ -2,7 +2,9 @@
 
 public interface ISettingsService
 {
-    string GetSetting(string settingId);
+    bool IsInteractive { get; }
 
-    string this[string settingType] { get; }
+    string? this[string settingType] { get; }
+
+    string? GetSetting(string settingId);
 }

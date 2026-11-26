@@ -8,7 +8,7 @@ namespace TTOptimize.Core.GameAbstractions
 
     public interface IPlayerResult
     {
-        IPlayerAgent Player { get; }
+        IPlayerState Player { get; }
 
         int Rank { get; }
 
