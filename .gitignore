@@ -3,3 +3,5 @@
 **/obj/
 /TTOptimize.ConsoleHost/TTOptimize.ConsoleHost.csproj.user
 /Persistence/
+/TTOptimize.Persistence/ttoptimize.db
+/TTOptimize.Persistence/ttoptimize-log.db
