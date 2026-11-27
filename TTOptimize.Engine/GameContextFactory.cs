@@ -12,12 +12,10 @@ public class GameContextFactory : IGameContextFactory
     private readonly IServiceProvider _rootServiceProvider;
     private readonly bool _isInteractive;
 
-    public GameContextFactory(
-        IServiceProvider rootServiceProvider,
-        ISettingsService settingsService)
+    public GameContextFactory(IServiceProvider rootServiceProvider, ISettingsService settingsService)
     {
         _rootServiceProvider = rootServiceProvider;
-        _isInteractive = settingsService.IsInteractive;
+        _isInteractive = settingsService.IsGameInteractive;
     }
 
     public GameContext CreateContext(string gameId)

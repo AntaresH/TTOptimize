@@ -2,9 +2,10 @@
 
 public interface ISettingsService
 {
-    bool IsInteractive { get; }
+    bool IsSetupInteractive { get; }
+    bool IsGameInteractive { get; }
+
+    int BatchRuns { get; }
 
     string? this[string settingType] { get; }
-
-    string? GetSetting(string settingId);
 }

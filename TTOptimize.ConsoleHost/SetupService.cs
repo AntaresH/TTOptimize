@@ -17,7 +17,7 @@ public class SetupService
     {
         _settingsService = serviceProvider.GetRequiredService<ISettingsService>();
 
-        _isInteractive = _settingsService.IsInteractive;
+        _isInteractive = _settingsService.IsSetupInteractive;
     }
 
     public GameSessionConfiguration SetupGame(IGameManifest selectedManifest)
@@ -110,7 +110,7 @@ public class SetupService
     {
         T defaultValue = (T)(property.GetValue(configInstance) ?? fallbackDefault!);
 
-        string? propArg = _settingsService.GetSetting(property.Name);
+        string? propArg = _settingsService[property.Name];
 
         if (T.TryParse(propArg, null, out T parsedValue))
         {
@@ -123,9 +123,9 @@ public class SetupService
         }
     }
 
-    private T FromSettingOrPrompt<T>(string formattedArgumentKey, Func<T> promptUser) where T : IParsable<T>
+    private T FromSettingOrPrompt<T>(string formattedSettingKey, Func<T> promptUser) where T : IParsable<T>
     {
-        string propertyArg = _settingsService.GetSetting(formattedArgumentKey);
+        string propertyArg = _settingsService[formattedSettingKey];
 
         if (T.TryParse(propertyArg, null, out T parsedArg))
         {

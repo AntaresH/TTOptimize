@@ -26,7 +26,7 @@ public class GameSessionManager
         _settingsService = settingsService;
         _matchRepository = matchRepository;
 
-        _isInteractive = _settingsService.IsInteractive;
+        _isInteractive = _settingsService.IsGameInteractive;
     }
     public SessionResult RunSingleMatch(string gameId, IGameConfiguration configuration, IReadOnlyList<PlayerSlotConfig> slotConfigs)
     {
@@ -90,11 +90,6 @@ public class GameSessionManager
             };
 
             agentsBySeat.Add(i + 1, agent);
-
-        }
-
-        foreach (PlayerSlotConfig slot in slotConfigs)
-        {
         }
 
         return agentsBySeat;

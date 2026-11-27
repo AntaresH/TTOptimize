@@ -5,23 +5,84 @@
     },
     "SplendidWonders HvH": {
       "commandName": "Project",
-      "commandLineArgs": "interactive=false gameid=splendidWonders playercount=2 userandomseed=true player1name=Ambrus player2name=Brünhilda player1type=1 player2type=1"
+      "environmentVariables": {
+        "Simulation__SetupInteractive": "false",
+        "Simulation__GameId": "splendidWonders",
+        "Simulation__PlayerCount": "2",
+        "Simulation__UseRandomSeed": "true",
+        "Simulation__Player1Name": "Ambrus",
+        "Simulation__Player2Name": "Brünhilda",
+        "Simulation__Player1Type": "1",
+        "Simulation__Player2Type": "1"
+      }
     },
     "SplendidWonders GVG": {
       "commandName": "Project",
-      "commandLineArgs": "interactive=false gameid=splendidWonders playercount=2 userandomseed=true player1name=Metalhead player2name=Ironboss player1type=2 player2type=2"
+      "environmentVariables": {
+        "Simulation__SetupInteractive": "false",
+        "Simulation__GameInteractive": "false",
+        "Simulation__GameId": "splendidWonders",
+        "Simulation__PlayerCount": "2",
+        "Simulation__UseRandomSeed": "true",
+        "Simulation__Player1Name": "Metalhead",
+        "Simulation__Player2Name": "Ironboss",
+        "Simulation__Player1Type": "2",
+        "Simulation__Player2Type": "2"
+      }
     },
     "SplendidWonders HvGGG": {
       "commandName": "Project",
-      "commandLineArgs": "interactive=false gameid=splendidWonders playercount=4 userandomseed=true player1name=LastManStanding player2name=Metalhead player3name=Ironboss player4name=RoboCube player1type=1 player2type=2 player3type=2 player4type=2"
+      "environmentVariables": {
+        "Simulation__SetupInteractive": "false",
+        "Simulation__GameId": "splendidWonders",
+        "Simulation__PlayerCount": "4",
+        "Simulation__UseRandomSeed": "true",
+        "Simulation__Player1Name": "LastManStanding",
+        "Simulation__Player2Name": "Metalhead",
+        "Simulation__Player3Name": "Ironboss",
+        "Simulation__Player4Name": "RoboCube",
+        "Simulation__Player1Type": "1",
+        "Simulation__Player2Type": "2",
+        "Simulation__Player3Type": "2",
+        "Simulation__Player4Type": "2"
+      }
     },
     "SplendidWonders 4G": {
       "commandName": "Project",
-      "commandLineArgs": "interactive=false gameid=splendidWonders playercount=4 userandomseed=true player1name=Metalhead player2name=Ironboss player3name=Robocube player4name=Wirebeast player1type=2 player2type=2 player3type=2 player4type=2"
+      "environmentVariables": {
+        "Simulation__SetupInteractive": "false",
+        "Simulation__GameInteractive": "false",
+        "Simulation__GameId": "splendidWonders",
+        "Simulation__PlayerCount": "4",
+        "Simulation__UseRandomSeed": "true",
+        "Simulation__Player1Name": "Metalhead",
+        "Simulation__Player2Name": "Ironboss",
+        "Simulation__Player3Name": "Robocube",
+        "Simulation__Player4Name": "Wirebeast",
+        "Simulation__Player1Type": "2",
+        "Simulation__Player2Type": "2",
+        "Simulation__Player3Type": "2",
+        "Simulation__Player4Type": "2"
+      }
     },
     "SplendidWonders 4Gx100": {
       "commandName": "Project",
-      "commandLineArgs": "interactive=false gameid=splendidWonders playercount=4 userandomseed=true player1name=Metalhead player2name=Ironboss player3name=Robocube player4name=Wirebeast player1type=2 player2type=2 player3type=2 player4type=2 batchruns=100"
+      "environmentVariables": {
+        "Simulation__SetupInteractive": "false",
+        "Simulation__GameInteractive": "false",
+        "Simulation__GameId": "splendidWonders",
+        "Simulation__PlayerCount": "4",
+        "Simulation__UseRandomSeed": "true",
+        "Simulation__BatchRuns": "100",
+        "Simulation__Player1Name": "Metalhead",
+        "Simulation__Player2Name": "Ironboss",
+        "Simulation__Player3Name": "Robocube",
+        "Simulation__Player4Name": "Wirebeast",
+        "Simulation__Player1Type": "2",
+        "Simulation__Player2Type": "2",
+        "Simulation__Player3Type": "2",
+        "Simulation__Player4Type": "2"
+      }
     }
   }
 }

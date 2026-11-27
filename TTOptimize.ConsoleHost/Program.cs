@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using SplendidWonders.CLI;
 using System.Runtime.InteropServices;
 using TTOptimize.Core;
@@ -52,7 +53,7 @@ public class Program
         {
             bool stayInGame = true;
 
-            if (settingsService.IsInteractive)
+            if (settingsService.IsSetupInteractive)
             {
                 Console.Clear();
                 DisplayTTOptimizeTitle();
@@ -62,7 +63,7 @@ public class Program
             var selectedGame = gameSelectionService.SelectGame();
             var sessionData = setupService.SetupGame(selectedGame);
 
-            int.TryParse(settingsService.GetSetting(TTOptArguments.BATCHRUNS), out int batchRuns);
+            int.TryParse(settingsService[TTOptArguments.BATCHRUNS], out int batchRuns);
 
             while (stayInGame)
             {
@@ -74,12 +75,14 @@ public class Program
                     {
                         var batchExecutionResult = sessionManager.RunBatch(selectedGame.GameId, sessionData.GameConfiguration, sessionData.Slots, batchRuns);
 
+                        Console.WriteLine();
                         Console.WriteLine($"{Strings.BatchExecutionTime}: {Math.Round(batchExecutionResult.TotalDuration.TotalSeconds, 4)} {Strings.Seconds}");
                     }
                     else
                     {
                         var sessionResult = sessionManager.RunSingleMatch(selectedGame.GameId, sessionData.GameConfiguration, sessionData.Slots);
 
+                        Console.WriteLine();
                         Console.WriteLine($"{Strings.ExecutionTime}: {Math.Round(sessionResult.ExecutionInfo.Elapsed.TotalSeconds, 4)} {Strings.Seconds}");
                     }
                 }
@@ -92,23 +95,38 @@ public class Program
 
                 batchRuns--;
 
-                stayInGame = settingsService.IsInteractive ? StayPrompter(Strings.PromptStayInGame) : false;
+                stayInGame = settingsService.IsSetupInteractive ? StayPrompter(Strings.PromptStayInGame) : false;
             }
 
-            stayInApp = settingsService.IsInteractive ? StayPrompter(Strings.PromptStayInApp) : false;
+            stayInApp = settingsService.IsSetupInteractive ? StayPrompter(Strings.PromptStayInApp) : false;
         }
     }
 
     private static void RegisterServices(string[] args, ServiceCollection services)
     {
-        services.AddSingleton<ISettingsService>(_ => new SettingsService(args));
+        IConfiguration configuration = new ConfigurationBuilder()
+            .SetBasePath(AppContext.BaseDirectory)
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+            .AddEnvironmentVariables()
+            .AddCommandLine(args)
+            .Build();
+
+        var settingsService = new SettingsService(configuration);
+        services.AddSingleton<ISettingsService>(settingsService);
+
         services.AddSingleton<SetupService>();
         services.AddSingleton<GameSelectionService>();
 
         services.AddTTOptimizeEngine();
         services.AddTTOptimizeConsoleUI();
 
-        string dbPath = Path.Combine(AppContext.BaseDirectory, "ttoptimize.db");
+        string relativeDir = configuration["Persistence:DatabaseDirectory"] ?? "..\\..\\..\\..\\Persistence";
+        string dbDir = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, relativeDir));
+        Directory.CreateDirectory(dbDir);
+
+        string dbPath = Path.Combine(dbDir, configuration["Persistence:DatabaseFileName"] ?? "ttoptimize.db");
+        services.AddTTOptimizePersistence(dbPath);
+
         services.AddTTOptimizePersistence(dbPath);
 
         services.AddSplendidWonders();
