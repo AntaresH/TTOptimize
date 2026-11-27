@@ -26,14 +26,14 @@ public class SelectLeaderReducerTests
         ReducerTestData input, SelectLeaderAction actionToApply, ReducerTestData expected)
     {
         // Arrange
-        var baseState = _defaultBuilder
+        var sourceState = _defaultBuilder
             .WithCurrentPlayer(input.ActivePlayerId)
             .WithLeaders(input.AvailableLeaders)
             .WithPlayerAcquiredLeaders(input.ActivePlayerId, input.PlayerAcquiredLeaders)
             .Build();
 
         // Act
-        var newState = _sut.Reduce(baseState, actionToApply);
+        var newState = _sut.Reduce(sourceState, actionToApply);
 
         // Assert
         Assert.That(newState, Is.Not.Null);

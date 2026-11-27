@@ -81,7 +81,7 @@ public class GameSession
         _input.ValidationFailed(invalidCommandText);
     }
 
-    private void OnActionExecuted(GameAction action, IParticipant player)
+    private void OnActionExecuted(GameAction action, IPlayer player)
     {
         _actionHistory.Add(new ActionLogEntry
         {

@@ -7,17 +7,17 @@ namespace SplendidWonders.Gameplay.Reducers
 {
     public class ReducerBase
     {
-        protected GameState ReturnTokens(GameState baseState, int[] returnTokens)
+        protected GameState ReturnTokens(GameState sourceState, int[] returnTokens)
         {
             var invertedValues = returnTokens.Select(t => t * -1).ToArray();
 
-            return DrawTokens(baseState, invertedValues);
+            return DrawTokens(sourceState, invertedValues);
         }
 
-        protected GameState DrawTokens(GameState baseState, int[] selectedTokens)
+        protected GameState DrawTokens(GameState sourceState, int[] selectedTokens)
         {
-            var playerStore = baseState.ActivePlayer.Store.ToArray();
-            var tokenSupply = baseState.TokenSupply.ToArray();
+            var playerStore = sourceState.ActivePlayer.Store.ToArray();
+            var tokenSupply = sourceState.TokenSupply.ToArray();
 
             for (int i = 0; i < 6; i++)
             {
@@ -25,19 +25,19 @@ namespace SplendidWonders.Gameplay.Reducers
                 tokenSupply[i] -= selectedTokens[i];
             }
 
-            return baseState.UpdatePlayerData(baseState.ActivePlayer.Seat, TokenGroup.FromArray(playerStore), baseState.ActivePlayer.ReservedCards, baseState.ActivePlayer.Tableau, baseState.ActivePlayer.AcquiredLeaders)
+            return sourceState.UpdatePlayerData(sourceState.ActivePlayer.Seat, TokenGroup.FromArray(playerStore), sourceState.ActivePlayer.ReservedCards, sourceState.ActivePlayer.Tableau, sourceState.ActivePlayer.AcquiredLeaders)
                             .UpdateTokenSupply(TokenGroup.FromArray(tokenSupply));
         }
 
-        protected GameState ReplaceCard(GameState baseState, CardAction action)
+        protected GameState ReplaceCard(GameState sourceState, CardAction action)
         {
             int level = action.Card.Level;
 
-            var cardGroup = baseState[level];
+            var cardGroup = sourceState[level];
 
             if (!cardGroup.Market.Contains(action.Card))
             {
-                return baseState;
+                return sourceState;
             }
 
             int index = cardGroup.Market.IndexOf(action.Card);
@@ -55,43 +55,43 @@ namespace SplendidWonders.Gameplay.Reducers
                 newMarket = newMarket.Insert(index, Cards.Empty);
             }
 
-            return baseState.UpdateLevel(level, new CardGroup() { Deck = newDeck, Market = newMarket });
+            return sourceState.UpdateLevel(level, new CardGroup() { Deck = newDeck, Market = newMarket });
         }
 
-        protected GameState TriggerEndgame(GameState baseState)
+        protected GameState TriggerEndgame(GameState sourceState)
         {
-            if (!baseState.IsFinalTurn)
+            if (!sourceState.IsFinalTurn)
             {
-                int totalVPs = baseState.ActivePlayer.Tableau.Sum(c => c.VictoryPoints) + baseState.ActivePlayer.AcquiredLeaders.Count * 3;
+                int totalVPs = sourceState.ActivePlayer.Tableau.Sum(c => c.VictoryPoints) + sourceState.ActivePlayer.AcquiredLeaders.Count * 3;
 
                 if (totalVPs >= 15)
                 {
-                    return baseState with { IsFinalTurn = true };
+                    return sourceState with { IsFinalTurn = true };
                 }
             }
 
-            return baseState;
+            return sourceState;
         }
 
-        protected GameState AcquireLeader(GameState baseState, Leader leader)
+        protected GameState AcquireLeader(GameState sourceState, Leader leader)
         {
-            var acquiredLeaders = baseState.ActivePlayer.AcquiredLeaders.Add(leader);
-            var availableLeaders = baseState.Leaders.Remove(leader);
+            var acquiredLeaders = sourceState.ActivePlayer.AcquiredLeaders.Add(leader);
+            var availableLeaders = sourceState.Leaders.Remove(leader);
 
-            return baseState
-                    .UpdatePlayerData(baseState.ActivePlayer.Seat, baseState.ActivePlayer.Store,
-                                      baseState.ActivePlayer.ReservedCards, baseState.ActivePlayer.Tableau, acquiredLeaders)
+            return sourceState
+                    .UpdatePlayerData(sourceState.ActivePlayer.Seat, sourceState.ActivePlayer.Store,
+                                      sourceState.ActivePlayer.ReservedCards, sourceState.ActivePlayer.Tableau, acquiredLeaders)
                     .UpdateAvailableLeaders(availableLeaders);
         }
 
-        protected GameState AdvanceTurn(GameState baseState, GameAction action)
+        protected GameState AdvanceTurn(GameState sourceState, GameAction action)
         {
             int newConsecutivePasses = 0;
             if (action is PassAction)
             {
-                if (baseState.ConsecutivePasses == baseState.Players.Count - 1)
+                if (sourceState.ConsecutivePasses == sourceState.Players.Count - 1)
                 {
-                    return baseState with
+                    return sourceState with
                     {
                         GameOverReason = GameOverReason.Stalemate,
                         GameProgression = GameProgression.GameOver
@@ -99,19 +99,19 @@ namespace SplendidWonders.Gameplay.Reducers
                 }
                 else
                 {
-                    newConsecutivePasses = baseState.ConsecutivePasses + 1;
+                    newConsecutivePasses = sourceState.ConsecutivePasses + 1;
                 }
             }
 
-            bool tokenOverflow = CheckTokenOverflow(baseState);
-            bool multipleLeadersEligible = CheckMultipleLeadersEligible(baseState);
+            bool tokenOverflow = CheckTokenOverflow(sourceState);
+            bool multipleLeadersEligible = CheckMultipleLeadersEligible(sourceState);
 
-            bool isLastPlayer = baseState.ActivePlayer.Seat == baseState.Players.Count;
+            bool isLastPlayer = sourceState.ActivePlayer.Seat == sourceState.Players.Count;
             bool advanceToNextPlayer = !tokenOverflow && !multipleLeadersEligible;
 
-            if (advanceToNextPlayer && isLastPlayer && baseState.IsFinalTurn)
+            if (advanceToNextPlayer && isLastPlayer && sourceState.IsFinalTurn)
             {
-                return baseState with 
+                return sourceState with 
                 { 
                     GameOverReason = GameOverReason.VictoryConditionMet,
                     GameProgression = GameProgression.GameOver 
@@ -119,19 +119,19 @@ namespace SplendidWonders.Gameplay.Reducers
             }
 
             int nextPlayerId = advanceToNextPlayer
-                ? baseState.ActivePlayer.Seat % baseState.Players.Count + 1
-                : baseState.ActivePlayer.Seat;
+                ? sourceState.ActivePlayer.Seat % sourceState.Players.Count + 1
+                : sourceState.ActivePlayer.Seat;
 
-            return baseState with 
+            return sourceState with 
             { 
-                ActivePlayer = baseState.Players[nextPlayerId - 1],
+                ActivePlayer = sourceState.Players[nextPlayerId - 1],
                 ConsecutivePasses = action is PassAction ? newConsecutivePasses : 0
             };
         }
 
-        private bool CheckMultipleLeadersEligible(GameState baseState)
+        private bool CheckMultipleLeadersEligible(GameState sourceState)
         {
-            return GetEligibleLeaders(baseState).Count() > 1;
+            return GetEligibleLeaders(sourceState).Count() > 1;
         }
 
         private bool CheckTokenOverflow(GameState state)

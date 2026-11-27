@@ -25,7 +25,7 @@ public class ReserveFromDeckReducerTests
         ReducerTestData input, ReserveFromDeckAction actionToApply, ReducerTestData expected)
     {
         // Arrange
-        var baseState = _defaultBuilder
+        var sourceState = _defaultBuilder
             .WithCurrentPlayer(input.ActivePlayerId)
             .WithPlayerStore(input.ActivePlayerId, input.PlayerStore)
             .WithPlayerReservedCards(input.ActivePlayerId, input.PlayerReservedCards)
@@ -33,7 +33,7 @@ public class ReserveFromDeckReducerTests
             .Build();
 
         // Act
-        var newState = _sut.Reduce(baseState, actionToApply);
+        var newState = _sut.Reduce(sourceState, actionToApply);
 
         // Assert
         Assert.That(newState, Is.Not.Null);
@@ -41,7 +41,7 @@ public class ReserveFromDeckReducerTests
         Assert.That(newState.Players[input.ActivePlayerId - 1].Store, Is.EqualTo(expected.PlayerStore));
         Assert.That(newState.Players[input.ActivePlayerId - 1].ReservedCards, Is.EquivalentTo(expected.PlayerReservedCards));
         Assert.That(newState.ActivePlayer.Seat, Is.EqualTo(expected.ActivePlayerId));
-        Assert.That(newState[actionToApply.Level].Deck.Count, Is.EqualTo(baseState[actionToApply.Level].Deck.Count - 1));
+        Assert.That(newState[actionToApply.Level].Deck.Count, Is.EqualTo(sourceState[actionToApply.Level].Deck.Count - 1));
     }
 
     [TestCaseSource(nameof(ReserveFromDeckCardSeed23456Cases))]
@@ -52,7 +52,7 @@ public class ReserveFromDeckReducerTests
         ReducerTestData expected)
     {
         // Arrange
-        var baseState = _defaultBuilder
+        var sourceState = _defaultBuilder
             .WithLevel1(seededCardSetup[0])
             .WithLevel2(seededCardSetup[1])
             .WithLevel3(seededCardSetup[2])
@@ -63,7 +63,7 @@ public class ReserveFromDeckReducerTests
             .Build();
 
         // Act
-        var newState = _sut.Reduce(baseState, actionToApply);
+        var newState = _sut.Reduce(sourceState, actionToApply);
 
         // Assert
         Assert.That(newState, Is.Not.Null);
@@ -71,7 +71,7 @@ public class ReserveFromDeckReducerTests
         Assert.That(newState.Players[input.ActivePlayerId - 1].Store, Is.EqualTo(expected.PlayerStore));
         Assert.That(newState.Players[input.ActivePlayerId - 1].ReservedCards, Is.EquivalentTo(expected.PlayerReservedCards));
         Assert.That(newState.ActivePlayer.Seat, Is.EqualTo(expected.ActivePlayerId));
-        Assert.That(newState[actionToApply.Level].Deck.Count, Is.EqualTo(baseState[actionToApply.Level].Deck.Count - 1));
+        Assert.That(newState[actionToApply.Level].Deck.Count, Is.EqualTo(sourceState[actionToApply.Level].Deck.Count - 1));
     }
 
     private static IEnumerable<TestCaseData> ReserveFromDeckCardSeed0Cases()

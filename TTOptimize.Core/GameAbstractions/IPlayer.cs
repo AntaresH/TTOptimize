@@ -1,6 +1,6 @@
 ﻿namespace TTOptimize.Core.GameAbstractions;
 
-public interface IParticipant
+public interface IPlayer
 {
     int Seat { get; } // 1..N
     string Name { get; }

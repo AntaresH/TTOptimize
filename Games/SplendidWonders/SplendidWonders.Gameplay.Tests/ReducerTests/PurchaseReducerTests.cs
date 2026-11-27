@@ -25,7 +25,7 @@ public class PurchaseReducerTests
         ReducerTestData input, PurchaseAction actionToApply, ReducerTestData expected)
     {
         // Arrange
-        var baseState = _defaultBuilder
+        var sourceState = _defaultBuilder
             .WithCurrentPlayer(input.ActivePlayerId)
             .WithPlayerStore(input.ActivePlayerId, input.PlayerStore)
             .WithPlayerReservedCards(input.ActivePlayerId, input.PlayerReservedCards)
@@ -34,7 +34,7 @@ public class PurchaseReducerTests
             .Build();
 
         // Act
-        var newState = _sut.Reduce(baseState, actionToApply);
+        var newState = _sut.Reduce(sourceState, actionToApply);
 
         // Assert
         Assert.That(newState, Is.Not.Null);
@@ -44,7 +44,7 @@ public class PurchaseReducerTests
         Assert.That(newState.Players[input.ActivePlayerId - 1].ReservedCards, Is.EquivalentTo(expected.PlayerReservedCards));
         Assert.That(newState.Players[input.ActivePlayerId - 1].Tableau, Is.EquivalentTo(expected.PlayerTableau));
 
-        AssertCardReplacement(baseState, newState, actionToApply);
+        AssertCardReplacement(sourceState, newState, actionToApply);
     }
 
     [TestCaseSource(nameof(PurchaseCardSeed11111Tableau33104Cases))]
@@ -52,7 +52,7 @@ public class PurchaseReducerTests
         ReducerTestData input, PurchaseAction actionToApply, ReducerTestData expected)
     {
         // Arrange
-        var baseState = _defaultBuilder
+        var sourceState = _defaultBuilder
             .WithLevel1(input.Level1)
             .WithLevel2(input.Level2)
             .WithLevel3(input.Level3)
@@ -64,7 +64,7 @@ public class PurchaseReducerTests
             .Build();
 
         // Act
-        var newState = _sut.Reduce(baseState, actionToApply);
+        var newState = _sut.Reduce(sourceState, actionToApply);
 
         // Assert
         Assert.That(newState, Is.Not.Null);
@@ -74,7 +74,7 @@ public class PurchaseReducerTests
         Assert.That(newState.Players[input.ActivePlayerId - 1].ReservedCards, Is.EquivalentTo(expected.PlayerReservedCards));
         Assert.That(newState.Players[input.ActivePlayerId - 1].Tableau, Is.EquivalentTo(expected.PlayerTableau));
 
-        AssertCardReplacement(baseState, newState, actionToApply);
+        AssertCardReplacement(sourceState, newState, actionToApply);
     }
 
     [TestCaseSource(nameof(LeaderEligibilityCases_Singular))]
@@ -83,7 +83,7 @@ public class PurchaseReducerTests
         ReducerTestData input, PurchaseAction actionToApply, ReducerTestData expected)
     {
         // Arrange
-        var baseState = _defaultBuilder
+        var sourceState = _defaultBuilder
             .WithCurrentPlayer(input.ActivePlayerId)
             .WithLeaders(input.AvailableLeaders)
             .WithPlayerAcquiredLeaders(input.ActivePlayerId, input.PlayerAcquiredLeaders)
@@ -92,7 +92,7 @@ public class PurchaseReducerTests
             .Build();
 
         // Act
-        var newState = _sut.Reduce(baseState, actionToApply);
+        var newState = _sut.Reduce(sourceState, actionToApply);
 
         // Assert
         Assert.That(newState, Is.Not.Null);
@@ -102,7 +102,7 @@ public class PurchaseReducerTests
         Assert.That(newState.Players[input.ActivePlayerId - 1].Tableau, Is.EquivalentTo(expected.PlayerTableau));
         Assert.That(newState.Players[input.ActivePlayerId - 1].AcquiredLeaders, Is.EquivalentTo(expected.PlayerAcquiredLeaders));
 
-        AssertCardReplacement(baseState, newState, actionToApply);
+        AssertCardReplacement(sourceState, newState, actionToApply);
     }
 
     [TestCaseSource(nameof(FinalTurnTriggerCases))]
@@ -110,35 +110,35 @@ public class PurchaseReducerTests
         ReducerTestData input, PurchaseAction actionToApply, ReducerTestData expected)
     {
         // Arrange
-        var baseState = _defaultBuilder
+        var sourceState = _defaultBuilder
             .WithCurrentPlayer(input.ActivePlayerId)
             .WithLeaders(input.AvailableLeaders)
             .WithPlayerTableau(input.ActivePlayerId, input.PlayerTableau)
             .Build();
         // Act
-        var newState = _sut.Reduce(baseState, actionToApply);
+        var newState = _sut.Reduce(sourceState, actionToApply);
         // Assert
         Assert.That(newState, Is.Not.Null);
         Assert.That(newState.ActivePlayer.Seat, Is.EqualTo(expected.ActivePlayerId));
         Assert.That(newState.IsFinalTurn, Is.EqualTo(expected.IsFinalTurn));
     }
 
-    private void AssertCardReplacement(GameState baseState, GameState newState, PurchaseAction gameAction)
+    private void AssertCardReplacement(GameState sourceState, GameState newState, PurchaseAction gameAction)
     {
         int level = gameAction.Card.Id < 41 ? 1 : gameAction.Card.Id < 71 ? 2 : 3;
 
-        var baseStateMarket = baseState[level].Market;
+        var sourceStateMarket = sourceState[level].Market;
         var newStateMarket = newState[level].Market;
-        var baseStateDeck = baseState[level].Deck;
+        var sourceStateDeck = sourceState[level].Deck;
         var newStateDeck = newState[level].Deck;
 
-        if (baseStateDeck.Any())
+        if (sourceStateDeck.Any())
         {
             Assert.That(newStateMarket.Count, Is.EqualTo(4));
         }
         else
         {
-            Assert.That(newStateMarket.Count(c => c != Cards.Empty), Is.EqualTo(baseStateMarket.Count(c => c != Cards.Empty) - 1));
+            Assert.That(newStateMarket.Count(c => c != Cards.Empty), Is.EqualTo(sourceStateMarket.Count(c => c != Cards.Empty) - 1));
             Assert.That(newStateDeck.Count, Is.EqualTo(0));
         }
     }

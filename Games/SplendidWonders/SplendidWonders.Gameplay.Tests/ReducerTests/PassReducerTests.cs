@@ -24,13 +24,13 @@ namespace SplendidWonders.Gameplay.Tests.ReducerTests
         public void Reduce_TwoPlayersFirstPass_TurnAdvanced(int currentPlayerId, int nextPlayerId)
         {
             // Arrange
-            var baseState = _defaultBuilder
+            var sourceState = _defaultBuilder
                 .WithCurrentPlayer(currentPlayerId)
                 .Build();
             var passAction = new PassAction();
 
             // Act
-            var newState = _sut.Reduce(baseState, passAction);
+            var newState = _sut.Reduce(sourceState, passAction);
 
             // Assert
             Assert.That(newState.ActivePlayer.Seat, Is.EqualTo(nextPlayerId));
@@ -43,14 +43,14 @@ namespace SplendidWonders.Gameplay.Tests.ReducerTests
         public void Reduce_TwoPlayersSecondPass_StalemateReached(int currentPlayerId, int nextPlayerId)
         {
             // Arrange
-            var baseState = _defaultBuilder
+            var sourceState = _defaultBuilder
                 .WithCurrentPlayer(currentPlayerId)
                 .WithConsecutivePasses(1)
                 .Build();
             var passAction = new PassAction();
 
             // Act
-            var newState = _sut.Reduce(baseState, passAction);
+            var newState = _sut.Reduce(sourceState, passAction);
 
             // Assert
             Assert.That(newState.GameProgression, Is.EqualTo(GameProgression.GameOver));
@@ -69,7 +69,7 @@ namespace SplendidWonders.Gameplay.Tests.ReducerTests
                 new Player() { Seat = 3 }
             };
 
-            var baseState = _defaultBuilder
+            var sourceState = _defaultBuilder
                 .WithPlayers(threePlayers)
                 .WithConsecutivePasses(1)
                 .WithCurrentPlayer(currentPlayerId)
@@ -78,7 +78,7 @@ namespace SplendidWonders.Gameplay.Tests.ReducerTests
             var passAction = new PassAction();
 
             // Act
-            var newState = _sut.Reduce(baseState, passAction);
+            var newState = _sut.Reduce(sourceState, passAction);
 
             // Assert
             Assert.That(newState.ActivePlayer.Seat, Is.EqualTo(nextPlayerId));
@@ -98,7 +98,7 @@ namespace SplendidWonders.Gameplay.Tests.ReducerTests
                 new Player() { Seat = 3 }
             };
 
-            var baseState = _defaultBuilder
+            var sourceState = _defaultBuilder
                 .WithPlayers(threePlayers)
                 .WithCurrentPlayer(currentPlayerId)
                 .WithConsecutivePasses(2)
@@ -106,7 +106,7 @@ namespace SplendidWonders.Gameplay.Tests.ReducerTests
             var passAction = new PassAction();
 
             // Act
-            var newState = _sut.Reduce(baseState, passAction);
+            var newState = _sut.Reduce(sourceState, passAction);
 
             // Assert
             Assert.That(newState.GameProgression, Is.EqualTo(GameProgression.GameOver));
@@ -127,7 +127,7 @@ namespace SplendidWonders.Gameplay.Tests.ReducerTests
                 new Player() { Seat = 4 } 
             };
 
-            var baseState = _defaultBuilder
+            var sourceState = _defaultBuilder
                 .WithPlayers(fourPlayers)
                 .WithCurrentPlayer(currentPlayerId)
                 .WithConsecutivePasses(2)
@@ -135,7 +135,7 @@ namespace SplendidWonders.Gameplay.Tests.ReducerTests
             var passAction = new PassAction();
 
             // Act
-            var newState = _sut.Reduce(baseState, passAction);
+            var newState = _sut.Reduce(sourceState, passAction);
 
             // Assert
             Assert.That(newState.ActivePlayer.Seat, Is.EqualTo(nextPlayerId));
@@ -157,7 +157,7 @@ namespace SplendidWonders.Gameplay.Tests.ReducerTests
                 new Player() { Seat = 4 }
             };
 
-        var baseState = _defaultBuilder
+        var sourceState = _defaultBuilder
                 .WithPlayers(fourPlayers)
                 .WithCurrentPlayer(currentPlayerId)
                 .WithConsecutivePasses(3)
@@ -165,7 +165,7 @@ namespace SplendidWonders.Gameplay.Tests.ReducerTests
             var passAction = new PassAction();
 
             // Act
-            var newState = _sut.Reduce(baseState, passAction);
+            var newState = _sut.Reduce(sourceState, passAction);
 
             // Assert
             Assert.That(newState.GameProgression, Is.EqualTo(GameProgression.GameOver));

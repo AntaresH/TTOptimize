@@ -40,10 +40,10 @@ namespace SplendidWonders.Gameplay
             return _validActions.ToArray();
         }
 
-        public IGameState Reduce(IGameState baseState, GameAction actionToApply)
+        public IGameState Reduce(IGameState sourceState, GameAction actionToApply)
         {
             _validActions.Clear();
-            return _stateReducer.Reduce(baseState, actionToApply);
+            return _stateReducer.Reduce(sourceState, actionToApply);
         }
 
         public IReadOnlyList<IPlayerResult> GetFinalStandings(IGameState finalState)

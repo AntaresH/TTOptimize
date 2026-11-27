@@ -7,6 +7,6 @@ public interface IGameState
     GameOverReason GameOverReason { get; }
     GameProgression GameProgression { get; }
 
-    IReadOnlyList<IParticipant> Players { get; }
-    IParticipant ActivePlayer { get; }
+    IReadOnlyList<IPlayer> Players { get; }
+    IPlayer ActivePlayer { get; }
 }

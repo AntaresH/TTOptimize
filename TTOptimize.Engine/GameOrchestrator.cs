@@ -10,7 +10,7 @@ public class GameOrchestrator
     private readonly IGameRules _rules;
     public event Action<IGameState, IReadOnlyList<GameAction>, IAgent>? TurnStarted;
     public event Action<string, IAgent>? ValidationFailed; 
-    public event Action<GameAction, IParticipant>? ActionExecuted;
+    public event Action<GameAction, IPlayer>? ActionExecuted;
 
     public GameOrchestrator(
         IGameState initialState,

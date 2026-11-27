@@ -5,23 +5,23 @@ namespace SplendidWonders.Gameplay.Reducers
 {
     public class TokenActionReducer : ReducerBase, IStateReducer<DrawDoubleTokensAction>, IStateReducer<DrawThreeTokensAction>, IStateReducer<ReturnTokensAction>
     {
-        public GameState Reduce(GameState baseState, DrawThreeTokensAction action)
+        public GameState Reduce(GameState sourceState, DrawThreeTokensAction action)
         {
-            return baseState
+            return sourceState
                 .Transform(DrawTokens, action.Tokens.ToArray())
                 .Transform(AdvanceTurn, action);
         }
 
-        public GameState Reduce(GameState baseState, DrawDoubleTokensAction action)
+        public GameState Reduce(GameState sourceState, DrawDoubleTokensAction action)
         {
-            return baseState
+            return sourceState
                 .Transform(DrawTokens, action.Tokens.ToArray())
                 .Transform(AdvanceTurn, action);
         }
 
-        public GameState Reduce(GameState baseState, ReturnTokensAction action)
+        public GameState Reduce(GameState sourceState, ReturnTokensAction action)
         {
-            return baseState
+            return sourceState
                 .Transform(ReturnTokens, action.Tokens.ToArray())
                 .Transform(AdvanceTurn, action);
 

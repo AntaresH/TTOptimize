@@ -14,7 +14,7 @@ public class MatchMetricsCollector
 
         foreach (IPlayerResult standing in outcome.Standings)
         {
-            IParticipant player = standing.Player;
+            IPlayer player = standing.Player;
 
             var playerActions = outcome.ActionHistory
                 .Where(entry => entry.Player.Seat == player.Seat)

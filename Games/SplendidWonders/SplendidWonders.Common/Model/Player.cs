@@ -3,7 +3,7 @@ using TTOptimize.Core.GameAbstractions;
 
 namespace SplendidWonders.Common.Model
 {
-    public record class Player : IParticipant
+    public record class Player : IPlayer
     {
         public int Seat { get; set; }
 

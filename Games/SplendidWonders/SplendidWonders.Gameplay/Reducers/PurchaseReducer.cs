@@ -5,9 +5,9 @@ namespace SplendidWonders.Gameplay.Reducers
 {
     public class PurchaseReducer : ReducerBase, IStateReducer<PurchaseAction>
     {
-        public GameState Reduce(GameState baseState, PurchaseAction action)
+        public GameState Reduce(GameState sourceState, PurchaseAction action)
         {
-            return baseState
+            return sourceState
                 .Transform(ReturnTokens, action)
                 .Transform(AcquireCard, action)
                 .Transform(ReplaceCard, action)
@@ -16,19 +16,19 @@ namespace SplendidWonders.Gameplay.Reducers
                 .Transform(AdvanceTurn, action);
         }
 
-        private GameState ReturnTokens(GameState baseState, PurchaseAction action)
+        private GameState ReturnTokens(GameState sourceState, PurchaseAction action)
         {
             var cardCostArray = action.Card.Cost.ToArray();
-            var playerStoreArray = baseState.ActivePlayer.Store.ToArray();
+            var playerStoreArray = sourceState.ActivePlayer.Store.ToArray();
             var paymentTokens = new int[6];
 
             int[] playerBonuses =
             [
-                baseState.ActivePlayer.Tableau.Count(c => c.Bonus == DevelopmentColor.Yellow),
-                baseState.ActivePlayer.Tableau.Count(c => c.Bonus == DevelopmentColor.Blue),
-                baseState.ActivePlayer.Tableau.Count(c => c.Bonus == DevelopmentColor.Green),
-                baseState.ActivePlayer.Tableau.Count(c => c.Bonus == DevelopmentColor.Brown),
-                baseState.ActivePlayer.Tableau.Count(c => c.Bonus == DevelopmentColor.Red),
+                sourceState.ActivePlayer.Tableau.Count(c => c.Bonus == DevelopmentColor.Yellow),
+                sourceState.ActivePlayer.Tableau.Count(c => c.Bonus == DevelopmentColor.Blue),
+                sourceState.ActivePlayer.Tableau.Count(c => c.Bonus == DevelopmentColor.Green),
+                sourceState.ActivePlayer.Tableau.Count(c => c.Bonus == DevelopmentColor.Brown),
+                sourceState.ActivePlayer.Tableau.Count(c => c.Bonus == DevelopmentColor.Red),
             ];
 
             int totalUsedPolymaths = 0;
@@ -43,33 +43,33 @@ namespace SplendidWonders.Gameplay.Reducers
 
             paymentTokens[5] = totalUsedPolymaths;
 
-            return ReturnTokens(baseState, paymentTokens);
+            return ReturnTokens(sourceState, paymentTokens);
         }
 
-        private GameState AcquireCard(GameState baseState, PurchaseAction action)
+        private GameState AcquireCard(GameState sourceState, PurchaseAction action)
         {
-            var playerTableau = baseState.ActivePlayer.Tableau.Add(action.Card);
-            var playerReserved = baseState.ActivePlayer.ReservedCards;
+            var playerTableau = sourceState.ActivePlayer.Tableau.Add(action.Card);
+            var playerReserved = sourceState.ActivePlayer.ReservedCards;
 
-            if (baseState.ActivePlayer.ReservedCards.Contains(action.Card))
+            if (sourceState.ActivePlayer.ReservedCards.Contains(action.Card))
             {
-                playerReserved = baseState.ActivePlayer.ReservedCards.Remove(action.Card);
+                playerReserved = sourceState.ActivePlayer.ReservedCards.Remove(action.Card);
             }
 
-            return baseState
-                .UpdatePlayerData(baseState.ActivePlayer.Seat, baseState.ActivePlayer.Store, playerReserved, playerTableau, baseState.ActivePlayer.AcquiredLeaders);
+            return sourceState
+                .UpdatePlayerData(sourceState.ActivePlayer.Seat, sourceState.ActivePlayer.Store, playerReserved, playerTableau, sourceState.ActivePlayer.AcquiredLeaders);
         }
 
-        private GameState AcquireLeader(GameState baseState)
+        private GameState AcquireLeader(GameState sourceState)
         {
-            var eligibleLeaders = GetEligibleLeaders(baseState);
+            var eligibleLeaders = GetEligibleLeaders(sourceState);
 
             if (eligibleLeaders.Count() == 1)
             {
-                return AcquireLeader(baseState, eligibleLeaders.First());
+                return AcquireLeader(sourceState, eligibleLeaders.First());
             }
 
-            return baseState;
+            return sourceState;
         }
     }
 }

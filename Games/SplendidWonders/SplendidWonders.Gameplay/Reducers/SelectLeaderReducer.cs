@@ -5,9 +5,9 @@ namespace SplendidWonders.Gameplay.Reducers
 {
     public class SelectLeaderReducer : ReducerBase, IStateReducer<SelectLeaderAction>
     {
-        public GameState Reduce(GameState baseState, SelectLeaderAction action)
+        public GameState Reduce(GameState sourceState, SelectLeaderAction action)
         {
-            return baseState
+            return sourceState
                 .Transform(AcquireLeader, action.Leader)
                 .Transform(TriggerEndgame)
                 .Transform(AdvanceTurn, action);

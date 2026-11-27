@@ -25,7 +25,7 @@ public class ReserveFromBoardReducerTests
         ReducerTestData input, ReserveFromBoardAction actionToApply, ReducerTestData expected)
     {
         // Arrange
-        var baseState = _defaultBuilder
+        var sourceState = _defaultBuilder
             .WithCurrentPlayer(input.ActivePlayerId)
             .WithPlayerStore(input.ActivePlayerId, input.PlayerStore)
             .WithPlayerReservedCards(input.ActivePlayerId, input.PlayerReservedCards)
@@ -33,7 +33,7 @@ public class ReserveFromBoardReducerTests
             .Build();
 
         // Act
-        var newState = _sut.Reduce(baseState, actionToApply);
+        var newState = _sut.Reduce(sourceState, actionToApply);
 
         // Assert
         Assert.That(newState, Is.Not.Null);
@@ -42,7 +42,7 @@ public class ReserveFromBoardReducerTests
         Assert.That(newState.Players[input.ActivePlayerId - 1].ReservedCards, Is.EquivalentTo(expected.PlayerReservedCards));
         Assert.That(newState.ActivePlayer.Seat, Is.EqualTo(expected.ActivePlayerId));
 
-        AssertCardReplacement(baseState, newState, actionToApply);
+        AssertCardReplacement(sourceState, newState, actionToApply);
     }
 
     [TestCaseSource(nameof(ReserveFromBoardCardSeed23456Cases))]
@@ -50,7 +50,7 @@ public class ReserveFromBoardReducerTests
         CardGroup[] seededCardSetup, ReducerTestData input, ReserveFromBoardAction actionToApply, ReducerTestData expected)
     {
         // Arrange
-        var baseState = _defaultBuilder
+        var sourceState = _defaultBuilder
             .WithLevel1(seededCardSetup[0])
             .WithLevel2(seededCardSetup[1])
             .WithLevel3(seededCardSetup[2])
@@ -61,7 +61,7 @@ public class ReserveFromBoardReducerTests
             .Build();
 
         // Act
-        var newState = _sut.Reduce(baseState, actionToApply);
+        var newState = _sut.Reduce(sourceState, actionToApply);
 
         // Assert
         Assert.That(newState, Is.Not.Null);
@@ -70,7 +70,7 @@ public class ReserveFromBoardReducerTests
         Assert.That(newState.Players[input.ActivePlayerId - 1].ReservedCards, Is.EquivalentTo(expected.PlayerReservedCards));
         Assert.That(newState.ActivePlayer.Seat, Is.EqualTo(expected.ActivePlayerId));
 
-        AssertCardReplacement(baseState, newState, actionToApply);
+        AssertCardReplacement(sourceState, newState, actionToApply);
     }
 
     [TestCaseSource(nameof(ReserveFromBoardShortDecksCases))]
@@ -78,7 +78,7 @@ public class ReserveFromBoardReducerTests
         CardGroup[] seededCardSetup, ReducerTestData input, ReserveFromBoardAction actionToApply, ReducerTestData expected)
     {
         // Arrange
-        var baseState = _defaultBuilder
+        var sourceState = _defaultBuilder
             .WithLevel1(seededCardSetup[0])
             .WithLevel2(seededCardSetup[1])
             .WithLevel3(seededCardSetup[2])
@@ -89,7 +89,7 @@ public class ReserveFromBoardReducerTests
             .Build();
 
         // Act
-        var newState = _sut.Reduce(baseState, actionToApply);
+        var newState = _sut.Reduce(sourceState, actionToApply);
 
         // Assert
         Assert.That(newState, Is.Not.Null);
@@ -98,25 +98,25 @@ public class ReserveFromBoardReducerTests
         Assert.That(newState.Players[input.ActivePlayerId - 1].ReservedCards, Is.EquivalentTo(expected.PlayerReservedCards));
         Assert.That(newState.ActivePlayer.Seat, Is.EqualTo(expected.ActivePlayerId));
 
-        AssertCardReplacement(baseState, newState, actionToApply);
+        AssertCardReplacement(sourceState, newState, actionToApply);
     }
 
-    private void AssertCardReplacement(GameState baseState, GameState newState, ReserveFromBoardAction gameAction)
+    private void AssertCardReplacement(GameState sourceState, GameState newState, ReserveFromBoardAction gameAction)
     {
         int level = gameAction.Card.Id < 41 ? 1 : gameAction.Card.Id < 71 ? 2 : 3;
 
-        var baseStateMarket = baseState[level].Market;
+        var sourceStateMarket = sourceState[level].Market;
         var newStateMarket = newState[level].Market;
-        var baseStateDeck = baseState[level].Deck;
+        var sourceStateDeck = sourceState[level].Deck;
         var newStateDeck = newState[level].Deck;
 
-        if (baseStateDeck.Any())
+        if (sourceStateDeck.Any())
         {
             Assert.That(newStateMarket.Count, Is.EqualTo(4));
         }
         else
         {
-            Assert.That(newStateMarket.Count(c => c != Cards.Empty), Is.EqualTo(baseStateMarket.Count(c => c != Cards.Empty) - 1));
+            Assert.That(newStateMarket.Count(c => c != Cards.Empty), Is.EqualTo(sourceStateMarket.Count(c => c != Cards.Empty) - 1));
             Assert.That(newStateDeck.Count, Is.EqualTo(0));
         }
     }
