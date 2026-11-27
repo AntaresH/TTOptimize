@@ -6,13 +6,11 @@ namespace TTOptimize.ConsoleHost;
 
 public class GameSelectionService
 {
-    private readonly IServiceProvider _serviceProvider;
     private readonly ISettingsService _settingsService;
     private readonly IReadOnlyList<IGameManifest> _gameManifests;
 
-    public GameSelectionService(IServiceProvider serviceProvider, ISettingsService settingsService, IEnumerable<IGameManifest> gameManifests)
+    public GameSelectionService(ISettingsService settingsService, IEnumerable<IGameManifest> gameManifests)
     {
-        _serviceProvider = serviceProvider;
         _settingsService = settingsService;
         _gameManifests = gameManifests.ToList();
     }

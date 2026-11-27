@@ -93,8 +93,6 @@ public class Program
                 {
                 }
 
-                batchRuns--;
-
                 stayInGame = settingsService.IsSetupInteractive ? StayPrompter(Strings.PromptStayInGame) : false;
             }
 

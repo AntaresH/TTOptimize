@@ -13,9 +13,9 @@ public class SetupService
     private bool _isInteractive;
     private readonly ISettingsService _settingsService;
 
-    public SetupService(IServiceProvider serviceProvider)
+    public SetupService(ISettingsService settingsService)
     {
-        _settingsService = serviceProvider.GetRequiredService<ISettingsService>();
+        _settingsService = settingsService;
 
         _isInteractive = _settingsService.IsSetupInteractive;
     }
