@@ -9,7 +9,7 @@ public class HumanAgent : IAgent
 
     public string Name { get; }
 
-    public string StatisticsSubjectId => $"Human:{Name}";
+    public string SubjectId => $"Human:{Name}";
 
     public HumanAgent(string name, IGameInput input)
     {

@@ -41,7 +41,7 @@ public class MatchMetricsCollector
             var baseMetrics = new BasePlayerMetrics
             {
                 Seat = player.Seat,
-                SubjectId = agentsBySeat[player.Seat].StatisticsSubjectId, 
+                SubjectId = agentsBySeat[player.Seat].SubjectId, 
                 Rank = standing.Rank,
                 IsWinner = standing.Rank == 1,
                 VictoryPoints = standing.Points,

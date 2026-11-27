@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Games\SplendidWonders\SplendidWonders.Agents\SplendidWonders.Agents.csproj" />
     <ProjectReference Include="..\Games\SplendidWonders\SplendidWonders.CLI\SplendidWonders.CLI.csproj" />
     <ProjectReference Include="..\Games\SplendidWonders\SplendidWonders.Gameplay\SplendidWonders.Gameplay.csproj" />
     <ProjectReference Include="..\TTOptimize.ConsoleUI\TTOptimize.ConsoleUI.csproj" />

@@ -7,7 +7,7 @@ public abstract class ComputerAgent : IAgent
 {
     public string Name { get; }
 
-    public string StatisticsSubjectId => nameof(ComputerAgent);
+    public abstract string SubjectId { get; }
 
     public ComputerAgent(string name)
     {

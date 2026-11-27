@@ -169,7 +169,7 @@ namespace TTOptimize.ConsoleHost {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Játékos neve (Enter = Játékos {0}): .
+        ///   Looks up a localized string similar to Játékos neve (Enter = {0}): .
         /// </summary>
         internal static string PlayerNamePrompt {
             get {

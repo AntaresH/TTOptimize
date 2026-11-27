@@ -166,7 +166,7 @@
     <value>PLAYER{0}NAME</value>
   </data>
   <data name="PlayerNamePrompt" xml:space="preserve">
-    <value>Játékos neve (Enter = Játékos {0}): </value>
+    <value>Játékos neve (Enter = {0}): </value>
   </data>
   <data name="ExecutionTime" xml:space="preserve">
     <value>Futási idő</value>

@@ -12,6 +12,8 @@ public class SetupService
 {
     private bool _isInteractive;
     private readonly ISettingsService _settingsService;
+    private static readonly string[] _botAgentNames = ["Metalhead", "RoboCube", "WireBeast", "B.O.R.G", "Skynet", "Omnius", "KaylonPrimary"];
+    private readonly IEnumerator<string> _nameEnumerator = GetShuffledBotNames().GetEnumerator();
 
     public SetupService(ISettingsService settingsService)
     {
@@ -20,7 +22,7 @@ public class SetupService
         _isInteractive = _settingsService.IsSetupInteractive;
     }
 
-    public GameSessionConfiguration SetupGame(IGameManifest selectedManifest)
+    public GameSessionConfiguration SetupGame(IGameManifest selectedManifest, IAgentFactory agentFactory)
     {   
         if (_isInteractive)
         {
@@ -29,9 +31,9 @@ public class SetupService
         }
 
         IGameConfiguration config = ReadConfiguration(selectedManifest.ConfigurationType);
-        IReadOnlyList<PlayerSlotConfig> slots = CreateAgents(selectedManifest.GameId, config.PlayerCount);
+        IReadOnlyList<PlayerSlotConfig> slots = CreatePlayerSlotConfigs(selectedManifest.GameId, agentFactory, config.PlayerCount);
 
-        config.PlayerNames = slots.Select(ag => ag.Name).ToList();
+        config.PlayerNames = slots.Select(ag => ag.DisplayName).ToList();
 
         return new GameSessionConfiguration()
         {
@@ -82,22 +84,47 @@ public class SetupService
         return configInstance;
     }
 
-    public IReadOnlyList<PlayerSlotConfig> CreateAgents(string gameId, int playerCount)
+    public IReadOnlyList<PlayerSlotConfig> CreatePlayerSlotConfigs(string gameId, IAgentFactory agentFactory, int playerCount)
     {
         var slots = new List<PlayerSlotConfig>(playerCount);
 
         if (_isInteractive)
             Console.WriteLine($"\n=== {Strings.PlayerSettings} ===");
 
+        var availableAgents = agentFactory.SupportedAgents;
+
         for (int i = 0; i < playerCount; i++)
         {
             if (_isInteractive)
                 Console.WriteLine($"\n--- {i + 1}. {Strings.Player} ---");
+            
+            var agentTypeDictionary = new Dictionary<int, string>();
+            List<string> agentTypePromptStrings = new List<string>();
 
-            string name = FromSettingOrPrompt(string.Format(Strings.PlayerNameArgumentKeyFormat, i + 1), () => PromptString(string.Format(Strings.PlayerNamePrompt, i + 1), $"{Strings.Player} {i + 1}"));
-            int agentTypeInt = FromSettingOrPrompt(string.Format(Strings.AgentTypeArgumentKeyFormat, i + 1), () => PromptInt(Strings.AgentTypePrompt, 1, 2, 1));
+            for (int j = 0; j < availableAgents.Count; j++)
+            {
+                var availableAgentTypeId = availableAgents[j].AgentTypeId;
+                agentTypeDictionary.Add(j + 1, availableAgentTypeId);
+                agentTypePromptStrings.Add($"{j + 1} - {availableAgentTypeId}");
+            }
 
-            var slot = new PlayerSlotConfig(name, i + 1, (AgentType)agentTypeInt);
+            string agentTypePrompt = $"[{string.Join(", ", agentTypePromptStrings)}])";
+            int agentTypeKey = FromSettingOrPrompt(string.Format(Strings.AgentTypeArgumentKeyFormat, i + 1), () => PromptInt(agentTypePrompt, 1, agentTypeDictionary.Count, 1));
+            
+            if (!agentTypeDictionary.TryGetValue(agentTypeKey, out string? agentTypeId))
+            {
+                throw new InvalidOperationException($"Invalid agent type key '{agentTypeKey}' for Player {i + 1}.");
+            }
+
+            var isInteractiveAgent = availableAgents.FirstOrDefault(aa => aa.AgentTypeId == agentTypeId).RequiresHumanInput;
+
+            string defaultPlayerName = isInteractiveAgent
+                ? $"{Strings.Human} {Strings.Player} {i + 1}"
+                : GenerateComputerAgentName();
+
+            string name = FromSettingOrPrompt(string.Format(Strings.PlayerNameArgumentKeyFormat, i + 1), () => PromptString(string.Format(Strings.PlayerNamePrompt, defaultPlayerName), defaultPlayerName));
+
+            var slot = new PlayerSlotConfig(i + 1, name, agentTypeId);
 
             slots.Add(slot);
         }
@@ -178,4 +205,24 @@ public class SetupService
         return string.IsNullOrEmpty(input) ? defaultValue : input;
     }
 
+    private static IEnumerable<string> GetShuffledBotNames()
+    {
+        var pool = _botAgentNames.ToArray();
+
+        while (true)
+        {
+            Random.Shared.Shuffle(pool);
+
+            foreach (string name in pool)
+            {
+                yield return name;
+            }
+        }
+    }
+
+    private string GenerateComputerAgentName()
+    {
+        _nameEnumerator.MoveNext();
+        return _nameEnumerator.Current;
+    }
 }

@@ -5,6 +5,8 @@ namespace TTOptimize.Core.Agents;
 
 public class RandomAgent : ComputerAgent
 {
+    public override string SubjectId => nameof(RandomAgent);
+
     public RandomAgent(string name) : base(name)
     {
     }

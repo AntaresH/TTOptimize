@@ -1,9 +1,12 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SplendidWonders.Agents;
 using SplendidWonders.CLI;
 using SplendidWonders.Gameplay;
 using System.Runtime.InteropServices;
+using TTOptimize.ConsoleUI.View;
 using TTOptimize.Core;
+using TTOptimize.Core.Agents;
 using TTOptimize.Core.InputAbstractions;
 using TTOptimize.Core.Setup;
 using TTOptimize.Engine;
@@ -62,7 +65,8 @@ public class Program
             }
 
             var selectedGame = gameSelectionService.SelectGame();
-            var sessionData = setupService.SetupGame(selectedGame);
+            var agentFactory = rootProvider.GetKeyedService<IAgentFactory>(selectedGame.GameId) ?? new BaseAgentFactory();
+            var sessionData = setupService.SetupGame(selectedGame, agentFactory);
 
             int.TryParse(settingsService[TTOptArguments.BATCHRUNS], out int batchRuns);
 
@@ -128,6 +132,7 @@ public class Program
 
         services.AddTTOptimizePersistence(dbPath);
 
+        services.AddSplendidWondersAgents();
         services.AddSplendidWondersGameplay();
         services.AddSplendidWondersCLI();
         services.AddConxelViewForGame(Games.SPLENDID_WONDERS_KEY);

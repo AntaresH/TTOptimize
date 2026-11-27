@@ -64,7 +64,7 @@ public class GameSessionManager
     {
         using GameContext context = _gameContextFactory.CreateContext(gameId);
 
-        var agentsBySeat = CreateAgents(slotConfigs, context.Input);
+        var agentsBySeat = CreateAgents(slotConfigs, context.AgentFactory, context.Input);
         IGameState initialState = context.StateFactory.Create(configuration);
 
         var orchestrator = new GameOrchestrator(initialState, agentsBySeat, context.Rules);
@@ -77,24 +77,13 @@ public class GameSessionManager
         return new CompletedMatch(result, record);
     }
 
-    private IReadOnlyDictionary<int, IAgent> CreateAgents(
-        IReadOnlyList<PlayerSlotConfig> slotConfigs,
-        IGameInput input)
+    private IReadOnlyDictionary<int, IAgent> CreateAgents(IReadOnlyList<PlayerSlotConfig> slotConfigs, IAgentFactory agentFactory, IGameInput? input)
     {
         var agentsBySeat = new Dictionary<int, IAgent>(slotConfigs.Count);
 
-        for (int i = 0; i < slotConfigs.Count; i++)
+        foreach (PlayerSlotConfig slot in slotConfigs)
         {
-            var slot = slotConfigs[i];
-
-            IAgent agent = slot.Type switch
-            {
-                AgentType.Human => new HumanAgent(slot.Name, input),
-                AgentType.Random => new RandomAgent(slot.Name),
-                _ => throw new ArgumentOutOfRangeException(nameof(slot.Type), $"Unknown agent type: {slot.Type}")
-            };
-
-            agentsBySeat.Add(i + 1, agent);
+            agentsBySeat[slot.Seat] = agentFactory.CreateAgent(slot.AgentTypeId, slot.DisplayName, input);
         }
 
         return agentsBySeat;
