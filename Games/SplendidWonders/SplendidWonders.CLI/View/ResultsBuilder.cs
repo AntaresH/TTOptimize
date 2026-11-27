@@ -1,5 +1,4 @@
 ﻿using SplendidWonders.Common.Model;
-using SplendidWonders.Gameplay;
 using TTOptimize.ConsoleUI.View;
 using TTOptimize.Core.ViewAbstractions;
 

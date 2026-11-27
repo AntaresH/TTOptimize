@@ -12,6 +12,19 @@ namespace SplendidWonders.Gameplay
 {
     public class SplendidWondersMetricsExtractor : IMatchMetricsExtractor
     {
+        public IReadOnlyList<string> KnownActionTypes { get; } =
+        [
+            nameof(DrawThreeTokensAction),
+            nameof(DrawDoubleTokensAction),
+            nameof(ReturnTokensAction),
+            nameof(ReserveFromBoardAction),
+            nameof(ReserveFromDeckAction),
+            nameof(PurchaseFromBoardAction),
+            nameof(PurchaseFromReservedAction),
+            nameof(SelectLeaderAction),
+            nameof(PassAction)
+        ];
+
         public IGameMetrics ExtractGameMetrics(IGameMetrics baseMetrics, IGameState finalState, IReadOnlyList<ActionLogEntry> history)
         {
             var swState = (GameState) finalState;

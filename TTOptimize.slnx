@@ -4,6 +4,9 @@
     <Project Path="Games/SplendidWonders/SplendidWonders.Common/SplendidWonders.Common.csproj" Id="e09405bb-4e0c-4988-8b49-c76034c05bf7" />
     <Project Path="Games/SplendidWonders/SplendidWonders.Gameplay/SplendidWonders.Gameplay.csproj" />
   </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="Architecture.md" />
+  </Folder>
   <Folder Name="/Tests/">
     <Project Path="Games/SplendidWonders/SplendidWonders.Gameplay.Tests/SplendidWonders.Gameplay.Tests.csproj" />
   </Folder>

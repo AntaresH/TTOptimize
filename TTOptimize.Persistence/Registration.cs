@@ -3,7 +3,7 @@ using TTOptimize.Core.Statistics;
 
 namespace TTOptimize.Persistence;
 
-public static class PersistenceRegistration
+public static class Registration
 {
     public static IServiceCollection AddTTOptimizePersistence(
         this IServiceCollection services,

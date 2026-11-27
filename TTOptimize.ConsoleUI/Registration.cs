@@ -3,7 +3,7 @@ using TTOptimize.ConsoleUI.Input;
 using TTOptimize.ConsoleUI.View;
 using TTOptimize.Core.ViewAbstractions;
 
-public static class ConsoleUIRegistration
+public static class Registration
 {
     public static IServiceCollection AddTTOptimizeConsoleUI(this IServiceCollection services)
     {

@@ -2,7 +2,7 @@
 
 namespace TTOptimize.Engine;
 
-public static class EngineRegistration
+public static class Registration
 {
     public static IServiceCollection AddTTOptimizeEngine(this IServiceCollection services)
     {

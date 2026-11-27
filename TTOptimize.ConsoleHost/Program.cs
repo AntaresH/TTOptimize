@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SplendidWonders.CLI;
+using SplendidWonders.Gameplay;
 using System.Runtime.InteropServices;
 using TTOptimize.Core;
 using TTOptimize.Core.InputAbstractions;
@@ -127,7 +128,8 @@ public class Program
 
         services.AddTTOptimizePersistence(dbPath);
 
-        services.AddSplendidWonders();
+        services.AddSplendidWondersGameplay();
+        services.AddSplendidWondersCLI();
         services.AddConxelViewForGame(Games.SPLENDID_WONDERS_KEY);
 
     }
