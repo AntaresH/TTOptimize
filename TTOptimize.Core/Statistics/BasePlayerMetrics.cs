@@ -3,7 +3,7 @@
 public record class BasePlayerMetrics : IPlayerMetrics
 {
     public int Seat { get; init; }
-    public string StatisticsSubjectId { get; init; } = string.Empty;
+    public string SubjectId { get; init; } = string.Empty;
     public int Rank { get; init; }
     public bool IsWinner { get; init; }
     public int VictoryPoints { get; init; }
@@ -19,7 +19,7 @@ public record class BasePlayerMetrics : IPlayerMetrics
     public BasePlayerMetrics(IPlayerMetrics source)
     {
         Seat = source.Seat;
-        StatisticsSubjectId = source.StatisticsSubjectId;
+        SubjectId = source.SubjectId;
         Rank = source.Rank;
         IsWinner = source.IsWinner;
         VictoryPoints = source.VictoryPoints;

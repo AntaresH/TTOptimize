@@ -6,6 +6,7 @@
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path="Architecture.md" />
+    <File Path="README.md" />
   </Folder>
   <Folder Name="/Tests/">
     <Project Path="Games/SplendidWonders/SplendidWonders.Gameplay.Tests/SplendidWonders.Gameplay.Tests.csproj" />

@@ -3,7 +3,7 @@
 public interface IPlayerMetrics
 {
     int Seat { get; }
-    string StatisticsSubjectId { get; }
+    string SubjectId { get; }
     int Rank { get; }
     bool IsWinner { get; }
     int VictoryPoints { get; }

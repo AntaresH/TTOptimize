@@ -22,23 +22,31 @@ public class MatchMetricsCollector
 
             int turnCount = playerActions.Count;
 
-            var actionCounts = playerActions
+            var executedActionCounts = playerActions
                 .GroupBy(entry => entry.Action.GetType().Name)
                 .ToDictionary(group => group.Key, group => group.Count());
+            
+            var allActionTypes = metricsExtractor?.KnownActionTypes != null
+                ? metricsExtractor.KnownActionTypes.Union(executedActionCounts.Keys)
+                : executedActionCounts.Keys;
 
-            var actionRatios = actionCounts.ToDictionary(
+            var actionCounts = allActionTypes.ToDictionary(
+                actionName => actionName,
+                actionName => executedActionCounts.GetValueOrDefault(actionName, 0));
+
+            var actionRatios = executedActionCounts.ToDictionary(
                 kvp => kvp.Key,
                 kvp => turnCount > 0 ? (double)kvp.Value / turnCount : 0.0);
 
             var baseMetrics = new BasePlayerMetrics
             {
                 Seat = player.Seat,
-                StatisticsSubjectId = agentsBySeat[player.Seat].StatisticsSubjectId, 
+                SubjectId = agentsBySeat[player.Seat].StatisticsSubjectId, 
                 Rank = standing.Rank,
                 IsWinner = standing.Rank == 1,
                 VictoryPoints = standing.Points,
                 TurnCount = turnCount,
-                ActionCounts = actionCounts,
+                ActionCounts = executedActionCounts,
                 ActionRatios = actionRatios
             };
 

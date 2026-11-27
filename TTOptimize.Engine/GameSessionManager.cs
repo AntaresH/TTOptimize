@@ -13,18 +13,21 @@ public class GameSessionManager
 {
     private bool _isInteractive;
 
-    private readonly IGameContextFactory _gameContextFactory;
-    private readonly MatchMetricsCollector _metricsCollector;
     private readonly ISettingsService? _settingsService;
+    private readonly IGameContextFactory _gameContextFactory;
     private readonly IMatchRepository? _matchRepository;
+    private readonly MatchMetricsCollector _metricsCollector;
+    private readonly MatchStatisticsAggregator _statisticsAggregator;
 
-    public GameSessionManager(IGameContextFactory gameContextFactory, MatchMetricsCollector metricsCollector, 
-        ISettingsService settingsService, IMatchRepository? matchRepository)
+    public GameSessionManager(ISettingsService settingsService, IGameContextFactory gameContextFactory, IMatchRepository? matchRepository, 
+        MatchMetricsCollector metricsCollector, MatchStatisticsAggregator statisticsAggregator = null)
     {
-        _gameContextFactory = gameContextFactory;
-        _metricsCollector = metricsCollector;
         _settingsService = settingsService;
+        _gameContextFactory = gameContextFactory;
         _matchRepository = matchRepository;
+
+        _metricsCollector = metricsCollector;
+        _statisticsAggregator = statisticsAggregator;
 
         _isInteractive = _settingsService.IsGameInteractive;
     }
@@ -33,6 +36,7 @@ public class GameSessionManager
         var completedMatch = ExecuteMatch(gameId, configuration, slotConfigs, batchRunId: null);
 
         _matchRepository?.SaveMatch(completedMatch.Record);
+        _statisticsAggregator?.ProcessMatches([completedMatch.Record]);
 
         return completedMatch.SessionResult;
     }
@@ -51,6 +55,7 @@ public class GameSessionManager
         }
 
         _matchRepository?.SaveMatchesBulk(records);
+        _statisticsAggregator?.ProcessMatches(records);
 
         return new BatchExecutionResult(batchRunId, matchCount, Stopwatch.GetElapsedTime(startTimestamp));
     }

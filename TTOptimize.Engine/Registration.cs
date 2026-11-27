@@ -8,6 +8,7 @@ public static class Registration
     {
         services.AddTransient<GameSessionManager>();
         services.AddSingleton<MatchMetricsCollector>();
+        services.AddSingleton<MatchStatisticsAggregator>();
         services.AddSingleton<IGameContextFactory, GameContextFactory>();
 
         return services;

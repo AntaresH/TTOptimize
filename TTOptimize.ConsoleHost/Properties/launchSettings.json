@@ -65,7 +65,7 @@
         "Simulation__Player4Type": "2"
       }
     },
-    "SplendidWonders 4Gx100": {
+    "SplendidWonders 4Randx1000": {
       "commandName": "Project",
       "environmentVariables": {
         "Simulation__SetupInteractive": "false",
@@ -73,7 +73,7 @@
         "Simulation__GameId": "splendidWonders",
         "Simulation__PlayerCount": "4",
         "Simulation__UseRandomSeed": "true",
-        "Simulation__BatchRuns": "100",
+        "Simulation__BatchRuns": "1000",
         "Simulation__Player1Name": "Metalhead",
         "Simulation__Player2Name": "Ironboss",
         "Simulation__Player3Name": "Robocube",
