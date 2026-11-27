@@ -15,6 +15,5 @@ public class StatisticsGroup
     public RunningMetric TurnCount { get; set; } = new();
     public Dictionary<string, RunningMetric> ActionRatios { get; set; } = new();
 
-    // A [TrackMetric] attribútummal jelölt játék-specifikus metrikák (pl. "TableauSize", "AcquiredLeadersCount")
-    public Dictionary<string, RunningMetric> CustomMetrics { get; set; } = new();
+    public Dictionary<string, RunningMetric> TrackedGameMetrics { get; set; } = new();
 }

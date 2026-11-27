@@ -91,10 +91,10 @@ public class MatchStatisticsAggregator
             {
                 double numericValue = Convert.ToDouble(rawValue);
 
-                if (!group.CustomMetrics.TryGetValue(metricName, out RunningMetric? customRunning))
+                if (!group.TrackedGameMetrics.TryGetValue(metricName, out RunningMetric? customRunning))
                 {
                     customRunning = new RunningMetric();
-                    group.CustomMetrics[metricName] = customRunning;
+                    group.TrackedGameMetrics[metricName] = customRunning;
                 }
                 customRunning.Track(numericValue);
             }
