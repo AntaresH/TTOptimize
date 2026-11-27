@@ -43,13 +43,13 @@ public class SelectLeaderWizard : SplendidWondersBaseWizard
 
         if (match.Success)
         {
-            int cardId = int.Parse(match.Groups[1].Value);
+            int leaderId = int.Parse(match.Groups[0].Value);
 
-            if (_eligibleLeaders.Any(c => c.Id == cardId))
+            if (_eligibleLeaders.Any(c => c.Id == leaderId))
             {
                 return new SelectLeaderAction()
                 {
-                    Leader = _eligibleLeaders.First(c => c.Id == cardId)
+                    Leader = _eligibleLeaders.First(c => c.Id == leaderId)
                 };
             }
         }
